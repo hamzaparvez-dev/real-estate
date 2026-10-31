@@ -147,7 +147,7 @@ UI = {
 
 HOME = {
     'en': {
-        'title': 'Prestige Enterprises | Property in Kalyan, Mumbai & Maharashtra',
+        'title': 'Prestige Enterprises | Kalyan Property Consultants',
         'desc': 'Property consultants focused exclusively on buying, selling and renting residential and commercial property in Kalyan, Maharashtra.',
         'jsonld_desc': 'Kalyan-based property consultancy helping local buyers, sellers, landlords and tenants with residential and commercial property in Kalyan.',
         'tag': 'Real estate · Kalyan, Maharashtra',
@@ -220,7 +220,7 @@ HOME = {
         'visit': 'Visit our office',
     },
     'hi': {
-        'title': 'Prestige Enterprises | कल्याण, मुंबई और महाराष्ट्र में प्रॉपर्टी',
+        'title': 'Prestige Enterprises | कल्याण में प्रॉपर्टी सलाहकार',
         'desc': 'कल्याण में आवासीय और व्यावसायिक प्रॉपर्टी खरीदने, बेचने और किराये पर लेने के लिए स्थानीय प्रॉपर्टी सलाहकार।',
         'jsonld_desc': 'कल्याण में स्थानीय खरीदारों, विक्रेताओं, मकान मालिकों और किरायेदारों को आवासीय और व्यावसायिक प्रॉपर्टी में मदद करने वाली प्रॉपर्टी सलाहकार सेवा।',
         'tag': 'रियल एस्टेट · कल्याण, महाराष्ट्र',
@@ -293,7 +293,7 @@ HOME = {
         'visit': 'हमारे ऑफिस आएँ',
     },
     'mr': {
-        'title': 'Prestige Enterprises | कल्याण, मुंबई आणि महाराष्ट्रातील मालमत्ता',
+        'title': 'Prestige Enterprises | कल्याणमधील मालमत्ता सल्लागार',
         'desc': 'कल्याणमधील निवासी आणि व्यावसायिक मालमत्ता खरेदी, विक्री आणि भाड्याने देण्यासाठी स्थानिक मालमत्ता सल्लागार.',
         'jsonld_desc': 'कल्याणमधील स्थानिक खरेदीदार, विक्रेते, घरमालक आणि भाडेकरूंना निवासी व व्यावसायिक मालमत्तेत मदत करणारी मालमत्ता सल्लागार सेवा.',
         'tag': 'रिअल इस्टेट · कल्याण, महाराष्ट्र',
