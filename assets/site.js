@@ -217,7 +217,7 @@
     document.querySelectorAll('a,button').forEach(function (el) {
       if (el.classList.contains('cta-enq') || el.classList.contains('f-enq') || el.classList.contains('enquire-trigger')) return;
       var label = (el.textContent || el.getAttribute('aria-label') || '').trim().toLowerCase();
-      if (!/\\b(enquire|enquiry|send enquiry|request details)\\b/.test(label)) return;
+      if (label.indexOf('enquire') === -1 && label.indexOf('enquiry') === -1 && label.indexOf('request details') === -1) return;
       var href = el.getAttribute('href') || '';
       if (el.tagName === 'A' && href && !/^#/.test(href) && href.indexOf('wa.me') === -1) return;
       el.addEventListener('click', function (e) {
