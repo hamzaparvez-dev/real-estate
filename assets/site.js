@@ -217,10 +217,16 @@
     document.querySelectorAll('a,button').forEach(function (el) {
       if (el.classList.contains('cta-enq') || el.classList.contains('f-enq') || el.classList.contains('enquire-trigger')) return;
       var label = (el.textContent || el.getAttribute('aria-label') || '').trim().toLowerCase();
-      if (!/^(enquire|enquire now|enquiry|send enquiry|request details)$/.test(label)) return;
-      if (el.tagName === 'A' && el.getAttribute('href') && !/^#/.test(el.getAttribute('href'))) return;
+      if (!/\\b(enquire|enquiry|send enquiry|request details)\\b/.test(label)) return;
+      var href = el.getAttribute('href') || '';
+      if (el.tagName === 'A' && href && !/^#/.test(href) && href.indexOf('wa.me') === -1) return;
       el.addEventListener('click', function (e) {
         if (el.tagName === 'A') e.preventDefault();
+        var card = el.closest('.plan-card');
+        var section = el.closest('section');
+        var context = card ? (card.querySelector('h3')?.textContent || 'featured project') : (section?.id || '');
+        var details = form.querySelector('[name="message"]');
+        if (context && details && !details.value) details.value = 'I am enquiring about: ' + context;
         openModal(this);
       });
     });
