@@ -105,27 +105,20 @@
     modal.innerHTML = `
       <div class="enq-box" role="dialog" aria-modal="true" aria-labelledby="enqTitle" aria-describedby="enqIntro">
         <button class="enq-close" type="button" aria-label="Close enquiry form">&times;</button>
-        <div class="enq-eyebrow">PRESTIGE ENTERPRISES · PROPERTY ENQUIRY</div>
-        <h3 id="enqTitle">Let’s find your next home.</h3>
-        <p id="enqIntro">Share a few details. Our property team will contact you to understand your requirements.</p>
+        <div class="enq-eyebrow">EXPERIENCE THE SAMPLE FLAT TODAY</div>
+        <h3 id="enqTitle">Book Site Visit. Enquire Now.</h3>
+        <p id="enqIntro">Limited units available</p>
         <form class="enq-form" novalidate>
           <div class="enq-fields">
-            <label class="enq-field enq-wide">Full name <span>*</span><input name="name" autocomplete="name" placeholder="Enter your full name" required minlength="2"></label>
-            <label class="enq-field">Mobile number <span>*</span><input name="phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="10-digit mobile number" required pattern="[6-9][0-9]{9}" maxlength="10"></label>
-            <label class="enq-field">Email address<input name="email" type="email" autocomplete="email" placeholder="name@example.com"></label>
-            <label class="enq-field">I am looking to <span>*</span><select name="requirement" required><option value="">Select requirement</option><option>Buy a property</option><option>Rent a property</option><option>Sell my property</option><option>Investment enquiry</option></select></label>
-            <label class="enq-field">Property type <span>*</span><select name="property" required><option value="">Select property type</option><option>1 BHK</option><option>2 BHK</option><option>3 BHK or larger</option><option>Villa / Row house</option><option>Residential plot</option><option>Other residential property</option></select></label>
-            <label class="enq-field">Preferred location<input name="location" placeholder="e.g. Kalyan, Dombivli, Thane"></label>
-            <label class="enq-field">Approximate budget<select name="budget"><option value="">Select budget</option><option>Below ₹25 lakh</option><option>₹25–40 lakh</option><option>₹40–60 lakh</option><option>₹60–80 lakh</option><option>₹80 lakh–₹1 crore</option><option>Above ₹1 crore</option><option>Not decided yet</option></select></label>
-            <label class="enq-field">Buying / moving timeline<select name="timeline"><option value="">Select timeline</option><option>Immediately</option><option>Within 1 month</option><option>Within 3 months</option><option>Within 6 months</option><option>Just exploring</option></select></label>
-            <label class="enq-field enq-wide">Additional details<textarea name="message" rows="3" placeholder="Anything else we should know? (Optional)"></textarea></label>
+            <label class="enq-field">Full Name <span>*</span><input name="name" autocomplete="name" placeholder="Enter your name" required minlength="2"></label>
+            <label class="enq-field">Phone Number <span>*</span><input name="phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="Enter your phone number" required pattern="[6-9][0-9]{9}" maxlength="10"></label>
+            <label class="enq-field">Select Configuration <span>*</span><select name="configuration" required><option value="">Select</option><option>1BHK</option><option>2BHK</option><option>3BHK</option><option>Commercial</option></select></label>
+            <label class="enq-field">Purpose <select name="purpose"><option value="">Select</option><option>Self Use / End-Use</option><option>Investment / Rental</option><option>First Home</option><option>Upgrade</option></select></label>
           </div>
-          <p class="enq-consent">By continuing, you agree that Prestige Enterprises may contact you about this enquiry.</p>
+          <p class="enq-consent">By submitting you authorize us to contact you via call/SMS/email.</p>
           <p class="enq-error" role="alert" aria-live="polite"></p>
-          <button class="enq-submit" type="submit">Continue to WhatsApp <span aria-hidden="true">→</span></button>
-          <p class="enq-foot">Your details will be shared with our team through WhatsApp. No online payment is required.</p>
-        </form>
-      </div>`;
+          <button class="enq-submit" type="submit">ENQUIRE NOW</button>
+        </form>      </div>`;
     document.body.appendChild(modal);
     var form = modal.querySelector('form');
     var lastFocus = null;
@@ -176,13 +169,8 @@
         '',
         'Name: ' + data.get('name'),
         'Mobile: ' + phone,
-        'Email: ' + (data.get('email') || 'Not provided'),
-        'Requirement: ' + data.get('requirement'),
-        'Property type: ' + data.get('property'),
-        'Preferred location: ' + (data.get('location') || 'Not specified'),
-        'Budget: ' + (data.get('budget') || 'Not specified'),
-        'Timeline: ' + (data.get('timeline') || 'Not specified'),
-        'Additional details: ' + (data.get('message') || 'None')
+        'Configuration: ' + data.get('configuration'),
+        'Purpose: ' + (data.get('purpose') || 'Not specified')
       ];
       var url = WA + '?text=' + encodeURIComponent(lines.join('\n'));
       var popup = window.open(url, '_blank');
