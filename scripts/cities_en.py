@@ -7,21 +7,12 @@ Facts about infrastructure were checked in Oct 2026. Anything not yet open is de
 
 # order = order in menus; group key -> label lives in the UI strings
 MENU = [
-    ('thane-district', ['kalyan', 'dombivli', 'thane', 'ulhasnagar', 'ambernath', 'badlapur', 'bhiwandi']),
-    ('mumbai-region', ['mumbai', 'navi-mumbai', 'panvel']),
+    ('kalyan-city', ['kalyan']),
 ]
 
+# The business currently accepts property enquiries in Kalyan only.
 NEAR = {
-    'kalyan': ['dombivli', 'ulhasnagar', 'bhiwandi', 'thane'],
-    'dombivli': ['kalyan', 'ulhasnagar', 'thane', 'navi-mumbai'],
-    'thane': ['mumbai', 'kalyan', 'navi-mumbai', 'bhiwandi'],
-    'ulhasnagar': ['kalyan', 'ambernath', 'dombivli'],
-    'ambernath': ['ulhasnagar', 'badlapur', 'kalyan'],
-    'badlapur': ['ambernath', 'ulhasnagar', 'kalyan'],
-    'bhiwandi': ['kalyan', 'thane', 'mumbai'],
-    'mumbai': ['thane', 'navi-mumbai', 'kalyan'],
-    'navi-mumbai': ['panvel', 'thane', 'mumbai'],
-    'panvel': ['navi-mumbai', 'kalyan', 'badlapur'],
+    'kalyan': [],
 }
 
 # which image tells each city's story (see scripts/make_images.py)
