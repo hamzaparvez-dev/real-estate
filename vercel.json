@@ -620,6 +620,141 @@
       "source": "/img/prestige_enterprises.in.png",
       "destination": "/img/logo.png",
       "permanent": false
+    },
+    {
+      "source": "/areas/dombivli/:path*",
+      "destination": "/areas/kalyan/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/thane/:path*",
+      "destination": "/areas/kalyan/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/ulhasnagar/:path*",
+      "destination": "/areas/kalyan/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/ambernath/:path*",
+      "destination": "/areas/kalyan/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/badlapur/:path*",
+      "destination": "/areas/kalyan/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/bhiwandi/:path*",
+      "destination": "/areas/kalyan/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/mumbai/:path*",
+      "destination": "/areas/kalyan/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/navi-mumbai/:path*",
+      "destination": "/areas/kalyan/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/panvel/:path*",
+      "destination": "/areas/kalyan/",
+      "permanent": true
+    },
+    {
+      "source": "/hi/areas/dombivli/:path*",
+      "destination": "/hi/areas/kalyan/",
+      "permanent": true
+    },
+    {
+      "source": "/hi/areas/thane/:path*",
+      "destination": "/hi/areas/kalyan/",
+      "permanent": true
+    },
+    {
+      "source": "/hi/areas/ulhasnagar/:path*",
+      "destination": "/hi/areas/kalyan/",
+      "permanent": true
+    },
+    {
+      "source": "/hi/areas/ambernath/:path*",
+      "destination": "/hi/areas/kalyan/",
+      "permanent": true
+    },
+    {
+      "source": "/hi/areas/badlapur/:path*",
+      "destination": "/hi/areas/kalyan/",
+      "permanent": true
+    },
+    {
+      "source": "/hi/areas/bhiwandi/:path*",
+      "destination": "/hi/areas/kalyan/",
+      "permanent": true
+    },
+    {
+      "source": "/hi/areas/mumbai/:path*",
+      "destination": "/hi/areas/kalyan/",
+      "permanent": true
+    },
+    {
+      "source": "/hi/areas/navi-mumbai/:path*",
+      "destination": "/hi/areas/kalyan/",
+      "permanent": true
+    },
+    {
+      "source": "/hi/areas/panvel/:path*",
+      "destination": "/hi/areas/kalyan/",
+      "permanent": true
+    },
+    {
+      "source": "/mr/areas/dombivli/:path*",
+      "destination": "/mr/areas/kalyan/",
+      "permanent": true
+    },
+    {
+      "source": "/mr/areas/thane/:path*",
+      "destination": "/mr/areas/kalyan/",
+      "permanent": true
+    },
+    {
+      "source": "/mr/areas/ulhasnagar/:path*",
+      "destination": "/mr/areas/kalyan/",
+      "permanent": true
+    },
+    {
+      "source": "/mr/areas/ambernath/:path*",
+      "destination": "/mr/areas/kalyan/",
+      "permanent": true
+    },
+    {
+      "source": "/mr/areas/badlapur/:path*",
+      "destination": "/mr/areas/kalyan/",
+      "permanent": true
+    },
+    {
+      "source": "/mr/areas/bhiwandi/:path*",
+      "destination": "/mr/areas/kalyan/",
+      "permanent": true
+    },
+    {
+      "source": "/mr/areas/mumbai/:path*",
+      "destination": "/mr/areas/kalyan/",
+      "permanent": true
+    },
+    {
+      "source": "/mr/areas/navi-mumbai/:path*",
+      "destination": "/mr/areas/kalyan/",
+      "permanent": true
+    },
+    {
+      "source": "/mr/areas/panvel/:path*",
+      "destination": "/mr/areas/kalyan/",
+      "permanent": true
     }
   ],
   "headers": [
