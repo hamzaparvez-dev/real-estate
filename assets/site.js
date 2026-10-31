@@ -157,7 +157,7 @@
       }
     });
     form.querySelector('[name="phone"]').addEventListener('input', function () {
-      this.value = this.value.replace(/\\D/g, '').slice(0, 10);
+      this.value = this.value.replace(/\D/g, '').slice(0, 10);
     });
     form.addEventListener('submit', function (e) {
       e.preventDefault();
@@ -184,7 +184,7 @@
         'Timeline: ' + (data.get('timeline') || 'Not specified'),
         'Additional details: ' + (data.get('message') || 'None')
       ];
-      var url = WA + '?text=' + encodeURIComponent(lines.join('\\n'));
+      var url = WA + '?text=' + encodeURIComponent(lines.join('\n'));
       var popup = window.open(url, '_blank');
       if (popup) popup.opener = null;
       else window.location.href = url;
