@@ -448,6 +448,7 @@ def build_city(l, s):
     pills = ''.join(f'<a class="svc-pill" href="{waurl(wa_t + " (" + t + ")")}" target="_blank" rel="noopener">{esc(t)}</a>' for t in U['city_svc'])
     near = ''.join(f'<a class="card" href="{url(l, "/areas/" + x + "/")}"><img src="/img/areas/{x}.jpg" width="1200" height="630" loading="lazy" alt="{attr(city(l, x)["alt"])}">'
                    f'<div class="card-b"><h3>{esc(city(l, x)["name"])}</h3><p>{esc(city(l, x)["card"])}</p></div></a>' for x in NEAR[s])
+    near_section = (f'<section class="sec"><div class="in"><h2 class="dh" style="font-size:clamp(28px,3.4vw,42px)">{esc(U["near_h"])}</h2><div class="cards">{near}</div></div></section>\n' if near else '')
     body = (f'<main id="main"><header class="ph"><img src="/img/areas/{s}.jpg" width="1200" height="630" alt="{attr(c["alt"])}" fetchpriority="high"><div class="ph-c">'
             + crumbs([(U['home'], url(l, '/')), (U['areas'], url(l, '/areas/')), (n, None)]) + eye(esc(U['city_eyebrow'].format(name=n)))
             + f'<h1>{U["city_h1"].format(name=esc(n))}</h1><p class="ph-lead">{esc(c["lead"])}</p>'
@@ -460,7 +461,7 @@ def build_city(l, s):
             f'<section class="sec dark-bg"><div class="in">{eye(esc(U["why_eye"].format(name=n)))}<h2 class="dh light">{U["why_h"].format(name=esc(n))}</h2><div class="why">{why}</div></div></section>\n'
             f'<section class="sec"><div class="in"><h2 class="dh">{U["svc_h"].format(name=esc(n))}</h2><div class="svc-pills">{pills}</div></div></section>\n'
             f'<section class="sec" style="background:#fff;padding-top:60px"><div class="in">{eye(esc(U["faq_eye"]))}<h2 class="dh">{U["faq_h"].format(name=esc(n))}</h2>{faq_html(c["faq"])}</div></section>\n'
-            f'<section class="sec"><div class="in"><h2 class="dh" style="font-size:clamp(28px,3.4vw,42px)">{esc(U["near_h"])}</h2><div class="cards">{near}</div></div></section>\n'
+            f'{near_section}'
             + contact_block(l, U['contact_h'].format(name=esc(n)), HOME[l]['contact_p'], wa_text=wa_t) + '</main>\n')
     trail = [(U['home'], url(l, '/')), (U['areas'], url(l, '/areas/')), (n, url(l, f'/areas/{s}/'))]
     ld = [agent_ld(l), breadcrumb_ld(l, trail), faq_ld(c['faq'])]
