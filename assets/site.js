@@ -85,6 +85,7 @@
     modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
     planWraps.forEach(function (w) {
+      if (!w.getAttribute('data-full')) return; // "Available on request" placeholders are not lightbox items.
       w.addEventListener('click', function () {
         var src = w.getAttribute('data-full');
         var title = w.getAttribute('data-title');
@@ -186,19 +187,7 @@
     document.body.appendChild(float);
     float.querySelector('.f-enq').addEventListener('click', function () { openModal(this); });
 
-    document.querySelectorAll('section').forEach(function (sec) {
-      if (sec.querySelector('.section-cta') || sec.classList.contains('hero')) return;
-      var cta = document.createElement('div');
-      cta.className = 'section-cta';
-      cta.innerHTML = '<a class="cta-wa" href="' + WA + '?text=' + encodeURIComponent('Hello Prestige Enterprises, I would like more information about this section of your website.') + '" target="_blank" rel="noopener">WhatsApp</a><button class="cta-enq" type="button">Enquire Now</button>';
-      sec.appendChild(cta);
-      cta.querySelector('.cta-enq').addEventListener('click', function () {
-        var section = sec.id || sec.querySelector('h2')?.textContent || 'Website enquiry';
-        var details = form.querySelector('[name="message"]');
-        if (details && !details.value) details.value = 'I am enquiring about: ' + section;
-        openModal(this);
-      });
-    });
+    /* Section-wide duplicate WhatsApp/Enquire CTAs intentionally removed. */
     document.querySelectorAll('.enquire-trigger').forEach(function (el) {
       el.addEventListener('click', function (e) { e.preventDefault(); openModal(this); });
     });
