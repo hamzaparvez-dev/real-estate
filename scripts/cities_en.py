@@ -7,7 +7,7 @@ Facts about infrastructure were checked in Oct 2026. Anything not yet open is de
 
 # order = order in menus; group key -> label lives in the UI strings
 MENU = [
-    ('kalyan-city', ['kalyan']),
+    ('kalyan', ['kalyan']),
 ]
 
 # The business currently accepts property enquiries in Kalyan only.
