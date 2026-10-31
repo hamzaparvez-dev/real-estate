@@ -185,8 +185,9 @@
         'Additional details: ' + (data.get('message') || 'None')
       ];
       var url = WA + '?text=' + encodeURIComponent(lines.join('\\n'));
-      var popup = window.open(url, '_blank', 'noopener');
-      if (!popup) window.location.href = url;
+      var popup = window.open(url, '_blank');
+      if (popup) popup.opener = null;
+      else window.location.href = url;
       close();
       form.reset();
     });
@@ -214,7 +215,7 @@
       el.addEventListener('click', function (e) { e.preventDefault(); openModal(this); });
     });
     document.querySelectorAll('a,button').forEach(function (el) {
-      if (el.classList.contains('cta-enq') || el.classList.contains('f-enq')) return;
+      if (el.classList.contains('cta-enq') || el.classList.contains('f-enq') || el.classList.contains('enquire-trigger')) return;
       var label = (el.textContent || el.getAttribute('aria-label') || '').trim().toLowerCase();
       if (!/^(enquire|enquire now|enquiry|send enquiry|request details)$/.test(label)) return;
       if (el.tagName === 'A' && el.getAttribute('href') && !/^#/.test(el.getAttribute('href'))) return;
