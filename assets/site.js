@@ -165,7 +165,7 @@
       error.textContent = '';
       if (!form.reportValidity()) return;
       var data = new FormData(form);
-      var phone = String(data.get('phone') || '').replace(/\\D/g, '');
+      var phone = String(data.get('phone') || '').replace(/\D/g, '');
       if (!/^[6-9][0-9]{9}$/.test(phone)) {
         error.textContent = 'Please enter a valid 10-digit Indian mobile number.';
         form.querySelector('[name="phone"]').focus();
