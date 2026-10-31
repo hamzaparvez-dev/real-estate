@@ -423,3 +423,34 @@ footer{padding-bottom:max(32px,env(safe-area-inset-bottom,0))}
 .nav-cta:hover{background:var(--gold2);color:#111827;border-color:var(--gold2)}
 button:focus-visible,a:focus-visible{outline:3px solid var(--gold2);outline-offset:3px}
 @media(max-width:600px){.section-cta{gap:10px}.section-cta .cta-wa,.section-cta .cta-enq{flex:1 1 145px;padding:13px 14px;font-size:10px}.foot-legal{margin-top:30px}}
+
+
+/* White corporate navigation + full-width campaign hero */
+nav#nav,nav#nav.up,nav#nav.solid,nav#nav.menu-open{
+  background:#fff!important;
+  color:#142b45;
+  box-shadow:0 2px 16px rgba(20,43,69,.09);
+  backdrop-filter:none;
+  -webkit-backdrop-filter:none;
+}
+nav#nav{height:76px;border-bottom:1px solid #e8edf2}
+.nav-logo img{height:48px;max-width:190px}
+.nav-a,.nav-dd-btn{color:#34465b}
+.nav-a:hover,.nav-dd-btn:hover,.nav-dd.open .nav-dd-btn{color:#a77c2f}
+.nav-dd-caret{color:#34465b}
+.lang{border-color:#d8e0e8}
+.lang a{color:#34465b}
+.lang a:hover{color:#a77c2f}
+.lang a[aria-current]{background:#142b45;color:#fff}
+.nav-ham span{background:#142b45}
+.nav-cta{background:#142b45;color:#fff;border-color:#142b45}
+.nav-cta:hover{background:#b9953f;border-color:#b9953f;color:#142b45}
+.hero.hero-campaign{display:block;position:relative;margin-top:76px;min-height:0;height:auto;overflow:hidden;background:#f7f0df}
+.hero-campaign .hero-banner{display:block;width:100%;height:auto;max-width:none;object-fit:contain;object-position:center}
+@media(max-width:700px){
+  nav#nav{height:64px}
+  .nav-logo img{height:39px;max-width:150px}
+  .hero.hero-campaign{margin-top:64px}
+  .hero-campaign .hero-banner{width:100%;height:auto;object-fit:contain}
+}
+@media(min-width:1600px){.hero-campaign .hero-banner{width:100%;}}
