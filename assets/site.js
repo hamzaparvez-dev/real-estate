@@ -96,43 +96,132 @@
       });
     });
   }
-  /* Enquiry modal + floating CTA + per-section CTAs */
+  /* Structured enquiry modal: collect buyer requirements and hand off to WhatsApp. */
   (function () {
     var WA = 'https://wa.me/919689557788';
     var modal = document.createElement('div');
     modal.className = 'enq-modal';
-    modal.innerHTML = '<div class="enq-box"><button class="enq-close" type="button" aria-label="Close">&times;</button><h3>Enquire Now</h3><p>Share your details and we will get back to you shortly.</p><form class="enq-form"><input name="name" placeholder="Your name" required><input name="phone" placeholder="Phone number" required><input name="email" type="email" placeholder="Email (optional)"><textarea name="message" placeholder="What are you looking for?"></textarea><button type="submit">Send Enquiry</button></form></div>';
+    modal.setAttribute('aria-hidden', 'true');
+    modal.innerHTML = `
+      <div class="enq-box" role="dialog" aria-modal="true" aria-labelledby="enqTitle" aria-describedby="enqIntro">
+        <button class="enq-close" type="button" aria-label="Close enquiry form">&times;</button>
+        <div class="enq-eyebrow">PRESTIGE ENTERPRISES · PROPERTY ENQUIRY</div>
+        <h3 id="enqTitle">Let’s find your next home.</h3>
+        <p id="enqIntro">Share a few details. Our property team will contact you to understand your requirements.</p>
+        <form class="enq-form" novalidate>
+          <div class="enq-fields">
+            <label class="enq-field enq-wide">Full name <span>*</span><input name="name" autocomplete="name" placeholder="Enter your full name" required minlength="2"></label>
+            <label class="enq-field">Mobile number <span>*</span><input name="phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="10-digit mobile number" required pattern="[6-9][0-9]{9}" maxlength="10"></label>
+            <label class="enq-field">Email address<input name="email" type="email" autocomplete="email" placeholder="name@example.com"></label>
+            <label class="enq-field">I am looking to <span>*</span><select name="requirement" required><option value="">Select requirement</option><option>Buy a property</option><option>Rent a property</option><option>Sell my property</option><option>Investment enquiry</option></select></label>
+            <label class="enq-field">Property type <span>*</span><select name="property" required><option value="">Select property type</option><option>1 BHK</option><option>2 BHK</option><option>3 BHK or larger</option><option>Villa / Row house</option><option>Residential plot</option><option>Other residential property</option></select></label>
+            <label class="enq-field">Preferred location<input name="location" placeholder="e.g. Kalyan, Dombivli, Thane"></label>
+            <label class="enq-field">Approximate budget<select name="budget"><option value="">Select budget</option><option>Below ₹25 lakh</option><option>₹25–40 lakh</option><option>₹40–60 lakh</option><option>₹60–80 lakh</option><option>₹80 lakh–₹1 crore</option><option>Above ₹1 crore</option><option>Not decided yet</option></select></label>
+            <label class="enq-field">Buying / moving timeline<select name="timeline"><option value="">Select timeline</option><option>Immediately</option><option>Within 1 month</option><option>Within 3 months</option><option>Within 6 months</option><option>Just exploring</option></select></label>
+            <label class="enq-field enq-wide">Additional details<textarea name="message" rows="3" placeholder="Anything else we should know? (Optional)"></textarea></label>
+          </div>
+          <p class="enq-consent">By continuing, you agree that Prestige Enterprises may contact you about this enquiry.</p>
+          <p class="enq-error" role="alert" aria-live="polite"></p>
+          <button class="enq-submit" type="submit">Continue to WhatsApp <span aria-hidden="true">→</span></button>
+          <p class="enq-foot">Your details will be shared with our team through WhatsApp. No online payment is required.</p>
+        </form>
+      </div>`;
     document.body.appendChild(modal);
-    var close = function () { modal.classList.remove('open'); document.body.style.overflow = ''; };
+    var form = modal.querySelector('form');
+    var lastFocus = null;
+    var close = function () {
+      modal.classList.remove('open');
+      modal.setAttribute('aria-hidden', 'true');
+      document.body.style.overflow = '';
+      if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
+    };
+    var openModal = function (trigger) {
+      lastFocus = trigger || document.activeElement;
+      modal.classList.add('open');
+      modal.setAttribute('aria-hidden', 'false');
+      document.body.style.overflow = 'hidden';
+      var error = form.querySelector('.enq-error');
+      error.textContent = '';
+      window.setTimeout(function () { var name = form.querySelector('[name="name"]'); if (name) name.focus(); }, 30);
+    };
     modal.querySelector('.enq-close').addEventListener('click', close);
     modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) close(); });
-    modal.querySelector('form').addEventListener('submit', function (e) {
-      e.preventDefault();
-      var f = e.target;
-      var msg = 'Hi Prestige Enterprises, my name is ' + (f.name.value || '') + '. Phone: ' + (f.phone.value || '') + '. ' + (f.message.value || '');
-      window.open(WA + '?text=' + encodeURIComponent(msg), '_blank');
-      close();
+    document.addEventListener('keydown', function (e) {
+      if (e.key === 'Escape' && modal.classList.contains('open')) close();
+      if (e.key === 'Tab' && modal.classList.contains('open')) {
+        var focusable = modal.querySelectorAll('button:not([disabled]),input:not([disabled]),select:not([disabled]),textarea:not([disabled])');
+        if (!focusable.length) return;
+        var first = focusable[0], last = focusable[focusable.length - 1];
+        if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+        else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+      }
     });
-
-    var openModal = function () { modal.classList.add('open'); document.body.style.overflow = 'hidden'; };
+    form.querySelector('[name="phone"]').addEventListener('input', function () {
+      this.value = this.value.replace(/\\D/g, '').slice(0, 10);
+    });
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      var error = form.querySelector('.enq-error');
+      error.textContent = '';
+      if (!form.reportValidity()) return;
+      var data = new FormData(form);
+      var phone = String(data.get('phone') || '').replace(/\\D/g, '');
+      if (!/^[6-9][0-9]{9}$/.test(phone)) {
+        error.textContent = 'Please enter a valid 10-digit Indian mobile number.';
+        form.querySelector('[name="phone"]').focus();
+        return;
+      }
+      var lines = [
+        'Hello Prestige Enterprises, I would like to make a property enquiry.',
+        '',
+        'Name: ' + data.get('name'),
+        'Mobile: ' + phone,
+        'Email: ' + (data.get('email') || 'Not provided'),
+        'Requirement: ' + data.get('requirement'),
+        'Property type: ' + data.get('property'),
+        'Preferred location: ' + (data.get('location') || 'Not specified'),
+        'Budget: ' + (data.get('budget') || 'Not specified'),
+        'Timeline: ' + (data.get('timeline') || 'Not specified'),
+        'Additional details: ' + (data.get('message') || 'None')
+      ];
+      var url = WA + '?text=' + encodeURIComponent(lines.join('\\n'));
+      var popup = window.open(url, '_blank', 'noopener');
+      if (!popup) window.location.href = url;
+      close();
+      form.reset();
+    });
 
     var float = document.createElement('div');
     float.className = 'floating-cta';
-    float.innerHTML = '<a class="f-wa" href="' + WA + '?text=' + encodeURIComponent('Hi Prestige Enterprises, I would like more information.') + '" target="_blank" rel="noopener" aria-label="WhatsApp">&#9990;</a><button class="f-enq" type="button" aria-label="Enquire">&#9998;</button>';
+    float.innerHTML = '<a class="f-wa" href="' + WA + '?text=' + encodeURIComponent('Hello Prestige Enterprises, I would like more information about residential properties.') + '" target="_blank" rel="noopener" aria-label="WhatsApp">&#9990;</a><button class="f-enq" type="button" aria-label="Open property enquiry form">&#9998;</button>';
     document.body.appendChild(float);
-    float.querySelector('.f-enq').addEventListener('click', openModal);
+    float.querySelector('.f-enq').addEventListener('click', function () { openModal(this); });
 
     document.querySelectorAll('section').forEach(function (sec) {
-      if (sec.querySelector('.section-cta')) return;
-      if (sec.classList.contains('hero') ) return;
+      if (sec.querySelector('.section-cta') || sec.classList.contains('hero')) return;
       var cta = document.createElement('div');
       cta.className = 'section-cta';
-      cta.innerHTML = '<a class="cta-wa" href="' + WA + '?text=' + encodeURIComponent('Hi Prestige Enterprises, I saw your website section and I would like more information.') + '" target="_blank" rel="noopener">WhatsApp</a><button class="cta-enq" type="button">Enquire Now</button>';
+      cta.innerHTML = '<a class="cta-wa" href="' + WA + '?text=' + encodeURIComponent('Hello Prestige Enterprises, I would like more information about this section of your website.') + '" target="_blank" rel="noopener">WhatsApp</a><button class="cta-enq" type="button">Enquire Now</button>';
       sec.appendChild(cta);
-      cta.querySelector('.cta-enq').addEventListener('click', openModal);
+      cta.querySelector('.cta-enq').addEventListener('click', function () {
+        var section = sec.id || sec.querySelector('h2')?.textContent || 'Website enquiry';
+        var details = form.querySelector('[name="message"]');
+        if (details && !details.value) details.value = 'I am enquiring about: ' + section;
+        openModal(this);
+      });
     });
-
-    document.querySelectorAll('.enquire-trigger').forEach(function (el) { el.addEventListener('click', function (e) { e.preventDefault(); openModal(); }); });
+    document.querySelectorAll('.enquire-trigger').forEach(function (el) {
+      el.addEventListener('click', function (e) { e.preventDefault(); openModal(this); });
+    });
+    document.querySelectorAll('a,button').forEach(function (el) {
+      if (el.classList.contains('cta-enq') || el.classList.contains('f-enq')) return;
+      var label = (el.textContent || el.getAttribute('aria-label') || '').trim().toLowerCase();
+      if (!/^(enquire|enquire now|enquiry|send enquiry|request details)$/.test(label)) return;
+      if (el.tagName === 'A' && el.getAttribute('href') && !/^#/.test(el.getAttribute('href'))) return;
+      el.addEventListener('click', function (e) {
+        if (el.tagName === 'A') e.preventDefault();
+        openModal(this);
+      });
+    });
   })();
 })();
