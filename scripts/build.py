@@ -362,7 +362,7 @@ def build_home(l):
     about = ('<section class="sec" id="about"><div class="in about-grid"><div>' + eye(esc(H['about_eye'])) + f'<h2 class="dh">{H["about_h"]}</h2>'
              f'<div class="about-body" style="margin-top:30px">{"".join(f"<p>{esc(p)}</p>" for p in H["about"])}</div>'
              f'<div class="tags">{"".join(f"<span class=tag>{esc(t)}</span>" for t in H["tags"])}</div>'
-             f'<div class="sec-cta" style="margin-top:28px"><a class="btn-enquire" href="{waurl(U["wa_default"])}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(U["enquire_now"])}</span></a></div></div>'
+             f'</div>'
              f'<div><div class="about-photo"><img src="/img/about.jpg" width="900" height="1125" loading="lazy" alt="{attr(H["about_alt"])}"></div>'
              f'<div class="about-quote"><p>{esc(H["quote"])}</p><cite>{esc(H["quote_by"])}</cite></div></div></div></section>\n')
     kinds = ['apartments', 'villas', 'plots', 'commercial', 'rentals', 'redevelopment']
@@ -371,45 +371,44 @@ def build_home(l):
                     f'<div class="type-ov"><h3>{esc(t[0])}</h3><p>{esc(t[1])}</p></div></a>' for i, (k, t) in enumerate(zip(kinds, H['types'])))
     types = ('<section class="sec types dark-bg" id="types"><div class="in"><div class="types-hd"><div>' + eye(esc(H['types_eye']))
              + f'<h2 class="dh light">{H["types_h"]}</h2></div><span class="types-hint">{esc(H["types_hint"])}</span></div><div class="types-grid">{cards}</div>'
-             f'<div class="sec-cta-center" style="margin-top:44px"><a class="btn-enquire gold" href="{waurl(U["wa_default"] + " (Property Options)")}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(U["enquire_now"])}</span></a></div></div></section>\n')
-    p_cards = ''.join(
-        f'<div class="plan-card">'
-        f'<div class="plan-card-hd"><span class="plan-badge">{esc(p[0])}</span><h3>{esc(p[1])}</h3><p>{esc(p[2])}</p></div>'
-        f'<div class="plan-img-wrap" data-full="{p[3]}" data-title="{attr(p[1])}">'
-        f'<img src="{p[3]}" width="666" height="375" loading="lazy" alt="{attr(p[1])}">'
-        f'<span class="plan-zoom-hint">{I["zoom"]}<span>{esc(H["plans_zoom"])}</span></span>'
-        f'</div>'
-        f'<div class="plan-card-ft">'
-        f'<a class="btn-wa-sm" href="{waurl(U["wa_default"] + " (" + p[0] + ")")}" target="_blank" rel="noopener">'
-        f'{I["chat"]}<span>{esc(H["plans_enquire"])}</span>'
-        f'</a>'
-        f'</div>'
-        f'</div>' for p in H['plans']
-    )
+             f'</div></section>\n')
+    def plan_card(p):
+        if p[3]:
+            visual = (f'<div class="plan-img-wrap" data-full="{p[3]}" data-title="{attr(p[1])}">'
+                      f'<img src="{p[3]}" width="666" height="375" loading="lazy" alt="{attr(p[1])}">'
+                      f'<span class="plan-zoom-hint">{I["zoom"]}<span>{esc(H["plans_zoom"])}</span></span></div>')
+        else:
+            visual = (f'<div class="plan-img-wrap plan-request-wrap" role="img" aria-label="{attr(H["plans_request"])}">'
+                      f'<div class="plan-request-box"><span>{esc(H["plans_request"])}</span></div></div>')
+        return (f'<div class="plan-card">'
+                f'<div class="plan-card-hd"><span class="plan-badge">{esc(p[0])}</span><h3>{esc(p[1])}</h3><p>{esc(p[2])}</p></div>'
+                f'{visual}'
+                f'<div class="plan-card-ft">'
+                f'<a class="btn-wa-sm" href="{waurl(U["wa_default"] + " (" + p[0] + ")")}" target="_blank" rel="noopener">'
+                f'{I["chat"]}<span>{esc(H["plans_enquire"])}</span></a></div></div>')
+    p_cards = ''.join(plan_card(p) for p in H['plans'])
     plans = (f'<section class="sec plans dark-bg" id="plans"><div class="in">'
              f'<div class="plans-hd"><div>{eye(esc(H["plans_eye"]))}<h2 class="dh light">{H["plans_h"]}</h2></div>'
              f'<p class="lead light" style="margin-top:16px;max-width:680px">{esc(H["plans_p"])}</p></div>'
              f'<div class="plans-grid">{p_cards}</div>'
-             f'<div class="sec-cta-center" style="margin-top:40px"><a class="btn-enquire gold" href="{waurl(U["wa_default"] + " (Prestige Gold Floor Plans)")}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(U["enquire_now"])}</span></a></div></div></section>\n')
+             f'</div></section>\n')
     svc = ('<section class="sec services" id="services"><div class="in">' + eye(esc(H['svc_eye'])) + f'<h2 class="dh">{H["svc_h"]}</h2><div class="svc-grid">'
            + ''.join(f'<div class="svc"><div class="svc-ic">{SVC_ICONS[i]}</div><h3>{esc(t)}</h3><p>{esc(d)}</p></div>' for i, (t, d) in enumerate(H['svc']))
-           + f'</div><div class="sec-cta-center" style="margin-top:48px"><a class="btn-enquire" href="{waurl(U["wa_default"] + " (Services Enquiry)")}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(U["enquire_now"])}</span></a></div></div></section>\n')
+           + f'</div></div></section>\n')
     proc = ('<section class="sec dark-bg" id="process"><div class="in">' + eye(esc(H['proc_eye'])) + f'<h2 class="dh light">{H["proc_h"]}</h2><div class="proc">'
             + ''.join(f'<div class="proc-step"><span class="proc-n">{i + 1:02d}</span><h3>{esc(t)}</h3><p>{esc(d)}</p></div>' for i, (t, d) in enumerate(H['proc']))
-            + f'</div><div class="sec-cta-center" style="margin-top:44px"><a class="btn-enquire gold" href="{waurl(U["wa_default"] + " (Process Consultation)")}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(U["enquire_now"])}</span></a></div></div></section>\n')
+            + f'</div></div></section>\n')
     pins = ''.join(f'<a class="area-pin" href="{url(l, "/areas/" + s + "/")}"><i></i>{esc(city(l, s)["name"])}</a>' for s in CITY_SLUGS)
     areas = ('<section class="sec" id="areas"><div class="in">' + eye(esc(H['areas_eye'])) + f'<h2 class="dh">{H["areas_h"]}</h2>'
              f'<p class="lead" style="margin-top:20px">{esc(H["areas_p"])}</p><div class="area-pins">{pins}</div>'
-             f'<div class="sec-cta" style="margin-top:36px"><a class="btn-g" href="{url(l, "/areas/")}"><span>{esc(H["areas_btn"])}</span>{I["arrow"]}</a>'
-             f'<a class="btn-enquire" href="{waurl(U["wa_default"] + " (Areas Enquiry)")}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(U["enquire_now"])}</span></a></div></div></section>\n')
+             f'</div></section>\n')
     guides = ('<section class="sec" id="guides" style="background:#fff"><div class="in">' + eye(esc(H['guides_eye'])) + f'<h2 class="dh">{H["guides_h"]}</h2>'
               f'<div class="cards">{"".join(post_card(l, s) for s in FEATURED)}</div>'
-              f'<div class="sec-cta" style="margin-top:36px"><a class="btn-o dark" href="{url(l, "/blog/")}"><span>{esc(H["guides_btn"])}</span>{I["arrow"]}</a>'
-              f'<a class="btn-enquire" href="{waurl(U["wa_default"] + " (Guides Enquiry)")}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(U["enquire_now"])}</span></a></div></div></section>\n')
+              f'<p style="margin-top:36px"><a class="btn-o dark" href="{url(l, "/blog/")}"><span>{esc(H["guides_btn"])}</span>{I["arrow"]}</a></p></div></section>\n')
     faq = (f'<section class="sec faq-sec" id="faq"><div class="in faq-center">'
            f'<div class="faq-hd">{eye(esc(H["faq_eye"]))}<h2 class="dh">{H["faq_h"]}</h2></div>'
            f'{faq_html(H["faq"])}'
-           f'<div class="sec-cta-center" style="margin-top:40px"><a class="btn-enquire" href="{waurl(U["wa_default"] + " (FAQ Enquiry)")}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(U["enquire_now"])}</span></a></div></div></section>\n')
+           f'</div></section>\n')
     contact = contact_block(l, H['contact_h'], H['contact_p'])
     ld = [agent_ld(l), {'@type': 'WebSite', '@id': C.SITE + '/#website', 'url': C.SITE + '/', 'name': C.BRAND, 'inLanguage': ['en-IN', 'hi-IN', 'mr-IN'],
                         'publisher': {'@id': C.SITE + '/#agent'}}, faq_ld(H['faq'])]
