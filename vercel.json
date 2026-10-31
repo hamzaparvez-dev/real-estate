@@ -1,5 +1,627 @@
 {
   "trailingSlash": true,
+  "redirects": [
+    {
+      "source": "/en",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/en/",
+      "destination": "/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/intercambio-1031-california",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/intercambio-1031-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/intercambio-1031-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/condominio-o-casa",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/condominio-o-casa/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/condominio-o-casa/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/comprar-casa-con-itin-california",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/comprar-casa-con-itin-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/comprar-casa-con-itin-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/casa-para-rentar-inversion-bay-area",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/casa-para-rentar-inversion-bay-area/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/casa-para-rentar-inversion-bay-area/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/que-hace-un-realtor-cuanto-cobra-california",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/que-hace-un-realtor-cuanto-cobra-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/que-hace-un-realtor-cuanto-cobra-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/es-buen-momento-para-comprar-casa-2026",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/es-buen-momento-para-comprar-casa-2026/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/es-buen-momento-para-comprar-casa-2026/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/fix-and-flip-bay-area-regla-70",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/fix-and-flip-bay-area-regla-70/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/fix-and-flip-bay-area-regla-70/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/programas-primera-casa-california",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/programas-primera-casa-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/programas-primera-casa-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/rentar-o-comprar-casa-bay-area",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/rentar-o-comprar-casa-bay-area/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/rentar-o-comprar-casa-bay-area/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/prestamo-fha-california",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/prestamo-fha-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/prestamo-fha-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/vender-y-comprar-casa-al-mismo-tiempo",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/vender-y-comprar-casa-al-mismo-tiempo/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/vender-y-comprar-casa-al-mismo-tiempo/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/adu-california",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/adu-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/adu-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/cuanto-cuesta-vender-casa-california",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/cuanto-cuesta-vender-casa-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/cuanto-cuesta-vender-casa-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/cuanto-ganar-para-comprar-casa-bay-area",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/cuanto-ganar-para-comprar-casa-bay-area/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/cuanto-ganar-para-comprar-casa-bay-area/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/preaprobacion-hipotecaria",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/preaprobacion-hipotecaria/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/preaprobacion-hipotecaria/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/comprar-casa-trabajo-por-cuenta-propia",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/comprar-casa-trabajo-por-cuenta-propia/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/comprar-casa-trabajo-por-cuenta-propia/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/casa-heredada-california",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/casa-heredada-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/casa-heredada-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/costos-de-cierre-comprador-california",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/costos-de-cierre-comprador-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/costos-de-cierre-comprador-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/cuanto-enganche-para-comprar-casa-california",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/cuanto-enganche-para-comprar-casa-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/cuanto-enganche-para-comprar-casa-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/atrasado-en-hipoteca-foreclosure-california",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/atrasado-en-hipoteca-foreclosure-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/atrasado-en-hipoteca-foreclosure-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/vender-casa-rapido-en-efectivo",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/vender-casa-rapido-en-efectivo/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/vender-casa-rapido-en-efectivo/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/puntaje-de-credito-para-comprar-casa",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/puntaje-de-credito-para-comprar-casa/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/puntaje-de-credito-para-comprar-casa/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/casas-mas-baratas-bay-area-east-bay",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/casas-mas-baratas-bay-area-east-bay/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/casas-mas-baratas-bay-area-east-bay/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/seguro-de-casa-california",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/seguro-de-casa-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/seguro-de-casa-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/inspeccion-de-casa-california",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/inspeccion-de-casa-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/inspeccion-de-casa-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/cuanto-vale-mi-casa-bay-area",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/cuanto-vale-mi-casa-bay-area/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/cuanto-vale-mi-casa-bay-area/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/oferta-ganadora-casa-bay-area",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/oferta-ganadora-casa-bay-area/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/oferta-ganadora-casa-bay-area/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/impuesto-a-la-propiedad-california",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/impuesto-a-la-propiedad-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/impuesto-a-la-propiedad-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/como-vender-tu-casa-bay-area",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/como-vender-tu-casa-bay-area/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/como-vender-tu-casa-bay-area/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/pasos-para-comprar-casa-california",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/blog/pasos-para-comprar-casa-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/en/blog/pasos-para-comprar-casa-california/",
+      "destination": "/blog/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/oakland",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/oakland/",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/en/areas/oakland/",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/san-francisco",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/san-francisco/",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/en/areas/san-francisco/",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/pittsburg",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/pittsburg/",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/en/areas/pittsburg/",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/antioch",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/antioch/",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/en/areas/antioch/",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/walnut-creek",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/walnut-creek/",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/en/areas/walnut-creek/",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/concord",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/concord/",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/en/areas/concord/",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/brentwood",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/brentwood/",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/en/areas/brentwood/",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/richmond",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/richmond/",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/en/areas/richmond/",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/hayward",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/hayward/",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/en/areas/hayward/",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/san-leandro",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/areas/san-leandro/",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/en/areas/san-leandro/",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/en/areas/",
+      "destination": "/areas/",
+      "permanent": true
+    },
+    {
+      "source": "/img/prestige_enterprises.in.png",
+      "destination": "/img/logo.png",
+      "permanent": false
+    }
+  ],
   "headers": [
     {
       "source": "/(.*)",
@@ -28,6 +650,15 @@
         {
           "key": "Cache-Control",
           "value": "public, max-age=2592000"
+        }
+      ]
+    },
+    {
+      "source": "/assets/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
         }
       ]
     }

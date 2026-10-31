@@ -1,40 +1,52 @@
 #!/usr/bin/env python3
-"""Build the generated pages. Spanish index.html is the source of truth.
+"""Build the whole Prestige Enterprises site (English at /, Hindi at /hi/, Marathi at /mr/).
 
+    python3 scripts/make_images.py     # only when you want to regenerate the artwork
     python3 scripts/build.py
 
-1. Fills the <!-- areas-* --> / /* areas-css */ marker blocks in index.html
-   (Áreas dropdown, city links, dropdown CSS/JS) and refreshes its JSON-LD areaServed.
-2. Generates en/index.html by translating index.html.
-3. Generates the city pages (/areas/<city>/ and /en/areas/<city>/) and the
-   /areas/ hubs from scripts/areas.py, reusing the home's CSS, nav, services,
-   contact block and footer so the design stays in sync.
-4. Writes sitemap.xml.
-
-Every replacement is asserted, so if the Spanish markup changes in a way this
-script doesn't know about, it fails loudly instead of shipping broken pages.
+Content lives in scripts/ui.py (home + interface), cities_*.py and posts_*.py. Business details live in
+scripts/config.py. The build asserts that Hindi and Marathi mirror the English structure, so a missing
+translation fails loudly instead of shipping a half-translated page.
 """
-import datetime
+import hashlib
 import html
 import json
 import os
-import re
+import shutil
 import sys
-import unicodedata
 import urllib.parse
 from email.utils import format_datetime
+import datetime
 
-sys.path.insert(0, os.path.dirname(os.path.abspath(__file__)))
-from areas import CITIES, COUNTIES, MENU, PROPERTIES, RECENT  # noqa: E402
-from blog import FEATURED, POSTS, PUBLISHED  # noqa: E402
+HERE = os.path.dirname(os.path.abspath(__file__))
+ROOT = os.path.dirname(HERE)
+sys.path.insert(0, HERE)
 
-ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
-SITE = 'https://www.alejandragranillorealestate.com'
-WA = 'https://wa.me/14154239973'
-BY_SLUG = {c['slug']: c for c in CITIES}
-# Cities the home page mentions that don't have their own page (yet).
-EXTRA_PINS = ['San Jose', 'San Anselmo', 'Daly City']
+import config as C  # noqa: E402
+import cities_en, cities_hi, cities_mr, posts_en, posts_hi, posts_mr  # noqa: E402,E401
+from ui import HOME, UI  # noqa: E402
 
+LANGS = C.LANGS
+CIT = {'en': cities_en.CITIES, 'hi': cities_hi.CITIES, 'mr': cities_mr.CITIES}
+PST = {'en': posts_en.POSTS, 'hi': posts_hi.POSTS, 'mr': posts_mr.POSTS}
+MENU, NEAR, ORDER, FEATURED = cities_en.MENU, cities_en.NEAR, posts_en.ORDER, posts_en.FEATURED
+CITY_SLUGS = [s for _, slugs in MENU for s in slugs]
+DATE_FMT = {'en': 'October 29, 2026', 'hi': '29 अक्टूबर 2026', 'mr': '29 ऑक्टोबर 2026'}
+
+# URLs of the old Spanish / Bay Area site: redirected so no inbound link dies.
+OLD_BLOG = ['intercambio-1031-california', 'condominio-o-casa', 'comprar-casa-con-itin-california', 'casa-para-rentar-inversion-bay-area',
+            'que-hace-un-realtor-cuanto-cobra-california', 'es-buen-momento-para-comprar-casa-2026', 'fix-and-flip-bay-area-regla-70',
+            'programas-primera-casa-california', 'rentar-o-comprar-casa-bay-area', 'prestamo-fha-california', 'vender-y-comprar-casa-al-mismo-tiempo',
+            'adu-california', 'cuanto-cuesta-vender-casa-california', 'cuanto-ganar-para-comprar-casa-bay-area', 'preaprobacion-hipotecaria',
+            'comprar-casa-trabajo-por-cuenta-propia', 'casa-heredada-california', 'costos-de-cierre-comprador-california',
+            'cuanto-enganche-para-comprar-casa-california', 'atrasado-en-hipoteca-foreclosure-california', 'vender-casa-rapido-en-efectivo',
+            'puntaje-de-credito-para-comprar-casa', 'casas-mas-baratas-bay-area-east-bay', 'seguro-de-casa-california', 'inspeccion-de-casa-california',
+            'cuanto-vale-mi-casa-bay-area', 'oferta-ganadora-casa-bay-area', 'impuesto-a-la-propiedad-california', 'como-vender-tu-casa-bay-area',
+            'pasos-para-comprar-casa-california']
+OLD_AREAS = ['oakland', 'san-francisco', 'pittsburg', 'antioch', 'walnut-creek', 'concord', 'brentwood', 'richmond', 'hayward', 'san-leandro']
+
+
+# ------------------------------------------------------------------ helpers
 
 def esc(s):
     return html.escape(s, quote=False)
@@ -44,1222 +56,544 @@ def attr(s):
     return html.escape(s, quote=True)
 
 
-def pre(lang):
-    return '' if lang == 'es' else '/en'
+def pre(l):
+    return '' if l == 'en' else '/' + l
+
+
+def url(l, path):
+    return pre(l) + path
+
+
+def waurl(text):
+    return C.WA + '?text=' + urllib.parse.quote(text)
 
 
 def write(rel, s):
-    path = os.path.join(ROOT, rel)
-    os.makedirs(os.path.dirname(path), exist_ok=True)
-    with open(path, 'w', encoding='utf-8') as f:
+    p = os.path.join(ROOT, rel)
+    os.makedirs(os.path.dirname(p), exist_ok=True)
+    with open(p, 'w', encoding='utf-8') as f:
         f.write(s)
 
 
-def fill(s, name, content, css=False):
-    a, b = (f'/* {name} */', f'/* /{name} */') if css else (f'<!-- {name} -->', f'<!-- /{name} -->')
-    assert s.count(a) == 1 and s.count(b) == 1, f'marker {name} missing'
-    i, j = s.index(a) + len(a), s.index(b)
-    return s[:i] + '\n' + content + '\n' + s[j:]
+def fver(rel):
+    with open(os.path.join(ROOT, rel), 'rb') as f:
+        return hashlib.md5(f.read()).hexdigest()[:8]
 
 
-def between(s, start, end, include=True):
-    i = s.index(start)
-    j = s.index(end, i) + len(end)
-    return s[i:j] if include else s[i + len(start):j - len(end)]
+def post(l, slug):
+    d = dict(PST['en'][slug])
+    d.update(PST[l][slug])
+    return d
 
 
-# ---------------------------------------------------------------- UI strings
+def city(l, slug):
+    return CIT[l][slug]
 
-UI = {
-    'es': {
-        'home': 'Inicio', 'areas': 'Áreas', 'all_areas': 'Ver todas las áreas',
-        'menu_label': 'Áreas que atiendo',
-        'title': 'Realtor que habla español en {name}, CA | Alejandra Granillo',
-        'eyebrow': 'Agente de bienes raíces que habla español · {county}',
-        'h1': 'Realtor en <b>{name}</b>, CA',
-        'btn_wa': 'Hablemos por WhatsApp', 'btn_hoods': 'Ver barrios',
-        'intro_eye': 'Sobre {name}', 'intro_h': 'Comprar y vender casa en <em>{name}</em>',
-        'facts_h': 'Datos rápidos',
-        'hoods_eye': 'Barrios', 'hoods_h': 'Barrios y zonas de <em>{name}</em>',
-        'why_eye': '¿Por qué {name}?', 'why_h': 'Lo que hace atractiva a <em>{name}</em>',
-        'svc_h': 'Cómo te ayudo en <em>{name}</em>',
-        'work_eye': 'Portafolio', 'work_h_city': 'Mis ventas en <em>{name}</em>',
-        'work_h': 'Trabajo reciente en el <em>Bay Area</em>', 'work_more': 'Ver portafolio completo',
-        'sold': 'Vendida',
-        'faq_eye': 'Preguntas frecuentes', 'faq_h': 'Preguntas sobre <em>{name}</em>',
-        'faq_generic': [
-            ('¿Me atiendes en español en {name}?',
-             'Sí. Te acompaño en español o en inglés en todo el proceso: búsqueda, visitas, oferta, negociación, inspecciones y cierre.'),
-            ('¿Cuánto vale mi casa en {name}?',
-             'Depende del barrio, el tamaño y el estado de la casa. Escríbeme por WhatsApp y te preparo un análisis comparativo de mercado (CMA) con ventas recientes cerca de tu casa.'),
-        ],
-        'near_h': 'Ciudades cercanas',
-        'contact_h': 'Hablemos de tu casa en <em>{name}</em>',
-        'wa_text': 'Hola Alejandra, vi tu página de {name} y me gustaría más información.',
-        'credit': 'Foto de portada', 'adapted': 'recortada', 'via': 'vía Wikimedia Commons',
-        'hub_title': 'Áreas que atiendo en el Bay Area | Alejandra Granillo',
-        'hub_desc': 'Realtor que habla español en Oakland, San Francisco, Concord, Walnut Creek, Pittsburg, Antioch, Brentwood, Richmond, Hayward y San Leandro. Elige tu ciudad.',
-        'hub_eyebrow': 'Bay Area, California', 'hub_h1': 'Áreas que <b>atiendo</b>',
-        'hub_lead': 'Trabajo con compradores, vendedores e inversionistas en todo el Bay Area. Elige tu ciudad para ver sus barrios, transporte y cómo te puedo ayudar ahí.',
-        'hub_more': 'Ver {name}', 'hub_wa': 'Hola Alejandra, vi tu página web y me gustaría más información.',
-        'hub_contact_h': 'Hablemos de tu <em>próximo paso</em>',
-        'hub_alt': 'El Golden Gate y la bahía de San Francisco',
-    },
-    'en': {
-        'home': 'Home', 'areas': 'Areas', 'all_areas': 'See all areas',
-        'menu_label': 'Areas I serve',
-        'title': 'Bilingual Realtor in {name}, CA | Alejandra Granillo',
-        'eyebrow': 'Bilingual real estate agent · {county}',
-        'h1': 'Realtor in <b>{name}</b>, CA',
-        'btn_wa': 'Message me on WhatsApp', 'btn_hoods': 'See neighborhoods',
-        'intro_eye': 'About {name}', 'intro_h': 'Buying and selling in <em>{name}</em>',
-        'facts_h': 'Quick facts',
-        'hoods_eye': 'Neighborhoods', 'hoods_h': '{name} <em>neighborhoods</em>',
-        'why_eye': 'Why {name}?', 'why_h': 'What makes <em>{name}</em> attractive',
-        'svc_h': 'How I can help in <em>{name}</em>',
-        'work_eye': 'Portfolio', 'work_h_city': 'My sales in <em>{name}</em>',
-        'work_h': 'Recent work in the <em>Bay Area</em>', 'work_more': 'See full portfolio',
-        'sold': 'Sold',
-        'faq_eye': 'FAQ', 'faq_h': 'Questions about <em>{name}</em>',
-        'faq_generic': [
-            ('Can you help me in Spanish in {name}?',
-             'Yes. I work with you in English or Spanish through the whole process: search, showings, offer, negotiation, inspections and closing.'),
-            ("What's my home worth in {name}?",
-             "It depends on the neighborhood, size and condition of the home. Message me on WhatsApp and I'll prepare a comparative market analysis (CMA) with recent sales near you."),
-        ],
-        'near_h': 'Nearby cities',
-        'contact_h': "Let's talk about your home in <em>{name}</em>",
-        'wa_text': "Hi Alejandra, I saw your {name} page and I'd like more information.",
-        'credit': 'Cover photo', 'adapted': 'cropped', 'via': 'via Wikimedia Commons',
-        'hub_title': 'Areas I Serve in the Bay Area | Alejandra Granillo',
-        'hub_desc': 'Bilingual Realtor in Oakland, San Francisco, Concord, Walnut Creek, Pittsburg, Antioch, Brentwood, Richmond, Hayward and San Leandro. Choose your city.',
-        'hub_eyebrow': 'Bay Area, California', 'hub_h1': 'Areas I <b>serve</b>',
-        'hub_lead': 'I work with buyers, sellers and investors across the Bay Area. Choose your city to see its neighborhoods, transit and how I can help there.',
-        'hub_more': 'See {name}', 'hub_wa': "Hi Alejandra, I saw your website and I'd like more information.",
-        'hub_contact_h': "Let's talk about your <em>next step</em>",
-        'hub_alt': 'The Golden Gate Bridge and San Francisco Bay',
-    },
+
+def jd(obj):
+    return json.dumps(obj, ensure_ascii=False, separators=(',', ':')).replace('</', '<\\/')
+
+
+# ------------------------------------------------------------------ validation
+
+def shape(x):
+    if isinstance(x, dict):
+        return {k: shape(v) for k, v in x.items()}
+    if isinstance(x, (list, tuple)):
+        return [len(x)] + [shape(i) for i in x] if x and isinstance(x[0], (list, tuple, dict)) else [len(x)]
+    return None
+
+
+def validate():
+    errs = []
+
+    def same(a, b, what):
+        if shape(a) != shape(b):
+            errs.append(f'structure mismatch: {what}')
+
+    for l in ('hi', 'mr'):
+        if set(UI[l]) != set(UI['en']):
+            errs.append(f'UI keys differ for {l}: {set(UI["en"]) ^ set(UI[l])}')
+        if set(HOME[l]) != set(HOME['en']):
+            errs.append(f'HOME keys differ for {l}')
+        for k in HOME['en']:
+            if k in HOME[l]:
+                same(HOME['en'][k], HOME[l][k], f'HOME[{l}][{k}]')
+        for k in UI['en']:
+            if k in UI[l]:
+                same(UI['en'][k], UI[l][k], f'UI[{l}][{k}]')
+        if set(CIT[l]) != set(CIT['en']):
+            errs.append(f'city slugs differ for {l}')
+        for s in CIT['en']:
+            same(CIT['en'][s], CIT[l][s], f'city {s} [{l}]')
+        if set(PST[l]) != set(PST['en']):
+            errs.append(f'post slugs differ for {l}')
+        for s in PST['en']:
+            a, b = PST['en'][s], PST[l][s]
+            for k in ('title', 'desc', 'answer', 'sections', 'faq'):
+                if k not in b:
+                    errs.append(f'post {s} [{l}] missing {k}')
+            if 'sections' in b:
+                if len(a['sections']) != len(b['sections']):
+                    errs.append(f'post {s} [{l}] section count')
+                else:
+                    for i, (x, y) in enumerate(zip(a['sections'], b['sections'])):
+                        if len(x[1]) != len(y[1]) or len(x[2]) != len(y[2]):
+                            errs.append(f'post {s} [{l}] section {i} paragraphs/bullets')
+            if len(a['faq']) != len(b['faq']):
+                errs.append(f'post {s} [{l}] faq count')
+    if set(ORDER) != set(PST['en']):
+        errs.append('ORDER does not match posts')
+    for s, near in NEAR.items():
+        for n in near:
+            if n not in CIT['en']:
+                errs.append(f'NEAR {s} -> unknown {n}')
+    for l in LANGS:
+        for s in CITY_SLUGS:
+            if not os.path.exists(os.path.join(ROOT, f'img/areas/{s}.jpg')):
+                errs.append(f'missing image img/areas/{s}.jpg')
+        for s in ORDER:
+            if not os.path.exists(os.path.join(ROOT, f'img/blog/{s}.jpg')):
+                errs.append(f'missing image img/blog/{s}.jpg')
+        if len(CIT[l]['kalyan']['desc']) > 175:
+            errs.append(f'long city desc {l}')
+    if errs:
+        sys.exit('BUILD FAILED:\n  ' + '\n  '.join(errs))
+
+
+# ------------------------------------------------------------------ svg bits
+
+def svg(inner, cls='', vb='0 0 24 24'):
+    return f'<svg class="{cls}" viewBox="{vb}" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">{inner}</svg>'
+
+
+I = {
+    'chat': svg('<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>'),
+    'caret': svg('<path d="M6 9l6 6 6-6"/>', 'nav-dd-caret'),
+    'arrow': svg('<path d="M5 12h14M13 6l6 6-6 6"/>'),
+    'phone': svg('<path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6A19.8 19.8 0 0 1 2.1 4.2 2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 1.9.7 2.8a2 2 0 0 1-.5 2.1L8.1 9.9a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.4c.9.3 1.8.6 2.8.7a2 2 0 0 1 1.7 2z"/>'),
+    'zoom': svg('<circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/>'),
 }
-
-# ------------------------------------------------- dropdown + home city pins
-
-AREAS_CSS = '''/* Áreas dropdown (generated by scripts/build.py) */
-.nav-dd{position:relative;}
-.nav-dd-btn{display:flex;align-items:center;gap:6px;background:none;border:none;padding:8px 0;cursor:pointer;font-family:inherit;font-size:11px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:rgba(250,246,240,0.55);transition:color 0.2s;}
-.nav-dd-btn:hover,.nav-dd.open .nav-dd-btn{color:var(--gold2);}
-.nav-dd-caret{transition:transform 0.25s;}
-.nav-dd.open .nav-dd-caret{transform:rotate(180deg);}
-.nav-dd-menu{position:absolute;top:calc(100% + 14px);right:-28px;display:none;grid-template-columns:repeat(2,minmax(180px,1fr));gap:0 36px;padding:26px 30px 20px;background:rgba(10,21,37,0.98);border:1px solid rgba(201,168,76,0.18);box-shadow:0 24px 60px rgba(0,0,0,0.45);}
-.nav-dd-menu::before{content:'';position:absolute;left:0;right:0;top:-18px;height:18px;}
-.nav-dd.open .nav-dd-menu{display:grid;}
-.nav-dd-col{display:flex;flex-direction:column;}
-.nav-dd-h{font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:0.18em;text-transform:uppercase;color:var(--gold);margin:14px 0 6px;}
-.nav-dd-col .nav-dd-h:first-child{margin-top:0;}
-.nav-dd-menu a{font-family:'Cormorant Garamond',serif;font-size:20px;font-weight:400;line-height:1.25;color:#FAF6F0;text-decoration:none;padding:4px 0;transition:color 0.2s;}
-.nav-dd-menu a:hover,.nav-dd-menu a[aria-current]{color:var(--gold2);}
-.nav-dd-menu a.nav-dd-all{grid-column:1/-1;margin-top:16px;padding-top:14px;border-top:1px solid rgba(201,168,76,0.15);font-family:'DM Sans',system-ui,sans-serif;font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);}
-@media(hover:hover) and (min-width:901px){.nav-dd:hover .nav-dd-menu{display:grid;}.nav-dd:hover .nav-dd-btn{color:var(--gold2);}}
-@media(max-width:1080px) and (min-width:901px){.nav-r{gap:22px;}}
-@media(max-width:1000px) and (min-width:901px){.nav-r .nav-a[href*="#sobre-mi"],.nav-r .nav-a[href*="#portafolio"]{display:none;}}
-a.area-pin{text-decoration:none;transition:border-color 0.2s,color 0.2s,background 0.2s;}
-a.area-pin:hover{border-color:var(--gold);color:var(--gold2);background:rgba(201,168,76,0.08);}
-/* Mobile menu: the hamburger replaces the Áreas dropdown and the WhatsApp button in the bar */
-.nav-ham span{background:#FAF6F0;}
-nav.menu-open{background:#0A1525;box-shadow:0 1px 0 rgba(201,168,76,0.15);}
-.mnav{position:fixed;inset:0;z-index:390;background:#0A1525;overflow-y:auto;-webkit-overflow-scrolling:touch;padding:calc(96px + env(safe-area-inset-top,0px)) 24px calc(40px + env(safe-area-inset-bottom,0px));}
-.mnav-nav{position:static;inset:auto;z-index:auto;height:auto;padding:0;display:block;background:none;box-shadow:none;}
-.mnav-main{list-style:none;margin:0 0 28px;padding:0 0 18px;border-bottom:1px solid rgba(201,168,76,0.15);}
-.mnav-main a{display:block;padding:10px 0;font-family:'Cormorant Garamond',serif;font-size:34px;font-weight:300;line-height:1.1;color:#FAF6F0;text-decoration:none;}
-.mnav-main a:active,.mnav-areas a:active{color:var(--gold2);}
-.mnav-h{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin:0 0 8px;}
-.mnav-areas{display:grid;grid-template-columns:1fr 1fr;gap:0 20px;}
-.mnav-areas a{display:block;padding:8px 0;font-family:'Cormorant Garamond',serif;font-size:22px;line-height:1.2;color:rgba(250,246,240,0.85);text-decoration:none;}
-.mnav-areas a[aria-current]{color:var(--gold2);}
-.mnav-all{display:inline-block;margin:14px 0 34px;font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);text-decoration:none;}
-.mnav .mnav-wa{display:flex;width:100%;justify-content:center;}
-@media(max-width:900px){
-  .nav-ham{display:flex;}
-  .nav-r{margin-left:auto;margin-right:14px;}
-  .nav-r .nav-dd,.nav-r .nav-cta{display:none;}
-}
-@media(min-width:901px){.mnav{display:none!important;}}'''
-
-AREAS_JS = '''<script>
-/* Áreas dropdown + mobile menu (generated by scripts/build.py) */
-(function(){
-  var dd=document.getElementById('navAreas');if(!dd)return;
-  var btn=dd.querySelector('.nav-dd-btn');
-  function set(o){dd.classList.toggle('open',o);btn.setAttribute('aria-expanded',o?'true':'false');}
-  btn.addEventListener('click',function(e){e.stopPropagation();set(!dd.classList.contains('open'));});
-  document.addEventListener('click',function(e){if(!dd.contains(e.target))set(false);});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&dd.classList.contains('open')){set(false);btn.focus();}});
-})();
-(function(){
-  var ham=document.getElementById('navHam'),menu=document.getElementById('mnav'),nav=document.getElementById('nav');
-  if(!ham||!menu)return;
-  function set(o){
-    menu.hidden=!o;ham.classList.toggle('open',o);ham.setAttribute('aria-expanded',o?'true':'false');
-    nav.classList.toggle('menu-open',o);document.body.style.overflow=o?'hidden':'';
-  }
-  ham.addEventListener('click',function(e){e.stopPropagation();set(menu.hidden);});
-  menu.addEventListener('click',function(e){if(e.target.closest('a'))set(false);});
-  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!menu.hidden){set(false);ham.focus();}});
-  var wide=window.matchMedia('(min-width:901px)');
-  (wide.addEventListener?wide.addEventListener.bind(wide,'change'):wide.addListener.bind(wide))(function(q){if(q.matches)set(false);});
-})();
-</script>'''
-
-MNAV_UI = {
-    'es': {'label': 'Menú principal', 'about': 'Sobre mí', 'portfolio': 'Portafolio', 'services': 'Servicios',
-           'blog': 'Blog', 'areas': 'Áreas', 'all': 'Ver todas las áreas', 'wa': 'Escríbeme por WhatsApp'},
-    'en': {'label': 'Main menu', 'about': 'About', 'portfolio': 'Portfolio', 'services': 'Services',
-           'blog': None, 'areas': 'Areas', 'all': 'See all areas', 'wa': 'Message me on WhatsApp'},
-}
-
-
-def mobile_nav(lang, current=None):
-    """Full-screen menu opened by the hamburger on phones. current = this page's URL, if it's a city page."""
-    t, p = MNAV_UI[lang], pre(lang)
-    main = [(f'{p}/#sobre-mi', t['about']), (f'{p}/#portafolio', t['portfolio']), (f'{p}/#servicios', t['services'])]
-    if t['blog']:
-        main.append(('/blog/', t['blog']))
-    cities = ''.join(
-        f'<a href="{city_url(lang, s)}"{" aria-current=\"page\"" if city_url(lang, s) == current else ""}>{esc(BY_SLUG[s]["name"])}</a>'
-        for _, slugs in MENU for s in slugs)
-    return (f'<div class="mnav" id="mnav" hidden><nav class="mnav-nav" aria-label="{t["label"]}">'
-            f'<ul class="mnav-main">{"".join(f"<li><a href=\"{u}\">{esc(label)}</a></li>" for u, label in main)}</ul>'
-            f'<p class="mnav-h">{t["areas"]}</p><div class="mnav-areas">{cities}</div>'
-            f'<a class="mnav-all" href="{p}/areas/">{esc(t["all"])} &rarr;</a>'
-            f'<a href="{WA}" class="btn-g mnav-wa" target="_blank" rel="noopener" {LEAD}>{WA_ICON}<span>{esc(t["wa"])}</span></a>'
-            f'</nav></div>')
-
-CARET = '<svg class="nav-dd-caret" width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg>'
-
-
-def city_url(lang, slug):
-    return f'{pre(lang)}/areas/{slug}/'
-
-
-def nav_areas(lang):
-    t = UI[lang]
-    cols = []
-    for counties in (MENU[:1] + MENU[2:], MENU[1:2]):  # Alameda + SF | Contra Costa
-        parts = []
-        for county, slugs in counties:
-            parts.append(f'<span class="nav-dd-h">{esc(COUNTIES[county][lang])}</span>')
-            parts += [f'<a href="{city_url(lang, s)}">{esc(BY_SLUG[s]["name"])}</a>' for s in slugs]
-        cols.append('<div class="nav-dd-col">' + ''.join(parts) + '</div>')
-    return (f'<div class="nav-dd" id="navAreas">'
-            f'<button class="nav-dd-btn" type="button" aria-expanded="false" aria-controls="ddAreas">{t["areas"]}{CARET}</button>'
-            f'<div class="nav-dd-menu" id="ddAreas" role="region" aria-label="{attr(t["menu_label"])}">'
-            + ''.join(cols)
-            + f'<a class="nav-dd-all" href="{pre(lang)}/areas/">{esc(t["all_areas"])} &rarr;</a></div></div>')
-
-
-def area_pins(lang):
-    pins = [f'<a class="area-pin" href="{city_url(lang, s)}"><span class="area-pin-dot"></span>{esc(BY_SLUG[s]["name"])}</a>'
-            for _, slugs in MENU for s in slugs]
-    pins += [f'<span class="area-pin"><span class="area-pin-dot"></span>{esc(n)}</span>' for n in EXTRA_PINS]
-    return '\n'.join('      ' + p for p in pins)
-
-
-def fill_home(s, lang):
-    s = fill(s, 'areas-nav', nav_areas(lang))
-    s = fill(s, 'areas-pins', area_pins(lang))
-    s = fill(s, 'areas-css', AREAS_CSS, css=True)
-    s = fill(s, 'areas-js', AREAS_JS)
-    s = fill(s, 'mobile-nav', mobile_nav(lang))
-    # The blog is Spanish-only, so the English home doesn't link to it.
-    s = fill(s, 'blog-nav', '<a href="/blog/" class="nav-a">Blog</a>' if lang == 'es' else '')
-    s = fill(s, 'blog-css', BLOG_CARD_CSS, css=True)
-    return fill(s, 'blog-home', home_guides() if lang == 'es' else '')
-
-
-def refresh_home_jsonld(s):
-    m = re.search(r'(<script type="application/ld\+json">\n)(.*?)(\n</script>)', s, re.S)
-    data = json.loads(m.group(2))
-    agent = next(n for n in data['@graph'] if n['@type'] == 'RealEstateAgent')
-    agent['areaServed'] = (
-        [{'@type': 'City', 'name': f'{c["name"]}, CA'} for c in CITIES]
-        + [{'@type': 'City', 'name': f'{n}, CA'} for n in EXTRA_PINS]
-        + [{'@type': 'AdministrativeArea', 'name': 'San Francisco Bay Area'}])
-    return s[:m.start(2)] + json.dumps(data, indent=2, ensure_ascii=False) + s[m.end(2):]
-
-
-# ------------------------------------------------------- English home page
-
-EN_TEXT = {
-    'nav_about': 'About', 'nav_portfolio': 'Portfolio', 'nav_services': 'Services', 'nav_cta': 'Contact',
-    'hero_tag': 'Real Estate Agent · Bay Area, California',
-    'hero_tl1': 'Your strategic ally for buying & selling in the Bay Area.',
-    'hero_tl2': 'Specialist in investments and Fix & Flip properties.',
-    'hero_tl3': 'Personalized service in Spanish and English.',
-    'hero_tl4': 'Your ally to buy, sell and invest with confidence.',
-    'hero_pill1': '8+ Years', 'hero_pill2': 'Bay Area', 'hero_pill3': 'ES / EN',
-    'hero_btn1': "Let's talk now",
-    'stat_l1': 'Years of experience', 'stat_l4': 'Average rating',
-    'about_eye': 'About me',
-    'about_p1': "I'm Alejandra Granillo, a licensed real estate agent with deep knowledge of the Bay Area market. My mission is to guide you every step of the way—whether you're buying your first home, selling a property, or looking for solid investment opportunities.",
-    'about_p2': 'With years of experience in the local market, I understand the unique complexities and opportunities of this region. I offer you strategy, honesty, and personalized service that turns a major decision into a successful experience.',
-    'about_q': '“My commitment is to find you not just a property, but the right opportunity at the right time.”',
-    'port_eye': 'Portfolio', 'port_hint': 'Tap to view details', 'modal_ask': 'Ask about this property',
-    'svc_eye': 'Services',
-    'svc_t1': 'Home Buying & Selling',
-    'svc_d1': 'I represent you with strategy and dedication in every negotiation—from finding the ideal home to closing, maximizing your investment or sale price.',
-    'svc_cta': 'Contact',
-    'svc_t2': 'Investment Management',
-    'svc_d2': 'For investors seeking returns: I identify, evaluate, and manage high-potential properties across the Bay Area with a long-term strategic vision.',
-    'svc_t3': 'Fix & Flip',
-    'svc_d3': 'Specialist in renovation and resale opportunities. I help you find properties with potential, calculate ROI, and coordinate the entire process from start to finish.',
-    'area_eye': 'Coverage',
-    'area_desc': 'I operate throughout the Bay Area with deep knowledge of the local market, providing strategic advantage in every transaction.',
-    'contact_eye': 'Contact',
-    'contact_p': "Ready to buy, sell, or invest? Message me on WhatsApp and I'll assist you personally, in Spanish or English.",
-    'btn_sms': 'Send message', 'btn_call': 'Call now',
-}
-EN_HTML = {
-    'about_h': 'Meet your <em>agent</em>',
-    'svc_h': 'How I can <em>help you</em>',
-    'contact_h': "Let's talk about your <em>next step</em>",
-}
-EN_TITLE = 'Alejandra Granillo | Bilingual Realtor in Oakland &amp; Bay Area'
-EN_DESC = ('Bilingual Bay Area Realtor (English &amp; Spanish): buying, selling, investments and '
-           'Fix &amp; Flip in Oakland, San Francisco and San Jose. Message me on WhatsApp.')
-# (spanish, english, expected count): text with no data-t key, head tags, toggle state
-EN_LITERAL = [
-    ('<html lang="es">', '<html lang="en">', 1),
-    ('<head>\n', '<head>\n<!-- Generated by scripts/build.py from index.html. Do not edit by hand. -->\n', 1),
-    ('<title>Alejandra Granillo | Realtor bilingüe en Oakland y Bay Area</title>', f'<title>{EN_TITLE}</title>', 1),
-    ('content="Alejandra Granillo | Realtor bilingüe en Oakland y Bay Area"', f'content="{EN_TITLE}"', 1),
-    ('content="Realtor que habla español en el Bay Area: compra, venta, inversiones y Fix &amp; Flip en Oakland, San Francisco y San Jose. Escríbeme por WhatsApp."', f'content="{EN_DESC}"', 2),
-    (f'<link rel="canonical" href="{SITE}/">', f'<link rel="canonical" href="{SITE}/en/">', 1),
-    (f'<meta property="og:url" content="{SITE}/">', f'<meta property="og:url" content="{SITE}/en/">', 1),
-    ('<meta property="og:locale" content="es_US">\n<meta property="og:locale:alternate" content="en_US">',
-     '<meta property="og:locale" content="en_US">\n<meta property="og:locale:alternate" content="es_US">', 1),
-    ('img/og-alejandra-granillo.jpg', 'img/og-alejandra-granillo-en.jpg', 1),
-    ('content="Alejandra Granillo, Realtor en el Bay Area, California"', 'content="Alejandra Granillo, Realtor in the Bay Area, California"', 1),
-    ('"description": "Agente de bienes raíces bilingüe (español e inglés) en el Bay Area: compra y venta de casas, inversiones y Fix & Flip."',
-     '"description": "Bilingual (English and Spanish) real estate agent in the Bay Area: home buying and selling, investments and Fix & Flip."', 1),
-    ('<a class="lang-btn active" href="/" hreflang="es" aria-current="page">ES</a>', '<a class="lang-btn" href="/" hreflang="es" lang="es">ES</a>', 1),
-    ('<a class="lang-btn" href="/en/" hreflang="en" lang="en">EN</a>', '<a class="lang-btn active" href="/en/" hreflang="en" aria-current="page">EN</a>', 1),
-    ('aria-label="Men&#250;"', 'aria-label="Menu"', 1),
-    ('aria-label="Contactar por WhatsApp"', 'aria-label="Contact on WhatsApp"', 1),
-    ('>Ver portafolio <svg', '>View portfolio <svg', 1),
-    ('<span class="stat-l">En toda el Área de la Bahía</span>', '<span class="stat-l">All over the Bay Area</span>', 1),
-    ('<span class="stat-l">Español e inglés</span>', '<span class="stat-l">Spanish &amp; English</span>', 1),
-    ('alt="Alejandra Granillo, Realtor en el Bay Area"', 'alt="Alejandra Granillo, Bay Area Realtor"', 1),
-    ('<h2 class="dh light">Propiedades <em>cerradas</em></h2>', '<h2 class="dh light">Closed <em>properties</em></h2>', 1),
-    ('<span class="pc-type">Residencial</span>', '<span class="pc-type">Residential</span>', 2),
-    ('</svg> Ver detalles</div>', '</svg> View details</div>', 5),
-    ('aria-label="Detalle de propiedad"', 'aria-label="Property details"', 1),
-    ('aria-label="Cerrar"', 'aria-label="Close"', 1),
+SVC_ICONS = [
+    svg('<path d="M3 9l9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><path d="M9 22V12h6v10"/>'),
+    svg('<path d="M20.6 13.4l-7.2 7.2a2 2 0 0 1-2.8 0L2 12V2h10l8.6 8.6a2 2 0 0 1 0 2.8z"/><path d="M7 7h.01"/>'),
+    svg('<path d="M21 2l-2 2m-7.6 7.6a5.5 5.5 0 1 1-7.8 7.8 5.5 5.5 0 0 1 7.8-7.8zm0 0L15.5 7.5m0 0l3 3L22 7l-3-3m-3.5 3.5L19 4"/>'),
+    svg('<path d="M23 6l-9.5 9.5-5-5L1 18"/><path d="M17 6h6v6"/>'),
+    svg('<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="M9 12l2 2 4-4"/>'),
+    svg('<path d="M19 5L5 19"/><circle cx="6.5" cy="6.5" r="2.5"/><circle cx="17.5" cy="17.5" r="2.5"/>'),
 ]
 
 
-def build_home_en(es):
-    s = es
-    for a, b, n in EN_LITERAL:
-        assert s.count(a) == n, f'expected {n}x: {a[:70]!r} (found {s.count(a)})'
-        s = s.replace(a, b)
+# ------------------------------------------------------------------ shell
 
-    def swap(attr_name, key, value):
-        nonlocal s
-        pat = re.compile(r'(<(\w+)\b[^>]*\s' + attr_name + r'="' + key + r'"[^>]*>)(.*?)(</\2>)', re.S)
-        s, n = pat.subn(lambda m: m.group(1) + value + m.group(4), s)
-        assert n, f'{attr_name}="{key}" not found in index.html'
-
-    for key, value in EN_TEXT.items():
-        swap('data-t', key, esc(value))
-    for key, value in EN_HTML.items():
-        swap('data-t-html', key, value)
-    missing = set(re.findall(r'data-t(?:-html)?="(\w+)"', s)) - set(EN_TEXT) - set(EN_HTML)
-    assert not missing, f'no English for: {sorted(missing)}'
-    return fill_home(s, 'en')
-
-
-# ------------------------------------------------- pieces shared with home
-
-class Pieces:
-    """Chunks lifted from a built home page (ES or EN) for the city pages."""
-
-    def __init__(self, home, lang):
-        self.lang = lang
-        self.head = between(home, '<!-- Meta Pixel', '<style>', include=False)
-        self.head = '<!-- Meta Pixel' + self.head
-        self.style = between(home, '<style>', '</style>')
-        self.noscript = between(home, '<noscript>', '</noscript>')
-        self.wa = between(home, '<a href="https://wa.me/14154239973" class="wa"', '</a>')
-        self.nav = between(home, '<nav id="nav">', '</nav>')
-        self.services = between(home, '<section class="services" id="servicios">', '\n</section>')
-        self.contact = between(home, '<section class="contact">', '\n</section>')
-        self.footer = between(home, '<footer>', '</footer>')
-        self.areas_js = AREAS_JS
-
-    def nav_for(self, es_url, en_url, current=None):
-        p = pre(self.lang)
-        n = self.nav
-        for a, b in [('href="#" class="nav-logo"', f'href="{p}/" class="nav-logo"'),
-                     ('href="#sobre-mi"', f'href="{p}/#sobre-mi"'),
-                     ('href="#portafolio"', f'href="{p}/#portafolio"'),
-                     ('href="#servicios"', f'href="{p}/#servicios"'),
-                     ('href="/" hreflang="es"', f'href="{es_url}" hreflang="es"'),
-                     ('href="/en/" hreflang="en"', f'href="{en_url}" hreflang="en"')]:
-            assert n.count(a) == 1, a
-            n = n.replace(a, b)
-        if current:
-            a = f'<a href="{current}">'
-            assert n.count(a) == 1, a
-            n = n.replace(a, f'<a href="{current}" aria-current="page">')
-        return n
-
-
-def wa_link(text):
-    return f'{WA}?text={urllib.parse.quote(text)}'
-
-
-def with_wa(chunk, text):
-    """Point every plain WhatsApp link in a chunk at a prefilled message."""
-    return chunk.replace(f'href="{WA}"', f'href="{wa_link(text)}"')
-
-
-# ---------------------------------------------------------------- page CSS
-
-PAGE_CSS = '''/* City + areas pages (generated by scripts/build.py) */
-.city-hero{position:relative;min-height:78vh;display:flex;align-items:flex-end;background:#050d1a;overflow:hidden;}
-.city-hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.55) contrast(1.05) saturate(0.9);}
-.city-hero-c{position:relative;z-index:2;width:100%;max-width:1300px;margin:0 auto;padding:150px 52px 88px;}
-/* the home styles every <nav> as the fixed top bar; undo that for breadcrumbs */
-.crumbs-nav{position:static;inset:auto;z-index:auto;height:auto;padding:0;display:block;background:none;box-shadow:none;}
-.crumbs{display:flex;flex-wrap:wrap;gap:8px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.16em;text-transform:uppercase;color:rgba(250,246,240,0.4);margin:0 0 24px;padding:0;list-style:none;}
-.crumbs li+li::before{content:'/';margin-right:8px;color:rgba(250,246,240,0.3);}
-.crumbs a{color:rgba(250,246,240,0.7);text-decoration:none;}
-.crumbs a:hover{color:var(--gold2);}
-.crumbs [aria-current]{color:var(--gold);}
-.city-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(46px,7.4vw,104px);font-weight:300;line-height:0.95;color:#FAF6F0;margin:0 0 26px;letter-spacing:-0.02em;opacity:0;animation:fadeUp 0.9s 0.45s forwards;}
-.city-h1 b{font-weight:600;font-style:italic;color:var(--gold);}
-.city-lead{max-width:660px;font-size:clamp(16px,1.5vw,19px);font-weight:300;line-height:1.75;color:rgba(250,246,240,0.78);margin:0 0 40px;opacity:0;animation:fadeUp 0.9s 0.7s forwards;}
-.city-sec{padding:120px 0;}
-.city-in{max-width:1300px;margin:0 auto;padding:0 52px;}
-.city-intro{background:#F7F4EF;}
-.city-grid{display:grid;grid-template-columns:1.35fr 1fr;gap:80px;align-items:start;}
-.city-p{font-size:16.5px;line-height:1.9;color:#5A6B80;margin:28px 0 0;}
-.facts{background:#0A1525;padding:40px 40px 36px;border-top:2px solid var(--gold);}
-.facts-h{font-family:'DM Mono',monospace;font-size:10px;font-weight:500;letter-spacing:0.24em;text-transform:uppercase;color:var(--gold);margin:0 0 24px;}
-.facts dl{margin:0;display:grid;gap:20px;}
-.facts dt{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.18em;text-transform:uppercase;color:rgba(250,246,240,0.45);margin:0 0 5px;}
-.facts dd{margin:0;font-size:15px;line-height:1.6;color:rgba(250,246,240,0.9);}
-.city-hoods{background:#FFFFFF;}
-.hood-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;margin-top:56px;}
-.hood{background:#F7F4EF;border:1px solid #E5E0D8;padding:32px 30px;}
-.hood h3{font-family:'Cormorant Garamond',serif;font-size:27px;font-weight:400;line-height:1.15;color:#0A1525;margin:0 0 12px;}
-.hood p{font-size:14.5px;line-height:1.75;color:#5A6B80;margin:0;}
-.city-why{background:#0A1525;}
-.why-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:56px;margin-top:56px;}
-.why-n{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.2em;color:var(--gold);}
-.why h3{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:#FAF6F0;margin:14px 0 12px;}
-.why p{font-size:15px;line-height:1.85;color:rgba(250,246,240,0.62);margin:0;}
-.city-work{background:#050D1A;}
-.work-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px;margin-top:48px;}
-.work-card{position:relative;display:block;overflow:hidden;aspect-ratio:3/4;text-decoration:none;background:#0A1525;}
-.work-card img{width:100%;height:100%;object-fit:cover;display:block;filter:brightness(0.78);transition:transform 0.7s cubic-bezier(0.25,0.46,0.45,0.94),filter 0.5s;}
-.work-card:hover img{transform:scale(1.05);filter:brightness(0.6);}
-.work-info{position:absolute;left:0;right:0;bottom:0;padding:26px 22px 22px;background:linear-gradient(to top,rgba(5,13,26,0.94),rgba(5,13,26,0));}
-.work-badge{display:inline-block;font-family:'DM Mono',monospace;font-size:9.5px;letter-spacing:0.18em;text-transform:uppercase;background:var(--gold);color:#0A1525;padding:4px 10px;}
-.work-addr{display:block;font-family:'Cormorant Garamond',serif;font-size:23px;color:#FAF6F0;margin:12px 0 4px;}
-.work-meta{display:block;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:rgba(250,246,240,0.55);}
-.work-price{display:block;font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--gold2);margin-top:6px;}
-.work-more{margin-top:40px;}
-.city-faq{background:#F7F4EF;}
-.faq-list{margin-top:48px;border-top:1px solid #E5E0D8;max-width:920px;}
-.faq-list details{border-bottom:1px solid #E5E0D8;padding:24px 0;}
-.faq-list summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;align-items:baseline;gap:24px;font-family:'Cormorant Garamond',serif;font-size:25px;line-height:1.3;color:#0A1525;}
-.faq-list summary::-webkit-details-marker{display:none;}
-.faq-list summary::after{content:'+';flex-shrink:0;font-family:'DM Sans',system-ui,sans-serif;font-size:24px;font-weight:300;color:var(--gold);transition:transform 0.3s;}
-.faq-list details[open] summary::after{transform:rotate(45deg);}
-.faq-list p{font-size:15.5px;line-height:1.85;color:#5A6B80;margin:14px 0 0;max-width:820px;}
-.near{margin-top:88px;}
-.near-h{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:300;color:#0A1525;margin:0;}
-.near .area-pins{justify-content:flex-start;margin-top:24px;gap:12px;}
-.near .area-pin{color:#0A1525;border-color:rgba(201,168,76,0.6);}
-.near a.area-pin:hover{color:#0A1525;background:rgba(201,168,76,0.14);}
-.hub-county{margin-top:72px;}
-.hub-county:first-child{margin-top:0;}
-.hub-county-h{font-family:'DM Mono',monospace;font-size:11px;letter-spacing:0.22em;text-transform:uppercase;color:var(--gold);margin:0 0 24px;font-weight:500;}
-.hub-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
-.hub-card{display:flex;flex-direction:column;text-decoration:none;background:#FFFFFF;border:1px solid #E5E0D8;overflow:hidden;transition:border-color 0.25s,transform 0.25s,box-shadow 0.25s;}
-.hub-card:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 18px 40px rgba(10,21,37,0.08);}
-.hub-card img{width:100%;aspect-ratio:16/10;object-fit:cover;display:block;}
-.hub-card-b{padding:26px 26px 24px;display:flex;flex-direction:column;flex:1;}
-.hub-card h3{font-family:'Cormorant Garamond',serif;font-size:32px;font-weight:400;color:#0A1525;margin:0 0 10px;}
-.hub-card p{font-size:14.5px;line-height:1.7;color:#5A6B80;margin:0 0 20px;flex:1;}
-.hub-go{font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);}
-.credit{max-width:1300px;margin:14px auto 0;font-size:11px;line-height:1.6;color:#9AAABB;}
-.credit a{color:inherit;}
-@media(max-width:900px){
-  .city-hero{min-height:74vh;}
-  .city-hero-c{padding:128px 24px 64px;}
-  .city-sec{padding:80px 0;}
-  .city-in{padding:0 24px;}
-  .city-grid{grid-template-columns:1fr;gap:48px;}
-  .hood-grid,.hub-grid{grid-template-columns:1fr 1fr;}
-  .why-grid{grid-template-columns:1fr;gap:36px;}
-}
-@media(max-width:600px){
-  .hood-grid,.hub-grid{grid-template-columns:1fr;}
-  .facts{padding:30px 24px;}
-  .faq-list summary{font-size:22px;}
-  .work-grid{grid-template-columns:1fr 1fr;gap:10px;}
-  .work-info{padding:18px 14px 14px;}
-  .work-addr{font-size:19px;}
-  .near-h{font-size:28px;}
-}'''
-
-PAGE_JS = '''<script>
-(function(){
-  var nav=document.getElementById('nav'),bar=document.getElementById('prog');
-  function onScroll(){
-    nav.classList.toggle('up',window.scrollY>60);
-    var max=document.documentElement.scrollHeight-window.innerHeight;
-    if(bar)bar.style.width=(max>0?window.scrollY/max*100:0)+'%';
-  }
-  window.addEventListener('scroll',onScroll,{passive:true});onScroll();
-})();
-</script>'''
-
-WA_ICON = '<svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z"/></svg>'
-LEAD = "onclick=\"if(typeof fbq!=='undefined')fbq('track','Lead')\""
-
-
-def head(lang, pieces, *, title, desc, url, es_url, en_url, preload, ld, og_type='website', extra='', extra_css=''):
-    """es_url/en_url=None for pages that exist in one language only (the blog)."""
-    og = f'{SITE}/img/og-alejandra-granillo{"" if lang == "es" else "-en"}.jpg'
-    loc, alt_loc = ('es_US', 'en_US') if lang == 'es' else ('en_US', 'es_US')
-    alternates = (f'''<link rel="alternate" hreflang="es" href="{SITE}{es_url}">
-<link rel="alternate" hreflang="en" href="{SITE}{en_url}">
-<link rel="alternate" hreflang="x-default" href="{SITE}{es_url}">
-''' if es_url and en_url else '')
-    locale_alt = f'<meta property="og:locale:alternate" content="{alt_loc}">\n' if alternates else ''
-    preload_tag = f'<link rel="preload" as="image" href="{preload}" fetchpriority="high">\n' if preload else ''
-    return f'''<!doctype html>
-<html lang="{lang}">
-<head>
-<!-- Generated by scripts/build.py. Do not edit by hand. -->
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>{esc(title)}</title>
-<meta name="description" content="{attr(desc)}">
-<meta name="robots" content="index, follow, max-image-preview:large">
-<link rel="canonical" href="{SITE}{url}">
-{alternates}<meta name="theme-color" content="#0A1525">
-<link rel="icon" href="/favicon.ico" sizes="48x48">
-<link rel="icon" href="/icon-192.png" type="image/png" sizes="192x192">
-<link rel="apple-touch-icon" href="/apple-touch-icon.png">
-<link rel="alternate" type="application/rss+xml" title="Blog de Alejandra Granillo" href="/blog/feed.xml">
-<meta property="og:type" content="{og_type}">
-<meta property="og:site_name" content="Alejandra Granillo Real Estate">
-<meta property="og:locale" content="{loc}">
-{locale_alt}{extra}<meta property="og:url" content="{SITE}{url}">
-<meta property="og:title" content="{attr(title)}">
-<meta property="og:description" content="{attr(desc)}">
-<meta property="og:image" content="{og}">
-<meta property="og:image:width" content="1200">
-<meta property="og:image:height" content="630">
-<meta name="twitter:card" content="summary_large_image">
-{preload_tag}<script type="application/ld+json">
-{json.dumps(ld, indent=2, ensure_ascii=False)}
-</script>
-{pieces.head}{pieces.style}
-<style>
-{PAGE_CSS}
-{extra_css}
-</style>
-</head>
-<body>
-{pieces.noscript}
-
-<div id="prog"></div>
-'''
-
-
-def agent_node(lang):
+def agent_ld(l):
     return {
-        '@type': 'RealEstateAgent', '@id': f'{SITE}/#agent', 'name': 'Alejandra Granillo',
-        'url': f'{SITE}{pre(lang)}/', 'telephone': '+1-415-423-9973',
-        'image': f'{SITE}/img/alejandra-granillo-realtor.webp',
-        'knowsLanguage': ['es', 'en'],
-        'areaServed': [{'@type': 'City', 'name': f'{c["name"]}, CA'} for c in CITIES],
-        'sameAs': ['https://www.facebook.com/alejandra.granillo.615305',
-                   'https://www.instagram.com/alejandra__granillo/'],
+        '@type': 'RealEstateAgent', '@id': C.SITE + '/#agent', 'name': C.BRAND, 'url': C.SITE + '/',
+        'image': C.SITE + '/img/logo.png', 'logo': C.SITE + '/img/logo.png', 'telephone': C.PHONE_TEL, 'email': C.EMAIL,
+        'description': HOME[l]['jsonld_desc'],
+        'address': {'@type': 'PostalAddress', 'streetAddress': C.STREET, 'addressLocality': C.LOCALITY,
+                    'addressRegion': C.REGION, 'postalCode': C.POSTAL, 'addressCountry': C.COUNTRY},
+        'hasMap': C.MAPS_URL,
+        'areaServed': [{'@type': 'City', 'name': f"{cities_en.CITIES[s]['name']}, Maharashtra"} for s in CITY_SLUGS]
+                      + [{'@type': 'AdministrativeArea', 'name': 'Mumbai Metropolitan Region'}],
+        'knowsLanguage': ['en', 'hi', 'mr'],
+        **({'sameAs': C.SAME_AS} if C.SAME_AS else {}),
     }
 
 
-def crumbs(lang, items):
-    """items: [(name, url or None)]; last item is the current page."""
-    li = []
-    for name, url in items:
-        li.append(f'<li><a href="{url}">{esc(name)}</a></li>' if url
-                  else f'<li><span aria-current="page">{esc(name)}</span></li>')
-    label = 'Ruta de navegación' if lang == 'es' else 'Breadcrumb'
-    return f'<nav class="crumbs-nav" aria-label="{label}"><ol class="crumbs">{"".join(li)}</ol></nav>'
-
-
-def eye(text, center=False):
-    style = ' style="justify-content:center"' if center else ''
-    return f'<div class="eye"{style}><span class="eye-line"></span><span class="eye-txt">{esc(text)}</span></div>'
-
-
-def footer_with_credit(pieces, lang, photo):
-    if not photo:
-        return pieces.footer
-    t = UI[lang]
-    lic = (f'<a href="{photo["license_url"]}" rel="license noopener" target="_blank">{esc(photo["license"])}</a>'
-           if photo['license_url'] else esc(photo['license']))
-    credit = (f'<p class="credit">{t["credit"]}: <a href="{photo["source"]}" rel="noopener" target="_blank">{esc(photo["author"])}</a>'
-              f' · {lic} ({t["adapted"]}), {t["via"]}.</p>')
-    return pieces.footer.replace('</div></footer>', '</div>' + credit + '</footer>')
-
-
-def city_page(lang, c, pieces):
-    t, d, name = UI[lang], c[lang], c['name']
-    county = COUNTIES[c['county']][lang]
-    url, es_url, en_url = city_url(lang, c['slug']), city_url('es', c['slug']), city_url('en', c['slug'])
-    title = t['title'].format(name=name)
-    wa_text = t['wa_text'].format(name=name)
-    img = f'/img/areas/{c["photo"]["file"]}'
-    faqs = [(q.format(name=name), a) for q, a in t['faq_generic']] + d['faq']
-
-    ld = {'@context': 'https://schema.org', '@graph': [
-        {'@type': 'WebPage', '@id': f'{SITE}{url}#webpage', 'url': f'{SITE}{url}', 'name': title,
-         'description': d['desc'], 'inLanguage': lang, 'isPartOf': {'@id': f'{SITE}/#website'},
-         'primaryImageOfPage': f'{SITE}{img}',
-         'about': {'@type': 'City', 'name': name,
-                   'containedInPlace': {'@type': 'AdministrativeArea', 'name': f'{COUNTIES[c["county"]]["en"]}, California'}},
-         'breadcrumb': {'@id': f'{SITE}{url}#breadcrumb'}, 'provider': {'@id': f'{SITE}/#agent'}},
-        {'@type': 'BreadcrumbList', '@id': f'{SITE}{url}#breadcrumb', 'itemListElement': [
-            {'@type': 'ListItem', 'position': 1, 'name': t['home'], 'item': f'{SITE}{pre(lang)}/'},
-            {'@type': 'ListItem', 'position': 2, 'name': t['areas'], 'item': f'{SITE}{pre(lang)}/areas/'},
-            {'@type': 'ListItem', 'position': 3, 'name': name, 'item': f'{SITE}{url}'}]},
-        agent_node(lang),
-        {'@type': 'FAQPage', '@id': f'{SITE}{url}#faq', 'mainEntity': [
-            {'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': a}} for q, a in faqs]},
-    ]}
-
-    out = [head(lang, pieces, title=title, desc=d['desc'], url=url, es_url=es_url, en_url=en_url, preload=img, ld=ld)]
-    out.append(with_wa(pieces.wa, wa_text))
-    out.append(with_wa(pieces.nav_for(es_url, en_url, current=url), wa_text))
-    out.append(with_wa(mobile_nav(lang, current=url), wa_text))
-
-    out.append(f'''
-<header class="city-hero">
-  <img class="city-hero-img" src="{img}" alt="{attr(d['alt'])}" fetchpriority="high">
-  <div class="hero-veil"></div>
-  <div class="city-hero-c">
-    {crumbs(lang, [(t['home'], pre(lang) + '/'), (t['areas'], pre(lang) + '/areas/'), (name, None)])}
-    <div class="hero-tag"><span class="hero-dot"></span><span class="hero-tag-text">{esc(t['eyebrow'].format(county=county))}</span></div>
-    <h1 class="city-h1">{t['h1'].format(name=esc(name))}</h1>
-    <p class="city-lead">{esc(d['lead'])}</p>
-    <div class="hero-btns">
-      <a href="{wa_link(wa_text)}" class="btn-g" target="_blank" rel="noopener" {LEAD}>{WA_ICON}<span>{esc(t['btn_wa'])}</span></a>
-      <a href="#barrios" class="btn-o">{esc(t['btn_hoods'])} <svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
-    </div>
-  </div>
-</header>
-
-<section class="city-sec city-intro">
-  <div class="city-in city-grid">
-    <div>
-      {eye(t['intro_eye'].format(name=name))}
-      <h2 class="dh">{t['intro_h'].format(name=esc(name))}</h2>
-      {''.join(f'<p class="city-p">{esc(p)}</p>' for p in d['intro'])}
-    </div>
-    <aside class="facts">
-      <p class="facts-h">{esc(t['facts_h'])}</p>
-      <dl>{''.join(f'<div><dt>{esc(k)}</dt><dd>{esc(v)}</dd></div>' for k, v in d['facts'])}</dl>
-    </aside>
-  </div>
-</section>
-
-<section class="city-sec city-hoods" id="barrios">
-  <div class="city-in">
-    {eye(t['hoods_eye'])}
-    <h2 class="dh">{t['hoods_h'].format(name=esc(name))}</h2>
-    <div class="hood-grid">
-      {''.join(f'<article class="hood"><h3>{esc(h)}</h3><p>{esc(p)}</p></article>' for h, p in d['hoods'])}
-    </div>
-  </div>
-</section>
-
-<section class="city-sec city-why">
-  <div class="city-in">
-    {eye(t['why_eye'].format(name=name))}
-    <h2 class="dh light">{t['why_h'].format(name=esc(name))}</h2>
-    <div class="why-grid">
-      {''.join(f'<div class="why"><span class="why-n">0{i}</span><h3>{esc(h)}</h3><p>{esc(p)}</p></div>' for i, (h, p) in enumerate(d['why'], 1))}
-    </div>
-  </div>
-</section>
-''')
-
-    svc = with_wa(pieces.services, wa_text)
-    svc, n = re.subn(r'<h2 class="dh" data-t-html="svc_h">.*?</h2>',
-                     f'<h2 class="dh">{t["svc_h"].format(name=esc(name))}</h2>', svc)
-    assert n == 1
-    out.append(svc.replace(' id="servicios"', ''))
-
-    work = c.get('work') or RECENT
-    work_h = t['work_h_city'] if c.get('work') else t['work_h']
-    cards = []
-    for key in work:
-        p = PROPERTIES[key]
-        cards.append(
-            f'<a class="work-card" href="{pre(lang)}/#portafolio">'
-            f'<img src="/img/{p["img"]}" alt="{attr(p["addr"] + ", " + p["city"])}" loading="lazy" decoding="async">'
-            f'<span class="work-info"><span class="work-badge">{esc(t["sold"])}</span>'
-            f'<span class="work-addr">{esc(p["addr"])}</span>'
-            f'<span class="work-meta">{esc(p["city"])} · {esc(p["type"][lang])}</span>'
-            f'<span class="work-price">{esc(p["price"])}</span></span></a>')
-    out.append(f'''
-<section class="city-sec city-work">
-  <div class="city-in">
-    {eye(t['work_eye'])}
-    <h2 class="dh light">{work_h.format(name=esc(name))}</h2>
-    <div class="work-grid">{''.join(cards)}</div>
-    <a href="{pre(lang)}/#portafolio" class="btn-o work-more">{esc(t['work_more'])}</a>
-  </div>
-</section>
-
-<section class="city-sec city-faq">
-  <div class="city-in">
-    {eye(t['faq_eye'])}
-    <h2 class="dh">{t['faq_h'].format(name=esc(name))}</h2>
-    <div class="faq-list">
-      {''.join(f'<details><summary>{esc(q)}</summary><p>{esc(a)}</p></details>' for q, a in faqs)}
-    </div>
-    <div class="near">
-      <h2 class="near-h">{esc(t['near_h'])}</h2>
-      <div class="area-pins">
-        {''.join(f'<a class="area-pin" href="{city_url(lang, s)}"><span class="area-pin-dot"></span>{esc(BY_SLUG[s]["name"])}</a>' for s in c['near'])}
-        <a class="area-pin" href="{pre(lang)}/areas/"><span class="area-pin-dot"></span>{esc(t['all_areas'])}</a>
-      </div>
-    </div>
-    {city_guides(c['slug']) if lang == 'es' else ''}
-  </div>
-</section>
-''')
-
-    contact = with_wa(pieces.contact, wa_text)
-    contact, n = re.subn(r'<h2 class="dh" data-t-html="contact_h">.*?</h2>',
-                         f'<h2 class="dh">{t["contact_h"].format(name=esc(name))}</h2>', contact)
-    assert n == 1
-    out.append(contact)
-    out.append('\n' + footer_with_credit(pieces, lang, c['photo']) + '\n' + PAGE_JS + '\n' + pieces.areas_js + '\n</body>\n</html>\n')
-    return ''.join(out)
-
-
-def hub_page(lang, pieces):
-    t = UI[lang]
-    url, es_url, en_url = f'{pre(lang)}/areas/', '/areas/', '/en/areas/'
-    img = '/img/bay-area-golden-gate.webp'
-    ld = {'@context': 'https://schema.org', '@graph': [
-        {'@type': 'CollectionPage', '@id': f'{SITE}{url}#webpage', 'url': f'{SITE}{url}', 'name': t['hub_title'],
-         'description': t['hub_desc'], 'inLanguage': lang, 'isPartOf': {'@id': f'{SITE}/#website'},
-         'breadcrumb': {'@id': f'{SITE}{url}#breadcrumb'}, 'provider': {'@id': f'{SITE}/#agent'},
-         'hasPart': [{'@type': 'WebPage', 'url': f'{SITE}{city_url(lang, c["slug"])}', 'name': c['name']} for c in CITIES]},
-        {'@type': 'BreadcrumbList', '@id': f'{SITE}{url}#breadcrumb', 'itemListElement': [
-            {'@type': 'ListItem', 'position': 1, 'name': t['home'], 'item': f'{SITE}{pre(lang)}/'},
-            {'@type': 'ListItem', 'position': 2, 'name': t['areas'], 'item': f'{SITE}{url}'}]},
-        agent_node(lang),
-    ]}
-    out = [head(lang, pieces, title=t['hub_title'], desc=t['hub_desc'], url=url, es_url=es_url, en_url=en_url, preload=img, ld=ld)]
-    out.append(with_wa(pieces.wa, t['hub_wa']))
-    out.append(pieces.nav_for(es_url, en_url))
-    out.append(with_wa(mobile_nav(lang), t['hub_wa']))
-    groups = []
-    for county, slugs in MENU:
-        cards = []
-        for s in slugs:
-            c = BY_SLUG[s]
-            cards.append(
-                f'<a class="hub-card" href="{city_url(lang, s)}">'
-                f'<img src="/img/areas/{c["photo"]["file"]}" alt="{attr(c[lang]["alt"])}" loading="lazy" decoding="async">'
-                f'<div class="hub-card-b"><h3>{esc(c["name"])}</h3><p>{esc(c[lang]["card"])}</p>'
-                f'<span class="hub-go">{esc(t["hub_more"].format(name=c["name"]))} &rarr;</span></div></a>')
-        groups.append(f'<div class="hub-county"><h2 class="hub-county-h">{esc(COUNTIES[county][lang])}</h2>'
-                      f'<div class="hub-grid">{"".join(cards)}</div></div>')
-    out.append(f'''
-<header class="city-hero">
-  <img class="city-hero-img" src="{img}" alt="{attr(t['hub_alt'])}" fetchpriority="high">
-  <div class="hero-veil"></div>
-  <div class="city-hero-c">
-    {crumbs(lang, [(t['home'], pre(lang) + '/'), (t['areas'], None)])}
-    <div class="hero-tag"><span class="hero-dot"></span><span class="hero-tag-text">{esc(t['hub_eyebrow'])}</span></div>
-    <h1 class="city-h1">{t['hub_h1']}</h1>
-    <p class="city-lead">{esc(t['hub_lead'])}</p>
-  </div>
-</header>
-
-<section class="city-sec city-intro">
-  <div class="city-in">
-    {''.join(groups)}
-  </div>
-</section>
-''')
-    contact = with_wa(pieces.contact, t['hub_wa'])
-    contact, n = re.subn(r'<h2 class="dh" data-t-html="contact_h">.*?</h2>',
-                         f'<h2 class="dh">{t["hub_contact_h"]}</h2>', contact)
-    assert n == 1
-    out.append(contact)
-    out.append('\n' + pieces.footer + '\n' + PAGE_JS + '\n' + pieces.areas_js + '\n</body>\n</html>\n')
-    return ''.join(out)
-
-
-# --------------------------------------------------------------------- blog
-
-POST_BY_SLUG = {p['slug']: p for p in POSTS}
-MONTHS = ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto',
-          'septiembre', 'octubre', 'noviembre', 'diciembre']
-# Blog index sections: heading -> post categories shown under it.
-BLOG_GROUPS = [('Comprar casa', ['Comprar']), ('Costos, impuestos y seguros', ['Costos']),
-               ('Vender tu casa', ['Vender']), ('Inversión, mercado y agentes', ['Invertir', 'Mercado', 'Guías'])]
-
-BLOG_CARD_CSS = '''/* Blog cards (generated by scripts/build.py) */
-.guides{background:#F7F4EF;padding:120px 0;}
-.guides-in{max-width:1300px;margin:0 auto;padding:0 52px;}
-.guides-hd{display:flex;justify-content:space-between;align-items:flex-end;gap:32px;margin-bottom:56px;}
-.guides-all{font-size:11px;font-weight:600;letter-spacing:0.14em;text-transform:uppercase;color:var(--gold);text-decoration:none;white-space:nowrap;padding-bottom:8px;}
-.guides-all:hover{color:#0A1525;}
-.bgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
-.bcard{display:flex;flex-direction:column;background:#FFFFFF;border:1px solid #E5E0D8;padding:32px 30px 26px;text-decoration:none;transition:border-color 0.25s,transform 0.25s,box-shadow 0.25s;}
-.bcard:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 18px 40px rgba(10,21,37,0.08);}
-.bcard-cat{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);}
-.bcard h3{font-family:'Cormorant Garamond',serif;font-size:26px;font-weight:400;line-height:1.2;color:#0A1525;margin:14px 0 12px;}
-.bcard p{font-size:14.5px;line-height:1.7;color:#5A6B80;margin:0 0 24px;flex:1;}
-.bcard-foot{display:flex;justify-content:space-between;align-items:center;gap:12px;font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.14em;text-transform:uppercase;color:#9AAABB;}
-.bcard-go{font-family:'DM Sans',system-ui,sans-serif;font-weight:600;color:var(--gold);}
-.city-guides{margin-top:24px;}
-@media(max-width:900px){.guides{padding:80px 0;}.guides-in{padding:0 24px;}.guides-hd{flex-direction:column;align-items:flex-start;gap:20px;margin-bottom:40px;}.bgrid{grid-template-columns:1fr 1fr;}}
-@media(max-width:600px){.bgrid{grid-template-columns:1fr;}.bcard{padding:26px 22px 22px;}}'''
-
-BLOG_PAGE_CSS = '''/* Blog pages (generated by scripts/build.py) */
-.post-hero{background:#0A1525;position:relative;overflow:hidden;}
-.post-hero::after{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 60% 80% at 85% 15%,rgba(201,168,76,0.13),transparent 60%);pointer-events:none;}
-.post-hero-c{position:relative;z-index:1;max-width:1300px;margin:0 auto;padding:150px 52px 72px;}
-.post-hero.has-photo{background:#050d1a;min-height:64vh;display:flex;align-items:flex-end;}
-.post-hero.has-photo::after{display:none;}
-.post-hero.has-photo .post-hero-c{width:100%;z-index:2;}
-.blog-hero.has-photo{min-height:78vh;}
-.post-h1{font-family:'Cormorant Garamond',serif;font-size:clamp(36px,4.8vw,62px);font-weight:300;line-height:1.08;color:#FAF6F0;margin:0 0 24px;max-width:1000px;opacity:0;animation:fadeUp 0.9s 0.45s forwards;}
-.post-h1 b{font-weight:600;font-style:italic;color:var(--gold);}
-.post-lead{max-width:680px;font-size:clamp(16px,1.5vw,19px);font-weight:300;line-height:1.75;color:rgba(250,246,240,0.75);margin:0;}
-.post-meta{font-size:14px;line-height:1.6;color:rgba(250,246,240,0.62);margin:0;}
-.post-meta a{color:#FAF6F0;text-decoration:none;border-bottom:1px solid rgba(201,168,76,0.5);}
-.post-bg{background:#FFFFFF;}
-.post-layout{max-width:1300px;margin:0 auto;padding:72px 52px 100px;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:72px;align-items:start;}
-.post{max-width:740px;font-size:17px;line-height:1.85;color:#33435A;}
-.post h2{font-family:'Cormorant Garamond',serif;font-size:clamp(28px,3vw,36px);font-weight:400;line-height:1.2;color:#0A1525;margin:56px 0 18px;scroll-margin-top:96px;}
-.post h3{font-family:'Cormorant Garamond',serif;font-size:25px;font-weight:600;line-height:1.25;color:#0A1525;margin:36px 0 8px;}
-.post p{margin:0 0 18px;}
-.post ul,.post ol{margin:0 0 24px;padding-left:22px;}
-.post li{margin:0 0 10px;padding-left:4px;}
-.post li::marker{color:#B8963E;}
-.post a{color:#0A1525;text-decoration:underline;text-decoration-color:var(--gold);text-underline-offset:3px;}
-.post a:hover{color:#8A6E28;}
-.post a.btn-g{color:#0A1525;text-decoration:none;}
-.post strong{color:#0A1525;font-weight:600;}
-.table-wrap{overflow-x:auto;margin:8px 0 28px;-webkit-overflow-scrolling:touch;}
-.post table{width:100%;border-collapse:collapse;font-size:15px;line-height:1.55;}
-.post table.wide{min-width:520px;}
-.post th{background:#0A1525;color:#FAF6F0;text-align:left;font-weight:500;padding:12px 14px;font-size:13.5px;}
-.post td{padding:12px 14px;border-bottom:1px solid #E5E0D8;vertical-align:top;}
-.post tbody tr:nth-child(even) td{background:#FAF8F4;}
-.answer{background:#F7F4EF;border-left:3px solid var(--gold);padding:24px 28px;margin:0 0 8px;}
-.answer-k{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:#8A6E28;margin:0 0 8px!important;}
-.answer p:last-child{margin:0;font-size:17.5px;line-height:1.75;color:#0A1525;}
-.post-faq details{border-bottom:1px solid #E5E0D8;padding:18px 0;}
-.post-faq details:first-of-type{border-top:1px solid #E5E0D8;}
-.post-faq summary{cursor:pointer;list-style:none;display:flex;justify-content:space-between;gap:20px;font-weight:600;line-height:1.5;color:#0A1525;}
-.post-faq summary::-webkit-details-marker{display:none;}
-.post-faq summary::after{content:'+';flex-shrink:0;color:var(--gold);font-size:22px;font-weight:300;line-height:1.1;transition:transform 0.3s;}
-.post-faq details[open] summary::after{transform:rotate(45deg);}
-.post-faq details p{margin:12px 0 0;}
-.post-cta{background:#0A1525;padding:36px 36px 32px;margin:52px 0;}
-.post-cta-h{font-family:'Cormorant Garamond',serif;font-size:30px;line-height:1.2;color:#FAF6F0!important;margin:0 0 10px!important;}
-.post-cta p{color:rgba(250,246,240,0.72);}
-.post-sources ul{font-size:15px;line-height:1.6;}
-.post-disclaimer{font-size:13.5px;line-height:1.7;color:#7A8899;border-top:1px solid #E5E0D8;padding-top:18px;margin-top:28px!important;}
-.author{display:flex;gap:20px;align-items:center;background:#F7F4EF;padding:24px;margin-top:40px;}
-.author img{width:84px;height:84px;border-radius:50%;object-fit:cover;object-position:top;flex-shrink:0;}
-.author-n{font-family:'Cormorant Garamond',serif;font-size:24px;line-height:1.2;color:#0A1525;margin:0 0 4px!important;}
-.author p{font-size:14.5px;line-height:1.7;margin:0;}
-.post-aside{position:sticky;top:100px;display:flex;flex-direction:column;gap:20px;}
-.toc{border:1px solid #E5E0D8;padding:24px 24px 14px;}
-.toc-h{font-family:'DM Mono',monospace;font-size:10px;letter-spacing:0.22em;text-transform:uppercase;color:#8A6E28;margin:0 0 14px;}
-.toc ol{list-style:none;margin:0;padding:0;counter-reset:t;}
-.toc li{counter-increment:t;margin:0 0 10px;font-size:14px;line-height:1.45;display:flex;gap:10px;}
-.toc li::before{content:counter(t,decimal-leading-zero);font-family:'DM Mono',monospace;font-size:10px;color:var(--gold);padding-top:3px;}
-.toc a{color:#33435A;text-decoration:none;}
-.toc a:hover{color:#0A1525;text-decoration:underline;text-decoration-color:var(--gold);}
-.aside-cta{background:#0A1525;padding:26px 24px;}
-.aside-cta-h{font-family:'Cormorant Garamond',serif;font-size:24px;line-height:1.2;color:#FAF6F0;margin:0 0 8px;}
-.aside-cta p{color:rgba(250,246,240,0.72);font-size:14.5px;line-height:1.65;margin:0 0 18px;}
-.aside-cta .btn-g{padding:14px 18px;width:100%;justify-content:center;}
-.post-more{background:#F7F4EF;}
-.post-more .near{margin-top:72px;}
-.post-hero .crumbs li:last-child{min-width:0;max-width:min(520px,60vw);overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
-.blog-cat{margin-top:72px;}
-.blog-cat:first-child{margin-top:0;}
-@media(max-width:1100px){.post-layout{grid-template-columns:minmax(0,1fr);}.post-aside{display:none;}.post{max-width:780px;min-width:0;}}
-@media(max-width:900px){.post-hero.has-photo{min-height:0;}.blog-hero.has-photo{min-height:74vh;}.post-hero.has-photo .hero-veil{background:linear-gradient(to top,rgba(5,13,26,0.94) 0%,rgba(5,13,26,0.72) 55%,rgba(5,13,26,0.5) 100%);}.post-hero-c{padding:128px 24px 56px;}.post-layout{padding:48px 24px 72px;}.post{font-size:16.5px;}.post-cta{padding:28px 24px;}.answer{padding:20px;}.author{align-items:flex-start;}}'''
-
-
-# Portfolio photos used behind the blog headers, same look as the home hero.
-HERO_PHOTOS = ['2-hillcrest-ct-san-anselmo.webp', '3228-hyde-st-oakland.webp', '5614-dover-st-oakland.webp',
-               '2311-57th-ave-oakland.webp', '672-27th-ave-oakland.webp']
-
-SLIDES_JS = '''<script>
-(function(){
-  var s=[].slice.call(document.querySelectorAll('.blog-hero .hero-slide'));if(s.length<2)return;
-  var c=0;setInterval(function(){s[c].classList.remove('active');c=(c+1)%s.length;s[c].classList.add('active');},5500);
-})();
-</script>'''
-
-
-def hero_slides(srcs):
-    slides = ''.join(
-        f'<div class="hero-slide{" active" if i == 0 else ""}"><img src="{src}" alt="" '
-        f'fetchpriority="{"high" if i == 0 else "low"}" decoding="async"></div>' for i, src in enumerate(srcs))
-    return f'<div class="hero-slides" aria-hidden="true">{slides}</div>\n  <div class="hero-veil"></div>'
-
-
-def fecha(iso):
-    y, m, d = map(int, iso.split('-'))
-    return f'{d} de {MONTHS[m - 1]} de {y}'
-
-
-def post_url(slug):
-    return f'/blog/{slug}/'
-
-
-def word_count(p):
-    text = p['answer'] + ' ' + re.sub(r'<[^>]+>', ' ', p['body']) + ' ' + ' '.join(q + ' ' + a for q, a in p['faq'])
-    return len(html.unescape(text).split())
-
-
-def read_min(p):
-    return max(1, round(word_count(p) / 200))
-
-
-def slugify(s):
-    s = unicodedata.normalize('NFKD', html.unescape(s)).encode('ascii', 'ignore').decode()
-    return re.sub(r'[^a-z0-9]+', '-', s.lower()).strip('-')
-
-
-def with_h2_ids(body):
-    toc = []
-
-    def add(m):
-        label = re.sub(r'<[^>]+>', '', m.group(1)).strip()
-        anchor = slugify(label)
-        assert anchor not in [a for a, _ in toc], anchor
-        toc.append((anchor, label))
-        return f'<h2 id="{anchor}">{m.group(1)}</h2>'
-    return re.sub(r'<h2>(.*?)</h2>', add, body), toc
-
-
-def bcard(p):
-    return (f'<a class="bcard" href="{post_url(p["slug"])}"><span class="bcard-cat">{esc(p["category"])}</span>'
-            f'<h3>{esc(p["title"])}</h3><p>{esc(p["desc"])}</p>'
-            f'<span class="bcard-foot"><span>{read_min(p)} min de lectura</span>'
-            f'<span class="bcard-go">Leer guía &rarr;</span></span></a>')
-
-
-def home_guides():
-    return f'''<section class="guides" id="guias">
-  <div class="guides-in">
-    <div class="guides-hd">
-      <div>{eye('Blog')}<h2 class="dh">Guías para comprar y vender en el <em>Bay Area</em></h2></div>
-      <a href="/blog/" class="guides-all">Ver todas las guías &rarr;</a>
-    </div>
-    <div class="bgrid">{''.join(bcard(POST_BY_SLUG[s]) for s in FEATURED)}</div>
-  </div>
-</section>'''
-
-
-def city_guides(slug):
-    picks = [p for p in POSTS if slug in p['cities']][:3]
-    picks += [POST_BY_SLUG[s] for s in FEATURED if POST_BY_SLUG[s] not in picks][:3 - len(picks)]
-    return (f'<div class="near"><h2 class="near-h">Guías útiles</h2>'
-            f'<div class="bgrid city-guides">{"".join(bcard(p) for p in picks)}</div></div>')
-
-
-def person_node():
-    return {'@type': 'Person', '@id': f'{SITE}/#alejandra', 'name': 'Alejandra Granillo', 'jobTitle': 'Realtor',
-            'url': f'{SITE}/', 'image': f'{SITE}/img/alejandra-granillo-realtor.webp', 'knowsLanguage': ['es', 'en'],
-            'worksFor': {'@id': f'{SITE}/#agent'},
-            'sameAs': ['https://www.facebook.com/alejandra.granillo.615305',
-                       'https://www.instagram.com/alejandra__granillo/']}
-
-
-def post_page(p, pieces):
-    url = post_url(p['slug'])
-    updated = p.get('updated', PUBLISHED)
-    body, toc = with_h2_ids(p['body'])
-    # Only wide tables keep a minimum width (and scroll sideways on phones); narrow ones just wrap.
-    body = re.sub(r'<table>(.*?)</table>', lambda m: '<div class="table-wrap"><table%s>%s</table></div>' % (
-        ' class="wide"' if m.group(1).split('</tr>')[0].count('<th>') >= 4 else '', m.group(1)), body, flags=re.S)
-    toc.append(('preguntas-frecuentes', 'Preguntas frecuentes'))
-    title = f'{p["seo_title"]} | Alejandra Granillo' if len(p['seo_title']) <= 50 else p['seo_title']
-    wa_text = f'Hola Alejandra, leí tu guía "{p["seo_title"]}" y tengo una pregunta.'
-    ld = {'@context': 'https://schema.org', '@graph': [
-        {'@type': 'BlogPosting', '@id': f'{SITE}{url}#article', 'mainEntityOfPage': f'{SITE}{url}', 'url': f'{SITE}{url}',
-         'headline': p['title'], 'description': p['desc'], 'inLanguage': 'es',
-         'datePublished': PUBLISHED, 'dateModified': updated,
-         'author': {'@id': f'{SITE}/#alejandra'}, 'publisher': {'@id': f'{SITE}/#agent'},
-         'image': f'{SITE}/img/og-alejandra-granillo.jpg', 'articleSection': p['category'],
-         'keywords': p['keywords'], 'wordCount': word_count(p), 'isPartOf': {'@id': f'{SITE}/blog/#blog'},
-         'citation': [u for _, u in p['sources']]},
-        {'@type': 'BreadcrumbList', '@id': f'{SITE}{url}#breadcrumb', 'itemListElement': [
-            {'@type': 'ListItem', 'position': 1, 'name': 'Inicio', 'item': f'{SITE}/'},
-            {'@type': 'ListItem', 'position': 2, 'name': 'Blog', 'item': f'{SITE}/blog/'},
-            {'@type': 'ListItem', 'position': 3, 'name': p['title'], 'item': f'{SITE}{url}'}]},
-        {'@type': 'FAQPage', '@id': f'{SITE}{url}#faq', 'mainEntity': [
-            {'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': a}} for q, a in p['faq']]},
-        person_node(),
-        agent_node('es'),
-    ]}
-    extra = (f'<meta property="article:published_time" content="{PUBLISHED}">\n'
-             f'<meta property="article:modified_time" content="{updated}">\n'
-             f'<meta property="article:section" content="{attr(p["category"])}">\n')
-    photo = '/img/' + HERO_PHOTOS[POSTS.index(p) % len(HERO_PHOTOS)]
-    out = [head('es', pieces, title=title, desc=p['desc'], url=url, es_url=None, en_url=None, preload=photo,
-                ld=ld, og_type='article', extra=extra, extra_css=BLOG_PAGE_CSS)]
-    out.append(with_wa(pieces.wa, wa_text))
-    out.append(with_wa(pieces.nav_for(url, '/en/'), wa_text))
-    out.append(with_wa(mobile_nav('es'), wa_text))
-    when = f'<time datetime="{PUBLISHED}">{fecha(PUBLISHED)}</time>'
-    if updated != PUBLISHED:
-        when += f' · Actualizado el <time datetime="{updated}">{fecha(updated)}</time>'
-    wa_btn = (f'<a href="{wa_link(wa_text)}" class="btn-g" target="_blank" rel="noopener" {LEAD}>'
-              f'{WA_ICON}<span>Escríbeme por WhatsApp</span></a>')
-    related = ''.join(bcard(POST_BY_SLUG[s]) for s in p['related'])
-    city_pins = ''.join(f'<a class="area-pin" href="{city_url("es", s)}"><span class="area-pin-dot"></span>{esc(BY_SLUG[s]["name"])}</a>'
-                        for s in p['cities'])
-    out.append(f'''
-<header class="post-hero has-photo">
-  {hero_slides([photo])}
-  <div class="post-hero-c">
-    {crumbs('es', [('Inicio', '/'), ('Blog', '/blog/'), (p['title'], None)])}
-    <div class="hero-tag"><span class="hero-dot"></span><span class="hero-tag-text">{esc(p['category'])} · {read_min(p)} min de lectura</span></div>
-    <h1 class="post-h1">{esc(p['title'])}</h1>
-    <p class="post-meta">Por <a href="/#sobre-mi">Alejandra Granillo</a>, Realtor® bilingüe en el Bay Area · {when}</p>
-  </div>
-</header>
-
-<div class="post-bg">
-  <div class="post-layout">
-    <article class="post">
-      <div class="answer"><p class="answer-k">Respuesta rápida</p><p>{esc(p['answer'])}</p></div>
-      {body}
-      <section class="post-faq">
-        <h2 id="preguntas-frecuentes">Preguntas frecuentes</h2>
-        {''.join(f'<details><summary>{esc(q)}</summary><p>{esc(a)}</p></details>' for q, a in p['faq'])}
-      </section>
-      <div class="post-cta">
-        <p class="post-cta-h">¿Tienes una pregunta sobre tu caso?</p>
-        <p>Escríbeme por WhatsApp y te respondo personalmente, en español o en inglés.</p>
-        {wa_btn}
-      </div>
-      <section class="post-sources">
-        <h2 id="fuentes">Fuentes</h2>
-        <ul>{''.join(f'<li><a href="{attr(u)}" target="_blank" rel="noopener">{esc(label)}</a></li>' for label, u in p['sources'])}</ul>
-        <p class="post-disclaimer">Esta guía es informativa y no sustituye la asesoría legal, fiscal ni financiera. Las cifras corresponden a 2026 y pueden cambiar; confírmalas con tu prestamista, contador o abogado.</p>
-      </section>
-      <div class="author">
-        <img src="/img/alejandra-granillo-realtor.webp" alt="Alejandra Granillo" loading="lazy" decoding="async">
-        <div><p class="author-n">Alejandra Granillo</p><p>Realtor® bilingüe en el Bay Area. Ayudo a familias e inversionistas a comprar, vender e invertir en Oakland, Contra Costa y San Francisco, en español o en inglés.</p></div>
-      </div>
-    </article>
-    <aside class="post-aside" aria-label="En esta guía">
-      <nav class="toc crumbs-nav" aria-label="Contenido"><p class="toc-h">En esta guía</p><ol>{''.join(f'<li><a href="#{a}">{esc(label)}</a></li>' for a, label in toc)}</ol></nav>
-      <div class="aside-cta"><p class="aside-cta-h">¿Hablamos?</p><p>Te ayudo a comprar, vender o invertir en el Bay Area, en español.</p>{wa_btn}</div>
-    </aside>
-  </div>
-</div>
-
-<section class="city-sec post-more">
-  <div class="city-in">
-    {eye('Sigue leyendo')}
-    <h2 class="dh">Guías <em>relacionadas</em></h2>
-    <div class="bgrid city-guides">{related}</div>
-    <div class="near">
-      <h2 class="near-h">Ciudades donde te puedo ayudar</h2>
-      <div class="area-pins">{city_pins}<a class="area-pin" href="/areas/"><span class="area-pin-dot"></span>Ver todas las áreas</a></div>
-    </div>
-  </div>
-</section>
-''')
-    out.append(with_wa(pieces.contact, wa_text))
-    out.append('\n' + pieces.footer + '\n' + PAGE_JS + '\n' + pieces.areas_js + '\n</body>\n</html>\n')
-    return ''.join(out)
-
-
-def blog_index(pieces):
-    url = '/blog/'
-    title = 'Blog de bienes raíces en español en el Bay Area | Alejandra Granillo'
-    desc = ('Guías en español para comprar, vender e invertir en casas en el Bay Area: préstamos con ITIN, '
-            'programas de primera vivienda, costos de cierre, precios por ciudad y más.')
-    wa_text = 'Hola Alejandra, vi tu blog y tengo una pregunta.'
-    ld = {'@context': 'https://schema.org', '@graph': [
-        {'@type': 'Blog', '@id': f'{SITE}/blog/#blog', 'url': f'{SITE}/blog/', 'name': 'Blog de Alejandra Granillo',
-         'description': desc, 'inLanguage': 'es', 'publisher': {'@id': f'{SITE}/#agent'},
-         'blogPost': [{'@type': 'BlogPosting', 'headline': p['title'], 'url': f'{SITE}{post_url(p["slug"])}',
-                       'datePublished': PUBLISHED} for p in POSTS]},
-        {'@type': 'BreadcrumbList', '@id': f'{SITE}/blog/#breadcrumb', 'itemListElement': [
-            {'@type': 'ListItem', 'position': 1, 'name': 'Inicio', 'item': f'{SITE}/'},
-            {'@type': 'ListItem', 'position': 2, 'name': 'Blog', 'item': f'{SITE}/blog/'}]},
-        agent_node('es'),
-    ]}
-    slides = ['/img/' + f for f in HERO_PHOTOS]
-    out = [head('es', pieces, title=title, desc=desc, url=url, es_url=None, en_url=None, preload=slides[0],
-                ld=ld, extra_css=BLOG_PAGE_CSS)]
-    out.append(with_wa(pieces.wa, wa_text))
-    out.append(with_wa(pieces.nav_for(url, '/en/', current=None), wa_text))
-    out.append(with_wa(mobile_nav('es'), wa_text))
-    groups = []
-    for heading, cats in BLOG_GROUPS:
-        posts = [p for p in POSTS if p['category'] in cats]
-        if posts:
-            groups.append(f'<div class="blog-cat"><h2 class="hub-county-h">{esc(heading)}</h2>'
-                          f'<div class="bgrid">{"".join(bcard(p) for p in posts)}</div></div>')
-    out.append(f'''
-<header class="post-hero has-photo blog-hero">
-  {hero_slides(slides)}
-  <div class="post-hero-c">
-    {crumbs('es', [('Inicio', '/'), ('Blog', None)])}
-    <div class="hero-tag"><span class="hero-dot"></span><span class="hero-tag-text">Blog · Guías en español</span></div>
-    <h1 class="post-h1">Guías para comprar, vender e invertir en el <b>Bay Area</b></h1>
-    <p class="post-lead">Respuestas claras a las preguntas que más me hacen mis clientes: cómo comprar con ITIN, cuánto enganche necesitas, cuánto cuesta vender y dónde están las casas más accesibles.</p>
-  </div>
-</header>
-
-<section class="city-sec blog-list">
-  <div class="city-in">
-    {''.join(groups)}
-  </div>
-</section>
-''')
-    contact = with_wa(pieces.contact, wa_text)
-    out.append(contact)
-    out.append('\n' + pieces.footer + '\n' + PAGE_JS + '\n' + SLIDES_JS + '\n' + pieces.areas_js + '\n</body>\n</html>\n')
-    return ''.join(out)
-
-
-def feed():
-    when = format_datetime(datetime.datetime.fromisoformat(PUBLISHED + 'T09:00:00-07:00'))
-    items = '\n'.join(
-        f'<item><title>{esc(p["title"])}</title><link>{SITE}{post_url(p["slug"])}</link>'
-        f'<guid isPermaLink="true">{SITE}{post_url(p["slug"])}</guid><pubDate>{when}</pubDate>'
-        f'<category>{esc(p["category"])}</category><description>{esc(p["desc"])}</description></item>'
-        for p in POSTS)
-    return f'''<?xml version="1.0" encoding="UTF-8"?>
-<rss version="2.0" xmlns:atom="http://www.w3.org/2005/Atom">
-<channel>
-<title>Blog de Alejandra Granillo</title>
-<link>{SITE}/blog/</link>
-<atom:link href="{SITE}/blog/feed.xml" rel="self" type="application/rss+xml"/>
-<description>Guías en español para comprar, vender e invertir en casas en el Bay Area.</description>
-<language>es-us</language>
-{items}
-</channel>
-</rss>
-'''
-
-
-def llms_txt():
-    """llms.txt: a plain-language map of the site for AI assistants (llmstxt.org)."""
-    cities = '\n'.join(f'- [{c["name"]}]({SITE}{city_url("es", c["slug"])}): {c["es"]["card"]}' for c in CITIES)
-    posts = '\n'.join(f'- [{p["title"]}]({SITE}{post_url(p["slug"])}): {p["answer"]}' for p in POSTS)
-    cities_en = '\n'.join(f'- [{c["name"]}]({SITE}{city_url("en", c["slug"])}): {c["en"]["card"]}' for c in CITIES)
-    return f'''# Alejandra Granillo Real Estate
-
-> Alejandra Granillo es una Realtor® bilingüe (español e inglés) en el Bay Area de California. Ayuda a comprar, vender e invertir en casas, incluidos proyectos Fix & Flip, en Oakland, Contra Costa y San Francisco.
-
-- Idiomas: español e inglés
-- Zona: {', '.join(c['name'] for c in CITIES)} y el resto del Bay Area
-- Servicios: compra y venta de casas, inversiones y Fix & Flip
-- Contacto: WhatsApp o teléfono (415) 423-9973, https://wa.me/14154239973
-
-## Páginas principales
-
-- [Inicio]({SITE}/): quién es Alejandra, servicios, propiedades vendidas y contacto.
-- [Áreas que atiende]({SITE}/areas/): páginas por ciudad con barrios, transporte y preguntas frecuentes.
-- [Blog]({SITE}/blog/): guías en español para comprar, vender e invertir.
-
-## Áreas
-
-{cities}
-
-## Guías del blog
-
-{posts}
-
-## English
-
-- [Home]({SITE}/en/): bilingual Realtor in the Bay Area.
-- [Areas]({SITE}/en/areas/): city pages in English.
-{cities_en}
-'''
-
-
-# ------------------------------------------------------------------ sitemap
-
-def sitemap(today):
-    imgs = ['alejandra-granillo-realtor.webp', '2-hillcrest-ct-san-anselmo.webp', '672-27th-ave-oakland.webp',
-            '2311-57th-ave-oakland.webp', '3228-hyde-st-oakland.webp', '5614-dover-st-oakland.webp']
-    pages = [('/', '/en/', imgs), ('/areas/', '/en/areas/', [])]
-    pages += [(city_url('es', c['slug']), city_url('en', c['slug']), ['areas/' + c['photo']['file']]) for c in CITIES]
-    rows = []
-    for es_url, en_url, images in pages:
-        for loc in (es_url, en_url):
-            img_xml = ''.join(f'\n    <image:image><image:loc>{SITE}/img/{i}</image:loc></image:image>'
-                              for i in (images if loc == es_url else []))
-            rows.append(f'''  <url>
-    <loc>{SITE}{loc}</loc>
-    <lastmod>{today}</lastmod>
-    <xhtml:link rel="alternate" hreflang="es" href="{SITE}{es_url}"/>
-    <xhtml:link rel="alternate" hreflang="en" href="{SITE}{en_url}"/>
-    <xhtml:link rel="alternate" hreflang="x-default" href="{SITE}{es_url}"/>{img_xml}
-  </url>''')
-    for loc, mod in [('/blog/', PUBLISHED)] + [(post_url(p['slug']), p.get('updated', PUBLISHED)) for p in POSTS]:
-        rows.append(f'  <url>\n    <loc>{SITE}{loc}</loc>\n    <lastmod>{mod}</lastmod>\n  </url>')
-    return ('<?xml version="1.0" encoding="UTF-8"?>\n'
-            '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml" '
-            'xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n' + '\n'.join(rows) + '\n</urlset>\n')
-
+def head(l, title, desc, alts, img, img_alt, ld, preload=None, og_type='website', extra=''):
+    canon = C.SITE + alts[l]
+    hl = ''.join(f'<link rel="alternate" hreflang="{k}" href="{C.SITE}{alts[k]}">' for k in alts)
+    hl += f'<link rel="alternate" hreflang="x-default" href="{C.SITE}{alts["en"]}">'
+    og_alt = ''.join(f'<meta property="og:locale:alternate" content="{C.LOCALE[k]}">' for k in alts if k != l)
+    fonts = 'family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500'
+    if l != 'en':
+        fonts += '&family=Noto+Sans+Devanagari:wght@300;400;500;600;700&family=Noto+Serif+Devanagari:wght@300;400;500;600'
+    pix = ''
+    if C.META_PIXEL_ID:
+        pix = ("<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};"
+               "if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];"
+               f"s.parentNode.insertBefore(t,s)}}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','{C.META_PIXEL_ID}');fbq('track','PageView');</script>")
+    return (f'<!doctype html>\n<html lang="{C.HTML_LANG[l]}">\n<head>\n<meta charset="utf-8">\n'
+            '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
+            f'<title>{esc(title)}</title>\n<meta name="description" content="{attr(desc)}">\n'
+            '<meta name="robots" content="index, follow, max-image-preview:large">\n'
+            f'<link rel="canonical" href="{canon}">\n{hl}\n<meta name="theme-color" content="#0A1525">\n'
+            f'<meta property="og:type" content="{og_type}"><meta property="og:site_name" content="{C.BRAND}">'
+            f'<meta property="og:locale" content="{C.LOCALE[l]}">{og_alt}<meta property="og:url" content="{canon}">'
+            f'<meta property="og:title" content="{attr(title)}"><meta property="og:description" content="{attr(desc)}">'
+            f'<meta property="og:image" content="{C.SITE}{img}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">'
+            f'<meta property="og:image:alt" content="{attr(img_alt)}"><meta name="twitter:card" content="summary_large_image">\n'
+            '<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">'
+            '<link rel="apple-touch-icon" href="/apple-touch-icon.png">\n'
+            + (f'<link rel="preload" as="image" href="{preload}" fetchpriority="high">\n' if preload else '')
+            + '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
+            f'<link href="https://fonts.googleapis.com/css2?{fonts}&display=swap" rel="stylesheet">\n'
+            f'<link rel="stylesheet" href="/assets/site.css?v={fver("assets/site.css")}">\n{extra}'
+            f'<script type="application/ld+json">{jd({"@context": "https://schema.org", "@graph": ld})}</script>\n{pix}</head>\n')
+
+
+def nav(l, alts, solid=True):
+    U, h = UI[l], url(l, '/')
+    sol = SOLID if solid else ''
+    cols = []
+    for g, slugs in MENU:
+        cols.append(f'<div class="nav-dd-col"><span class="nav-dd-h">{esc(U["grp_" + g])}</span>'
+                    + ''.join(f'<a href="{url(l, "/areas/" + s + "/")}">{esc(city(l, s)["name"])}</a>' for s in slugs) + '</div>')
+    langs = ''.join(f'<a href="{alts[k]}" hreflang="{k}" lang="{k}" aria-label="{attr(C.LANG_NAME[k])}"' + (' aria-current="true"' if k == l else '')
+                    + f'>{C.LANG_SHORT[k]}</a>' for k in alts)
+    main = [(f'{h}#about', U['nav_about']), (f'{h}#types', U['nav_types']), (f'{h}#plans', U['nav_plans']), (f'{h}#services', U['nav_services'])]
+    mlinks = ''.join(f'<li><a href="{u}">{esc(t)}</a></li>' for u, t in main + [(url(l, '/blog/'), U['nav_blog']), (f'{h}#contact', U['nav_contact'])])
+    mareas = ''.join(f'<a href="{url(l, "/areas/" + s + "/")}">{esc(city(l, s)["name"])}</a>' for s in CITY_SLUGS)
+    return (f'<a class="skip" href="#main">{esc(U["skip"])}</a><div id="prog"></div>\n'
+            f'<nav id="nav"{SOLID if solid else ""} aria-label="{attr(U["main_menu"])}">'
+            f'<a class="nav-logo" href="{h}" aria-label="{attr(C.BRAND)}"><img src="/img/logo.png" width="160" height="49" alt="{attr(C.BRAND)}"></a>'
+            '<div class="nav-r">'
+            f'<a class="nav-a" href="{h}#about">{esc(U["nav_about"])}</a><a class="nav-a" href="{h}#types">{esc(U["nav_types"])}</a>'
+            f'<a class="nav-a" href="{h}#plans">{esc(U["nav_plans"])}</a>'
+            f'<a class="nav-a" href="{h}#services">{esc(U["nav_services"])}</a>'
+            f'<div class="nav-dd" id="navAreas"><button class="nav-dd-btn" type="button" aria-expanded="false" aria-controls="ddAreas">{esc(U["nav_areas"])}{I["caret"]}</button>'
+            f'<div class="nav-dd-menu" id="ddAreas" role="region" aria-label="{attr(U["menu_label"])}">{"".join(cols)}'
+            f'<a class="nav-dd-all" href="{url(l, "/areas/")}">{esc(U["all_areas"])} &rarr;</a></div></div>'
+            f'<a class="nav-a" href="{url(l, "/blog/")}">{esc(U["nav_blog"])}</a>'
+            f'<div class="lang" role="group" aria-label="{attr(U["lang_label"])}">{langs}</div>'
+            f'<a class="nav-cta" href="{h}#contact">{I["chat"]}{esc(U["nav_contact"])}</a>'
+            f'<button class="nav-ham" id="navHam" type="button" aria-label="{attr(U["main_menu"])}" aria-expanded="false" aria-controls="mnav"><span></span><span></span><span></span></button>'
+            '</div></nav>\n'
+            f'<div class="mnav" id="mnav" hidden><ul>{mlinks}</ul><p class="mnav-h">{esc(U["nav_areas"])}</p><div class="mnav-areas">{mareas}</div>'
+            f'<a class="mnav-all" href="{url(l, "/areas/")}">{esc(U["all_areas"])} &rarr;</a><br><div class="lang" role="group" aria-label="{attr(U["lang_label"])}">{langs}</div><br>'
+            f'<a class="btn-wa" href="{waurl(U["wa_default"])}" target="_blank" rel="noopener" style="width:100%">{I["chat"]}<span>{esc(U["wa_btn"])}</span></a></div>\n')
+
+
+def footer(l, alts):
+    U, h = UI[l], url(l, '/')
+    langs = ''.join(f'<li><a href="{alts[k]}" hreflang="{k}" lang="{k}">{C.LANG_NAME[k]}</a></li>' for k in alts)
+    rera = f'<p>{esc(U["rera_label"])}: {esc(C.RERA_NO)}</p>' if C.RERA_NO else ''
+    return (f'<footer><div class="foot-grid"><div>'
+            f'<a class="foot-logo-link" href="{h}" aria-label="{attr(C.BRAND)}"><img src="/img/logo.png" width="175" height="54" alt="{attr(C.BRAND)}" class="foot-logo"></a>'
+            f'<p>{esc(U["foot_tag"])}</p>{rera}</div>'
+            f'<div><h4>{esc(U["foot_links"])}</h4><ul><li><a href="{h}">{esc(U["home"])}</a></li><li><a href="{h}#plans">{esc(U["nav_plans"])}</a></li><li><a href="{url(l, "/areas/")}">{esc(U["areas"])}</a></li>'
+            f'<li><a href="{url(l, "/blog/")}">{esc(U["blog"])}</a></li><li><a href="{h}#contact">{esc(U["nav_contact"])}</a></li></ul></div>'
+            f'<div><h4>{esc(U["foot_contact"])}</h4><p>{esc(C.ADDRESS_LINE)}</p><p><a href="tel:{C.PHONE_TEL}">{C.PHONE_DISPLAY}</a><br>'
+            f'<a href="mailto:{C.EMAIL}">{C.EMAIL}</a></p></div>'
+            f'<div><h4>{esc(U["foot_lang"])}</h4><ul>{langs}</ul></div></div>'
+            f'<div class="foot-legal"><p>{esc(U["disclaimer"])}</p><p>{esc(U["rights"])}</p></div></footer>\n'
+            f'<a class="wa" href="{waurl(U["wa_default"])}" target="_blank" rel="noopener" aria-label="{attr(U["wa_btn"])}">{I["chat"]}<span>{esc(U["float_wa"])}</span></a>\n'
+            f'<script src="/assets/site.js?v={fver("assets/site.js")}" defer></script>\n</body>\n</html>\n')
+
+
+def page(l, path, alts, head_html, body):
+    """Write one page; alts maps lang -> url path."""
+    write((url(l, path)).lstrip('/') + 'index.html', head_html + '<body>\n' + nav(l, alts) + body + footer(l, alts))
+
+
+def breadcrumb_ld(l, trail):
+    return {'@type': 'BreadcrumbList', 'itemListElement': [
+        {'@type': 'ListItem', 'position': i + 1, 'name': n, 'item': C.SITE + u} for i, (n, u) in enumerate(trail)]}
+
+
+def faq_ld(items):
+    return {'@type': 'FAQPage', 'mainEntity': [{'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': a}} for q, a in items]}
+
+
+def faq_html(items, dark=False):
+    return f'<div class="faq-list{" faq-dark" if dark else ""}">' + ''.join(
+        f'<details class="q"><summary>{esc(q)}</summary><div class="ans">{esc(a)}</div></details>' for q, a in items) + '</div>'
+
+
+def eye(txt):
+    return f'<div class="eye"><span class="eye-line"></span><span class="eye-txt">{txt}</span></div>'
+
+
+def crumbs(items):
+    return '<ol class="crumbs">' + ''.join(f'<li>{"<a href=" + chr(34) + u + chr(34) + ">" + esc(n) + "</a>" if u else esc(n)}</li>' for n, u in items) + '</ol>'
+
+
+PAGES = []  # alts dicts (lang -> path); deduplicated when the sitemap is written
+SOLID = ' class="solid"'
+
+
+# ------------------------------------------------------------------ home
+
+def post_card(l, slug):
+    p, U = post(l, slug), UI[l]
+    return (f'<a class="card" href="{url(l, "/blog/" + slug + "/")}"><img src="/img/blog/{slug}.jpg" width="1200" height="630" loading="lazy" alt="">'
+            f'<div class="card-b"><span class="card-k">{esc(U["cat_" + p["cat"]])}</span><h3>{esc(p["title"])}</h3><p>{esc(p["desc"])}</p>'
+            f'<span class="card-m">{esc(U["min_read"].format(n=p["read"]))}</span></div></a>')
+
+
+def contact_block(l, h2, p_txt, dark_eye=True, wa_text=None):
+    U, H = UI[l], HOME[l]
+    rera = f'<li><b>{esc(U["rera_label"])}</b><span>{esc(C.RERA_NO)}</span></li>' if C.RERA_NO else ''
+    return ('<section class="sec contact" id="contact"><div class="in contact-grid"><div>'
+            f'{eye(esc(H["contact_eye"]))}<h2 class="dh light">{h2}</h2><p class="lead light" style="margin-top:18px">{esc(p_txt)}</p>'
+            f'<ul class="contact-list"><li><b>{esc(U["addr_label"])}</b><span>{esc(C.ADDRESS_LINE)}</span></li>'
+            f'<li><b>{esc(U["phone_label"])}</b><a href="tel:{C.PHONE_TEL}">{C.PHONE_DISPLAY}</a></li>'
+            f'<li><b>WhatsApp</b><a href="{waurl(wa_text or U["wa_default"])}" target="_blank" rel="noopener">{C.PHONE_DISPLAY}</a></li>'
+            f'<li><b>{esc(U["email_label"])}</b><a href="mailto:{C.EMAIL}">{C.EMAIL}</a></li>{rera}</ul>'
+            f'<div class="cta-row"><a class="btn-wa" href="{waurl(wa_text or U["wa_default"])}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(U["wa_btn"])}</span></a>'
+            f'<a class="btn-o" href="tel:{C.PHONE_TEL}">{I["phone"]}<span>{esc(U["call_btn"])}</span></a></div></div>'
+            f'<div><iframe class="map" src="{C.MAPS_EMBED}" title="{attr(C.ADDRESS_LINE)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>'
+            f'<p style="margin:12px 0 0"><a class="btn-o" href="{C.MAPS_URL}" target="_blank" rel="noopener">{esc(U["open_maps"])} {I["arrow"]}</a></p></div></div></section>\n')
+
+
+def build_home(l):
+    U, H = UI[l], HOME[l]
+    alts = {k: url(k, '/') for k in LANGS}
+    hero_imgs = [
+        ('hero-day.jpg', 'Prestige Gold Kalyan - Modern Architecture Tower (Day View)'),
+        ('hero-night.jpg', 'Prestige Gold Kalyan - Evening Ambiance (Night View)'),
+        ('hero-iso-2bhk.jpg', 'Prestige Gold - 2 BHK 3D Isometric View'),
+        ('hero-iso-1bhk.jpg', 'Prestige Gold - 1 BHK 3D Isometric View'),
+        ('hero-plan-1bhk.jpg', 'Prestige Gold - 1 BHK Architectural Floor Plan'),
+    ]
+    slides = ''.join(f'<div class="hero-slide{" active" if i == 0 else ""}"><img src="/img/{n}" width="1920" height="1080" alt="{attr(alt)}"'
+                     + (' fetchpriority="high"' if i == 0 else ' loading="lazy"') + '></div>' for i, (n, alt) in enumerate(hero_imgs))
+    dots = ''.join(f'<button class="hc-dot{" on" if i == 0 else ""}" type="button" aria-label="{i + 1}"></button>' for i in range(len(hero_imgs)))
+    hero = ('<main id="main"><section class="hero"><div class="hero-slides">' + slides + '</div><div class="hero-veil"></div><div class="hero-c">'
+            f'<div class="hero-tag"><span class="hero-dot"></span>{esc(H["tag"])}</div>'
+            '<h1 class="hero-name">Prestige<b>Enterprises</b></h1>'
+            f'<div class="hero-tagline-wrap"><div class="hero-tagline">{"".join(f"<span>{esc(t)}</span>" for t in H["taglines"])}</div></div>'
+            f'<div class="hero-pills">{"".join(f"<span class=hero-pill>{esc(p)}</span>" for p in H["pills"])}</div>'
+            f'<div class="hero-btns"><a class="btn-g" href="{waurl(U["wa_default"])}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(H["btn1"])}</span></a>'
+            f'<a class="btn-o" href="{url(l, "/areas/")}"><span>{esc(H["btn2"])}</span>{I["arrow"]}</a></div></div>'
+            f'<div class="hero-dots">{dots}</div></section>\n'
+            f'<div class="stats">{"".join(f"<div class=stat><span class=stat-n>{esc(n)}</span><span class=stat-l>{esc(t)}</span></div>" for n, t in H["stats"])}</div>\n')
+    about = ('<section class="sec" id="about"><div class="in about-grid"><div>' + eye(esc(H['about_eye'])) + f'<h2 class="dh">{H["about_h"]}</h2>'
+             f'<div class="about-body" style="margin-top:30px">{"".join(f"<p>{esc(p)}</p>" for p in H["about"])}</div>'
+             f'<div class="tags">{"".join(f"<span class=tag>{esc(t)}</span>" for t in H["tags"])}</div>'
+             f'<div class="sec-cta" style="margin-top:28px"><a class="btn-enquire" href="{waurl(U["wa_default"])}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(U["enquire_now"])}</span></a></div></div>'
+             f'<div><div class="about-photo"><img src="/img/about.jpg" width="900" height="1125" loading="lazy" alt="{attr(H["about_alt"])}"></div>'
+             f'<div class="about-quote"><p>{esc(H["quote"])}</p><cite>{esc(H["quote_by"])}</cite></div></div></div></section>\n')
+    kinds = ['apartments', 'villas', 'plots', 'commercial', 'rentals', 'redevelopment']
+    cards = ''.join(f'<a class="type" href="{waurl(U["wa_default"] + " (" + t[2] + ")")}" target="_blank" rel="noopener">'
+                    f'<img src="/img/types/{k}.jpg" width="900" height="1200" loading="lazy" alt="{attr(H["types_alt"][i])}">'
+                    f'<div class="type-ov"><h3>{esc(t[0])}</h3><p>{esc(t[1])}</p></div></a>' for i, (k, t) in enumerate(zip(kinds, H['types'])))
+    types = ('<section class="sec types dark-bg" id="types"><div class="in"><div class="types-hd"><div>' + eye(esc(H['types_eye']))
+             + f'<h2 class="dh light">{H["types_h"]}</h2></div><span class="types-hint">{esc(H["types_hint"])}</span></div><div class="types-grid">{cards}</div>'
+             f'<div class="sec-cta-center" style="margin-top:44px"><a class="btn-enquire gold" href="{waurl(U["wa_default"] + " (Property Options)")}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(U["enquire_now"])}</span></a></div></div></section>\n')
+    p_cards = ''.join(
+        f'<div class="plan-card">'
+        f'<div class="plan-card-hd"><span class="plan-badge">{esc(p[0])}</span><h3>{esc(p[1])}</h3><p>{esc(p[2])}</p></div>'
+        f'<div class="plan-img-wrap" data-full="{p[3]}" data-title="{attr(p[1])}">'
+        f'<img src="{p[3]}" width="666" height="375" loading="lazy" alt="{attr(p[1])}">'
+        f'<span class="plan-zoom-hint">{I["zoom"]}<span>{esc(H["plans_zoom"])}</span></span>'
+        f'</div>'
+        f'<div class="plan-card-ft">'
+        f'<a class="btn-wa-sm" href="{waurl(U["wa_default"] + " (" + p[0] + ")")}" target="_blank" rel="noopener">'
+        f'{I["chat"]}<span>{esc(H["plans_enquire"])}</span>'
+        f'</a>'
+        f'</div>'
+        f'</div>' for p in H['plans']
+    )
+    plans = (f'<section class="sec plans dark-bg" id="plans"><div class="in">'
+             f'<div class="plans-hd"><div>{eye(esc(H["plans_eye"]))}<h2 class="dh light">{H["plans_h"]}</h2></div>'
+             f'<p class="lead light" style="margin-top:16px;max-width:680px">{esc(H["plans_p"])}</p></div>'
+             f'<div class="plans-grid">{p_cards}</div>'
+             f'<div class="sec-cta-center" style="margin-top:40px"><a class="btn-enquire gold" href="{waurl(U["wa_default"] + " (Prestige Gold Floor Plans)")}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(U["enquire_now"])}</span></a></div></div></section>\n')
+    svc = ('<section class="sec services" id="services"><div class="in">' + eye(esc(H['svc_eye'])) + f'<h2 class="dh">{H["svc_h"]}</h2><div class="svc-grid">'
+           + ''.join(f'<div class="svc"><div class="svc-ic">{SVC_ICONS[i]}</div><h3>{esc(t)}</h3><p>{esc(d)}</p></div>' for i, (t, d) in enumerate(H['svc']))
+           + f'</div><div class="sec-cta-center" style="margin-top:48px"><a class="btn-enquire" href="{waurl(U["wa_default"] + " (Services Enquiry)")}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(U["enquire_now"])}</span></a></div></div></section>\n')
+    proc = ('<section class="sec dark-bg" id="process"><div class="in">' + eye(esc(H['proc_eye'])) + f'<h2 class="dh light">{H["proc_h"]}</h2><div class="proc">'
+            + ''.join(f'<div class="proc-step"><span class="proc-n">{i + 1:02d}</span><h3>{esc(t)}</h3><p>{esc(d)}</p></div>' for i, (t, d) in enumerate(H['proc']))
+            + f'</div><div class="sec-cta-center" style="margin-top:44px"><a class="btn-enquire gold" href="{waurl(U["wa_default"] + " (Process Consultation)")}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(U["enquire_now"])}</span></a></div></div></section>\n')
+    pins = ''.join(f'<a class="area-pin" href="{url(l, "/areas/" + s + "/")}"><i></i>{esc(city(l, s)["name"])}</a>' for s in CITY_SLUGS)
+    areas = ('<section class="sec" id="areas"><div class="in">' + eye(esc(H['areas_eye'])) + f'<h2 class="dh">{H["areas_h"]}</h2>'
+             f'<p class="lead" style="margin-top:20px">{esc(H["areas_p"])}</p><div class="area-pins">{pins}</div>'
+             f'<div class="sec-cta" style="margin-top:36px"><a class="btn-g" href="{url(l, "/areas/")}"><span>{esc(H["areas_btn"])}</span>{I["arrow"]}</a>'
+             f'<a class="btn-enquire" href="{waurl(U["wa_default"] + " (Areas Enquiry)")}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(U["enquire_now"])}</span></a></div></div></section>\n')
+    guides = ('<section class="sec" id="guides" style="background:#fff"><div class="in">' + eye(esc(H['guides_eye'])) + f'<h2 class="dh">{H["guides_h"]}</h2>'
+              f'<div class="cards">{"".join(post_card(l, s) for s in FEATURED)}</div>'
+              f'<div class="sec-cta" style="margin-top:36px"><a class="btn-o dark" href="{url(l, "/blog/")}"><span>{esc(H["guides_btn"])}</span>{I["arrow"]}</a>'
+              f'<a class="btn-enquire" href="{waurl(U["wa_default"] + " (Guides Enquiry)")}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(U["enquire_now"])}</span></a></div></div></section>\n')
+    faq = (f'<section class="sec faq-sec" id="faq"><div class="in faq-center">'
+           f'<div class="faq-hd">{eye(esc(H["faq_eye"]))}<h2 class="dh">{H["faq_h"]}</h2></div>'
+           f'{faq_html(H["faq"])}'
+           f'<div class="sec-cta-center" style="margin-top:40px"><a class="btn-enquire" href="{waurl(U["wa_default"] + " (FAQ Enquiry)")}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(U["enquire_now"])}</span></a></div></div></section>\n')
+    contact = contact_block(l, H['contact_h'], H['contact_p'])
+    ld = [agent_ld(l), {'@type': 'WebSite', '@id': C.SITE + '/#website', 'url': C.SITE + '/', 'name': C.BRAND, 'inLanguage': ['en-IN', 'hi-IN', 'mr-IN'],
+                        'publisher': {'@id': C.SITE + '/#agent'}}, faq_ld(H['faq'])]
+    h = head(l, H['title'], H['desc'], alts, '/img/og-default.jpg', C.BRAND, ld, preload='/img/hero-day.jpg')
+    page(l, '/', alts, h, hero + about + types + plans + svc + proc + areas + guides + faq + contact + '</main>\n')
+    PAGES.append(alts)
+
+
+# ------------------------------------------------------------------ areas
+
+def build_hub(l):
+    U = UI[l]
+    alts = {k: url(k, '/areas/') for k in LANGS}
+    out = ''
+    for g, slugs in MENU:
+        out += f'<p class="grp-h">{esc(U["grp_" + g])}</p><div class="cards four" style="margin-top:20px">' + ''.join(
+            f'<a class="card" href="{url(l, "/areas/" + s + "/")}"><img src="/img/areas/{s}.jpg" width="1200" height="630" loading="lazy" alt="{attr(city(l, s)["alt"])}">'
+            f'<div class="card-b"><h3>{esc(city(l, s)["name"])}</h3><p>{esc(city(l, s)["card"])}</p><span class="card-m">{esc(U["hub_more"].format(name=city(l, s)["name"]))} →</span></div></a>'
+            for s in slugs) + '</div>'
+    body = ('<main id="main"><header class="ph"><img src="/img/hero-day.jpg" width="1920" height="1080" alt=""><div class="ph-c">'
+            + crumbs([(U['home'], url(l, '/')), (U['areas'], None)]) + eye(esc(U['hub_eyebrow'])) + f'<h1>{U["hub_h1"]}</h1>'
+            f'<p class="ph-lead">{esc(U["hub_lead"])}</p></div></header><section class="sec"><div class="in" style="margin-top:-30px">{out}</div></section>\n'
+            + contact_block(l, U['hub_contact_h'], HOME[l]['contact_p']) + '</main>\n')
+    ld = [agent_ld(l), breadcrumb_ld(l, [(U['home'], url(l, '/')), (U['areas'], url(l, '/areas/'))])]
+    page(l, '/areas/', alts, head(l, U['hub_title'], U['hub_desc'], alts, '/img/og-default.jpg', C.BRAND, ld), body)
+    PAGES.append(alts)
+
+
+def build_city(l, s):
+    U, c = UI[l], city(l, s)
+    n = c['name']
+    alts = {k: url(k, f'/areas/{s}/') for k in LANGS}
+    wa_t = U['city_wa'].format(name=n)
+    facts = ''.join(f'<div><dt>{esc(k)}</dt><dd>{esc(v)}</dd></div>' for k, v in c['facts'])
+    hoods = ''.join(f'<div class="hood"><h3>{esc(a)}</h3><p>{esc(b)}</p></div>' for a, b in c['hoods'])
+    why = ''.join(f'<div><h3>{esc(a)}</h3><p>{esc(b)}</p></div>' for a, b in c['why'])
+    pills = ''.join(f'<a class="svc-pill" href="{waurl(wa_t + " (" + t + ")")}" target="_blank" rel="noopener">{esc(t)}</a>' for t in U['city_svc'])
+    near = ''.join(f'<a class="card" href="{url(l, "/areas/" + x + "/")}"><img src="/img/areas/{x}.jpg" width="1200" height="630" loading="lazy" alt="{attr(city(l, x)["alt"])}">'
+                   f'<div class="card-b"><h3>{esc(city(l, x)["name"])}</h3><p>{esc(city(l, x)["card"])}</p></div></a>' for x in NEAR[s])
+    body = (f'<main id="main"><header class="ph"><img src="/img/areas/{s}.jpg" width="1200" height="630" alt="{attr(c["alt"])}" fetchpriority="high"><div class="ph-c">'
+            + crumbs([(U['home'], url(l, '/')), (U['areas'], url(l, '/areas/')), (n, None)]) + eye(esc(U['city_eyebrow'].format(name=n)))
+            + f'<h1>{U["city_h1"].format(name=esc(n))}</h1><p class="ph-lead">{esc(c["lead"])}</p>'
+            f'<div class="cta-row"><a class="btn-wa" href="{waurl(wa_t)}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(U["btn_wa"])}</span></a>'
+            f'<a class="btn-o" href="#hoods"><span>{esc(U["btn_hoods"])}</span></a></div></div></header>\n'
+            f'<section class="sec"><div class="in two-col"><div>{eye(esc(U["intro_eye"].format(name=n)))}<h2 class="dh">{U["intro_h"].format(name=esc(n))}</h2>'
+            f'<div class="prose" style="margin-top:28px">{"".join(f"<p>{esc(p)}</p>" for p in c["intro"])}</div></div>'
+            f'<aside class="facts"><h3>{esc(U["facts_h"])}</h3><dl>{facts}</dl></aside></div></section>\n'
+            f'<section class="sec" id="hoods" style="background:#fff"><div class="in">{eye(esc(U["hoods_eye"]))}<h2 class="dh">{U["hoods_h"].format(name=esc(n))}</h2><div class="hoods">{hoods}</div></div></section>\n'
+            f'<section class="sec dark-bg"><div class="in">{eye(esc(U["why_eye"].format(name=n)))}<h2 class="dh light">{U["why_h"].format(name=esc(n))}</h2><div class="why">{why}</div></div></section>\n'
+            f'<section class="sec"><div class="in"><h2 class="dh">{U["svc_h"].format(name=esc(n))}</h2><div class="svc-pills">{pills}</div></div></section>\n'
+            f'<section class="sec" style="background:#fff;padding-top:60px"><div class="in">{eye(esc(U["faq_eye"]))}<h2 class="dh">{U["faq_h"].format(name=esc(n))}</h2>{faq_html(c["faq"])}</div></section>\n'
+            f'<section class="sec"><div class="in"><h2 class="dh" style="font-size:clamp(28px,3.4vw,42px)">{esc(U["near_h"])}</h2><div class="cards">{near}</div></div></section>\n'
+            + contact_block(l, U['contact_h'].format(name=esc(n)), HOME[l]['contact_p'], wa_text=wa_t) + '</main>\n')
+    trail = [(U['home'], url(l, '/')), (U['areas'], url(l, '/areas/')), (n, url(l, f'/areas/{s}/'))]
+    ld = [agent_ld(l), breadcrumb_ld(l, trail), faq_ld(c['faq'])]
+    page(l, f'/areas/{s}/', alts, head(l, U['city_title'].format(name=n), c['desc'], alts, f'/img/areas/{s}.jpg', c['alt'], ld), body)
+    PAGES.append(alts)
+
+
+# ------------------------------------------------------------------ blog
+
+def build_blog_index(l):
+    U = UI[l]
+    alts = {k: url(k, '/blog/') for k in LANGS}
+    body = ('<main id="main"><header class="ph" style="min-height:460px"><img src="/img/hero-night.jpg" width="1920" height="1080" alt=""><div class="ph-c">'
+            + crumbs([(U['home'], url(l, '/')), (U['blog'], None)]) + eye(esc(U['blog_eyebrow'])) + f'<h1>{U["blog_h1"]}</h1><p class="ph-lead">{esc(U["blog_lead"])}</p></div></header>'
+            f'<section class="sec"><div class="in" style="margin-top:-20px"><div class="cards">{"".join(post_card(l, s) for s in ORDER)}</div></div></section>\n'
+            + contact_block(l, U['cta_h'], U['cta_p']) + '</main>\n')
+    ld = [agent_ld(l), breadcrumb_ld(l, [(U['home'], url(l, '/')), (U['blog'], url(l, '/blog/'))])]
+    feed = f'<link rel="alternate" type="application/rss+xml" title="{attr(C.BRAND)}" href="{url(l, "/blog/feed.xml")}">\n'
+    page(l, '/blog/', alts, head(l, U['blog_title'], U['blog_desc'], alts, '/img/og-default.jpg', C.BRAND, ld, extra=feed), body)
+    PAGES.append(alts)
+
+
+def build_post(l, s):
+    U, p = UI[l], post(l, s)
+    alts = {k: url(k, f'/blog/{s}/') for k in LANGS}
+    secs = ''
+    for hd, paras, bullets in p['sections']:
+        secs += f'<h2>{esc(hd)}</h2>' + ''.join(f'<p>{esc(x)}</p>' for x in paras)
+        if bullets:
+            secs += '<ul>' + ''.join(f'<li>{esc(b)}</li>' for b in bullets) + '</ul>'
+    idx = ORDER.index(s)
+    rel = [ORDER[(idx + k) % len(ORDER)] for k in (1, 2, 3)]
+    wa_t = U['post_wa'].format(title=p['title'])
+    body = (f'<main id="main"><header class="ph" style="min-height:500px"><img src="/img/blog/{s}.jpg" width="1200" height="630" alt="" fetchpriority="high"><div class="ph-c">'
+            + crumbs([(U['home'], url(l, '/')), (U['blog'], url(l, '/blog/')), (p['title'], None)]) + eye(esc(U['cat_' + p['cat']]))
+            + f'<h1 style="font-size:clamp(34px,5vw,64px)">{esc(p["title"])}</h1><div class="ph-meta"><span>{esc(U["by"])}</span><span>{esc(U["updated"].format(date=DATE_FMT[l]))}</span>'
+            f'<span>{esc(U["min_read"].format(n=p["read"]))}</span></div></div></header>\n'
+            f'<article class="sec"><div class="post"><div class="answer"><b>{esc(U["quick_answer"])}</b><p>{esc(p["answer"])}</p></div>{secs}'
+            f'<h2>{esc(U["post_faq"])}</h2>{faq_html(p["faq"])}'
+            f'<div class="cta-box"><h2>{esc(U["cta_h"])}</h2><p>{esc(U["cta_p"])}</p><a class="btn-wa" href="{waurl(wa_t)}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(U["wa_btn"])}</span></a></div>'
+            f'</div></article>\n<section class="sec" style="background:#fff"><div class="in"><h2 class="dh" style="font-size:clamp(28px,3.4vw,42px)">{esc(U["related"])}</h2>'
+            f'<div class="cards">{"".join(post_card(l, r) for r in rel)}</div></div></section></main>\n')
+    ld = [agent_ld(l), breadcrumb_ld(l, [(U['home'], url(l, '/')), (U['blog'], url(l, '/blog/')), (p['title'], url(l, f'/blog/{s}/'))]), faq_ld(p['faq']),
+          {'@type': 'Article', 'headline': p['title'], 'description': p['desc'], 'inLanguage': C.HTML_LANG[l], 'datePublished': C.BUILD_DATE, 'dateModified': C.BUILD_DATE,
+           'image': f'{C.SITE}/img/blog/{s}.jpg', 'mainEntityOfPage': C.SITE + alts[l], 'author': {'@id': C.SITE + '/#agent'}, 'publisher': {'@id': C.SITE + '/#agent'}}]
+    page(l, f'/blog/{s}/', alts, head(l, (p['title'] + ' | ' + C.BRAND) if len(p['title']) + len(C.BRAND) + 3 <= 70 else p['title'], p['desc'], alts, f'/img/blog/{s}.jpg', p['title'], ld, og_type='article'), body)
+    PAGES.append(alts)
+
+
+def build_feed(l):
+    U = UI[l]
+    dt = format_datetime(datetime.datetime(2026, 10, 29, 9, 0, tzinfo=datetime.timezone.utc))
+    items = ''.join(f'<item><title>{esc(post(l, s)["title"])}</title><link>{C.SITE}{url(l, "/blog/" + s + "/")}</link><guid>{C.SITE}{url(l, "/blog/" + s + "/")}</guid>'
+                    f'<pubDate>{dt}</pubDate><description>{esc(post(l, s)["answer"])}</description></item>' for s in ORDER)
+    write(url(l, '/blog/feed.xml').lstrip('/'), f'<?xml version="1.0" encoding="UTF-8"?>\n<rss version="2.0"><channel><title>{esc(C.BRAND)}: {esc(U["blog"])}</title>'
+          f'<link>{C.SITE}{url(l, "/blog/")}</link><description>{esc(U["blog_desc"])}</description><language>{C.HTML_LANG[l]}</language>{items}</channel></rss>\n')
+
+
+# ------------------------------------------------------------------ site files
+
+def build_404():
+    l = 'en'
+    U = UI[l]
+    alts = {'en': '/'}
+    body = (f'<main id="main" class="sec" style="padding-top:170px;min-height:70vh"><div class="in"><h1 class="dh">{esc(U["notfound_h"])}</h1><p class="lead" style="margin:20px 0 28px">{esc(U["notfound_p"])}</p>'
+            f'<a class="btn-g" href="/">{esc(U["home"])}</a> <a class="btn-o dark" href="/blog/">{esc(U["blog"])}</a></div></main>\n')
+    h = head(l, f'{U["notfound_h"]} | {C.BRAND}', U['notfound_p'], {'en': '/404.html'}, '/img/og-default.jpg', C.BRAND, [], extra='').replace('content="index, follow', 'content="noindex, follow')
+    write('404.html', h + '<body>\n' + nav(l, {'en': '/', 'hi': '/hi/', 'mr': '/mr/'}) + body + footer(l, {'en': '/', 'hi': '/hi/', 'mr': '/mr/'}))
+
+
+def build_sitemap():
+    rows, seen = '', set()
+    for alts in PAGES:
+        if alts['en'] in seen:
+            continue
+        seen.add(alts['en'])
+        for l in alts:
+            links = ''.join(f'<xhtml:link rel="alternate" hreflang="{k}" href="{C.SITE}{alts[k]}"/>' for k in alts)
+            links += f'<xhtml:link rel="alternate" hreflang="x-default" href="{C.SITE}{alts["en"]}"/>'
+            rows += f'<url><loc>{C.SITE}{alts[l]}</loc><lastmod>{C.BUILD_DATE}</lastmod>{links}</url>\n'
+    write('sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' + rows + '</urlset>\n')
+    write('robots.txt', f'User-agent: *\nAllow: /\n\nSitemap: {C.SITE}/sitemap.xml\n')
+
+
+def build_llms():
+    lines = [f'# {C.BRAND}', '', f'> Property consultants in Kalyan, Maharashtra, helping buyers, sellers, tenants and investors across the Mumbai Metropolitan Region. '
+             'Site available in English (/), Hindi (/hi/) and Marathi (/mr/).', '', '## Contact', f'- Office: {C.ADDRESS_LINE}', f'- Phone / WhatsApp: {C.PHONE_DISPLAY}',
+             f'- Email: {C.EMAIL}', '', '## Areas served']
+    lines += [f'- [{CIT["en"][s]["name"]}]({C.SITE}/areas/{s}/): {CIT["en"][s]["card"]}' for s in CITY_SLUGS]
+    lines += ['', '## Guides']
+    lines += [f'- [{PST["en"][s]["title"]}]({C.SITE}/blog/{s}/): {PST["en"][s]["answer"]}' for s in ORDER]
+    lines += ['', '## Notes', 'Information is general guidance, not legal, tax or financial advice. Confirm rates and rules with official sources.', '']
+    write('llms.txt', '\n'.join(lines))
+
+
+def build_vercel():
+    red = [{'source': '/en', 'destination': '/', 'permanent': True}, {'source': '/en/', 'destination': '/', 'permanent': True}]
+    for s in OLD_BLOG:
+        red += [{'source': f'/blog/{s}', 'destination': '/blog/', 'permanent': True}, {'source': f'/blog/{s}/', 'destination': '/blog/', 'permanent': True},
+                {'source': f'/en/blog/{s}/', 'destination': '/blog/', 'permanent': True}]
+    for s in OLD_AREAS:
+        red += [{'source': f'/areas/{s}', 'destination': '/areas/', 'permanent': True}, {'source': f'/areas/{s}/', 'destination': '/areas/', 'permanent': True},
+                {'source': f'/en/areas/{s}/', 'destination': '/areas/', 'permanent': True}]
+    red += [{'source': '/en/areas/', 'destination': '/areas/', 'permanent': True}, {'source': '/img/prestige_enterprises.in.png', 'destination': '/img/logo.png', 'permanent': False}]
+    cfg = {'trailingSlash': True, 'redirects': red, 'headers': [
+        {'source': '/(.*)', 'headers': [{'key': 'X-Content-Type-Options', 'value': 'nosniff'}, {'key': 'X-Frame-Options', 'value': 'SAMEORIGIN'},
+                                         {'key': 'Referrer-Policy', 'value': 'strict-origin-when-cross-origin'}, {'key': 'Permissions-Policy', 'value': 'camera=(), microphone=(), geolocation=()'}]},
+        {'source': '/img/(.*)', 'headers': [{'key': 'Cache-Control', 'value': 'public, max-age=2592000'}]},
+        {'source': '/assets/(.*)', 'headers': [{'key': 'Cache-Control', 'value': 'public, max-age=31536000, immutable'}]}]}
+    write('vercel.json', json.dumps(cfg, indent=2) + '\n')
+
+
+# ------------------------------------------------------------------ main
 
 def main():
-    es = open(os.path.join(ROOT, 'index.html'), encoding='utf-8').read()
-    es = refresh_home_jsonld(fill_home(es, 'es'))
-    write('index.html', es)
-    en = build_home_en(es)
-    write('en/index.html', en)
-
-    for lang, home in (('es', es), ('en', en)):
-        pieces = Pieces(home, lang)
-        for c in CITIES:
-            write(city_url(lang, c['slug']).lstrip('/') + 'index.html', city_page(lang, c, pieces))
-        write(f'{pre(lang)}/areas/index.html'.lstrip('/'), hub_page(lang, pieces))
-
-        if lang == 'es':
-            for p in POSTS:
-                write(post_url(p['slug']).lstrip('/') + 'index.html', post_page(p, pieces))
-            write('blog/index.html', blog_index(pieces))
-            write('blog/feed.xml', feed())
-
-    write('llms.txt', llms_txt())
-    write('sitemap.xml', sitemap(datetime.date.today().isoformat()))
-    print(f'built: index.html, en/index.html, {len(CITIES) * 2} city pages, 2 hubs, '
-          f'{len(POSTS)} posts + blog index + feed, llms.txt, sitemap.xml')
+    validate()
+    for d in ('en', 'hi', 'mr', 'areas', 'blog'):  # generated trees (old Spanish site included)
+        shutil.rmtree(os.path.join(ROOT, d), ignore_errors=True)
+    for l in LANGS:
+        build_home(l)
+        build_hub(l)
+        for s in CITY_SLUGS:
+            build_city(l, s)
+        build_blog_index(l)
+        for s in ORDER:
+            build_post(l, s)
+        build_feed(l)
+    build_404()
+    build_sitemap()
+    build_llms()
+    build_vercel()
+    print(f'built {len({a["en"] for a in PAGES})} pages x {len(LANGS)} languages = {len(PAGES)} URLs')
 
 
 if __name__ == '__main__':
