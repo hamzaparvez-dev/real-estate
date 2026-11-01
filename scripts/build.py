@@ -311,7 +311,7 @@ def crumbs(items):
 
 PAGES = []  # alts dicts (lang -> path); deduplicated when the sitemap is written
 SOLID = ' class="solid"'
-BLOG_PHOTO_VERSION = '20261101-editorial-photo-set-2'
+BLOG_PHOTO_VERSION = '20261101-editorial-photo-set-3'
 
 
 # ------------------------------------------------------------------ home
