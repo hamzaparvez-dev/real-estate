@@ -1005,3 +1005,26 @@ a.wa[href*="wa.me"]{
   color:#fff!important;
 }
 a.wa[href*="wa.me"] svg{color:#fff!important;stroke:currentColor}
+
+
+/* Sticky-footer page shell: main content fills the remaining viewport; footer stays navy. */
+html,body{min-height:100%;background:#070E1C!important}
+body{
+  display:flex;
+  flex-direction:column;
+  min-height:100vh;
+  min-height:100svh;
+  background:#070E1C!important;
+}
+#main{
+  flex:1 0 auto;
+  width:100%;
+  background:var(--bg);
+}
+body>footer,body>footer:last-of-type{
+  flex:0 0 auto;
+  width:100%;
+  margin-top:0!important;
+  margin-bottom:0!important;
+  background:#070E1C!important;
+}
