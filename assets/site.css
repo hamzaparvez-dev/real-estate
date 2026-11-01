@@ -1131,3 +1131,13 @@ body>footer,body>footer:last-of-type{
 @media(max-width:640px){
   .plans-grid-secondary{grid-template-columns:1fr}
 }
+
+
+/* Three apartment-only category cards: the artwork carries its own titles. */
+.types-grid-apartments{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px;align-items:stretch}
+.types-grid-apartments .type-apartment{display:block;min-width:0;aspect-ratio:880/786;overflow:hidden;border:1px solid rgba(34,230,95,.55);border-radius:4px;background:#061426;box-shadow:0 10px 28px rgba(0,0,0,.22)}
+.types-grid-apartments .type-apartment img{display:block;width:100%;height:100%;aspect-ratio:880/786;object-fit:cover;filter:none;transition:transform .45s ease}
+.types-grid-apartments .type-apartment:hover img{transform:scale(1.015);filter:none}
+.types-grid-apartments .type-apartment .type-ov{display:none}
+@media(max-width:900px){.types-grid-apartments{grid-template-columns:repeat(2,minmax(0,1fr))}}
+@media(max-width:560px){.types-grid-apartments{grid-template-columns:1fr}}
