@@ -1113,3 +1113,21 @@ body>footer,body>footer:last-of-type{
 @media(prefers-reduced-motion:reduce){
   .floating-cta a,.floating-cta button{transition:none!important}
 }
+
+
+/* Floor plan request cards: 4 BHK and 5 BHK form a centered second row on desktop. */
+.plans-grid-secondary{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:24px;
+  width:calc(66.6667% - 8px);
+  max-width:100%;
+  margin:24px auto 0;
+}
+.plans-grid-secondary .plan-card{min-width:0}
+@media(max-width:960px){
+  .plans-grid-secondary{width:100%;max-width:none}
+}
+@media(max-width:640px){
+  .plans-grid-secondary{grid-template-columns:1fr}
+}
