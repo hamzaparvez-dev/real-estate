@@ -188,8 +188,12 @@
     float.querySelector('.f-enq').addEventListener('click', function () { openModal(this); });
 
     /* Normalise legacy unclassed CTA markup so older pages cannot ship browser-default buttons. */
-    $('a[href*="wa.me"]').forEach(function (el) {
-      if (!el.classList.contains('btn-wa-sm')) el.classList.add('btn-wa');
+    $('a[href*="wa.me"],a[aria-label*="WhatsApp"],a[aria-label*="whatsapp"],button[aria-label*="WhatsApp"]').forEach(function (el) {
+      if (!el.classList.contains('btn-wa-sm') && !el.classList.contains('f-wa')) el.classList.add('btn-wa');
+    });
+    $('a,button').forEach(function (el) {
+      var label = (el.textContent || el.getAttribute('aria-label') || '').trim().toLowerCase();
+      if (label.indexOf('whatsapp') !== -1 && !el.classList.contains('btn-wa-sm') && !el.classList.contains('f-wa')) el.classList.add('btn-wa');
     });
     /* Section-wide duplicate WhatsApp/Enquire CTAs intentionally removed. */
     document.querySelectorAll('.enquire-trigger').forEach(function (el) {
