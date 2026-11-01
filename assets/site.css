@@ -1131,3 +1131,44 @@ body>footer,body>footer:last-of-type{
 @media(max-width:640px){
   .plans-grid-secondary{grid-template-columns:1fr}
 }
+
+
+/* Prestige Gold pricing section: scoped styling, reusing the site's font variables. */
+.price-section{--price-navy:#142B45;--price-gold:#BD963F;--price-muted:#627184;background:#F5F7FA;color:var(--price-navy);border-block:1px solid #E2E7ED}
+.price-heading{display:flex;align-items:flex-end;justify-content:space-between;gap:32px;margin-bottom:38px}
+.price-section .eye-line{background:var(--price-gold)}
+.price-section .eye-txt{color:var(--price-navy)}
+.price-title{color:var(--price-navy);max-width:800px}
+.price-title em{color:var(--price-gold);font-style:italic}
+.price-intro{max-width:690px;margin:18px 0 0;color:var(--price-muted);font:400 16px/1.75 var(--sans)}
+.price-heading-note{flex:none;padding-bottom:8px;color:#7B8795;font:500 10px/1.4 var(--mono);letter-spacing:.19em;text-transform:uppercase}
+.price-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));align-items:stretch;gap:20px}
+.price-card{min-width:0;display:flex;flex-direction:column;overflow:hidden;background:#fff;border:1px solid #DCE3EA;border-top:3px solid #D9C18B;box-shadow:0 12px 32px rgba(20,43,69,.055);transition:transform .25s ease,box-shadow .25s ease,border-color .25s ease}
+.price-card:hover{transform:translateY(-4px);border-color:#C5A45B;box-shadow:0 18px 38px rgba(20,43,69,.10)}
+.price-card-featured{border-top-color:var(--price-gold);box-shadow:0 16px 38px rgba(20,43,69,.10)}
+.price-media{height:180px;padding:14px 20px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#F7F8FA,#EEF2F5);border-bottom:1px solid #E9EDF1}
+.price-media img{display:block;width:100%;height:100%;max-width:100%;object-fit:contain}
+.price-media-request{padding:18px 24px}
+.price-plan-placeholder{width:100%;height:100%;min-height:130px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;padding:18px;border:1px dashed #C6A45A;color:#A47D2D;text-align:center;font:italic 400 22px/1.25 var(--serif)}
+.price-placeholder-mark{display:grid;place-items:center;width:36px;height:36px;border:1px solid #C6A45A;color:var(--price-navy);font:500 11px/1 var(--mono);letter-spacing:.08em}
+.price-card-body{height:100%;display:flex;flex-direction:column;padding:24px 25px 25px}
+.price-card-meta{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}
+.price-card-label{color:#7A8795;font:500 9px/1.4 var(--mono);letter-spacing:.2em;text-transform:uppercase}
+.price-card-index{color:#B7A06E;font:400 11px/1 var(--mono);letter-spacing:.1em}
+.price-card h3{margin:0;color:var(--price-navy);font:400 36px/1.12 var(--serif)}
+.price-start-label{margin:18px 0 0;color:#8793A0;font:500 9px/1.4 var(--mono);letter-spacing:.16em;text-transform:uppercase}
+.price-amount{margin:1px 0 0;color:var(--price-gold);font:400 clamp(29px,3vw,38px)/1.16 var(--serif);white-space:nowrap;font-variant-numeric:lining-nums}
+.price-onwards{min-height:38px;margin:4px 0 18px;color:#7B8792;font:400 12px/1.55 var(--sans)}
+.price-area{display:flex;flex-direction:column;gap:6px;padding:15px 0;border-block:1px solid #E1E5EA}
+.price-area span{color:#8994A1;font:500 9px/1.4 var(--mono);letter-spacing:.16em;text-transform:uppercase}
+.price-area strong{color:#34465B;font:500 14px/1.4 var(--sans)}
+.price-features{display:grid;gap:9px;margin:18px 0 24px;padding:0;list-style:none}
+.price-features li{position:relative;padding-left:16px;color:#566477;font:400 13px/1.5 var(--sans)}
+.price-features li:before{content:"";position:absolute;left:0;top:.62em;width:5px;height:5px;border-radius:50%;background:var(--price-gold)}
+.price-enquire{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:auto;min-height:48px;padding:12px 15px;border:1px solid var(--price-navy);background:var(--price-navy);color:#fff;text-decoration:none;font:600 10px/1.35 var(--sans);letter-spacing:.09em;text-transform:uppercase;transition:background .2s ease,border-color .2s ease}
+.price-enquire span{color:#E3C779;font-size:17px;line-height:1}
+.price-enquire:hover{background:#1D3B5C;border-color:#1D3B5C}
+.price-disclaimer{max-width:1040px;margin:24px 0 0;color:#778493;font:400 11px/1.7 var(--sans)}
+@media(max-width:1000px){.price-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.price-card:last-child{grid-column:1/-1;max-width:calc(50% - 10px);width:100%;justify-self:center}}
+@media(max-width:680px){.price-section{padding-top:64px;padding-bottom:64px}.price-heading{display:block;margin-bottom:26px}.price-heading-note{display:block;margin-top:18px;padding:0}.price-intro{font-size:14px;line-height:1.7;margin-top:14px}.price-grid{grid-template-columns:1fr;gap:16px}.price-card:last-child{grid-column:auto;max-width:none}.price-media{height:168px}.price-card-body{padding:21px 20px}.price-card h3{font-size:34px}.price-amount{font-size:34px}.price-onwards{min-height:0}.price-features{gap:8px;margin:16px 0 22px}}
+@media(prefers-reduced-motion:reduce){.price-card,.price-enquire{transition:none}.price-card:hover{transform:none}}
