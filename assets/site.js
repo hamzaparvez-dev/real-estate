@@ -215,4 +215,44 @@
       openModal(el);
     });
   })();
+  /* Topic-specific editorial photography for every guide card and article hero. */
+  (function () {
+    var blogPhotos = {
+      'how-to-buy-a-flat-in-kalyan-dombivli': 'https://images.unsplash.com/photo-1751945965597-71171ec7a458?auto=format&fit=crop&w=1400&q=85',
+      'stamp-duty-registration-charges-maharashtra': 'https://images.unsplash.com/photo-1759429255330-51145b170dad?auto=format&fit=crop&w=1400&q=85',
+      'check-rera-registration-before-you-buy': 'https://images.unsplash.com/photo-1753774050094-867f85e986fa?auto=format&fit=crop&w=1400&q=85',
+      'home-loan-eligibility-emi-guide': 'https://images.unsplash.com/photo-1709880945165-d2208c6ad2ec?auto=format&fit=crop&w=1400&q=85',
+      'under-construction-vs-ready-to-move': 'https://images.unsplash.com/photo-1765547682681-428452039cd8?auto=format&fit=crop&w=1400&q=85',
+      'documents-to-check-before-buying-property': 'https://images.unsplash.com/photo-1762427907123-c7ab022a5de7?auto=format&fit=crop&w=1400&q=85',
+      'buying-a-resale-flat-checklist': 'https://images.unsplash.com/photo-1759428679273-11d914866394?auto=format&fit=crop&w=1400&q=85',
+      'ready-reckoner-rate-explained': 'https://images.unsplash.com/photo-1732437598333-27141529981f?auto=format&fit=crop&w=1400&q=85',
+      'rent-or-buy-in-mumbai-metropolitan-region': 'https://images.unsplash.com/photo-1724582586529-62622e50c0b3?auto=format&fit=crop&w=1400&q=85',
+      'capital-gains-tax-on-property-sale': 'https://images.unsplash.com/photo-1762427907123-c7ab022a5de7?auto=format&fit=crop&w=1400&q=85',
+      'property-investment-kalyan-corridor': 'https://images.unsplash.com/photo-1759863468440-85130c0dff28?auto=format&fit=crop&w=1400&q=85',
+      'nri-buying-property-in-maharashtra': 'https://images.unsplash.com/photo-1763621605783-307c1743e308?auto=format&fit=crop&w=1400&q=85'
+    };
+    document.querySelectorAll('img[src*="/img/blog/"]').forEach(function (img) {
+      var raw = img.getAttribute('src') || '';
+      var file = raw.split('/').pop().split('?')[0];
+      var slug = file.replace(/\.(jpe?g|webp|png)$/i, '');
+      var photo = blogPhotos[slug];
+      if (!photo) return;
+      img.dataset.localFallback = raw;
+      img.onerror = function () {
+        if (this.dataset.localFallback) {
+          this.onerror = null;
+          this.src = this.dataset.localFallback;
+        }
+      };
+      img.src = photo;
+      img.decoding = 'async';
+      if (img.closest('.ph')) {
+        img.loading = 'eager';
+        img.fetchPriority = 'high';
+      } else {
+        img.loading = 'lazy';
+      }
+    });
+  })();
+
 })();
