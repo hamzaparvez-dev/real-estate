@@ -199,22 +199,20 @@
     document.querySelectorAll('.enquire-trigger').forEach(function (el) {
       el.addEventListener('click', function (e) { e.preventDefault(); openModal(this); });
     });
-    document.querySelectorAll('a,button').forEach(function (el) {
-      if (el.classList.contains('cta-enq') || el.classList.contains('f-enq') || el.classList.contains('enquire-trigger')) return;
+    /* One delegated handler covers legacy and newly-rendered enquiry controls on every page. */
+    document.addEventListener('click', function (e) {
+      var el = e.target && e.target.closest ? e.target.closest('a,button') : null;
+      if (!el || modal.contains(el) || el.classList.contains('f-enq') || el.classList.contains('enquire-trigger')) return;
       var label = (el.textContent || el.getAttribute('aria-label') || '').trim().toLowerCase();
       if (label.indexOf('enquire') === -1 && label.indexOf('enquiry') === -1 && label.indexOf('request details') === -1) return;
+      e.preventDefault();
       el.classList.add('btn-enquire');
-      var href = el.getAttribute('href') || '';
-      if (el.tagName === 'A' && href && !/^#/.test(href) && href.indexOf('wa.me') === -1) return;
-      el.addEventListener('click', function (e) {
-        if (el.tagName === 'A') e.preventDefault();
-        var card = el.closest('.plan-card');
-        var section = el.closest('section');
-        var context = card ? (card.querySelector('h3')?.textContent || 'featured project') : (section?.id || '');
-        var details = form.querySelector('[name="message"]');
-        if (context && details && !details.value) details.value = 'I am enquiring about: ' + context;
-        openModal(this);
-      });
+      var card = el.closest('.plan-card');
+      var section = el.closest('section');
+      var context = card ? (card.querySelector('h3')?.textContent || 'featured project') : (section && (section.id || section.querySelector('h2')?.textContent) || '');
+      var details = form.querySelector('[name="message"]');
+      if (context && details && !details.value) details.value = 'I am enquiring about: ' + context;
+      openModal(el);
     });
   })();
 })();
