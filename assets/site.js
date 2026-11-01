@@ -187,6 +187,10 @@
     document.body.appendChild(float);
     float.querySelector('.f-enq').addEventListener('click', function () { openModal(this); });
 
+    /* Normalise legacy unclassed CTA markup so older pages cannot ship browser-default buttons. */
+    $('a[href*="wa.me"]').forEach(function (el) {
+      if (!el.classList.contains('btn-wa-sm')) el.classList.add('btn-wa');
+    });
     /* Section-wide duplicate WhatsApp/Enquire CTAs intentionally removed. */
     document.querySelectorAll('.enquire-trigger').forEach(function (el) {
       el.addEventListener('click', function (e) { e.preventDefault(); openModal(this); });
@@ -195,6 +199,7 @@
       if (el.classList.contains('cta-enq') || el.classList.contains('f-enq') || el.classList.contains('enquire-trigger')) return;
       var label = (el.textContent || el.getAttribute('aria-label') || '').trim().toLowerCase();
       if (label.indexOf('enquire') === -1 && label.indexOf('enquiry') === -1 && label.indexOf('request details') === -1) return;
+      el.classList.add('btn-enquire');
       var href = el.getAttribute('href') || '';
       if (el.tagName === 'A' && href && !/^#/.test(href) && href.indexOf('wa.me') === -1) return;
       el.addEventListener('click', function (e) {
