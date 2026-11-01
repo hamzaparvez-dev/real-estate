@@ -123,6 +123,7 @@
     document.body.appendChild(modal);
     var form = modal.querySelector('form');
     var lastFocus = null;
+    var enquiryIntent = 'property';
     var close = function () {
       modal.classList.remove('open');
       modal.setAttribute('aria-hidden', 'true');
@@ -131,6 +132,8 @@
     };
     var openModal = function (trigger) {
       lastFocus = trigger || document.activeElement;
+      enquiryIntent = trigger && trigger.getAttribute('data-enquiry-intent') === 'site-visit' ? 'site-visit' : 'property';
+      modal.querySelector('#enqTitle').textContent = enquiryIntent === 'site-visit' ? 'Book Your Site Visit' : 'Enquire Now';
       modal.classList.add('open');
       modal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
@@ -166,7 +169,7 @@
         return;
       }
       var lines = [
-        'Hello Prestige Enterprises, I would like to make a property enquiry.',
+        'Hello Prestige Enterprises, I would like to ' + (enquiryIntent === 'site-visit' ? 'book a site visit.' : 'make a property enquiry.'),
         '',
         'Name: ' + data.get('name'),
         'Mobile: ' + phone,
@@ -183,8 +186,10 @@
 
     var float = document.createElement('div');
     float.className = 'floating-cta';
-    float.innerHTML = '<a class="f-wa" href="' + WA + '?text=' + encodeURIComponent('Hello Prestige Enterprises, I would like more information about residential properties.') + '" target="_blank" rel="noopener" aria-label="WhatsApp">&#9990;</a><button class="f-enq" type="button" aria-label="Open property enquiry form">&#9998;</button>';
+    float.setAttribute('aria-label', 'Quick contact actions');
+    float.innerHTML = '<button class="f-book" type="button" data-enquiry-intent="site-visit" aria-label="Book a site visit">BOOK VISIT</button><a class="f-wa" href="' + WA + '?text=' + encodeURIComponent('Hello Prestige Enterprises, I would like more information about homes in Kalyan.') + '" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20l1.2-4.3A8.4 8.4 0 1 1 20 11.5Z"/><path d="M8.5 8.2c.3-.6.6-.6.9-.6h.4c.2 0 .4.1.5.4l.7 1.7c.1.2.1.4-.1.6l-.5.6c-.2.2-.2.4 0 .7.6 1 1.4 1.7 2.4 2.2.3.1.5.1.7-.1l.7-.8c.2-.2.4-.3.7-.2l1.6.8c.3.1.4.3.4.5 0 .3-.2 1-.7 1.4-.5.4-1.1.6-1.8.5-1-.1-2.2-.6-3.6-1.8-1.6-1.4-2.6-3.1-2.8-4.1-.2-.9.1-1.5.5-1.8Z"/></svg><span>WHATSAPP</span></a><button class="f-enq" type="button" data-enquiry-intent="property" aria-label="Enquire now">ENQUIRE NOW</button>';
     document.body.appendChild(float);
+    float.querySelector('.f-book').addEventListener('click', function () { openModal(this); });
     float.querySelector('.f-enq').addEventListener('click', function () { openModal(this); });
 
     /* Normalise legacy unclassed CTA markup so older pages cannot ship browser-default buttons. */

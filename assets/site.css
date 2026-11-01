@@ -1043,3 +1043,73 @@ body>footer,body>footer:last-of-type{
 .card:hover>img{transform:scale(1.015)}
 .card>img{transition:transform .35s ease}
 @media(prefers-reduced-motion:reduce){.card>img{transition:none}.card:hover>img{transform:none}}
+
+
+/* Three-action mobile contact dock. Desktop contact controls remain unchanged. */
+@media(max-width:700px){
+  body{padding-bottom:calc(82px + env(safe-area-inset-bottom,0px))}
+  body>a.wa{display:none!important}
+  .floating-cta{
+    position:fixed;
+    z-index:1200;
+    left:10px;
+    right:10px;
+    bottom:calc(9px + env(safe-area-inset-bottom,0px));
+    display:grid;
+    grid-template-columns:repeat(3,minmax(0,1fr));
+    width:auto;
+    overflow:hidden;
+    border:1px solid rgba(20,43,69,.18);
+    border-radius:12px;
+    background:#142B45;
+    box-shadow:0 8px 28px rgba(0,0,0,.24);
+  }
+  .floating-cta a,
+  .floating-cta button{
+    display:flex!important;
+    min-width:0;
+    min-height:54px;
+    align-items:center;
+    justify-content:center;
+    gap:5px;
+    margin:0!important;
+    padding:0 5px!important;
+    border:0!important;
+    border-radius:0!important;
+    box-shadow:none!important;
+    font:700 10px/1.15 var(--sans)!important;
+    letter-spacing:.045em!important;
+    text-align:center;
+    text-decoration:none!important;
+    white-space:nowrap;
+    transform:none!important;
+    cursor:pointer;
+  }
+  .floating-cta button.f-book{
+    background:#121820!important;
+    color:#fff!important;
+  }
+  .floating-cta a.f-wa{
+    background:#25D366!important;
+    color:#fff!important;
+    border-left:1px solid rgba(255,255,255,.25)!important;
+    border-right:1px solid rgba(255,255,255,.25)!important;
+  }
+  .floating-cta .f-wa svg{
+    display:block;
+    width:17px;
+    height:17px;
+    flex:0 0 17px;
+    stroke:currentColor;
+  }
+  .floating-cta button.f-enq{
+    background:#D3B16B!important;
+    color:#142B45!important;
+  }
+}
+@media(min-width:701px){
+  .floating-cta{display:none!important}
+}
+@media(prefers-reduced-motion:reduce){
+  .floating-cta a,.floating-cta button{transition:none!important}
+}
