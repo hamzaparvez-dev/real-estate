@@ -898,3 +898,13 @@ a.btn-wa:hover,button.btn-wa:hover,.section-cta .cta-wa:hover{
   border-color:#159B4A!important;
   color:#FFFFFF!important;
 }
+
+/* Ensure the viewport tail below a short page/footer remains brand navy, not the body canvas. */
+html{background:#070E1C!important}
+body{
+  background:linear-gradient(to bottom,var(--bg) 0 calc(100% - 28px),#070E1C calc(100% - 28px))!important;
+  min-height:100vh;
+  min-height:100svh;
+}
+body>footer:last-of-type{margin-bottom:0!important}
+footer{background:#070E1C!important;width:100%;margin:0!important}
