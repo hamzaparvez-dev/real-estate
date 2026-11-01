@@ -1028,3 +1028,18 @@ body>footer,body>footer:last-of-type{
   margin-bottom:0!important;
   background:#070E1C!important;
 }
+
+
+/* Blog photography: consistent editorial aspect ratio and crop on every breakpoint. */
+.card>img{
+  display:block;
+  width:100%;
+  aspect-ratio:1200/630;
+  height:auto;
+  object-fit:cover;
+  object-position:center;
+  background:#E9EDF1;
+}
+.card:hover>img{transform:scale(1.015)}
+.card>img{transition:transform .35s ease}
+@media(prefers-reduced-motion:reduce){.card>img{transition:none}.card:hover>img{transform:none}}
