@@ -311,13 +311,14 @@ def crumbs(items):
 
 PAGES = []  # alts dicts (lang -> path); deduplicated when the sitemap is written
 SOLID = ' class="solid"'
+BLOG_PHOTO_VERSION = '20261031-editorial-photos-1'
 
 
 # ------------------------------------------------------------------ home
 
 def post_card(l, slug):
     p, U = post(l, slug), UI[l]
-    return (f'<a class="card" href="{url(l, "/blog/" + slug + "/")}"><img src="/img/blog/{slug}.jpg" width="1200" height="630" loading="lazy" alt="">'
+    return (f'<a class="card" href="{url(l, "/blog/" + slug + "/")}"><img src="/img/blog/{slug}.jpg?v={BLOG_PHOTO_VERSION}" width="1200" height="630" loading="lazy" decoding="async" alt="{attr(p["title"] + " — editorial real estate photograph")}">'
             f'<div class="card-b"><span class="card-k">{esc(U["cat_" + p["cat"]])}</span><h3>{esc(p["title"])}</h3><p>{esc(p["desc"])}</p>'
             f'<span class="card-m">{esc(U["min_read"].format(n=p["read"]))}</span></div></a>')
 
@@ -495,7 +496,7 @@ def build_post(l, s):
     idx = ORDER.index(s)
     rel = [ORDER[(idx + k) % len(ORDER)] for k in (1, 2, 3)]
     wa_t = U['post_wa'].format(title=p['title'])
-    body = (f'<main id="main"><header class="ph" style="min-height:500px"><img src="/img/blog/{s}.jpg" width="1200" height="630" alt="" fetchpriority="high"><div class="ph-c">'
+    body = (f'<main id="main"><header class="ph" style="min-height:500px"><img src="/img/blog/{s}.jpg?v={BLOG_PHOTO_VERSION}" width="1200" height="630" alt="{attr(p["title"] + " — editorial real estate photograph")}" fetchpriority="high" decoding="async"><div class="ph-c">'
             + crumbs([(U['home'], url(l, '/')), (U['blog'], url(l, '/blog/')), (p['title'], None)]) + eye(esc(U['cat_' + p['cat']]))
             + f'<h1 style="font-size:clamp(34px,5vw,64px)">{esc(p["title"])}</h1><div class="ph-meta"><span>{esc(U["by"])}</span><span>{esc(U["updated"].format(date=DATE_FMT[l]))}</span>'
             f'<span>{esc(U["min_read"].format(n=p["read"]))}</span></div></div></header>\n'
@@ -506,7 +507,7 @@ def build_post(l, s):
             f'<div class="cards">{"".join(post_card(l, r) for r in rel)}</div></div></section></main>\n')
     ld = [agent_ld(l), breadcrumb_ld(l, [(U['home'], url(l, '/')), (U['blog'], url(l, '/blog/')), (p['title'], url(l, f'/blog/{s}/'))]), faq_ld(p['faq']),
           {'@type': 'Article', 'headline': p['title'], 'description': p['desc'], 'inLanguage': C.HTML_LANG[l], 'datePublished': C.BUILD_DATE, 'dateModified': C.BUILD_DATE,
-           'image': f'{C.SITE}/img/blog/{s}.jpg', 'mainEntityOfPage': C.SITE + alts[l], 'author': {'@id': C.SITE + '/#agent'}, 'publisher': {'@id': C.SITE + '/#agent'}}]
+           'image': f'{C.SITE}/img/blog/{s}.jpg?v={BLOG_PHOTO_VERSION}', 'mainEntityOfPage': C.SITE + alts[l], 'author': {'@id': C.SITE + '/#agent'}, 'publisher': {'@id': C.SITE + '/#agent'}}]
     page(l, f'/blog/{s}/', alts, head(l, (p['title'] + ' | ' + C.BRAND) if len(p['title']) + len(C.BRAND) + 3 <= 70 else p['title'], p['desc'], alts, f'/img/blog/{s}.jpg', p['title'], ld, og_type='article'), body)
     PAGES.append(alts)
 
