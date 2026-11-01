@@ -85,15 +85,25 @@
     modal.addEventListener('click', function (e) { if (e.target === modal) closeModal(); });
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && modal.classList.contains('open')) closeModal(); });
     planWraps.forEach(function (w) {
-      if (!w.getAttribute('data-full')) return; // "Available on request" placeholders are not lightbox items.
-      w.addEventListener('click', function () {
+      if (!w.getAttribute('data-full')) return; // Placeholders without an image stay non-interactive.
+      var openPlanImage = function () {
         var src = w.getAttribute('data-full');
-        var title = w.getAttribute('data-title');
+        var title = w.getAttribute('data-title') || 'Floor plan';
         modalImg.src = src;
         modalImg.alt = title;
         modalTitle.textContent = title;
         modal.classList.add('open');
         document.body.style.overflow = 'hidden';
+      };
+      w.setAttribute('role', 'button');
+      w.setAttribute('tabindex', '0');
+      w.setAttribute('aria-label', 'View ' + (w.getAttribute('data-title') || 'floor plan') + ' in full size');
+      w.addEventListener('click', openPlanImage);
+      w.addEventListener('keydown', function (e) {
+        if (e.key === 'Enter' || e.key === ' ') {
+          e.preventDefault();
+          openPlanImage();
+        }
       });
     });
   }
