@@ -908,3 +908,100 @@ body{
 }
 body>footer:last-of-type{margin-bottom:0!important}
 footer{background:#070E1C!important;width:100%;margin:0!important}
+
+
+/* 2026-11-01 reliability pass: keep the page canvas navy after the footer. */
+html{
+  min-height:100%;
+  background:#070E1C!important;
+  overflow-x:clip;
+}
+body{
+  min-height:100vh;
+  min-height:100svh;
+  margin:0;
+  background:transparent!important;
+  overflow-x:clip;
+}
+#main{
+  display:block;
+  background:var(--bg);
+}
+body>footer,
+footer{
+  display:block;
+  width:100%;
+  margin:0!important;
+  border:0;
+  background:#070E1C!important;
+  color:rgba(250,246,240,.78);
+  padding-bottom:calc(32px + env(safe-area-inset-bottom,0px));
+}
+
+/* Fallback styling for legacy/unclassed enquiry controls on older generated pages. */
+button:not(.nav-dd-btn):not(.nav-ham):not(.enq-close):not(.f-enq),
+a.btn-enquire,
+button.btn-enquire,
+a.enquire-trigger,
+button.enquire-trigger,
+button[aria-label*="enquiry"],
+button[aria-label*="Enquiry"]{
+  appearance:none;
+  display:inline-flex!important;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  min-height:46px;
+  padding:13px 22px;
+  border:1px solid #142B45!important;
+  border-radius:3px;
+  background:#142B45!important;
+  color:#fff!important;
+  font:700 11px/1.25 var(--sans);
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  text-decoration:none!important;
+  visibility:visible!important;
+  opacity:1!important;
+  cursor:pointer;
+  box-shadow:0 7px 20px rgba(20,43,69,.2);
+}
+button:not(.nav-dd-btn):not(.nav-ham):not(.enq-close):not(.f-enq):hover,
+a.btn-enquire:hover,
+button.btn-enquire:hover,
+a.enquire-trigger:hover,
+button.enquire-trigger:hover{
+  background:#1D3B5A!important;
+  border-color:#1D3B5A!important;
+  color:#fff!important;
+  transform:translateY(-2px);
+}
+
+/* Every direct WhatsApp URL remains recognisable even without JS-added classes. */
+a[href*="wa.me"]:not(.wa){
+  display:inline-flex!important;
+  align-items:center;
+  justify-content:center;
+  gap:9px;
+  min-height:44px;
+  padding:12px 20px;
+  border:1px solid #25D366!important;
+  border-radius:4px;
+  background:#25D366!important;
+  color:#fff!important;
+  font-weight:700;
+  text-decoration:none!important;
+  visibility:visible!important;
+  opacity:1!important;
+}
+a[href*="wa.me"]:not(.wa):hover{
+  background:#159B4A!important;
+  border-color:#159B4A!important;
+  color:#fff!important;
+}
+a.wa[href*="wa.me"]{
+  background:#25D366!important;
+  border-color:#25D366!important;
+  color:#fff!important;
+}
+a.wa[href*="wa.me"] svg{color:#fff!important;stroke:currentColor}
