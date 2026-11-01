@@ -1085,7 +1085,8 @@ body>footer,body>footer:last-of-type{
     transform:none!important;
     cursor:pointer;
   }
-  .floating-cta button.f-book{
+  .floating-cta button.f-book,
+  .floating-cta a.f-book{
     background:#121820!important;
     color:#fff!important;
   }
