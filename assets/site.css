@@ -806,3 +806,95 @@ nav#nav .nav-logo::after{
 
 /* Kalyan is the only active locality in the current service menu. */
 .grp-h{color:#142B45}
+
+
+/* Final global repair: keep the page-edge and scrollbar on the Prestige navy. */
+html{
+  min-height:100%;
+  background:#070E1C!important;
+  overflow-x:clip;
+  scrollbar-color:#34445C #070E1C;
+}
+html,body{width:100%;max-width:100%;margin-inline:0}
+body{min-height:100vh;min-height:100svh;overflow-x:clip}
+body>footer:last-of-type{
+  display:block;
+  width:100%;
+  margin:0!important;
+  border:0;
+  background:#070E1C!important;
+}
+footer{
+  width:100%;
+  margin:0!important;
+  background:#070E1C!important;
+  padding-bottom:calc(32px + env(safe-area-inset-bottom,0px));
+}
+::-webkit-scrollbar{width:10px;height:10px;background:#070E1C}
+::-webkit-scrollbar-track{background:#070E1C}
+::-webkit-scrollbar-thumb{background:#34445C;border:2px solid #070E1C;border-radius:8px}
+
+/* A consistent, high-contrast style for every enquiry trigger. */
+a.btn-enquire,
+button.btn-enquire,
+a.enquire-trigger,
+button.enquire-trigger,
+.section-cta .cta-enq,
+.sec-cta .cta-enq,
+.floating-cta .f-enq{
+  display:inline-flex!important;
+  min-height:48px;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  padding:14px 24px;
+  border:1px solid #142B45!important;
+  border-radius:4px;
+  background:#142B45!important;
+  color:#FFFFFF!important;
+  font:700 11px/1.25 var(--sans);
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  text-decoration:none!important;
+  opacity:1!important;
+  visibility:visible!important;
+  box-shadow:0 7px 20px rgba(20,43,69,.2);
+  cursor:pointer;
+}
+a.btn-enquire:hover,
+button.btn-enquire:hover,
+a.enquire-trigger:hover,
+button.enquire-trigger:hover,
+.section-cta .cta-enq:hover,
+.sec-cta .cta-enq:hover{
+  background:#1D3B5A!important;
+  border-color:#1D3B5A!important;
+  color:#FFFFFF!important;
+  transform:translateY(-2px);
+  box-shadow:0 10px 24px rgba(20,43,69,.26);
+}
+a.btn-wa,
+button.btn-wa,
+.section-cta .cta-wa{
+  display:inline-flex!important;
+  align-items:center;
+  justify-content:center;
+  gap:10px;
+  min-height:48px;
+  padding:14px 24px;
+  background:#25D366!important;
+  border:1px solid #25D366!important;
+  border-radius:4px;
+  color:#FFFFFF!important;
+  font:700 11px/1.25 var(--sans);
+  letter-spacing:.1em;
+  text-transform:uppercase;
+  text-decoration:none!important;
+  opacity:1!important;
+  visibility:visible!important;
+}
+a.btn-wa:hover,button.btn-wa:hover,.section-cta .cta-wa:hover{
+  background:#159B4A!important;
+  border-color:#159B4A!important;
+  color:#FFFFFF!important;
+}
