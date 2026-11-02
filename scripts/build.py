@@ -242,13 +242,14 @@ def nav(l, alts, solid=True):
                     + ''.join(f'<a href="{url(l, "/areas/" + s + "/")}">{esc(city(l, s)["name"])}</a>' for s in slugs) + '</div>')
     langs = ''.join(f'<a href="{alts[k]}" hreflang="{k}" lang="{k}" aria-label="{attr(C.LANG_NAME[k])}"' + (' aria-current="true"' if k == l else '')
                     + f'>{C.LANG_SHORT[k]}</a>' for k in alts)
-    main = [(f'{h}#about', U['nav_about']), (f'{h}#types', U['nav_types']), (f'{h}#plans', U['nav_plans']), (f'{h}#services', U['nav_services'])]
+    main = [(f'{h}#home', U['home']), (f'{h}#about', U['nav_about']), (f'{h}#types', U['nav_types']), (f'{h}#plans', U['nav_plans']), (f'{h}#services', U['nav_services'])]
     mlinks = ''.join(f'<li><a href="{u}">{esc(t)}</a></li>' for u, t in main + [(url(l, '/blog/'), U['nav_blog']), (f'{h}#contact', U['nav_contact'])])
     mareas = ''.join(f'<a href="{url(l, "/areas/" + s + "/")}">{esc(city(l, s)["name"])}</a>' for s in CITY_SLUGS)
     return (f'<a class="skip" href="#main">{esc(U["skip"])}</a><div id="prog"></div>\n'
             f'<nav id="nav"{SOLID if solid else ""} aria-label="{attr(U["main_menu"])}">'
             f'<a class="nav-logo" href="{h}" aria-label="{attr(C.BRAND)}"><img src="/img/logo.png" width="160" height="49" alt="{attr(C.BRAND)}"></a>'
             '<div class="nav-r">'
+            f'<a class="nav-a" href="{h}#home">{esc(U["home"])}</a>'
             f'<a class="nav-a" href="{h}#about">{esc(U["nav_about"])}</a><a class="nav-a" href="{h}#types">{esc(U["nav_types"])}</a>'
             f'<a class="nav-a" href="{h}#plans">{esc(U["nav_plans"])}</a>'
             f'<a class="nav-a" href="{h}#services">{esc(U["nav_services"])}</a>'
@@ -351,7 +352,7 @@ def build_home(l):
     slides = ''.join(f'<div class="hero-slide{" active" if i == 0 else ""}"><img src="/img/{n}" width="1920" height="1080" alt="{attr(alt)}"'
                      + (' fetchpriority="high"' if i == 0 else ' loading="lazy"') + '></div>' for i, (n, alt) in enumerate(hero_imgs))
     dots = ''.join(f'<button class="hc-dot{" on" if i == 0 else ""}" type="button" aria-label="{i + 1}"></button>' for i in range(len(hero_imgs)))
-    hero = ('<main id="main"><section class="hero"><div class="hero-slides">' + slides + '</div><div class="hero-veil"></div><div class="hero-c">'
+    hero = ('<main id="main"><section id="home" class="hero"><div class="hero-slides">' + slides + '</div><div class="hero-veil"></div><div class="hero-c">'
             f'<div class="hero-tag"><span class="hero-dot"></span>{esc(H["tag"])}</div>'
             '<h1 class="hero-name">Prestige<b>Enterprises</b></h1>'
             f'<div class="hero-tagline-wrap"><div class="hero-tagline">{"".join(f"<span>{esc(t)}</span>" for t in H["taglines"])}</div></div>'
