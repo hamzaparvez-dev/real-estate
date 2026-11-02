@@ -1391,10 +1391,11 @@ nav#nav .nav-logo{
 nav#nav .nav-logo img{
   display:block;
   width:auto;
-  height:56px;
-  max-width:220px;
+  height:64px;
+  max-width:240px;
   object-fit:contain;
   opacity:1;
+  filter:contrast(1.12) saturate(1.08);
 }
 nav#nav .nav-logo::after{
   content:none!important;
@@ -1403,10 +1404,10 @@ nav#nav .nav-logo::after{
   mask-image:none!important;
 }
 @media(max-width:700px){
-  nav#nav .nav-logo{width:auto;height:48px}
-  nav#nav .nav-logo img{width:auto;height:46px;max-width:180px}
+  nav#nav .nav-logo{width:auto;height:56px}
+  nav#nav .nav-logo img{width:auto;height:52px;max-width:205px}
 }
 @media(max-width:420px){
-  nav#nav .nav-logo{width:auto;height:44px}
-  nav#nav .nav-logo img{width:auto;height:42px;max-width:165px}
+  nav#nav .nav-logo{width:auto;height:50px}
+  nav#nav .nav-logo img{width:auto;height:46px;max-width:180px}
 }
