@@ -242,16 +242,24 @@ def nav(l, alts, solid=True):
                     + ''.join(f'<a href="{url(l, "/areas/" + s + "/")}">{esc(city(l, s)["name"])}</a>' for s in slugs) + '</div>')
     langs = ''.join(f'<a href="{alts[k]}" hreflang="{k}" lang="{k}" aria-label="{attr(C.LANG_NAME[k])}"' + (' aria-current="true"' if k == l else '')
                     + f'>{C.LANG_SHORT[k]}</a>' for k in alts)
-    main = [(f'{h}#home', U['home']), (f'{h}#about', U['nav_about']), (f'{h}#types', U['nav_types']), (f'{h}#plans', U['nav_plans']), (f'{h}#services', U['nav_services'])]
-    mlinks = ''.join(f'<li><a href="{u}">{esc(t)}</a></li>' for u, t in main + [(url(l, '/blog/'), U['nav_blog']), (f'{h}#contact', U['nav_contact'])])
+    mlinks = (f'<li><a href="{h}#home">{esc(U["home"])}</a></li>'
+              f'<li><a href="{h}#about">{esc(U["nav_about"])}</a></li>'
+              f'<li class="mnav-projects"><span>{esc(U["nav_projects"])}</span><a href="{h}#plans">{esc(U["nav_plans"])}</a></li>'
+              f'<li><a href="{h}#pricing">{esc(U["nav_pricing"])}</a></li>'
+              f'<li><a href="{h}#services">{esc(U["nav_services"])}</a></li>'
+              f'<li><a href="{url(l, "/blog/")}">{esc(U["nav_blog"])}</a></li>'
+              f'<li><a href="{h}#contact">{esc(U["nav_contact"])}</a></li>')
     mareas = ''.join(f'<a href="{url(l, "/areas/" + s + "/")}">{esc(city(l, s)["name"])}</a>' for s in CITY_SLUGS)
     return (f'<a class="skip" href="#main">{esc(U["skip"])}</a><div id="prog"></div>\n'
             f'<nav id="nav"{SOLID if solid else ""} aria-label="{attr(U["main_menu"])}">'
             f'<a class="nav-logo" href="{h}" aria-label="{attr(C.BRAND)}"><img src="/img/logo.png" width="160" height="49" alt="{attr(C.BRAND)}"></a>'
             '<div class="nav-r">'
             f'<a class="nav-a" href="{h}#home">{esc(U["home"])}</a>'
-            f'<a class="nav-a" href="{h}#about">{esc(U["nav_about"])}</a><a class="nav-a" href="{h}#types">{esc(U["nav_types"])}</a>'
-            f'<a class="nav-a" href="{h}#plans">{esc(U["nav_plans"])}</a>'
+            f'<a class="nav-a" href="{h}#about">{esc(U["nav_about"])}</a>'
+            f'<div class="nav-dd" id="navProjects"><button class="nav-dd-btn" type="button" aria-expanded="false" aria-controls="ddProjects">{esc(U["nav_projects"])}{I["caret"]}</button>'
+            f'<div class="nav-dd-menu nav-projects-menu" id="ddProjects" role="region" aria-label="{attr(U["nav_projects"])}"><a href="{h}#plans">{esc(U["nav_plans"])}</a></div></div>'
+            f'<a class="nav-a" href="{h}#pricing">{esc(U["nav_pricing"])}</a>'
+            f'<a class="nav-a" href="{h}#services">{esc(U["nav_services"])}</a>'
             f'<a class="nav-a" href="{h}#services">{esc(U["nav_services"])}</a>'
             f'<div class="nav-dd" id="navAreas"><button class="nav-dd-btn" type="button" aria-expanded="false" aria-controls="ddAreas">{esc(U["nav_areas"])}{I["caret"]}</button>'
             f'<div class="nav-dd-menu" id="ddAreas" role="region" aria-label="{attr(U["menu_label"])}">{"".join(cols)}'
