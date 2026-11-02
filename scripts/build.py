@@ -348,7 +348,7 @@ def contact_block(l, h2, p_txt, dark_eye=True, wa_text=None):
 
 def build_home(l):
     U, H = UI[l], HOME[l]
-    stat_class = lambda label: 'stat stat-services' if label in ('Property services', 'संपत्ति सेवाएँ', 'मालमत्ता सेवा') else 'stat'
+    stat_class = lambda label: 'stat stat-services' if label in ('Residential & Commercial', 'रेज़िडेंशियल और कमर्शियल', 'रेसिडेन्शियल आणि कमर्शियल') else 'stat'
     alts = {k: url(k, '/') for k in LANGS}
     hero_imgs = [
         ('hero-day.jpg', 'Prestige Gold Kalyan - Modern Architecture Tower (Day View)'),
