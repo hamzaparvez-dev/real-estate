@@ -1424,3 +1424,19 @@ footer .foot-logo{
 @media(max-width:700px){
   footer .foot-logo{height:58px;max-width:220px}
 }
+
+
+/* Site-wide new logo sizing, including every footer. */
+.foot-logo{
+  display:block;
+  width:auto;
+  height:64px;
+  max-width:250px;
+  object-fit:contain;
+}
+@media(max-width:700px){
+  .foot-logo{height:56px;max-width:220px}
+}
+@media(max-width:420px){
+  .foot-logo{height:50px;max-width:195px}
+}
