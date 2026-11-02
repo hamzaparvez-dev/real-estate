@@ -154,7 +154,7 @@ HOME = {
         'taglines': ['Buy, sell and rent property in Kalyan.', 'Clear numbers. Verified documents. Honest advice.', 'In English, हिन्दी and मराठी.'],
         'pills': ['Kalyan only', 'Local property support', 'EN · हिन्दी · मराठी'],
         'btn1': 'Talk to us on WhatsApp', 'btn2': 'Explore areas',
-        'stats': [('Kalyan', 'Our service area'), ('3', 'Languages'), ('RERA', 'Checked first'), ('Local', 'Office & support')],
+        'stats': [('Kalyan', 'Local service area'), ('Buy · Sell · Rent', 'Property services'), ('RERA', 'Checked first'), ('Local', 'Office & support')],
         'about_eye': 'About us', 'about_h': 'A calm, careful way to <em>buy property</em>',
         'about': [
             'Prestige Enterprises is a Kalyan-based property consultancy. We help local families, first-time buyers, property owners and tenants buy, sell and rent residential and commercial property within Kalyan.',
