@@ -1266,3 +1266,12 @@ html{
   ::view-transition-old(root),
   ::view-transition-new(root){animation:none!important}
 }
+
+/* Lenis integration: do not add reveal-on-scroll or hide sections while scrolling. */
+html.lenis,
+html.lenis body{height:auto}
+html.lenis{scroll-behavior:auto!important}
+html.lenis body{overscroll-behavior-y:auto}
+@media(prefers-reduced-motion:reduce){
+  html.lenis{scroll-behavior:auto!important}
+}
