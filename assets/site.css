@@ -1376,3 +1376,37 @@ html.lenis body{overscroll-behavior-y:auto}
 .pg-milestones p{font-size:12px;line-height:1.65;color:var(--muted);margin:0}
 @media(max-width:760px){.pg-milestones{grid-template-columns:1fr 1fr}}
 @media(max-width:520px){.pg-milestones{grid-template-columns:1fr}.pg-progress-copy{align-items:flex-start;flex-direction:column;gap:5px}}
+
+
+/* Render the selected navbar logo asset directly (do not apply the legacy logo mask). */
+nav#nav .nav-logo{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  justify-content:flex-start;
+  width:auto;
+  height:auto;
+  flex:0 0 auto;
+}
+nav#nav .nav-logo img{
+  display:block;
+  width:auto;
+  height:48px;
+  max-width:190px;
+  object-fit:contain;
+  opacity:1;
+}
+nav#nav .nav-logo::after{
+  content:none!important;
+  display:none!important;
+  -webkit-mask-image:none!important;
+  mask-image:none!important;
+}
+@media(max-width:700px){
+  nav#nav .nav-logo{width:auto;height:40px}
+  nav#nav .nav-logo img{width:auto;height:39px;max-width:150px}
+}
+@media(max-width:420px){
+  nav#nav .nav-logo{width:auto;height:36px}
+  nav#nav .nav-logo img{width:auto;height:35px;max-width:138px}
+}
