@@ -2,13 +2,13 @@
 :root{
   --bg:#F5F7FA;--white:#fff;--ink:#0B1220;--navy:#0B1220;--navy2:#111A2E;
   --gold:#0B1220;--gold2:#111A2E;--coral:#0B1220;--muted:#1E293B;--faint:#334155;--border:#DCE3EA;
-  --serif:'Cormorant Garamond','Noto Serif Devanagari',Georgia,serif;
-  --sans:'DM Sans','Noto Sans Devanagari',system-ui,-apple-system,'Segoe UI',sans-serif;
+  --serif:'Cormorant Garamond',Georgia,serif;
+  --sans:'DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;
   --mono:var(--sans);
   --pad:clamp(20px,4.5vw,52px);
 }
 
-html:lang(hi),html:lang(mr){--mono:'DM Mono','Noto Sans Devanagari',ui-monospace,monospace;}
+html:lang(hi),html:lang(mr){--serif:'Noto Serif Devanagari','Cormorant Garamond',Georgia,serif;--sans:'Noto Sans Devanagari','DM Sans',system-ui,-apple-system,'Segoe UI',sans-serif;--mono:'DM Mono','Noto Sans Devanagari',ui-monospace,monospace;}
 *,*::before,*::after{box-sizing:border-box}
 [hidden]{display:none!important}
 html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
