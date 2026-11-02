@@ -29,6 +29,16 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
+  /* Projects dropdown */
+  var projects = $('#navProjects');
+  if (projects) {
+    var projectsBtn = $('.nav-dd-btn', projects);
+    var setProjects = function (o) { projects.classList.toggle('open', o); projectsBtn.setAttribute('aria-expanded', o ? 'true' : 'false'); };
+    projectsBtn.addEventListener('click', function (e) { e.stopPropagation(); setProjects(!projects.classList.contains('open')); });
+    document.addEventListener('click', function (e) { if (!projects.contains(e.target)) setProjects(false); });
+    document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setProjects(false); });
+  }
+
   /* Areas dropdown */
   var dd = $('#navAreas');
   if (dd) {
