@@ -269,4 +269,36 @@
     });
   })();
 
+
+  /* Smooth wheel/trackpad scrolling in both directions.
+     Touch scrolling and reduced-motion preferences retain native browser behaviour. */
+  (function () {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    var script = document.createElement('script');
+    script.src = 'https://cdn.jsdelivr.net/npm/lenis@1.1.20/dist/lenis.min.js';
+    script.async = true;
+    script.onload = function () {
+      if (!window.Lenis || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      var lenis = new window.Lenis({
+        duration: 1.05,
+        easing: function (t) { return Math.min(1, 1.001 - Math.pow(2, -10 * t)); },
+        smoothWheel: true,
+        syncTouch: false,
+        wheelMultiplier: 0.9,
+        touchMultiplier: 1
+      });
+      window.__prestigeLenis = lenis;
+      function raf(time) {
+        lenis.raf(time);
+        window.requestAnimationFrame(raf);
+      }
+      window.requestAnimationFrame(raf);
+      document.addEventListener('visibilitychange', function () {
+        if (document.hidden) lenis.stop();
+        else lenis.start();
+      });
+    };
+    document.head.appendChild(script);
+  })();
+
 })();
