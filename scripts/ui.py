@@ -154,7 +154,7 @@ HOME = {
         'taglines': ['Buy, sell and rent property in Kalyan.', 'Clear numbers. Verified documents. Honest advice.', 'In English, हिन्दी and मराठी.'],
         'pills': ['Kalyan only', 'Local property support', 'EN · हिन्दी · मराठी'],
         'btn1': 'Talk to us on WhatsApp', 'btn2': 'Explore areas',
-        'stats': [('Kalyan', 'Local service area'), ('Buy · Sell · Rent', 'Property services'), ('RERA', 'Checked first'), ('Local', 'Office & support')],
+        'stats': [('Kalyan', 'Local service area'), ('Buy · Sell', 'Property services'), ('RERA', 'Checked first'), ('Local', 'Office & support')],
         'about_eye': 'About us', 'about_h': 'A calm, careful way to <em>buy property</em>',
         'about': [
             'Prestige Enterprises is a Kalyan-based property consultancy. We help local families, first-time buyers, property owners and tenants buy, sell and rent residential and commercial property within Kalyan.',
@@ -227,7 +227,7 @@ HOME = {
         'taglines': ['कल्याण में प्रॉपर्टी खरीदें, बेचें और किराये पर लें।', 'साफ़ आँकड़े। जाँचे हुए दस्तावेज़। ईमानदार सलाह।', 'English, हिन्दी और मराठी में।'],
         'pills': ['केवल कल्याण', 'स्थानीय प्रॉपर्टी सेवा', 'EN · हिन्दी · मराठी'],
         'btn1': 'WhatsApp पर बात करें', 'btn2': 'इलाके देखें',
-        'stats': [('कल्याण', 'हमारा सेवा क्षेत्र'), ('खरीद · बिक्री · किराया', 'संपत्ति सेवाएँ'), ('RERA', 'पहले जाँच'), ('स्थानीय', 'ऑफिस और सहायता')],
+        'stats': [('कल्याण', 'हमारा सेवा क्षेत्र'), ('खरीद · बिक्री', 'संपत्ति सेवाएँ'), ('RERA', 'पहले जाँच'), ('स्थानीय', 'ऑफिस और सहायता')],
         'about_eye': 'हमारे बारे में', 'about_h': '<em>प्रॉपर्टी खरीदने</em> का शांत और सावधान तरीका',
         'about': [
             'Prestige Enterprises कल्याण स्थित प्रॉपर्टी सलाहकार है। हम स्थानीय परिवारों, पहली बार घर खरीदने वालों, प्रॉपर्टी मालिकों और किरायेदारों को कल्याण में आवासीय और व्यावसायिक प्रॉपर्टी खरीदने, बेचने और किराये पर लेने में मदद करते हैं।',
@@ -300,7 +300,7 @@ HOME = {
         'taglines': ['कल्याणमध्ये मालमत्ता खरेदी, विक्री आणि भाड्याने घ्या.', 'स्पष्ट आकडे. तपासलेली कागदपत्रे. प्रामाणिक सल्ला.', 'English, हिन्दी आणि मराठीत.'],
         'pills': ['फक्त कल्याण', 'स्थानिक मालमत्ता सेवा', 'EN · हिन्दी · मराठी'],
         'btn1': 'WhatsApp वर बोला', 'btn2': 'परिसर पाहा',
-        'stats': [('कल्याण', 'आमचे सेवा क्षेत्र'), ('खरेदी · विक्री · भाडे', 'मालमत्ता सेवा'), ('RERA', 'आधी तपासणी'), ('स्थानिक', 'कार्यालय आणि मदत')],
+        'stats': [('कल्याण', 'आमचे सेवा क्षेत्र'), ('खरेदी · विक्री', 'मालमत्ता सेवा'), ('RERA', 'आधी तपासणी'), ('स्थानिक', 'कार्यालय आणि मदत')],
         'about_eye': 'आमच्याबद्दल', 'about_h': '<em>मालमत्ता खरेदी</em> करण्याचा शांत आणि काळजीपूर्वक मार्ग',
         'about': [
             'Prestige Enterprises ही कल्याणमधील मालमत्ता सल्लागार संस्था आहे. आम्ही स्थानिक कुटुंबे, पहिल्यांदा घर घेणारे, मालमत्ता मालक आणि भाडेकरूंना कल्याणमध्ये निवासी व व्यावसायिक मालमत्ता खरेदी, विक्री आणि भाड्याने घेण्यात मदत करतो.',
