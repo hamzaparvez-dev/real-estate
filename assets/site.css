@@ -318,7 +318,7 @@ details.q .ans{padding:0 0 24px;font-size:16.5px;line-height:1.85;color:var(--mu
 }
 .btn-enquire.gold:hover{
   background:linear-gradient(135deg, var(--gold2) 0%, var(--gold) 100%);
-  color:var(--navy);
+  color:#fff;
   box-shadow:0 12px 32px rgba(11,18,32,.4);
 }
 .sec-cta{display:flex;align-items:center;gap:16px;flex-wrap:wrap}
@@ -493,7 +493,7 @@ nav#nav{height:76px;border-bottom:1px solid #e8edf2}
 .lang a[aria-current]{background:#142b45;color:#fff}
 .nav-ham span{background:#142b45}
 .nav-cta{background:#142b45;color:#fff;border-color:#142b45}
-.nav-cta:hover{background:var(--gold);border-color:var(--gold);color:#142b45}
+.nav-cta:hover{background:var(--gold);border-color:var(--gold);color:#fff}
 .hero.hero-campaign{display:block;position:relative;margin-top:76px;min-height:0;height:auto;overflow:hidden;background:#f7f0df}
 .hero-campaign .hero-banner{display:block;width:100%;height:auto;max-width:none;object-fit:contain;object-position:center}
 @media(max-width:700px){
@@ -596,7 +596,7 @@ nav#nav .nav-logo::after{
 .btn-o{border-color:rgba(255,255,255,.5);color:#fff}
 .btn-o:hover{background:rgba(205,47,42,.14);border-color:var(--gold2);color:var(--gold2)}
 .btn-o.dark{border-color:rgba(20,43,69,.42);color:#142B45}
-.btn-o.dark:hover{background:rgba(20,43,69,.07);border-color:#142B45;color:#142B45}
+.btn-o.dark:hover{background:rgba(205,47,42,.06);border-color:var(--gold);color:var(--gold)}
 .enq-submit{min-height:50px;border-radius:4px}
 
 /* How we help: balanced, consistent three-column service cards. */
