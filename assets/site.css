@@ -1360,3 +1360,19 @@ html.lenis body{overscroll-behavior-y:auto}
  .pg-amenities-grid{grid-template-columns:1fr}
  .pg-unit{padding:22px}
 }
+
+.pg-progress{background:#F2F4F7}
+.pg-progress-head{max-width:780px}
+.pg-progress-meter{margin:34px 0 28px;padding:26px;background:#fff;border:1px solid var(--line)}
+.pg-progress-copy{display:flex;align-items:baseline;gap:16px;margin-bottom:14px}
+.pg-progress-copy b{font:400 42px/1 var(--serif);color:var(--navy)}
+.pg-progress-copy span{font-size:12px;color:var(--muted)}
+.pg-progress-track{height:8px;background:#E5E9EF;overflow:hidden}
+.pg-progress-track span{display:block;width:70%;height:100%;background:var(--gold)}
+.pg-milestones{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:24px}
+.pg-milestones article{border-top:1px solid var(--line);padding-top:18px}
+.pg-milestones article>b{font:500 10px/1 var(--mono);color:var(--gold)}
+.pg-milestones h3{font:400 22px/1.2 var(--serif);color:var(--navy);margin:10px 0 7px}
+.pg-milestones p{font-size:12px;line-height:1.65;color:var(--muted);margin:0}
+@media(max-width:760px){.pg-milestones{grid-template-columns:1fr 1fr}}
+@media(max-width:520px){.pg-milestones{grid-template-columns:1fr}.pg-progress-copy{align-items:flex-start;flex-direction:column;gap:5px}}
