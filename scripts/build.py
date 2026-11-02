@@ -278,7 +278,7 @@ def footer(l, alts):
     langs = ''.join(f'<li><a href="{alts[k]}" hreflang="{k}" lang="{k}">{C.LANG_NAME[k]}</a></li>' for k in alts)
     rera = f'<p>{esc(U["rera_label"])}: {esc(C.RERA_NO)}</p>' if C.RERA_NO else ''
     return (f'<footer><div class="foot-grid"><div>'
-            f'<a class="foot-logo-link" href="{h}" aria-label="{attr(C.BRAND)}"><img src="/img/logo.png" width="175" height="54" alt="{attr(C.BRAND)}" class="foot-logo"></a>'
+            f'<a class="foot-logo-link" href="{h}" aria-label="{attr(C.BRAND)}"><img src="/img/new-logo.png" width="210" height="65" alt="{attr(C.BRAND)}" class="foot-logo"></a>'
             f'<p>{esc(U["foot_tag"])}</p>{rera}</div>'
             f'<div><h4>{esc(U["foot_links"])}</h4><ul><li><a href="{h}">{esc(U["home"])}</a></li><li><a href="{h}#plans">{esc(U["nav_plans"])}</a></li><li><a href="{url(l, "/areas/")}">{esc(U["areas"])}</a></li>'
             f'<li><a href="{url(l, "/blog/")}">{esc(U["blog"])}</a></li><li><a href="{h}#contact">{esc(U["nav_contact"])}</a></li></ul></div>'
