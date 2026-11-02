@@ -162,8 +162,8 @@ nav#nav.up,nav#nav.solid,nav#nav.menu-open{background:rgba(10,21,37,.97);backdro
   color:var(--muted);
 }
 .stat-services .stat-n{
-  font:700 clamp(14px,1.35vw,18px)/1.25 var(--sans);
-  letter-spacing:.025em;
+  font:600 clamp(25px,2.35vw,33px)/1.05 var(--serif);
+  letter-spacing:0;
   white-space:nowrap;
 }
 @media(max-width:700px){
@@ -172,11 +172,11 @@ nav#nav.up,nav#nav.solid,nav#nav.menu-open{background:rgba(10,21,37,.97);backdro
   .stat:nth-child(2){border-right:0}
   .stat:nth-child(-n+2){border-bottom:1px solid var(--border)}
   .stat-n{font-size:30px}
-  .stat-services .stat-n{font-size:15px}
+  .stat-services .stat-n{font-size:24px}
   .stat-l{font-size:8px;letter-spacing:.11em}
 }
 @media(max-width:360px){
-  .stat-services .stat-n{font-size:13px}
+  .stat-services .stat-n{font-size:21px}
 }
 
 /* ---------- about ---------- */
