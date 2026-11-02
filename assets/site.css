@@ -1228,3 +1228,41 @@ body>footer,body>footer:last-of-type{
   .price-row-visual.plan-img-wrap img{transition:none}
   .price-row-visual.plan-img-wrap:hover img{transform:none}
 }
+
+
+/* ---------- smooth navigation and page transitions ---------- */
+/* Keep native scrolling (including trackpads and touch) responsive; smooth only
+   programmatic and in-page anchor navigation. Account for the fixed header. */
+html{
+  scroll-behavior:smooth;
+  scroll-padding-top:calc(88px + env(safe-area-inset-top,0px));
+}
+:where([id]){
+  scroll-margin-top:calc(88px + env(safe-area-inset-top,0px));
+}
+
+/* Native cross-document View Transitions: graceful fade/slide on supported browsers,
+   with normal navigation as the automatic fallback everywhere else. */
+@view-transition{
+  navigation:auto;
+}
+::view-transition-old(root){
+  animation:pe-page-out .18s ease both;
+}
+::view-transition-new(root){
+  animation:pe-page-in .34s cubic-bezier(.22,.7,.2,1) both;
+}
+@keyframes pe-page-out{
+  to{opacity:0;transform:translateY(-5px)}
+}
+@keyframes pe-page-in{
+  from{opacity:0;transform:translateY(8px)}
+  to{opacity:1;transform:translateY(0)}
+}
+
+/* Respect accessibility preferences and avoid forced motion. */
+@media(prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  ::view-transition-old(root),
+  ::view-transition-new(root){animation:none!important}
+}
