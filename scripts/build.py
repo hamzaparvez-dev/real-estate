@@ -206,9 +206,9 @@ def head(l, title, desc, alts, img, img_alt, ld, preload=None, og_type='website'
     hl = ''.join(f'<link rel="alternate" hreflang="{k}" href="{C.SITE}{alts[k]}">' for k in alts)
     hl += f'<link rel="alternate" hreflang="x-default" href="{C.SITE}{alts["en"]}">'
     og_alt = ''.join(f'<meta property="og:locale:alternate" content="{C.LOCALE[k]}">' for k in alts if k != l)
-    fonts = 'family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700&family=DM+Mono:wght@400;500'
+    fonts = 'family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700'
     if l != 'en':
-        fonts += '&family=Noto+Sans+Devanagari:wght@300;400;500;600;700&family=Noto+Serif+Devanagari:wght@300;400;500;600'
+        fonts += '&family=DM+Mono:wght@400;500&family=Noto+Sans+Devanagari:wght@300;400;500;600;700&family=Noto+Serif+Devanagari:wght@300;400;500;600'
     pix = ''
     if C.META_PIXEL_ID:
         pix = ("<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};"
