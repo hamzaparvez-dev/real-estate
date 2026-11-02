@@ -244,7 +244,7 @@ def nav(l, alts, solid=True):
                     + f'>{C.LANG_SHORT[k]}</a>' for k in alts)
     mlinks = (f'<li><a href="{h}#home">{esc(U["home"])}</a></li>'
               f'<li><a href="{h}#about">{esc(U["nav_about"])}</a></li>'
-              f'<li class="mnav-projects"><span>{esc(U["nav_projects"])}</span><a href="{h}#plans">{esc(U["nav_plans"])}</a></li>'
+              f'<li class="mnav-projects"><span>{esc(U["nav_projects"])}</span><span class="mnav-subhead">{esc(U["nav_plans"])}</span><a href="/projects/prestige-gold/">Prestige Gold</a></li>'
               f'<li><a href="{h}#pricing">{esc(U["nav_pricing"])}</a></li>'
               f'<li><a href="{h}#services">{esc(U["nav_services"])}</a></li>'
               f'<li><a href="{url(l, "/blog/")}">{esc(U["nav_blog"])}</a></li>'
@@ -257,9 +257,8 @@ def nav(l, alts, solid=True):
             f'<a class="nav-a" href="{h}#home">{esc(U["home"])}</a>'
             f'<a class="nav-a" href="{h}#about">{esc(U["nav_about"])}</a>'
             f'<div class="nav-dd" id="navProjects"><button class="nav-dd-btn" type="button" aria-expanded="false" aria-controls="ddProjects">{esc(U["nav_projects"])}{I["caret"]}</button>'
-            f'<div class="nav-dd-menu nav-projects-menu" id="ddProjects" role="region" aria-label="{attr(U["nav_projects"])}"><a href="{h}#plans">{esc(U["nav_plans"])}</a></div></div>'
+            f'<div class="nav-dd-menu nav-projects-menu" id="ddProjects" role="region" aria-label="{attr(U["nav_projects"])}"><div class="nav-projects-group"><span class="nav-projects-label">{esc(U["nav_plans"])}</span><a class="nav-projects-item" href="/projects/prestige-gold/">Prestige Gold</a></div></div></div>'
             f'<a class="nav-a" href="{h}#pricing">{esc(U["nav_pricing"])}</a>'
-            f'<a class="nav-a" href="{h}#services">{esc(U["nav_services"])}</a>'
             f'<a class="nav-a" href="{h}#services">{esc(U["nav_services"])}</a>'
             f'<div class="nav-dd" id="navAreas"><button class="nav-dd-btn" type="button" aria-expanded="false" aria-controls="ddAreas">{esc(U["nav_areas"])}{I["caret"]}</button>'
             f'<div class="nav-dd-menu" id="ddAreas" role="region" aria-label="{attr(U["menu_label"])}">{"".join(cols)}'
@@ -425,6 +424,121 @@ def build_home(l):
     h = head(l, H['title'], H['desc'], alts, '/img/og-default.jpg', C.BRAND, ld, preload='/img/hero-day.jpg')
     page(l, '/', alts, h, hero + about + types + plans + svc + proc + areas + guides + faq + contact + '</main>\n')
     PAGES.append(alts)
+
+
+
+# ------------------------------------------------------------------ Prestige Gold project page
+
+def build_prestige_gold():
+    path = '/projects/prestige-gold/'
+    nav_alts = {k: url(k, '/') for k in LANGS}
+    seo_alts = {'en': path}
+    title = 'Prestige Gold Kalyan West | 1, 2 & 3 BHK Homes'
+    desc = 'Explore Prestige Gold in Kalyan West: 1, 2 and 3 BHK residences, RERA details, indicative pricing, floor plans, amenities and site visit enquiries.'
+    wa_text = 'Hello, I would like to know more about Prestige Gold, Kalyan West. Please share current availability, floor plans and the latest cost sheet.'
+    wa_link = 'https://wa.me/918446652600?text=' + urllib.parse.quote(wa_text)
+    units = [
+        ('1 BHK', '₹55,00,000', '404–519 sq. ft.', 'Compact planning with living and dining, bedroom, kitchen provision and balcony.'),
+        ('2 BHK', '₹75,00,000', '577–721 sq. ft.', 'Spacious living and dining, two bedrooms, kitchen provision and balcony.'),
+        ('3 BHK', '₹1,20,00,000', '873–1,040 sq. ft.', 'Larger family layout with additional bedrooms, balconies and dedicated pooja space.')
+    ]
+    unit_cards = ''.join(
+        f'<article class="pg-unit"><span class="pg-unit-k">RESIDENTIAL CONFIGURATION</span><h3>{esc(name)}</h3>'
+        f'<p class="pg-price">{esc(price)}</p><p class="pg-area">RERA area · {esc(area)}</p>'
+        f'<p>{esc(summary)}</p><a class="btn-g" href="{wa_link}" target="_blank" rel="noopener">Enquire for {esc(name)}</a></article>'
+        for name, price, area, summary in units)
+    amenities = [
+        ('Rooftop leisure zone', 'Rooftop garden with sit-outs, gazebo and fountain.'),
+        ('Security-focused planning', 'Monitored common areas and controlled movement across key entry points.'),
+        ('Power backup', 'Backup provision for lifts, lobbies and common areas.'),
+        ('Water & utilities', 'KDMC water supply with borewell backup and planned utility infrastructure.'),
+        ('Sustainable operations', 'Waste segregation and green-zone planning.'),
+        ('Parking convenience', 'Two parking levels with optimized angle-parking design.')
+    ]
+    amenity_cards = ''.join(f'<article class="pg-amenity"><span>✦</span><div><h3>{esc(a)}</h3><p>{esc(d)}</p></div></article>' for a, d in amenities)
+    faq_items = [
+        ('Where is Prestige Gold located?', 'Prestige Gold is in Kalyan West, Thane, Maharashtra 421301. Contact the project team for exact directions and a guided site visit.'),
+        ('Is Prestige Gold RERA registered?', 'The project website lists MahaRERA registration number P51700052362. Buyers should verify the latest registration details and disclosures on the official MahaRERA portal before booking.'),
+        ('Which configurations are listed?', 'The project website lists 1 BHK, 2 BHK and 3 BHK configurations. Confirm current inventory and unit-specific areas with the sales team.'),
+        ('What are the indicative starting prices?', 'The project website lists starting prices of ₹55 lakh for 1 BHK, ₹75 lakh for 2 BHK and ₹1.20 crore for 3 BHK. Prices and availability may change; request a current written cost sheet.'),
+        ('When is possession expected?', 'The project website states June 2027 as the expected possession timeline. Confirm the applicable date against the latest MahaRERA record and your agreement for sale.')
+    ]
+    hero = (
+        '<main id="main"><header class="ph pg-hero"><img src="/img/prestige-tower-day.jpg" width="1920" height="1080" fetchpriority="high" alt="Prestige Gold residential tower, Kalyan West">'
+        '<div class="ph-c">' + crumbs([(UI['en']['home'], '/'), ('Projects', None), ('Plans', None), ('Prestige Gold', None)]) +
+        eye('KALYAN WEST · RESIDENTIAL + COMMERCIAL') +
+        '<h1>Prestige <b>Gold</b></h1>'
+        '<p class="ph-lead">A considered address for everyday living and long-term value in Kalyan West. Explore the project, compare configurations and arrange a guided visit.</p>'
+        '<div class="pg-hero-facts"><span>1, 2 &amp; 3 BHK</span><span>MahaRERA · P51700052362</span><span>Project details &amp; site visits</span></div>'
+        f'<div class="section-cta"><a class="cta-enq" href="{wa_link}" target="_blank" rel="noopener">Enquire on WhatsApp</a><a class="cta-wa" href="tel:+918446652600">Call +91 84466 52600</a></div>'
+        '</div></header>'
+    )
+    overview = (
+        '<section class="sec pg-overview"><div class="in pg-overview-grid"><div>'
+        + eye('THE PROJECT') + '<h2 class="dh">A premium address in <em>Kalyan West</em></h2>'
+        '<p class="lead">Prestige Gold is presented as a mixed-use development bringing residential homes and commercial opportunity together. The project website highlights vastu-compliant planning, modern infrastructure and a rooftop leisure zone.</p>'
+        '<dl class="pg-facts"><div><dt>Project type</dt><dd>Residential + Commercial</dd></div><div><dt>Configurations</dt><dd>1, 2 &amp; 3 BHK</dd></div><div><dt>MahaRERA</dt><dd>P51700052362</dd></div><div><dt>Expected possession</dt><dd>June 2027*</dd></div></dl>'
+        '<p class="pg-note">*Timeline shown on the project website. Verify the latest MahaRERA disclosures and agreement before making a purchase decision.</p>'
+        '</div><figure class="pg-overview-image"><img src="/img/prestige-tower-night.jpg" width="1200" height="900" loading="lazy" alt="Prestige Gold tower at night"><figcaption>Prestige Gold · Kalyan West</figcaption></figure></div></section>'
+    )
+    pricing = (
+        '<section class="sec pg-pricing" id="pg-configurations"><div class="in">'
+        + eye('CONFIGURATIONS & INDICATIVE PRICING') + '<h2 class="dh">Find a home that <em>fits your plans</em></h2>'
+        '<p class="lead">Compare the configurations listed on the project website. Areas and prices are indicative and must be reconfirmed for the selected unit.</p>'
+        f'<div class="cards three pg-units">{unit_cards}</div>'
+        '<p class="pg-note">Prices are indicative starting figures published on the project website. Final pricing, taxes, statutory charges, parking, inclusions and availability must be confirmed in a current written cost sheet.</p>'
+        '</div></section>'
+    )
+    floorplans = (
+        '<section class="sec pg-floorplans"><div class="in">'
+        + eye('LAYOUT PREVIEW') + '<h2 class="dh">Explore the <em>floor plans</em></h2>'
+        '<p class="lead">Indicative visual references. Request the latest approved, unit-specific floor plan and RERA carpet-area statement before booking.</p>'
+        '<div class="pg-plan-grid"><figure><img src="/img/prestige-plan-1bhk.png" width="1000" height="760" loading="lazy" alt="Prestige Gold 1 BHK floor plan"><figcaption><b>1 BHK</b><span>Indicative layout</span></figcaption></figure>'
+        '<figure><img src="/img/prestige-iso-2bhk.png" width="1000" height="760" loading="lazy" alt="Prestige Gold 2 BHK isometric layout"><figcaption><b>2 BHK</b><span>Isometric layout reference</span></figcaption></figure>'
+        '<figure><img src="/img/prestige-iso-1bhk.png" width="1000" height="760" loading="lazy" alt="Prestige Gold 1 BHK isometric layout"><figcaption><b>1 BHK</b><span>Isometric layout reference</span></figcaption></figure></div>'
+        '<p class="pg-note">3 BHK layout and additional unit-specific drawings can be requested from the project sales team.</p>'
+        '</div></section>'
+    )
+    amenities_section = (
+        '<section class="sec pg-amenities"><div class="in">'
+        + eye('EVERYDAY COMFORT') + '<h2 class="dh">Thoughtful features for <em>daily living</em></h2>'
+        f'<div class="pg-amenities-grid">{amenity_cards}</div>'
+        '</div></section>'
+    )
+    gallery = (
+        '<section class="sec pg-gallery"><div class="in">'
+        + eye('PROJECT GALLERY') + '<h2 class="dh">A closer look at <em>Prestige Gold</em></h2>'
+        '<div class="pg-gallery-grid"><figure><img src="/img/prestige-tower-day.jpg" width="1400" height="900" loading="lazy" alt="Prestige Gold exterior, day view"><figcaption>Day view</figcaption></figure>'
+        '<figure><img src="/img/prestige-tower-night.jpg" width="1400" height="900" loading="lazy" alt="Prestige Gold exterior, night view"><figcaption>Night view</figcaption></figure></div>'
+        '</div></section>'
+    )
+    location = (
+        '<section class="sec pg-location"><div class="in pg-location-grid"><div>'
+        + eye('LOCATION ADVANTAGE') + '<h2 class="dh">Connected to <em>Kalyan West</em></h2>'
+        '<p class="lead">The project is located in Kalyan West, Thane, Maharashtra – 421301. Contact the sales team for the exact site pin, route guidance and a scheduled walkthrough.</p>'
+        '<p class="pg-address"><b>Prestige Gold</b><br>Kalyan West, Thane<br>Maharashtra – 421301</p>'
+        '<a class="btn-o" href="https://www.google.com/maps/search/?api=1&amp;query=Prestige+Gold+Kalyan+West+Thane+421301" target="_blank" rel="noopener">Open location in Google Maps ↗</a>'
+        '</div><div class="pg-map-card"><span>VISIT THE PROJECT</span><h3>See the location and experience the sample flat.</h3><p>Site visits are arranged through the project sales team.</p>'
+        f'<a class="btn-g" href="{wa_link}" target="_blank" rel="noopener">Arrange a site visit</a></div></div></section>'
+    )
+    contact = (
+        '<section class="sec pg-contact" id="pg-enquire"><div class="in pg-contact-inner">'
+        + eye('NEXT STEP') + '<h2 class="dh">Experience Prestige <em>Gold</em></h2>'
+        '<p class="lead">Ask for current availability, unit-wise pricing, approved floor plans and a guided site visit.</p>'
+        '<div class="section-cta"><a class="cta-enq" href="' + wa_link + '" target="_blank" rel="noopener">WhatsApp the project team</a>'
+        '<a class="cta-wa" href="tel:+918446652600">Call +91 84466 52600</a></div>'
+        '<p class="pg-contact-email">Email: <a href="mailto:shreedurgaenterprise21@gmail.com">shreedurgaenterprise21@gmail.com</a></p>'
+        '</div></section>'
+    )
+    faq = (
+        '<section class="sec pg-faq"><div class="in"><div class="faq-hd">' + eye('BUYER INFORMATION') +
+        '<h2 class="dh">Frequently asked <em>questions</em></h2></div>' + faq_html(faq_items) + '</div></section></main>'
+    )
+    body = hero + overview + pricing + floorplans + amenities_section + gallery + location + contact + faq
+    ld = [agent_ld('en'), breadcrumb_ld('en', [(UI['en']['home'], url('en', '/')), ('Prestige Gold', path)])]
+    html = head('en', title, desc, seo_alts, '/img/prestige-tower-day.jpg', 'Prestige Gold project in Kalyan West', ld)
+    write(path.lstrip('/') + 'index.html', html + '<body>\n' + nav('en', nav_alts) + body + footer('en', nav_alts))
+    PAGES.append(seo_alts)
 
 
 # ------------------------------------------------------------------ areas
@@ -599,6 +713,7 @@ def main():
         for s in ORDER:
             build_post(l, s)
         build_feed(l)
+    build_prestige_gold()
     build_404()
     build_sitemap()
     build_llms()
