@@ -3,7 +3,7 @@ Every language must define exactly the same keys: build.py asserts it."""
 
 UI = {
     'en': {
-        'nav_about': 'About', 'nav_types': 'Property', 'nav_plans': 'Plans', 'nav_services': 'Services', 'nav_areas': 'Areas',
+        'nav_about': 'About', 'nav_projects': 'Projects', 'nav_pricing': 'Pricing', 'nav_types': 'Property', 'nav_plans': 'Plans', 'nav_services': 'Services', 'nav_areas': 'Areas',
         'nav_blog': 'Guides', 'nav_contact': 'Contact', 'all_areas': 'See all areas', 'menu_label': 'Areas we serve',
         'grp_kalyan': 'Kalyan', 'grp_mumbai-region': 'Mumbai region', 'lang_label': 'Language',
         'main_menu': 'Main menu', 'wa_btn': 'Chat on WhatsApp', 'call_btn': 'Call us', 'float_wa': 'WhatsApp',
@@ -52,7 +52,7 @@ UI = {
         'skip': 'Skip to content',
     },
     'hi': {
-        'nav_about': 'हमारे बारे में', 'nav_types': 'प्रॉपर्टी', 'nav_plans': 'फ्लोर प्लान', 'nav_services': 'सेवाएँ', 'nav_areas': 'इलाके',
+        'nav_about': 'हमारे बारे में', 'nav_projects': 'प्रोजेक्ट्स', 'nav_pricing': 'कीमतें', 'nav_types': 'प्रॉपर्टी', 'nav_plans': 'फ्लोर प्लान', 'nav_services': 'सेवाएँ', 'nav_areas': 'इलाके',
         'nav_blog': 'गाइड', 'nav_contact': 'संपर्क', 'all_areas': 'सभी इलाके देखें', 'menu_label': 'हमारे सेवा क्षेत्र',
         'grp_kalyan': 'केवल कल्याण', 'grp_mumbai-region': 'मुंबई क्षेत्र', 'lang_label': 'भाषा',
         'main_menu': 'मुख्य मेन्यू', 'wa_btn': 'WhatsApp पर चैट करें', 'call_btn': 'कॉल करें', 'float_wa': 'WhatsApp',
@@ -98,7 +98,7 @@ UI = {
         'skip': 'सामग्री पर जाएँ',
     },
     'mr': {
-        'nav_about': 'आमच्याबद्दल', 'nav_types': 'मालमत्ता', 'nav_plans': 'फ्लोअर प्लॅन', 'nav_services': 'सेवा', 'nav_areas': 'परिसर',
+        'nav_about': 'आमच्याबद्दल', 'nav_projects': 'प्रकल्प', 'nav_pricing': 'किंमती', 'nav_types': 'मालमत्ता', 'nav_plans': 'फ्लोअर प्लॅन', 'nav_services': 'सेवा', 'nav_areas': 'परिसर',
         'nav_blog': 'मार्गदर्शक', 'nav_contact': 'संपर्क', 'all_areas': 'सर्व परिसर पाहा', 'menu_label': 'आमचे सेवा क्षेत्र',
         'grp_kalyan': 'फक्त कल्याण', 'grp_mumbai-region': 'मुंबई प्रदेश', 'lang_label': 'भाषा',
         'main_menu': 'मुख्य मेनू', 'wa_btn': 'WhatsApp वर चॅट करा', 'call_btn': 'कॉल करा', 'float_wa': 'WhatsApp',
