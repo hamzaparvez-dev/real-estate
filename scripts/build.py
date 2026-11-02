@@ -348,6 +348,7 @@ def contact_block(l, h2, p_txt, dark_eye=True, wa_text=None):
 
 def build_home(l):
     U, H = UI[l], HOME[l]
+    stat_class = lambda label: 'stat stat-services' if label == 'Property services' else 'stat'
     alts = {k: url(k, '/') for k in LANGS}
     hero_imgs = [
         ('hero-day.jpg', 'Prestige Gold Kalyan - Modern Architecture Tower (Day View)'),
@@ -367,7 +368,7 @@ def build_home(l):
             f'<div class="hero-btns"><a class="btn-g" href="{waurl(U["wa_default"])}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(H["btn1"])}</span></a>'
             f'<a class="btn-o" href="{url(l, "/areas/")}"><span>{esc(H["btn2"])}</span>{I["arrow"]}</a></div></div>'
             f'<div class="hero-dots">{dots}</div></section>\n'
-            f'<div class="stats">{"".join(f"<div class=stat><span class=stat-n>{esc(n)}</span><span class=stat-l>{esc(t)}</span></div>" for n, t in H["stats"])}</div>\n')
+            f'<div class="stats">{"".join(f"<div class='{stat_class(t)}'><span class=stat-n>{esc(n)}</span><span class=stat-l>{esc(t)}</span></div>" for n, t in H["stats"])}</div>\n')
     about = ('<section class="sec" id="about"><div class="in about-grid"><div>' + eye(esc(H['about_eye'])) + f'<h2 class="dh">{H["about_h"]}</h2>'
              f'<div class="about-body" style="margin-top:30px">{"".join(f"<p>{esc(p)}</p>" for p in H["about"])}</div>'
              f'<div class="tags">{"".join(f"<span class=tag>{esc(t)}</span>" for t in H["tags"])}</div>'
