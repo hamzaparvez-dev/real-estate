@@ -1275,3 +1275,9 @@ html.lenis body{overscroll-behavior-y:auto}
 @media(prefers-reduced-motion:reduce){
   html.lenis{scroll-behavior:auto!important}
 }
+
+/* Projects navigation dropdown and nested mobile menu */
+.nav-projects-menu{grid-template-columns:minmax(150px,1fr);min-width:190px;right:auto;left:-24px;padding:18px 24px}
+.mnav-projects{display:flex;flex-direction:column;gap:4px;padding:9px 0}
+.mnav ul .mnav-projects>span{display:block;font:500 10px/1.2 var(--sans);letter-spacing:.16em;text-transform:uppercase;color:var(--gold);padding:0 0 2px}
+.mnav ul .mnav-projects>a{padding:2px 0 2px 14px;font-size:25px;color:#F8FAFC}
