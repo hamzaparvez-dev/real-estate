@@ -252,7 +252,7 @@ def nav(l, alts, solid=True):
     mareas = ''.join(f'<a href="{url(l, "/areas/" + s + "/")}">{esc(city(l, s)["name"])}</a>' for s in CITY_SLUGS)
     return (f'<a class="skip" href="#main">{esc(U["skip"])}</a><div id="prog"></div>\n'
             f'<nav id="nav"{SOLID if solid else ""} aria-label="{attr(U["main_menu"])}">'
-            f'<a class="nav-logo" href="{h}" aria-label="{attr(C.BRAND)}"><img src="/img/logo.png" width="160" height="49" alt="{attr(C.BRAND)}"></a>'
+            f'<a class="nav-logo" href="{h}" aria-label="{attr(C.BRAND)}"><img src="/img/new-logo.png" width="160" height="49" alt="{attr(C.BRAND)}"></a>'
             '<div class="nav-r">'
             f'<a class="nav-a" href="{h}#home">{esc(U["home"])}</a>'
             f'<a class="nav-a" href="{h}#about">{esc(U["nav_about"])}</a>'
