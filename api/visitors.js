@@ -1,5 +1,5 @@
 'use strict';
-const {sendJson,getConfig,readJson,sameOrigin,rateLimit,verifySession,command}=require('../lib/enquiry-auth');
+const {sendJson,getConfig,readJson,rateLimit,verifySession,command}=require('../lib/enquiry-auth');
 const DATA_KEY='prestige:visitors:data',INDEX_KEY='prestige:visitors:index';
 const SAVE_SCRIPT=[
  "redis.call('HSET',KEYS[1],ARGV[1],ARGV[2])",
@@ -30,7 +30,15 @@ function device(ua){ua=String(ua||'').toLowerCase();if(/ipad|tablet/.test(ua))re
 module.exports=async function handler(req,res){
  const config=getConfig();if(!config)return sendJson(res,503,{error:'Visitor analytics storage is not configured.'});
  if(req.method==='POST'){
-  if(!sameOrigin(req))return sendJson(res,403,{error:'Request origin could not be verified.'});
+  const origin=req.headers.origin;
+  let originAllowed=false;
+  try {
+   const requestHost=String(req.headers['x-forwarded-host']||req.headers.host||'').split(',')[0].trim().toLowerCase().split(':')[0].replace(/^www\\./,'');
+   const originUrl=new URL(origin||'');
+   const originHost=originUrl.hostname.toLowerCase().replace(/^www\\./,'');
+   originAllowed=!!requestHost&&originHost===requestHost&&(originUrl.protocol==='https:'||originUrl.hostname==='localhost'||originUrl.hostname==='127.0.0.1');
+  } catch (_) {}
+  if(!originAllowed)return sendJson(res,403,{error:'Request origin could not be verified.'});
   try{
    const body=await readJson(req,2048),eventId=String(body.eventId||''),sessionId=String(body.sessionId||'');
    if(!/^[0-9a-f-]{36}$/i.test(eventId)||!/^[0-9a-f-]{36}$/i.test(sessionId))return sendJson(res,400,{error:'Invalid analytics event.'});
