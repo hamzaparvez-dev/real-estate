@@ -100,7 +100,7 @@
         '<a class="mnav-area-row" href="'+paths.kalyan+'"><span class="mnav-area-icon">'+icon('location')+'</span><strong>'+t.kalyan+'</strong>'+icon('chevron','mnav-chevron')+'</a>'+
         '<a class="mnav-all-areas" href="'+paths.all+'">'+t.all+icon('arrow')+'</a>'+
       '</section>'+
-      '<a class="mnav-whatsapp" href="'+waHref+'" target="_blank" rel="noopener">'+icon('whatsapp')+'<span>'+t.whatsapp+'</span>'+icon('chevron','mnav-chevron')+'</a>'
+      '<a class="mnav-whatsapp" href="'+waHref+'" target="_blank" rel="noopener">'+icon('whatsapp')+'<span>'+t.whatsapp+'</span>'+icon('chevron','mnav-chevron')+'</a>';
   }
 
   /* Mobile menu: accessible focus and keyboard behavior */
