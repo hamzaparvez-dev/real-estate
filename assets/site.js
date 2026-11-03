@@ -350,54 +350,24 @@
     document.head.appendChild(script);
   })();
 
-  /* Anonymous visitor analytics runs only after the visitor opts in. */
+  /* Anonymous analytics: opt-in is managed from the Privacy Policy page. */
   (function () {
-    var key = 'pe_visitor_analytics_consent';
-    var sessionKey = 'pe_analytics_session';
-    var memorySession = '';
-    function readConsent() { try { return localStorage.getItem(key) || ''; } catch (e) { return ''; } }
-    function saveConsent(value) { try { localStorage.setItem(key, value); } catch (e) {} }
-    function uuid() {
-      try { if (window.crypto && crypto.randomUUID) return crypto.randomUUID(); } catch (e) {}
-      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0;return(c==='x'?r:(r&3|8)).toString(16)});
+    var consentKey='pe_visitor_analytics_consent', sessionKey='pe_analytics_session', memorySession='';
+    function consent(){try{return localStorage.getItem(consentKey)||''}catch(e){return ''}}
+    function store(value){try{localStorage.setItem(consentKey,value)}catch(e){}}
+    function uuid(){try{if(window.crypto&&crypto.randomUUID)return crypto.randomUUID()}catch(e){}return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0;return(c==='x'?r:(r&3|8)).toString(16)})}
+    function track(){
+      var sid='';try{sid=sessionStorage.getItem(sessionKey)||''}catch(e){}
+      if(!sid){sid=memorySession||uuid();memorySession=sid;try{sessionStorage.setItem(sessionKey,sid)}catch(e){}}
+      fetch('/api/visitors',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},cache:'no-store',keepalive:true,body:JSON.stringify({eventId:uuid(),sessionId:sid,page:location.pathname,referrer:document.referrer||''})})
+      .then(function(r){if(!r.ok)r.text().then(function(t){console.warn('Prestige analytics:',r.status,t)})})
+      .catch(function(e){console.warn('Prestige analytics request failed:',e)});
     }
-    function track() {
-      var sessionId = '';
-      try { sessionId = sessionStorage.getItem(sessionKey) || ''; } catch (e) {}
-      if (!sessionId) {
-        sessionId = memorySession || uuid();
-        memorySession = sessionId;
-        try { sessionStorage.setItem(sessionKey, sessionId); } catch (e) {}
-      }
-      fetch('/api/visitors', {
-        method: 'POST',
-        credentials: 'same-origin',
-        headers: { 'Content-Type': 'application/json' },
-        cache: 'no-store',
-        keepalive: true,
-        body: JSON.stringify({ eventId: uuid(), sessionId: sessionId, page: location.pathname, referrer: document.referrer || '' })
-      }).then(function (response) {
-        if (!response.ok) response.text().then(function (message) { console.warn('Prestige visitor analytics:', response.status, message); });
-      }).catch(function (error) { console.warn('Prestige visitor analytics request failed:', error); });
-    }
-    if (readConsent() === 'yes') track();
-    var control = document.getElementById('privacy-analytics-toggle');
-    if (control) {
-      function updateLabel() { control.textContent = readConsent() === 'yes' ? 'Disable anonymous analytics' : 'Privacy & analytics choices'; }
-      updateLabel();
-      control.addEventListener('click', function () {
-        if (readConsent() === 'yes') {
-          saveConsent('no');
-          updateLabel();
-          return;
-        }
-        var allowed = window.confirm('Allow Prestige Enterprises to collect anonymous page views, visit time, referring website, device and browser? No name, phone number, email address or raw IP address is stored.');
-        if (!allowed) return;
-        saveConsent('yes');
-        updateLabel();
-        track();
-      });
-    }
+    if(consent()==='yes')track();
+    var status=document.getElementById('analytics-consent-status');
+    var toggle=document.getElementById('analytics-consent-toggle');
+    function render(){if(!toggle)return;var enabled=consent()==='yes';toggle.checked=enabled;if(status)status.textContent=enabled?'Anonymous analytics is enabled. Page views are recorded on this browser.':'Anonymous analytics is disabled. No new page views will be recorded.'}
+    if(toggle){render();toggle.addEventListener('change',function(){if(toggle.checked){store('yes');render();track()}else{store('no');render()}})}
   })();
 
 })();
