@@ -683,54 +683,64 @@ nav#nav .nav-logo::after{
   letter-spacing:-.025em;
 }
 #process .dh em{color:var(--gold2)}
+/* How it works: editorial, motion-free process cards. */
+#process .in{max-width:1320px}
+#process .eye{margin-bottom:14px}
+#process .dh{max-width:900px;margin-inline:auto;text-wrap:balance}
+#process .dh em{color:#CD2F2A;font-style:italic}
 #process .proc{
   grid-template-columns:repeat(4,minmax(0,1fr));
-  gap:16px;
-  margin-top:44px;
+  gap:18px;
+  margin-top:46px;
   border:0;
+  counter-reset:process-step;
 }
 #process .proc-step{
   display:flex;
   flex-direction:column;
-  min-height:238px;
-  padding:28px 25px 26px;
+  align-items:flex-start;
+  min-height:244px;
+  padding:27px 25px 25px;
   position:relative;
-  border:1px solid rgba(255,255,255,.14);
-  border-radius:14px;
-  background:rgba(255,255,255,.055);
-  box-shadow:0 10px 26px rgba(0,0,0,.10);
-  transform:none;
-  transition:none;
+  overflow:hidden;
+  border:1px solid rgba(255,255,255,.15);
+  border-radius:12px;
+  background:linear-gradient(155deg,rgba(255,255,255,.075),rgba(255,255,255,.025));
+  box-shadow:0 12px 30px rgba(0,0,0,.12);
+  transform:none!important;
+  transition:none!important;
 }
 #process .proc-step::before{
   content:"";
   position:absolute;
-  top:-1px;
-  left:25px;
-  width:44px;
+  inset:0 auto auto 25px;
+  width:46px;
   height:3px;
   border-radius:0 0 3px 3px;
-  background:var(--gold2);
+  background:#CD2F2A;
 }
 #process .proc-n{
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  width:50px;
-  height:50px;
-  flex:0 0 50px;
-  border:1px solid rgba(205,47,42,.48);
+  width:48px;
+  height:48px;
+  flex:0 0 48px;
+  border:1px solid rgba(205,47,42,.58);
   border-radius:50%;
-  background:rgba(205,47,42,.12);
+  background:rgba(205,47,42,.10);
   color:#F0443E;
-  font:600 21px/1 var(--serif);
+  font:600 18px/1 var(--serif);
 }
 #process .proc-step h3{
-  margin:22px 0 9px;
+  margin:23px 0 9px;
+  max-width:18ch;
   color:#F8FAFC;
-  font:500 23px/1.2 var(--serif);
+  font:500 clamp(20px,1.55vw,24px)/1.2 var(--serif);
+  letter-spacing:-.01em;
 }
 #process .proc-step p{
+  max-width:34ch;
   margin:0;
   color:rgba(248,250,252,.76);
   font-size:14px;
@@ -738,26 +748,27 @@ nav#nav .nav-logo::after{
 }
 #process .proc-step:hover,
 #process .proc-step:focus-within{
-  transform:none;
-  box-shadow:0 10px 26px rgba(0,0,0,.10);
+  transform:none!important;
+  box-shadow:0 12px 30px rgba(0,0,0,.12);
 }
 @media(max-width:1050px){
-  #process .proc{grid-template-columns:repeat(2,minmax(0,1fr))}
+  #process .proc{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}
+  #process .proc-step{min-height:220px}
 }
 @media(max-width:620px){
-  #process .proc{grid-template-columns:1fr;gap:12px;margin-top:32px}
-  #process .proc-step{min-height:0;padding:24px 22px}
-  #process .dh{text-align:center}
+  #process .sec{padding-block:64px}
+  #process .proc{grid-template-columns:1fr;gap:12px;margin-top:30px}
+  #process .proc-step{min-height:0;padding:22px 21px}
+  #process .proc-step h3{margin-top:18px;font-size:22px}
+  #process .dh{text-align:center;font-size:clamp(34px,9vw,44px)}
+  #process .eye{justify-content:center}
 }
 
-/* Respect reduced-motion preferences throughout the site. */
-@media(prefers-reduced-motion:reduce){
-  *,*::before,*::after{
-    scroll-behavior:auto!important;
-    animation-duration:.01ms!important;
-    animation-iteration-count:1!important;
-    transition-duration:.01ms!important;
-  }
+/* Keep this section completely still, regardless of global reveal/hover styles. */
+#process *,#process *::before,#process *::after{
+  animation:none!important;
+  transition:none!important;
+  scroll-behavior:auto!important;
 }
 
 /* FAQ: keep the heading and accordion column centered on every breakpoint. */
