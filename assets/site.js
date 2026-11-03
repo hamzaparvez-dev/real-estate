@@ -49,18 +49,37 @@
     document.addEventListener('keydown', function (e) { if (e.key === 'Escape') setDd(false); });
   }
 
-  /* Mobile menu */
+  /* Mobile menu: accessible focus and keyboard behavior */
   var ham = $('#navHam'), menu = $('#mnav');
   if (ham && menu) {
-    var setMenu = function (o) {
-      menu.hidden = !o; ham.classList.toggle('open', o); ham.setAttribute('aria-expanded', o ? 'true' : 'false');
-      nav.classList.toggle('menu-open', o); document.body.style.overflow = o ? 'hidden' : '';
+    var setMenu = function (open) {
+      menu.hidden = !open;
+      menu.setAttribute('aria-hidden', open ? 'false' : 'true');
+      ham.classList.toggle('open', open);
+      ham.setAttribute('aria-expanded', open ? 'true' : 'false');
+      ham.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
+      nav.classList.toggle('menu-open', open);
+      document.body.style.overflow = open ? 'hidden' : '';
+      if (open) { var first = $('a[href]', menu); if (first) first.focus({preventScroll:true}); }
+      else ham.focus({preventScroll:true});
     };
     ham.addEventListener('click', function () { setMenu(menu.hidden); });
     menu.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
-    document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !menu.hidden) { setMenu(false); ham.focus(); } });
+    document.addEventListener('keydown', function (e) {
+      if (menu.hidden) return;
+      if (e.key === 'Escape') { e.preventDefault(); setMenu(false); return; }
+      if (e.key === 'Tab') {
+        var items = $$('a[href],button:not([disabled])', menu);
+        if (!items.length) return;
+        if (e.shiftKey && document.activeElement === items[0]) { e.preventDefault(); items[items.length-1].focus(); }
+        else if (!e.shiftKey && document.activeElement === items[items.length-1]) { e.preventDefault(); items[0].focus(); }
+      }
+    });
     var mq = window.matchMedia('(min-width:981px)');
-    (mq.addEventListener ? mq.addEventListener.bind(mq, 'change') : mq.addListener.bind(mq))(function (q) { if (q.matches) setMenu(false); });
+    (mq.addEventListener ? mq.addEventListener.bind(mq, 'change') : mq.addListener.bind(mq))(function (q) {
+      if (q.matches && !menu.hidden) { menu.hidden=true; menu.setAttribute('aria-hidden','true'); ham.classList.remove('open'); ham.setAttribute('aria-expanded','false'); ham.setAttribute('aria-label','Open menu'); nav.classList.remove('menu-open'); document.body.style.overflow=''; }
+    });
+    menu.setAttribute('aria-hidden', menu.hidden ? 'true' : 'false');
   }
 
   /* Hero slider + rotating tagline (home only) */
