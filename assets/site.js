@@ -51,7 +51,7 @@
 
   /* Apply the same premium drawer to all legacy interior-page menus. */
   function upgradeMobileMenu(panel) {
-    if (!panel || panel.querySelector('.mnav-panel')) return;
+    if (!panel || panel.querySelector('.mnav-section-heading')) return;
     var lang = (document.documentElement.lang || 'en').slice(0,2).toLowerCase();
     var t = {
       en:{home:'Home',about:'About',projects:'Projects',plans:'Plans',pricing:'Pricing',services:'Services',guides:'Guides',contact:'Contact',areas:'Areas',kalyan:'Kalyan',all:'See All Areas',whatsapp:'Chat on WhatsApp'},
@@ -85,22 +85,22 @@
       return '<a class="mnav-row" href="'+href+'"><span class="mnav-row-icon">'+icon(name)+'</span><span class="mnav-row-label">'+t[name]+'</span>'+icon('chevron','mnav-chevron')+'</a>';
     }
     panel.innerHTML =
-      '<div class="mnav-topline"><span class="mnav-kicker">PRESTIGE ENTERPRISES</span><span class="mnav-top-note">PROPERTY SALES · KALYAN</span></div>'+
       '<div class="mnav-main-links">'+
         '<a class="mnav-row mnav-row-home" href="'+paths.home+'"><span class="mnav-row-icon">'+icon('home')+'</span><span class="mnav-row-label">'+t.home+'</span>'+icon('chevron','mnav-chevron')+'</a>'+
         '<a class="mnav-row" href="'+paths.about+'"><span class="mnav-row-icon">'+icon('about')+'</span><span class="mnav-row-label">'+t.about+'</span>'+icon('chevron','mnav-chevron')+'</a>'+
       '</div>'+
-      '<section class="mnav-panel mnav-project-panel" aria-labelledby="mnav-projects-title">'+
-        '<div class="mnav-panel-heading">'+icon('project')+'<h2 id="mnav-projects-title">'+t.projects+'</h2><span class="mnav-panel-rule"></span>'+icon('up','mnav-panel-arrow')+'</div>'+
-        '<a class="mnav-featured-project" href="/projects/prestige-gold/"><span class="mnav-featured-icon">'+icon('image')+'</span><span class="mnav-featured-copy"><small>'+t.plans+'</small><strong>Prestige Gold</strong></span><span class="mnav-featured-badge">Featured</span>'+icon('chevron','mnav-chevron')+'</a>'+
+      '<section class="mnav-project-panel" aria-labelledby="mnav-projects-title">'+
+        '<div class="mnav-section-heading"><h2 id="mnav-projects-title">'+t.projects+'</h2><span></span></div>'+
+        '<div class="mnav-plan-row"><span class="mnav-plan-icon">'+icon('project')+'</span><strong>'+t.plans+'</strong></div>'+
+        '<a class="mnav-featured-project" href="/projects/prestige-gold/"><strong>Prestige Gold</strong>'+icon('chevron','mnav-chevron')+'</a>'+
       '</section>'+
       '<div class="mnav-main-links mnav-secondary-links">'+row('pricing',paths.pricing)+row('services',paths.services)+row('guides',paths.guides)+row('contact',paths.contact)+'</div>'+
-      '<section class="mnav-panel mnav-areas-panel" aria-labelledby="mnav-areas-title">'+
-        '<div class="mnav-panel-heading">'+icon('location')+'<h2 id="mnav-areas-title">'+t.areas+'</h2><span class="mnav-panel-rule"></span></div>'+
+      '<section class="mnav-areas-panel" aria-labelledby="mnav-areas-title">'+
+        '<div class="mnav-section-heading"><h2 id="mnav-areas-title">'+t.areas+'</h2><span></span></div>'+
         '<a class="mnav-area-row" href="'+paths.kalyan+'"><span class="mnav-area-icon">'+icon('location')+'</span><strong>'+t.kalyan+'</strong>'+icon('chevron','mnav-chevron')+'</a>'+
         '<a class="mnav-all-areas" href="'+paths.all+'">'+t.all+icon('arrow')+'</a>'+
       '</section>'+
-      '<a class="mnav-whatsapp" href="'+waHref+'" target="_blank" rel="noopener">'+icon('whatsapp')+'<span>'+t.whatsapp+'</span>'+icon('chevron','mnav-chevron')+'</a>';
+      '<a class="mnav-whatsapp" href="'+waHref+'" target="_blank" rel="noopener">'+icon('whatsapp')+'<span>'+t.whatsapp+'</span>'+icon('chevron','mnav-chevron')+'</a>'
   }
 
   /* Mobile menu: accessible focus and keyboard behavior */
