@@ -51,56 +51,77 @@
 
   /* Apply the same premium drawer to all legacy interior-page menus. */
   function upgradeMobileMenu(panel) {
-    if (!panel || panel.querySelector('.mnav-section-heading')) return;
+    if (!panel || panel.querySelector('.mnav-content')) return;
     var lang = (document.documentElement.lang || 'en').slice(0,2).toLowerCase();
     var t = {
-      en:{home:'Home',about:'About',projects:'Projects',plans:'Plans',pricing:'Pricing',services:'Services',guides:'Guides',contact:'Contact',areas:'Areas',kalyan:'Kalyan',all:'See All Areas',whatsapp:'Chat on WhatsApp'},
-      hi:{home:'होम',about:'हमारे बारे में',projects:'प्रोजेक्ट्स',plans:'फ्लोर प्लान',pricing:'कीमतें',services:'सेवाएँ',guides:'गाइड',contact:'संपर्क',areas:'इलाके',kalyan:'कल्याण',all:'सभी इलाके देखें',whatsapp:'WhatsApp पर चैट करें'},
-      mr:{home:'मुख्यपृष्ठ',about:'आमच्याबद्दल',projects:'प्रकल्प',plans:'फ्लोअर प्लॅन',pricing:'किंमती',services:'सेवा',guides:'मार्गदर्शक',contact:'संपर्क',areas:'परिसर',kalyan:'कल्याण',all:'सर्व परिसर पाहा',whatsapp:'WhatsApp वर चॅट करा'}
+      en:{home:'Home',about:'About',projects:'Projects',plans:'Plans',gold:'Prestige Gold',pricing:'Pricing',services:'Services',guides:'Guides',contact:'Contact',areas:'Areas',kalyan:'Kalyan',whatsapp:'Chat on WhatsApp'},
+      hi:{home:'होम',about:'हमारे बारे में',projects:'प्रोजेक्ट्स',plans:'प्लान्स',gold:'प्रेस्टीज गोल्ड',pricing:'कीमत',services:'सेवाएँ',guides:'गाइड',contact:'संपर्क',areas:'क्षेत्र',kalyan:'कल्याण',whatsapp:'व्हाट्सऐप पर चैट करें'},
+      mr:{home:'मुख्यपृष्ठ',about:'आमच्याबद्दल',projects:'प्रकल्प',plans:'योजना',gold:'प्रेस्टीज गोल्ड',pricing:'किंमत',services:'सेवा',guides:'मार्गदर्शक',contact:'संपर्क',areas:'परिसर',kalyan:'कल्याण',whatsapp:'व्हॉट्सअ‍ॅपवर चॅट करा'}
     }[lang] || null;
     if (!t) return;
     var oldWhatsApp = panel.querySelector('a[href*="wa.me"]');
-    var waHref = oldWhatsApp ? oldWhatsApp.getAttribute('href') : 'https://wa.me/919689557788';
+    var waHref = oldWhatsApp ? oldWhatsApp.getAttribute('href') :
+      'https://wa.me/919689557788?text=Hello%20Prestige%20Enterprises%2C%20I%20would%20like%20more%20information%20about%20properties%20for%20sale%20in%20Kalyan.';
     var prefix = lang === 'en' ? '' : '/' + lang;
-    var paths = {home:prefix+'/#home',about:prefix+'/#about',pricing:prefix+'/#pricing',services:prefix+'/#services',guides:prefix+'/blog/',contact:prefix+'/#contact',kalyan:prefix+'/areas/kalyan/',all:prefix+'/areas/'};
+    var paths = {
+      home:prefix+'/#home',about:prefix+'/#about',pricing:prefix+'/#pricing',
+      services:prefix+'/#services',guides:prefix+'/blog/',contact:prefix+'/#contact',
+      kalyan:prefix+'/areas/kalyan/'
+    };
     var glyphs = {
-      home:'<path d="m3 10 9-7 9 7v10a1 1 0 0 1-1 1h-5v-7H9v7H4a1 1 0 0 1-1-1z"/>',
-      about:'<path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87M16 3.13a4 4 0 0 1 0 7.75"/>',
-      project:'<rect x="3" y="7" width="7" height="14" rx="1"/><rect x="14" y="3" width="7" height="18" rx="1"/><path d="M6 11h1M6 15h1M17 7h1M17 11h1M17 15h1"/>',
-      pricing:'<path d="M20.6 13.4 11 23l-9-9 9.6-9.6a2 2 0 0 1 1.4-.6H20a2 2 0 0 1 2 2v7.1a2 2 0 0 1-1.4 1.5z"/><circle cx="16.5" cy="7.5" r="1.5"/>',
-      services:'<path d="m12 3 9 5-9 5-9-5 9-5z"/><path d="m3 12 9 5 9-5M3 16l9 5 9-5"/>',
-      guides:'<path d="M4 5.5A3.5 3.5 0 0 1 7.5 2H20v18H7.5A3.5 3.5 0 0 0 4 23z"/><path d="M4 5.5V23M20 20H7.5A3.5 3.5 0 0 0 4 23"/>',
-      contact:'<rect x="2" y="4" width="20" height="16" rx="2"/><path d="m3 6 9 7 9-7"/>',
-      location:'<path d="M20 10c0 5-8 12-8 12S4 15 4 10a8 8 0 1 1 16 0Z"/><circle cx="12" cy="10" r="2.5"/>',
-      image:'<rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/><path d="m21 15-5-5L5 21"/>',
-      arrow:'<path d="M5 12h14M13 6l6 6-6 6"/>',
-      chevron:'<path d="m9 18 6-6-6-6"/>',
-      up:'<path d="m6 15 6-6 6 6"/>',
-      whatsapp:'<path d="M21 11.5a8.38 8.38 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.38 8.38 0 0 1-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.38 8.38 0 0 1 3.8-.9h.5a8.48 8.48 0 0 1 8 8v.5z"/>'
+      home:'<path d="M3 11 12 3l9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/>',
+      about:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7z"/>',
+      project:'<path d="M4 21V9l6-3v15"/><path d="M10 21V4l8 3v14"/><path d="M2 21h20M13 10h2M13 14h2M7 12h0M7 16h0"/>',
+      pricing:'<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.2"/>',
+      services:'<path d="M12 3l9 5-9 5-9-5z"/><path d="M3 12.5l9 5 9-5"/><path d="M3 17l9 5 9-5"/>',
+      guides:'<path d="M12 6c-2-1.5-5-2-9-2v14c4 0 7 .5 9 2 2-1.5 5-2 9-2V4c-4 0-7 .5-9 2z"/><path d="M12 6v14"/>',
+      contact:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 7 9-7"/>',
+      location:'<path d="M12 22s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/>',
+      whatsapp:'<path d="M3 21l1.6-4.8A9 9 0 1 1 12 21a9 9 0 0 1-4.3-1.1z"/><path d="M9 8.5c0 3.5 3 6.5 6.5 6.5l1-1.8-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2z"/>',
+      chevron:'<path d="M9 5l7 7-7 7"/>'
     };
     function icon(name, cls) {
-      return '<svg class="'+(cls||'')+'" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'+glyphs[name]+'</svg>';
+      return '<svg class="'+(cls||'')+'" viewBox="0 0 24 24" aria-hidden="true">'+glyphs[name]+'</svg>';
     }
-    function row(name, href) {
-      return '<a class="mnav-row" href="'+href+'"><span class="mnav-row-icon">'+icon(name)+'</span><span class="mnav-row-label">'+t[name]+'</span>'+icon('chevron','mnav-chevron')+'</a>';
+    function item(name, href, iconName, extra) {
+      return '<a class="mnav-item mnav-full-item '+(extra||'')+'" href="'+href+'">'+icon(iconName)+
+        '<span class="mnav-label">'+t[name]+'</span>'+icon('chevron','mnav-chevron')+'</a>';
     }
     panel.innerHTML =
-      '<div class="mnav-main-links">'+
-        '<a class="mnav-row mnav-row-home" href="'+paths.home+'"><span class="mnav-row-icon">'+icon('home')+'</span><span class="mnav-row-label">'+t.home+'</span>'+icon('chevron','mnav-chevron')+'</a>'+
-        '<a class="mnav-row" href="'+paths.about+'"><span class="mnav-row-icon">'+icon('about')+'</span><span class="mnav-row-label">'+t.about+'</span>'+icon('chevron','mnav-chevron')+'</a>'+
+      '<div class="mnav-content">'+
+        '<div class="mnav-top">'+
+          '<a class="mnav-item mnav-item-top mnav-item-active" href="'+paths.home+'">'+icon('home')+'<span class="mnav-label">'+t.home+'</span></a>'+
+          '<a class="mnav-item mnav-item-top" href="'+paths.about+'">'+icon('about')+'<span class="mnav-label">'+t.about+'</span></a>'+
+        '</div>'+
+        '<div class="mnav-section">'+t.projects+'</div>'+
+        '<div class="mnav-group open" id="mnav-plans">'+
+          '<button class="mnav-item mnav-plan-button" type="button" id="mnav-plans-button" aria-expanded="true">'+icon('project')+
+            '<span class="mnav-label">'+t.plans+'</span>'+icon('chevron','mnav-chevron')+
+          '</button>'+
+          '<div class="mnav-plan-sub"><div>'+
+            '<a class="mnav-plan-link" href="/projects/prestige-gold/"><span>'+t.gold+'</span>'+icon('chevron')+'</a>'+
+          '</div></div>'+
+        '</div>'+
+        item('pricing',paths.pricing,'pricing','')+
+        item('services',paths.services,'services','')+
+        item('guides',paths.guides,'guides','')+
+        item('contact',paths.contact,'contact','')+
+        '<div class="mnav-section">'+t.areas+'</div>'+
+        item('kalyan',paths.kalyan,'location','mnav-area-item')+
       '</div>'+
-      '<section class="mnav-project-panel" aria-labelledby="mnav-projects-title">'+
-        '<div class="mnav-section-heading"><h2 id="mnav-projects-title">'+t.projects+'</h2><span></span></div>'+
-        '<div class="mnav-plan-row"><span class="mnav-plan-icon">'+icon('project')+'</span><strong>'+t.plans+'</strong></div>'+
-        '<a class="mnav-featured-project" href="/projects/prestige-gold/"><strong>Prestige Gold</strong>'+icon('chevron','mnav-chevron')+'</a>'+
-      '</section>'+
-      '<div class="mnav-main-links mnav-secondary-links">'+row('pricing',paths.pricing)+row('services',paths.services)+row('guides',paths.guides)+row('contact',paths.contact)+'</div>'+
-      '<section class="mnav-areas-panel" aria-labelledby="mnav-areas-title">'+
-        '<div class="mnav-section-heading"><h2 id="mnav-areas-title">'+t.areas+'</h2><span></span></div>'+
-        '<a class="mnav-area-row" href="'+paths.kalyan+'"><span class="mnav-area-icon">'+icon('location')+'</span><strong>'+t.kalyan+'</strong>'+icon('chevron','mnav-chevron')+'</a>'+
-        '<a class="mnav-all-areas" href="'+paths.all+'">'+t.all+icon('arrow')+'</a>'+
-      '</section>'+
-      '<a class="mnav-whatsapp" href="'+waHref+'" target="_blank" rel="noopener">'+icon('whatsapp')+'<span>'+t.whatsapp+'</span>'+icon('chevron','mnav-chevron')+'</a>';
+      '<div class="mnav-footer">'+
+        '<a class="mnav-whatsapp" href="'+waHref+'" target="_blank" rel="noopener">'+icon('whatsapp')+
+          '<span>'+t.whatsapp+'</span>'+icon('chevron','mnav-chevron')+
+        '</a>'+
+      '</div>';
+    var group = panel.querySelector('#mnav-plans');
+    var toggle = panel.querySelector('#mnav-plans-button');
+    if (group && toggle) {
+      toggle.addEventListener('click',function(){
+        var open = group.classList.toggle('open');
+        toggle.setAttribute('aria-expanded',open ? 'true' : 'false');
+      });
+    }
   }
 
   /* Mobile menu: accessible focus and keyboard behavior */
