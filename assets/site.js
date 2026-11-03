@@ -136,6 +136,8 @@
             <label class="enq-field">Select Configuration <span>*</span><select name="configuration" required><option value="">Select</option><option>1BHK</option><option>2BHK</option><option>3BHK</option><option>4BHK</option><option>5BHK</option><option>Commercial</option></select></label>
             <label class="enq-field">Purpose <select name="purpose"><option value="">Select</option><option>Self Use / End-Use</option><option>Investment / Rental</option><option>First Home</option><option>Upgrade</option></select></label>
           </div>
+          <input type="hidden" name="message" value="">
+          <div class="enq-honeypot" aria-hidden="true"><label>Leave this field empty<input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
           <p class="enq-consent">By submitting you authorize us to contact you via call/SMS/email.</p>
           <p class="enq-error" role="alert" aria-live="polite"></p>
           <button class="enq-submit" type="submit">ENQUIRE NOW</button>
@@ -194,14 +196,48 @@
         'Name: ' + data.get('name'),
         'Mobile: ' + phone,
         'Configuration: ' + data.get('configuration'),
-        'Purpose: ' + (data.get('purpose') || 'Not specified')
+        'Purpose: ' + (data.get('purpose') || 'Not specified'),
+        'Details: ' + (data.get('message') || 'Not specified')
       ];
-      var url = WA + '?text=' + encodeURIComponent(lines.join('\n'));
-      var popup = window.open(url, '_blank');
-      if (popup) popup.opener = null;
-      else window.location.href = url;
-      close();
-      form.reset();
+      var url = WA + '?text=' + encodeURIComponent(lines.join('\\n'));
+      var payload = {
+        name: String(data.get('name') || '').trim(),
+        phone: phone,
+        configuration: String(data.get('configuration') || ''),
+        purpose: String(data.get('purpose') || ''),
+        intent: enquiryIntent,
+        message: String(data.get('message') || '').trim(),
+        source: location.pathname,
+        website: String(data.get('website') || '')
+      };
+      var submitButton = form.querySelector('.enq-submit');
+      var originalLabel = submitButton.textContent;
+      submitButton.disabled = true;
+      submitButton.textContent = 'SAVING ENQUIRY…';
+      var waWindow = window.open('about:blank', '_blank');
+      if (waWindow) waWindow.opener = null;
+      fetch('/api/enquiries', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload)
+      }).then(function (response) {
+        return response.json().catch(function () { return {}; }).then(function (body) {
+          if (!response.ok) throw new Error(body.error || 'We could not save your enquiry. Please try again.');
+          return body;
+        });
+      }).then(function () {
+        close();
+        form.reset();
+        if (waWindow) waWindow.location.href = url;
+        else window.location.href = url;
+      }).catch(function (err) {
+        if (waWindow) waWindow.close();
+        error.textContent = err.message || 'We could not save your enquiry. Please try again.';
+      }).finally(function () {
+        submitButton.disabled = false;
+        submitButton.textContent = originalLabel;
+      });
     });
 
     var float = document.createElement('div');
