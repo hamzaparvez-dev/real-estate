@@ -1574,3 +1574,6 @@ footer .foot-logo{
 }
 @media(max-width:380px){nav#nav{padding-inline:12px}.nav-logo img{height:38px;max-width:130px}.nav-r{gap:6px}nav#nav .lang a{padding:7px 5px;font-size:9px}.mnav{padding-inline:14px}.mnav ul li>a{font-size:17px}}
 @media(prefers-reduced-motion:reduce){.mnav{animation:none}}
+
+/* Keep the collapsed navigation truly hidden despite its flex layout. */
+.mnav[hidden]{display:none!important}
