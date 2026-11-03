@@ -1778,3 +1778,30 @@ footer .foot-logo{
  .mnav-whatsapp{min-height:56px;font-size:15px}
 }
 @media(prefers-reduced-motion:reduce){.mnav{animation:none}}
+
+
+/* Final mobile drawer alignment and overlay stacking. */
+@media(max-width:980px){
+ nav#nav{z-index:1300!important}
+ .mnav{
+  position:fixed!important;
+  inset:68px 0 0!important;
+  z-index:1200!important;
+  display:flex!important;
+  flex-direction:column;
+  overflow-x:hidden;
+  overflow-y:auto;
+  overscroll-behavior:contain;
+  background:#fff!important;
+  color:#10243d!important;
+  opacity:1!important;
+  isolation:isolate;
+ }
+ .mnav[hidden]{display:none!important}
+ .mnav-secondary-links{display:grid!important;grid-template-columns:1fr!important;gap:10px!important}
+ .mnav-secondary-links .mnav-row{min-height:62px!important}
+ .mnav-featured-project{padding:12px 20px 12px 70px!important}
+ .mnav-project-panel,.mnav-areas-panel{background:#fff!important}
+ .mobile-menu-open .floating-cta{display:none!important;visibility:hidden!important;pointer-events:none!important}
+ .mobile-menu-open .wa{display:none!important}
+}
