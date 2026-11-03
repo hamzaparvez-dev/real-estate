@@ -136,9 +136,10 @@
             <label class="enq-field">Select Configuration <span>*</span><select name="configuration" required><option value="">Select</option><option>1BHK</option><option>2BHK</option><option>3BHK</option><option>4BHK</option><option>5BHK</option><option>Commercial</option></select></label>
             <label class="enq-field">Purpose <select name="purpose"><option value="">Select</option><option>Self Use / End-Use</option><option>Investment / Rental</option><option>First Home</option><option>Upgrade</option></select></label>
           </div>
-          <input type="hidden" name="message" value="">
+          <label class="enq-field">Anything else we should know? <textarea name="message" rows="3" maxlength="1000" placeholder="Optional details about your requirements"></textarea></label>
           <div class="enq-honeypot" aria-hidden="true"><label>Leave this field empty<input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>
-          <p class="enq-consent">By submitting you authorize us to contact you via call/SMS/email.</p>
+          <p class="enq-consent">By submitting, you ask Prestige Enterprises to contact you about this specific enquiry. Your details are collected through this form, not through cookies.</p>
+          <label class="enq-optional-consent"><input type="checkbox" name="marketingConsent" value="true"><span>I also agree to receive occasional property updates, offers and relevant marketing messages from Prestige Enterprises. Optional; I can withdraw this consent later.</span></label>
           <p class="enq-error" role="alert" aria-live="polite"></p>
           <button class="enq-submit" type="submit">ENQUIRE NOW</button>
         </form>      </div>`;
@@ -197,7 +198,8 @@
         'Mobile: ' + phone,
         'Configuration: ' + data.get('configuration'),
         'Purpose: ' + (data.get('purpose') || 'Not specified'),
-        'Details: ' + (data.get('message') || 'Not specified')
+        'Details: ' + (data.get('message') || 'Not specified'),
+        'Agreed to future property updates: ' + (form.querySelector('[name="marketingConsent"]').checked ? 'Yes' : 'No')
       ];
       var url = WA + '?text=' + encodeURIComponent(lines.join('\\n'));
       var payload = {
@@ -208,6 +210,7 @@
         intent: enquiryIntent,
         message: String(data.get('message') || '').trim(),
         source: location.pathname,
+        marketingConsent: !!form.querySelector('[name="marketingConsent"]').checked,
         website: String(data.get('website') || '')
       };
       var submitButton = form.querySelector('.enq-submit');

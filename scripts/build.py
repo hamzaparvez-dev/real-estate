@@ -287,7 +287,7 @@ def footer(l, alts):
             f'<div><h4>{esc(U["foot_lang"])}</h4><ul>{langs}</ul></div></div>'
             f'<div class="foot-legal"><p>{esc(U["disclaimer"])}</p><p>{esc(U["rights"])}</p></div></footer>\n'
             f'<a class="wa" href="{waurl(U["wa_default"])}" target="_blank" rel="noopener" aria-label="{attr(U["wa_btn"])}">{I["chat"]}<span>{esc(U["float_wa"])}</span></a>\n'
-            '<script src="/assets/site.js?v=admin-enquiry-20261103" defer></script>\n</body>\n</html>\n')
+            '<script src="/assets/site.js?v=crm-dashboard-20261103-v2" defer></script>\n</body>\n</html>\n')
 
 
 def page(l, path, alts, head_html, body):
@@ -668,35 +668,10 @@ def build_404():
 
 
 def build_login_page():
-    """Generate the private, no-index enquiry dashboard."""
-    page = f'''<!doctype html>
-<html lang="en">
-<head>
-<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="robots" content="noindex, nofollow, noarchive"><meta name="theme-color" content="#142B45">
-<title>Private Enquiry Dashboard | Prestige Enterprises</title>
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=admin-dashboard-20261103">
-</head>
-<body class="admin-page">
-<div class="admin-shell">
-<header class="admin-topbar"><a class="admin-brand" href="/" aria-label="Prestige Enterprises home"><img src="/img/new-logo.png" width="168" height="52" alt="Prestige Enterprises"><span>PRIVATE PORTAL</span></a><button class="admin-logout" id="admin-logout" type="button" hidden>Sign out</button></header>
-<main class="admin-main">
-<section class="admin-login-card" id="admin-login"><p class="admin-eyebrow">PRESTIGE ENTERPRISES · KALYAN</p><h1>Enquiry <em>dashboard</em></h1>
-<p class="admin-intro">Sign in to view and manage property enquiries received through the website.</p>
-<form id="admin-login-form" novalidate><label for="admin-password">Dashboard password</label><input id="admin-password" name="password" type="password" autocomplete="current-password" required placeholder="Enter your password"><p class="admin-error" id="admin-login-error" role="alert" aria-live="polite"></p><button class="admin-primary-btn" type="submit">Sign in securely</button></form>
-<p class="admin-secure-note">Private access · Session expires automatically</p></section>
-<section class="admin-dashboard" id="admin-dashboard" hidden><div class="admin-dashboard-heading"><div><p class="admin-eyebrow">PRESTIGE ENTERPRISES · LEAD MANAGEMENT</p><h1>Website <em>enquiries</em></h1><p class="admin-intro">Latest submissions from your website enquiry forms.</p></div><button class="admin-refresh-btn" id="admin-refresh" type="button">Refresh</button></div>
-<div class="admin-summary"><div class="admin-summary-card"><span class="admin-summary-label">TOTAL ENQUIRIES</span><strong id="admin-total">—</strong></div><div class="admin-summary-card"><span class="admin-summary-label">SHOWING</span><strong id="admin-showing">—</strong></div></div>
-<div class="admin-toolbar"><label class="admin-search-label" for="admin-search">Search enquiries</label><input id="admin-search" type="search" placeholder="Search name, mobile, configuration or details…"></div>
-<p class="admin-error admin-dashboard-error" id="admin-dashboard-error" role="alert" aria-live="polite"></p><div class="admin-enquiry-list" id="admin-enquiry-list" aria-live="polite"></div>
-<div class="admin-pagination"><span id="admin-page-label">—</span><div><button class="admin-page-btn" id="admin-prev" type="button" disabled>Previous</button><button class="admin-page-btn" id="admin-next" type="button" disabled>Next</button></div></div></section>
-<p class="admin-bottom-note">Prestige Enterprises · Internal use only</p></main></div>
-<script src="/assets/login.js?v=admin-dashboard-20261103" defer></script></body></html>
-'''
-    write('login/index.html', page)
+    """Copy the private enquiry CRM template to /login/."""
+    template = os.path.join(ROOT, 'admin', 'dashboard.html')
+    with open(template, 'r', encoding='utf-8') as f:
+        write('login/index.html', f.read())
 
 
 def build_sitemap():

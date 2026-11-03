@@ -3,19 +3,130 @@
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow, noarchive"><meta name="theme-color" content="#142B45">
 <title>Private Enquiry Dashboard | Prestige Enterprises</title>
-<link rel="icon" href="/favicon.ico" sizes="any">
-<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="icon" href="/favicon.ico" sizes="any"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="/assets/site.css?v=admin-enquiry-20261103"></head>
-<body class="admin-page"><div class="admin-shell">
-<header class="admin-topbar"><a class="admin-brand" href="/" aria-label="Prestige Enterprises home"><img src="/img/new-logo.png" width="168" height="52" alt="Prestige Enterprises"><span>PRIVATE PORTAL</span></a><button class="admin-logout" id="admin-logout" type="button" hidden>Sign out</button></header>
+<style>
+:root{--red:#CD2F2A;--navy:#142B45;--muted:#69778a;--line:#e2e7ee;--sans:'DM Sans',system-ui,sans-serif;--serif:'Cormorant Garamond',Georgia,serif}
+*{box-sizing:border-box}body{margin:0;background:#07111f;color:#142B45;font-family:var(--sans)}
+[hidden]{display:none!important}.admin-topbar{height:82px;padding:0 clamp(18px,5vw,72px);display:flex;align-items:center;justify-content:space-between;background:#fff;border-bottom:1px solid #e5e9ef}
+.admin-brand{display:flex;align-items:center;gap:17px;text-decoration:none;color:var(--navy)}.admin-brand img{display:block;width:168px;height:auto;object-fit:contain}
+.admin-brand span{font:600 9px/1 var(--sans);letter-spacing:.18em;color:#738094;border-left:1px solid #dce1e8;padding-left:17px}
+.admin-logout,.admin-button,.admin-page-btn{border:1px solid #dce1e8;background:#fff;color:var(--navy);padding:11px 17px;font:600 11px var(--sans);cursor:pointer}
+.admin-logout{background:var(--navy);color:#fff;border:0;min-height:44px;letter-spacing:.04em}
+.admin-main{width:min(1260px,calc(100% - 48px));margin:0 auto;padding:clamp(32px,5vw,60px) 0 36px}
+.admin-login-card{width:min(100%,460px);margin:clamp(25px,8vh,90px) auto;background:#fff;padding:clamp(28px,5vw,48px);box-shadow:0 18px 55px rgba(0,0,0,.2)}
+.admin-eyebrow{font:600 9px/1.4 var(--sans);letter-spacing:.2em;color:var(--red);margin:0 0 14px}
+.admin-login-card h1,.admin-dashboard h1{font:500 clamp(34px,5vw,48px)/1.04 var(--serif);letter-spacing:-.02em;margin:0;color:var(--navy)}
+.admin-login-card h1 em,.admin-dashboard h1 em{font-style:italic;color:var(--red)}
+.admin-intro{font:400 14px/1.7 var(--sans);color:var(--muted);margin:16px 0 28px}
+#admin-login-form{display:grid;gap:12px}#admin-login-form label,.admin-label{font:600 11px var(--sans);color:#33445a}
+#admin-password{width:100%;height:48px;border:1px solid #d9e0e8;padding:0 14px;font:400 14px var(--sans);color:var(--navy);outline:none}
+#admin-password:focus,input:focus,select:focus,textarea:focus{border-color:var(--red);box-shadow:0 0 0 3px rgba(205,47,42,.08)}
+.admin-primary{height:49px;border:0;background:var(--navy);color:#fff;font:600 11px var(--sans);letter-spacing:.06em;cursor:pointer;margin-top:7px}
+.admin-primary:hover{background:#203c5c}.admin-primary:disabled{opacity:.6;cursor:wait}
+.admin-error{min-height:18px;margin:0;color:#b82420;font:500 12px/1.5 var(--sans)}
+.admin-secure,.admin-bottom{font:400 10px/1.6 var(--sans);letter-spacing:.06em;color:#8b96a5;text-align:center}
+.admin-secure{margin:24px 0 0}.admin-bottom{margin:42px 0 0}
+.admin-dashboard h1{color:#fff}.admin-dashboard .admin-intro{color:#aeb9c8}
+.admin-head{display:flex;align-items:flex-end;justify-content:space-between;gap:24px;margin-bottom:26px}
+.admin-head-actions{display:flex;gap:10px;flex-wrap:wrap}.admin-head-actions button{min-height:42px;padding:0 16px}
+.admin-export{border:1px solid var(--red);background:var(--red);color:#fff;font:600 10px var(--sans);letter-spacing:.04em;cursor:pointer}
+.admin-export:disabled{opacity:.6;cursor:wait}
+.kpis{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:12px;margin:26px 0}
+.kpi{background:#fff;border:1px solid var(--line);padding:18px 20px;min-height:112px}.kpi:first-child{border-top:3px solid var(--red)}
+.kpi span{display:block;font:600 10px var(--sans);color:#637187}.kpi strong{display:block;font:500 34px/1.1 var(--serif);margin:8px 0 4px;color:var(--navy)}.kpi small{font:400 10px var(--sans);color:#8490a1}
+.workspace{background:#f4f6f9;padding:clamp(16px,3vw,30px);border:1px solid #dbe1e9}
+.filters{display:grid;grid-template-columns:minmax(240px,1.7fr) minmax(150px,.7fr) minmax(170px,.8fr);gap:13px;align-items:end;margin-bottom:28px}
+.filters label{display:grid;gap:7px;font:600 10px var(--sans);color:#33445a}.filters input,.filters select{height:44px;width:100%;border:1px solid #d4dce6;background:#fff;padding:0 12px;color:var(--navy);font:400 12px var(--sans);border-radius:2px}
+.list-heading{display:flex;align-items:center;justify-content:space-between;margin-bottom:13px}.list-heading h2{font:500 26px/1 var(--serif);margin:0;color:var(--navy)}.list-heading p{margin:6px 0 0;color:#78869a;font:400 11px var(--sans)}
+.private-tag{padding:6px 8px;background:#e8edf3;color:#526176;font:600 8px var(--sans);letter-spacing:.13em}
+.enquiry-list{display:grid;gap:12px}.enquiry{background:#fff;border:1px solid var(--line);padding:19px 21px}
+.enquiry-top{display:flex;align-items:flex-start;justify-content:space-between;gap:20px}
+.enquiry-title{display:flex;align-items:center;gap:11px;flex-wrap:wrap}.enquiry-name{font:600 16px var(--sans);margin:0;color:var(--navy)}
+.pill{display:inline-flex;padding:4px 8px;background:#edf1f5;color:#5e6c7f;font:600 8px var(--sans);text-transform:uppercase;letter-spacing:.1em}
+.pill-new{background:#fff1ef;color:#b92d28}.pill-contacted{background:#eaf2ff;color:#285d9e}.pill-qualified{background:#e7f5ed;color:#276b47}.pill-closed{background:#edf0f3;color:#5b6471}
+.meta{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:7px;color:#69778a;font:400 11px var(--sans)}
+.badges{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.badge{padding:6px 9px;background:#f4f6f9;color:#48566a;font:600 9px var(--sans);letter-spacing:.03em}.badge.red{background:#fff0ef;color:#b82420}.badge.yes{background:#e7f5ed;color:#276b47}
+.actions{display:flex;gap:8px;flex-shrink:0}.actions a{display:inline-flex;align-items:center;justify-content:center;min-width:66px;min-height:36px;padding:0 13px;text-decoration:none;font:600 10px var(--sans)}
+.call{border:1px solid #dce1e8;color:var(--navy)}.wa{background:var(--navy);color:#fff}
+.message{margin:14px 0 0;padding-top:12px;border-top:1px solid #edf0f3;color:#526176;font:400 12px/1.6 var(--sans);overflow-wrap:anywhere}
+.manage{display:grid;grid-template-columns:minmax(150px,.5fr) minmax(240px,1.5fr);gap:12px 16px;margin-top:17px;padding-top:15px;border-top:1px solid #edf0f3}
+.manage label{display:grid;gap:6px;color:#637187;font:600 9px var(--sans);letter-spacing:.05em;text-transform:uppercase}
+.manage select,.manage textarea{width:100%;border:1px solid #d9e0e8;background:#fff;border-radius:2px;padding:10px;color:var(--navy);font:400 12px/1.45 var(--sans);outline:none}.manage textarea{min-height:52px;resize:vertical}
+.save-row{grid-column:1/-1;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.proof{color:#7c8796;font:400 10px var(--sans)}.save{background:var(--navy);color:#fff;border:0;padding:10px 14px;font:600 9px var(--sans);cursor:pointer}.save:disabled{opacity:.5;cursor:wait}
+.empty{display:grid;gap:5px;background:#fff;border:1px dashed #c9d2de;padding:44px 22px;color:#6a788d;font:400 12px/1.6 var(--sans)}.empty strong{color:var(--navy);font-size:15px}
+.pagination{display:flex;align-items:center;justify-content:space-between;gap:14px;margin-top:20px;color:#9ba9ba;font:400 11px var(--sans)}
+.pagination>div{display:flex;gap:8px}.page-btn:disabled{opacity:.4;cursor:not-allowed}
+.privacy-note{margin:18px 2px 0;color:#9ba9ba;font:400 10px/1.6 var(--sans)}
+@media(max-width:900px){.kpis{grid-template-columns:repeat(3,minmax(0,1fr))}.filters{grid-template-columns:1fr 1fr}.filters .search{grid-column:1/-1}}
+@media(max-width:640px){.admin-topbar{height:70px;padding:0 14px}.admin-brand img{width:140px}.admin-brand span{font-size:8px;letter-spacing:.11em;padding-left:11px}
+.admin-main{width:calc(100% - 24px);padding-top:30px}.admin-head{display:block}.admin-head-actions{width:100%;margin-top:12px}.admin-head-actions button{flex:1}
+.kpis{grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}.kpi{padding:14px;min-height:98px}.kpi strong{font-size:29px}
+.workspace{padding:13px}.filters{grid-template-columns:1fr}.filters .search{grid-column:auto}.enquiry-top{display:block}.actions{margin-top:13px}
+.manage{grid-template-columns:1fr}.save-row{align-items:flex-start;flex-direction:column}.save{width:100%}.list-heading h2{font-size:23px}
+.pagination{align-items:flex-start;flex-direction:column}
+}
+</style></head>
+<body>
+<header class="admin-topbar"><a class="admin-brand" href="/" aria-label="Prestige Enterprises home"><img src="/img/new-logo.png" width="168" height="52" alt="Prestige Enterprises"><span>PRIVATE PORTAL</span></a><button class="admin-logout" id="logout" type="button" hidden>Sign out</button></header>
 <main class="admin-main">
-<section class="admin-login-card" id="admin-login"><p class="admin-eyebrow">PRESTIGE ENTERPRISES · KALYAN</p><h1>Enquiry <em>dashboard</em></h1><p class="admin-intro">Sign in to view and manage property enquiries received through the website.</p>
-<form id="admin-login-form" novalidate><label for="admin-password">Dashboard password</label><input id="admin-password" name="password" type="password" autocomplete="current-password" required placeholder="Enter your password"><p class="admin-error" id="admin-login-error" role="alert" aria-live="polite"></p><button class="admin-primary-btn" type="submit">Sign in securely</button></form><p class="admin-secure-note">Private access · Session expires automatically</p></section>
-<section class="admin-dashboard" id="admin-dashboard" hidden><div class="admin-dashboard-heading"><div><p class="admin-eyebrow">PRESTIGE ENTERPRISES · LEAD MANAGEMENT</p><h1>Website <em>enquiries</em></h1><p class="admin-intro">Latest submissions from your website enquiry forms.</p></div><button class="admin-refresh-btn" id="admin-refresh" type="button">Refresh</button></div>
-<div class="admin-summary"><div class="admin-summary-card"><span class="admin-summary-label">TOTAL ENQUIRIES</span><strong id="admin-total">—</strong></div><div class="admin-summary-card"><span class="admin-summary-label">SHOWING</span><strong id="admin-showing">—</strong></div></div>
-<div class="admin-toolbar"><label class="admin-search-label" for="admin-search">Search enquiries</label><input id="admin-search" type="search" placeholder="Search name, mobile, configuration or details…"></div>
-<p class="admin-error admin-dashboard-error" id="admin-dashboard-error" role="alert" aria-live="polite"></p><div class="admin-enquiry-list" id="admin-enquiry-list" aria-live="polite"></div>
-<div class="admin-pagination"><span id="admin-page-label">—</span><div><button class="admin-page-btn" id="admin-prev" type="button" disabled>Previous</button><button class="admin-page-btn" id="admin-next" type="button" disabled>Next</button></div></div></section>
-<p class="admin-bottom-note">Prestige Enterprises · Internal use only</p></main></div>
-<script src="/assets/login.js?v=admin-enquiry-20261103" defer></script></body></html>
+<section class="admin-login-card" id="login-view"><p class="admin-eyebrow">PRESTIGE ENTERPRISES · KALYAN</p><h1>Enquiry <em>dashboard</em></h1><p class="admin-intro">Sign in to manage property enquiries, follow-ups and marketing permissions.</p>
+<form id="login-form" novalidate><label for="password">Dashboard password</label><input id="password" name="password" type="password" autocomplete="current-password" required placeholder="Enter your password"><p class="admin-error" id="login-error" role="alert" aria-live="polite"></p><button class="admin-primary" type="submit">SIGN IN SECURELY</button></form><p class="admin-secure">Private access · Session expires automatically</p></section>
+<section id="dashboard" hidden><div class="admin-head"><div><p class="admin-eyebrow">PRESTIGE ENTERPRISES · LEAD MANAGEMENT</p><h1>Website <em>enquiries</em></h1><p class="admin-intro">Review, qualify and follow up with people who contacted your team.</p></div><div class="admin-head-actions"><button class="admin-button" id="refresh" type="button">Refresh</button><button class="admin-export" id="export" type="button">Export opted-in leads</button></div></div>
+<div class="kpis"><article class="kpi"><span>Total leads</span><strong id="total">—</strong><small>Saved enquiries</small></article><article class="kpi"><span>New</span><strong id="count-new">—</strong><small>Awaiting follow-up</small></article><article class="kpi"><span>Contacted</span><strong id="count-contacted">—</strong><small>First contact made</small></article><article class="kpi"><span>Qualified</span><strong id="count-qualified">—</strong><small>Potential buyers</small></article><article class="kpi"><span>Closed</span><strong id="count-closed">—</strong><small>Completed / archived</small></article></div>
+<section class="workspace"><div class="filters"><label class="search">Search leads<input id="search" type="search" placeholder="Name, mobile, configuration…"></label><label>Lead status<select id="status"><option value="all">All statuses</option><option value="new">New</option><option value="contacted">Contacted</option><option value="qualified">Qualified</option><option value="closed">Closed</option></select></label><label>Marketing consent<select id="consent"><option value="all">All enquiries</option><option value="yes">Opted in</option><option value="no">Not opted in</option></select></label></div>
+<div class="list-heading"><div><h2>Lead inbox</h2><p id="summary">Latest website enquiries</p></div><span class="private-tag">PRIVATE DATA</span></div>
+<p class="admin-error" id="dashboard-error" role="alert" aria-live="polite"></p><div class="enquiry-list" id="list" aria-live="polite"></div><div class="pagination"><span id="page-label">—</span><div><button class="page-btn" id="prev" type="button" disabled>Previous</button><button class="page-btn" id="next" type="button" disabled>Next</button></div></div></section>
+<p class="privacy-note">Marketing export contains only contacts who explicitly opted in to receive property updates. Website cookies are not used to identify visitors or collect contact details.</p></section>
+<p class="admin-bottom">Prestige Enterprises · Internal use only</p></main>
+<script>
+(function(){
+'use strict';
+var $=function(s){return document.querySelector(s)},login=$('#login-view'),dash=$('#dashboard'),form=$('#login-form'),err=$('#login-error'),apiErr=$('#dashboard-error'),list=$('#list'),logout=$('#logout'),search=$('#search'),status=$('#status'),consent=$('#consent');
+var offset=0,limit=25,total=0,busy=false,timer=null,items=[];
+function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'})[c]})}
+function dt(v){var d=new Date(v);return isNaN(d.getTime())?'Date unavailable':new Intl.DateTimeFormat('en-IN',{day:'2-digit',month:'short',year:'numeric',hour:'2-digit',minute:'2-digit'}).format(d)}
+function showLogin(m){login.hidden=false;dash.hidden=true;logout.hidden=true;err.textContent=m||''}
+function showDash(){login.hidden=true;dash.hidden=false;logout.hidden=false;err.textContent=''}
+function setCounts(c){['new','contacted','qualified','closed'].forEach(function(k){$('#count-'+k).textContent=c[k]||0})}
+function opts(v){return[['new','New'],['contacted','Contacted'],['qualified','Qualified'],['closed','Closed']].map(function(x){return'<option value="'+x[0]+'"'+(v===x[0]?' selected':'')+'>'+x[1]+'</option>'}).join('')}
+function render(){
+$('#total').textContent=total;$('#summary').textContent=total+' matching enquiries · Sorted newest first';
+if(!items.length){list.innerHTML='<div class="empty"><strong>No enquiries found.</strong><span>Change your filters or check again after a visitor submits the enquiry form.</span></div>'}
+else list.innerHTML=items.map(function(x){
+var phone=String(x.phone||'').replace(/\D/g,''),yes=x.marketingConsent===true,wa=encodeURIComponent('Hello '+(x.name||'')+', this is Prestige Enterprises following up on your enquiry.');
+return '<article class="enquiry" data-id="'+esc(x.id)+'"><div class="enquiry-top"><div><div class="enquiry-title"><h3 class="enquiry-name">'+esc(x.name||'Unnamed enquiry')+'</h3><span class="pill pill-'+esc(x.status||'new')+'">'+esc(x.status||'new')+'</span></div><div class="meta"><span>'+esc(dt(x.submittedAt))+'</span><span>'+esc(x.source||'/')+'</span></div><div class="badges"><span class="badge red">'+esc(x.configuration||'Not specified')+'</span><span class="badge">'+esc(x.purpose||'Purpose not specified')+'</span><span class="badge">'+(x.intent==='site-visit'?'SITE VISIT':'PROPERTY ENQUIRY')+'</span><span class="badge '+(yes?'yes':'')+'">'+(yes?'MARKETING OPTED IN':'ENQUIRY ONLY')+'</span></div></div><div class="actions">'+(phone?'<a class="call" href="tel:+91'+phone+'">Call</a><a class="wa" href="https://wa.me/91'+phone+'?text='+wa+'" target="_blank" rel="noopener">WhatsApp</a>':'')+'</div></div>'+(x.message?'<p class="message">'+esc(x.message)+'</p>':'')+
+'<div class="manage"><label>Lead status<select class="status-edit">'+opts(x.status||'new')+'</select></label><label>Internal follow-up notes<textarea class="notes-edit" maxlength="2000" rows="2" placeholder="Call outcome, next follow-up or buyer requirements…">'+esc(x.notes||'')+'</textarea></label><div class="save-row"><span class="proof">'+(yes?'Consent recorded '+esc(dt(x.marketingConsentCapturedAt)):'No marketing consent recorded')+'</span><button class="save" type="button" data-save>Save updates</button></div></div></article>'
+}).join('');
+$('#page-label').textContent='Showing '+(total?offset+1:0)+'–'+Math.min(offset+limit,total)+' of '+total;$('#prev').disabled=offset<=0||busy;$('#next').disabled=offset+limit>=total||busy
+}
+async function load(next){if(busy)return;if(typeof next==='number')offset=next;busy=true;apiErr.textContent='';$('#refresh').disabled=true;
+try{var p=new URLSearchParams({offset:offset,limit:limit,status:status.value,consent:consent.value,q:search.value.trim()}),r=await fetch('/api/enquiries?'+p,{credentials:'same-origin',cache:'no-store'}),b=await r.json().catch(function(){return{}});
+if(r.status===401){showLogin('Your session has expired. Please sign in again.');return}if(!r.ok)throw Error(b.error||'Unable to load enquiries.');
+items=Array.isArray(b.items)?b.items:[];total=Number(b.total||0);setCounts(b.counts||{});render()
+}catch(e){apiErr.textContent=e.message||'Unable to load enquiries.'}finally{busy=false;$('#refresh').disabled=false;render()}
+}
+async function session(){try{var r=await fetch('/api/auth',{credentials:'same-origin',cache:'no-store'}),b=await r.json().catch(function(){return{}});
+if(r.ok&&b.authenticated){showDash();await load(0)}else if(r.status===503)showLogin('Dashboard setup is incomplete. Configure the required Vercel environment variables.');else showLogin('')
+}catch(e){showLogin('Could not connect to the dashboard. Check your internet connection.')}}
+form.addEventListener('submit',async function(e){e.preventDefault();err.textContent='';var btn=form.querySelector('button'),password=$('#password').value;if(!password){err.textContent='Enter the dashboard password.';return}btn.disabled=true;btn.textContent='SIGNING IN…';
+try{var r=await fetch('/api/auth',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({password:password})}),b=await r.json().catch(function(){return{}});if(!r.ok)throw Error(b.error||'Sign-in failed.');form.reset();showDash();await load(0)}
+catch(e){err.textContent=e.message||'Sign-in failed.'}finally{btn.disabled=false;btn.textContent='SIGN IN SECURELY'}});
+logout.addEventListener('click',async function(){try{await fetch('/api/auth',{method:'DELETE',credentials:'same-origin'})}finally{items=[];total=0;showLogin('You have signed out.')}});
+$('#refresh').addEventListener('click',function(){load(offset)});$('#prev').addEventListener('click',function(){if(offset>=limit)load(offset-limit)});$('#next').addEventListener('click',function(){if(offset+limit<total)load(offset+limit)});
+status.addEventListener('change',function(){load(0)});consent.addEventListener('change',function(){load(0)});
+search.addEventListener('input',function(){clearTimeout(timer);timer=setTimeout(function(){load(0)},300)});
+list.addEventListener('click',async function(e){var btn=e.target.closest('[data-save]');if(!btn)return;var card=btn.closest('.enquiry');if(!card)return;btn.disabled=true;btn.textContent='Saving…';apiErr.textContent='';
+try{var r=await fetch('/api/enquiries',{method:'PATCH',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:card.dataset.id,status:card.querySelector('.status-edit').value,notes:card.querySelector('.notes-edit').value})}),b=await r.json().catch(function(){return{}});if(r.status===401){showLogin('Your session has expired. Please sign in again.');return}if(!r.ok)throw Error(b.error||'Could not save updates.');await load(offset)}
+catch(e){apiErr.textContent=e.message||'Could not save updates.';btn.disabled=false;btn.textContent='Save updates'}});
+$('#export').addEventListener('click',async function(){var btn=$('#export'),label=btn.textContent;btn.disabled=true;btn.textContent='Preparing CSV…';apiErr.textContent='';
+try{var r=await fetch('/api/enquiries?offset=0&limit=5000&status=all&consent=yes',{credentials:'same-origin',cache:'no-store'}),b=await r.json().catch(function(){return{}});if(r.status===401){showLogin('Your session has expired. Please sign in again.');return}if(!r.ok)throw Error(b.error||'Could not export opted-in leads.');var rows=Array.isArray(b.items)?b.items:[];if(!rows.length)throw Error('There are no marketing-opted-in contacts to export.');
+var h=['Name','Mobile','Configuration','Purpose','Lead status','Enquiry type','Source','Submitted at','Marketing consent captured at','Message'],matrix=rows.map(function(x){return[x.name,x.phone,x.configuration,x.purpose,x.status,x.intent,x.source,x.submittedAt,x.marketingConsentCapturedAt,x.message]});
+var csv=[h].concat(matrix).map(function(row){return row.map(function(v){return'"'+String(v==null?'':v).replace(/"/g,'""')+'"'}).join(',')}).join('\r\n');
+var url=URL.createObjectURL(new Blob(['\uFEFF'+csv],{type:'text/csv;charset=utf-8'})),a=document.createElement('a');a.href=url;a.download='prestige-opted-in-leads-'+new Date().toISOString().slice(0,10)+'.csv';document.body.appendChild(a);a.click();a.remove();URL.revokeObjectURL(url)
+}catch(e){apiErr.textContent=e.message||'Could not export opted-in leads.'}finally{btn.disabled=false;btn.textContent=label}});
+session();
+})();
+</script>
+</body></html>

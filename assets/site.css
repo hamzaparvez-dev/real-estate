@@ -1539,3 +1539,6 @@ footer .foot-logo{
 @media(max-width:640px){.admin-topbar{height:70px;padding:0 18px}.admin-brand img{width:140px}.admin-brand span{font-size:8px;letter-spacing:.11em;padding-left:11px}
 .admin-main{width:calc(100% - 28px);padding-top:32px}.admin-dashboard-heading{align-items:flex-start}.admin-dashboard-heading .admin-refresh-btn{margin-top:2px;padding:10px 12px}
 .admin-summary{gap:9px}.admin-summary-card{padding:17px}.admin-enquiry-card{grid-template-columns:1fr;padding:18px}.admin-enquiry-actions{grid-column:1/-1}.admin-pagination{align-items:flex-start;flex-direction:column}}
+
+/* Voluntary property marketing permission on enquiry form. */
+.enq-optional-consent{display:flex;gap:10px;align-items:flex-start;padding:11px 12px;background:#fff7f6;border:1px solid #f0d4d2;color:#4d5c70;font:400 11px/1.55 var(--sans);cursor:pointer}.enq-optional-consent input{flex:0 0 auto;width:16px;height:16px;margin:2px 0 0;accent-color:#CD2F2A}
