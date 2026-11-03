@@ -287,7 +287,7 @@ def footer(l, alts):
             f'<div><h4>{esc(U["foot_lang"])}</h4><ul>{langs}</ul></div></div>'
             f'<div class="foot-legal"><p>{esc(U["disclaimer"])}</p><p>{esc(U["rights"])}</p></div></footer>\n'
             f'<a class="wa" href="{waurl(U["wa_default"])}" target="_blank" rel="noopener" aria-label="{attr(U["wa_btn"])}">{I["chat"]}<span>{esc(U["float_wa"])}</span></a>\n'
-            f'<script src="/assets/site.js?v={fver("assets/site.js")}" defer></script>\n</body>\n</html>\n')
+            '<script src="/assets/site.js?v=admin-enquiry-20261103" defer></script>\n</body>\n</html>\n')
 
 
 def page(l, path, alts, head_html, body):
