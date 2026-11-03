@@ -350,28 +350,54 @@
     document.head.appendChild(script);
   })();
 
-  /* Optional, consent-based anonymous visitor analytics. No contact details or raw IPs are collected. */
+  /* Anonymous visitor analytics runs only after the visitor opts in. */
   (function () {
     var key = 'pe_visitor_analytics_consent';
-    var consent = null;
-    try { consent = localStorage.getItem(key); } catch (e) {}
-    function track() {
-      try {
-        var sessionId = sessionStorage.getItem('pe_analytics_session');
-        if (!sessionId) { sessionId = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0;return(c==='x'?r:(r&3|8)).toString(16)}); sessionStorage.setItem('pe_analytics_session',sessionId); }
-        var eventId = (window.crypto && crypto.randomUUID) ? crypto.randomUUID() : sessionId.replace(/.$/,'a');
-        fetch('/api/visitors',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},keepalive:true,body:JSON.stringify({eventId:eventId,sessionId:sessionId,page:location.pathname,referrer:document.referrer||''})}).catch(function(){});
-      } catch (e) {}
+    var sessionKey = 'pe_analytics_session';
+    var memorySession = '';
+    function readConsent() { try { return localStorage.getItem(key) || ''; } catch (e) { return ''; } }
+    function saveConsent(value) { try { localStorage.setItem(key, value); } catch (e) {} }
+    function uuid() {
+      try { if (window.crypto && crypto.randomUUID) return crypto.randomUUID(); } catch (e) {}
+      return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0;return(c==='x'?r:(r&3|8)).toString(16)});
     }
-    if (consent === 'yes') { track(); return; }
-    if (consent === 'no') return;
-    if (!document.body) return;
-    var panel=document.createElement('aside');
-    panel.setAttribute('aria-label','Privacy choices');
-    panel.style.cssText='position:fixed;z-index:9999;left:18px;right:18px;bottom:18px;max-width:560px;margin:auto;background:#fff;color:#142B45;border:1px solid #dce1e8;box-shadow:0 12px 36px rgba(7,17,31,.18);padding:16px 18px;font:12px/1.55 system-ui,sans-serif';
-    panel.innerHTML='<strong style="display:block;font-size:13px;margin-bottom:4px">Your privacy choices</strong><span>Allow anonymous page-view analytics to help us improve this website. We do not collect your name, phone number, email address or raw IP address through analytics.</span><div style="display:flex;gap:8px;flex-wrap:wrap;margin-top:12px"><button type="button" data-choice="yes" style="border:0;background:#142B45;color:#fff;padding:10px 14px;font-weight:600;cursor:pointer">Allow analytics</button><button type="button" data-choice="no" style="border:1px solid #dce1e8;background:#fff;color:#142B45;padding:10px 14px;font-weight:600;cursor:pointer">Not now</button></div>';
-    panel.addEventListener('click',function(e){var b=e.target.closest('[data-choice]');if(!b)return;try{localStorage.setItem(key,b.dataset.choice)}catch(err){}panel.remove();if(b.dataset.choice==='yes')track()});
-    document.body.appendChild(panel);
+    function track() {
+      var sessionId = '';
+      try { sessionId = sessionStorage.getItem(sessionKey) || ''; } catch (e) {}
+      if (!sessionId) {
+        sessionId = memorySession || uuid();
+        memorySession = sessionId;
+        try { sessionStorage.setItem(sessionKey, sessionId); } catch (e) {}
+      }
+      fetch('/api/visitors', {
+        method: 'POST',
+        credentials: 'same-origin',
+        headers: { 'Content-Type': 'application/json' },
+        cache: 'no-store',
+        keepalive: true,
+        body: JSON.stringify({ eventId: uuid(), sessionId: sessionId, page: location.pathname, referrer: document.referrer || '' })
+      }).then(function (response) {
+        if (!response.ok) response.text().then(function (message) { console.warn('Prestige visitor analytics:', response.status, message); });
+      }).catch(function (error) { console.warn('Prestige visitor analytics request failed:', error); });
+    }
+    if (readConsent() === 'yes') track();
+    var control = document.getElementById('privacy-analytics-toggle');
+    if (control) {
+      function updateLabel() { control.textContent = readConsent() === 'yes' ? 'Disable anonymous analytics' : 'Privacy & analytics choices'; }
+      updateLabel();
+      control.addEventListener('click', function () {
+        if (readConsent() === 'yes') {
+          saveConsent('no');
+          updateLabel();
+          return;
+        }
+        var allowed = window.confirm('Allow Prestige Enterprises to collect anonymous page views, visit time, referring website, device and browser? No name, phone number, email address or raw IP address is stored.');
+        if (!allowed) return;
+        saveConsent('yes');
+        updateLabel();
+        track();
+      });
+    }
   })();
 
 })();
