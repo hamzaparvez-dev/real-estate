@@ -441,9 +441,9 @@ html:lang(hi) .nav-dd-menu a,html:lang(mr) .nav-dd-menu a,html:lang(hi) .mnav-ar
 .enq-box h3{margin:0 42px 8px 0;color:#222;font:400 clamp(25px,4vw,30px)/1.15 Georgia,serif}
 .enq-box>p{margin:0 0 22px;color:#68737d;font:400 14px/1.6 "DM Sans",sans-serif}
 .enq-fields{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px}
-.enq-field{display:flex;flex-direction:column;gap:7px;color:#263747;font:600 12px/1.4 "DM Sans",sans-serif}
-.enq-field>span{color:var(--gold)}
-.enq-field input,.enq-field select,.enq-field textarea{width:100%;min-width:0;border:1px solid #d9d9d9;border-radius:2px;background:#f5f5f5;color:#253443;padding:12px 13px;font:400 14px/1.45 "DM Sans",sans-serif;outline:none;transition:border-color .18s,box-shadow .18s}
+.enq-field{display:block;min-width:0;color:#263747;font:600 12px/1.4 "DM Sans",sans-serif}
+.enq-field>span{color:var(--gold);display:inline}
+.enq-field input,.enq-field select,.enq-field textarea{display:block;width:100%;min-width:0;margin-top:7px;border:1px solid #d9d9d9;border-radius:2px;background:#f5f5f5;color:#253443;padding:12px 13px;font:400 14px/1.45 "DM Sans",sans-serif;outline:none;transition:border-color .18s,box-shadow .18s}
 .enq-field input,.enq-field select{min-height:46px}
 .enq-field textarea{resize:vertical;min-height:82px}
 .enq-field input:focus,.enq-field select:focus,.enq-field textarea:focus{border-color:#142b45;box-shadow:0 0 0 3px rgba(20,43,69,.1)}
