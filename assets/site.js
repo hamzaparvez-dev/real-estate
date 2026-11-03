@@ -115,8 +115,12 @@
       ham.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
       nav.classList.toggle('menu-open', open);
       document.body.style.overflow = open ? 'hidden' : '';
-      if (open) { var first = $('a[href]', menu); if (first) first.focus({preventScroll:true}); }
-      else ham.focus({preventScroll:true});
+      document.body.classList.toggle('mobile-menu-open', open);
+      if (open) {
+        menu.scrollTop = 0;
+        var first = $('a[href]', menu);
+        if (first) first.focus({preventScroll:true});
+      } else ham.focus({preventScroll:true});
     };
     ham.addEventListener('click', function () { setMenu(menu.hidden); });
     menu.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
@@ -132,7 +136,7 @@
     });
     var mq = window.matchMedia('(min-width:981px)');
     (mq.addEventListener ? mq.addEventListener.bind(mq, 'change') : mq.addListener.bind(mq))(function (q) {
-      if (q.matches && !menu.hidden) { menu.hidden=true; menu.setAttribute('aria-hidden','true'); ham.classList.remove('open'); ham.setAttribute('aria-expanded','false'); ham.setAttribute('aria-label','Open menu'); nav.classList.remove('menu-open'); document.body.style.overflow=''; }
+      if (q.matches && !menu.hidden) { menu.hidden=true; menu.setAttribute('aria-hidden','true'); ham.classList.remove('open'); ham.setAttribute('aria-expanded','false'); ham.setAttribute('aria-label','Open menu'); nav.classList.remove('menu-open'); document.body.classList.remove('mobile-menu-open'); document.body.style.overflow=''; }
     });
     menu.setAttribute('aria-hidden', menu.hidden ? 'true' : 'false');
   }
