@@ -756,7 +756,7 @@ nav#nav .nav-logo::after{
   #process .proc-step{min-height:220px}
 }
 @media(max-width:620px){
-  #process .sec{padding-block:64px}
+  #process{padding-block:64px}
   #process .proc{grid-template-columns:1fr;gap:12px;margin-top:30px}
   #process .proc-step{min-height:0;padding:22px 21px}
   #process .proc-step h3{margin-top:18px;font-size:22px}
@@ -769,6 +769,16 @@ nav#nav .nav-logo::after{
   animation:none!important;
   transition:none!important;
   scroll-behavior:auto!important;
+}
+
+/* Respect reduced-motion preferences throughout the site. */
+@media(prefers-reduced-motion:reduce){
+  *,*::before,*::after{
+    scroll-behavior:auto!important;
+    animation-duration:.01ms!important;
+    animation-iteration-count:1!important;
+    transition-duration:.01ms!important;
+  }
 }
 
 /* FAQ: keep the heading and accordion column centered on every breakpoint. */
