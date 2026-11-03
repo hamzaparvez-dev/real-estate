@@ -1805,3 +1805,17 @@ footer .foot-logo{
  .mobile-menu-open .floating-cta{display:none!important;visibility:hidden!important;pointer-events:none!important}
  .mobile-menu-open .wa{display:none!important}
 }
+
+@media(max-width:980px){
+  .nav-ham.open{
+    background:#fff!important;
+    border-color:#dfe4eb!important;
+  }
+  .nav-ham.open span{background:#10243d!important}
+  body.mobile-menu-open .floating-cta,
+  body.mobile-menu-open .wa{
+    display:none!important;
+    visibility:hidden!important;
+    pointer-events:none!important;
+  }
+}
