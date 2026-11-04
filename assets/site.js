@@ -444,24 +444,30 @@
     document.head.appendChild(script);
   })();
 
-  /* Anonymous analytics: opt-in is managed from the Privacy Policy page. */
+  /* First-party analytics: records anonymous page/engagement events only after opt-in. Never reads form values. */
   (function () {
-    var consentKey='pe_visitor_analytics_consent', sessionKey='pe_analytics_session', memorySession='';
+    var consentKey='pe_visitor_analytics_consent', sessionKey='pe_analytics_session', memorySession='', seen={};
     function consent(){try{return localStorage.getItem(consentKey)||''}catch(e){return ''}}
     function store(value){try{localStorage.setItem(consentKey,value)}catch(e){}}
     function uuid(){try{if(window.crypto&&crypto.randomUUID)return crypto.randomUUID()}catch(e){}return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0;return(c==='x'?r:(r&3|8)).toString(16)})}
-    function track(){
-      var sid='';try{sid=sessionStorage.getItem(sessionKey)||''}catch(e){}
-      if(!sid){sid=memorySession||uuid();memorySession=sid;try{sessionStorage.setItem(sessionKey,sid)}catch(e){}}
-      fetch('/api/visitors',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},cache:'no-store',keepalive:true,body:JSON.stringify({eventId:uuid(),sessionId:sid,page:location.pathname,referrer:document.referrer||''})})
-      .then(function(r){if(!r.ok)r.text().then(function(t){console.warn('Prestige analytics:',r.status,t)})})
+    function session(){var sid='';try{sid=sessionStorage.getItem(sessionKey)||''}catch(e){}if(!sid){sid=memorySession||uuid();memorySession=sid;try{sessionStorage.setItem(sessionKey,sid)}catch(e){}}return sid}
+    function campaign(){var p=new URLSearchParams(location.search),o={};['utm_source','utm_medium','utm_campaign','utm_term','utm_content'].forEach(function(k){var v=p.get(k);if(v)o[k]=v.slice(0,120)});return o}
+    function track(type,extra){
+      if(consent()!=='yes'||seen[type])return;seen[type]=true;
+      var body={eventId:uuid(),sessionId:session(),page:location.pathname,referrer:document.referrer||'',eventType:type,campaign:campaign(),engagement:extra||{}};
+      fetch('/api/visitors',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},cache:'no-store',keepalive:true,body:JSON.stringify(body)})
+      .then(function(r){if(!r.ok)console.warn('Prestige analytics request failed:',r.status)})
       .catch(function(e){console.warn('Prestige analytics request failed:',e)});
     }
-    if(consent()==='yes')track();
-    var status=document.getElementById('analytics-consent-status');
-    var toggle=document.getElementById('analytics-consent-toggle');
-    function render(){if(!toggle)return;var enabled=consent()==='yes';toggle.checked=enabled;if(status)status.textContent=enabled?'Anonymous analytics is enabled. Page views are recorded on this browser.':'Anonymous analytics is disabled. No new page views will be recorded.'}
-    if(toggle){render();toggle.addEventListener('change',function(){if(toggle.checked){store('yes');render();track()}else{store('no');render()}})}
+    function start(){if(consent()!=='yes')return;track('pageview');}
+    start();
+    var started=Date.now(),status=document.getElementById('analytics-consent-status'),toggle=document.getElementById('analytics-consent-toggle');
+    var scrollHandler=function(){if(consent()!=='yes')return;var max=document.documentElement.scrollHeight-innerHeight,p=max>0?scrollY/max*100:100;if(p>=50)track('scroll_50');if(p>=75)track('scroll_75')};
+    addEventListener('scroll',scrollHandler,{passive:true});
+    var dwellTimer=setInterval(function(){if(consent()!=='yes'){clearInterval(dwellTimer);return}if(Date.now()-started>=30000){track('dwell_30s');clearInterval(dwellTimer)}},5000);
+    document.addEventListener('click',function(e){if(consent()!=='yes')return;var el=e.target&&e.target.closest?e.target.closest('a,button'):null;if(!el)return;var label=(el.textContent||el.getAttribute('aria-label')||'').toLowerCase();if(/enquir|whatsapp|book visit|call/.test(label))track('contact_cta_click')},true);
+    function render(){if(!toggle)return;var enabled=consent()==='yes';toggle.checked=enabled;if(status)status.textContent=enabled?'Anonymous analytics is enabled. Page views and limited engagement events are recorded.':'Anonymous analytics is disabled. No new analytics events will be recorded.'}
+    if(toggle){render();toggle.addEventListener('change',function(){if(toggle.checked){store('yes');seen={};render();start()}else{store('no');render()}})}
   })();
 
 })();
