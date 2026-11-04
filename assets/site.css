@@ -2018,3 +2018,8 @@ section#process.dark-bg{
 
 /* MahaRERA footer registration line */
 .foot-rera{color:rgba(250,246,240,.78);letter-spacing:.01em}.foot-rera strong{color:var(--gold2);font-weight:600}.foot-rera span:not([aria-hidden]){color:#F8FAFC;font-weight:600}
+
+/* Homepage SEO heading */
+.home-seo-intro{padding:clamp(30px,4vw,54px) 0 18px;background:#fff;text-align:center}
+.home-seo-intro h1{max-width:980px;margin:0 auto 12px;font:400 clamp(30px,4vw,48px)/1.12 var(--serif);color:#142B45}
+.home-seo-intro p{max-width:820px;margin:0 auto;color:#5d6672;font-size:15px;line-height:1.75}
