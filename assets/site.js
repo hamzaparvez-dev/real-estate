@@ -185,7 +185,7 @@
   if (planWraps.length) {
     var modal = document.createElement('div');
     modal.className = 'lightbox-modal';
-    modal.innerHTML = '<div class="lightbox-box"><button class="lightbox-close" type="button" aria-label="Close">&times;</button><img src="" alt=""><div class="lightbox-title"></div></div>';
+    modal.innerHTML = '<div class="lightbox-box"><button class="lightbox-close" type="button" aria-label="Close">&times;</button><img src="" alt="Enlarged Prestige Gold floor plan"><div class="lightbox-title"></div></div>';
     document.body.appendChild(modal);
     var modalImg = $('img', modal);
     var modalTitle = $('.lightbox-title', modal);
