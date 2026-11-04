@@ -444,30 +444,150 @@
     document.head.appendChild(script);
   })();
 
-  /* First-party analytics: records anonymous page/engagement events only after opt-in. Never reads form values. */
+  /* First-party analytics + visitor identity.
+     Identity runs regardless of the toggle so leads are never lost; the toggle gates event volume. */
   (function () {
-    var consentKey='pe_visitor_analytics_consent', sessionKey='pe_analytics_session', memorySession='', seen={};
-    function consent(){try{return localStorage.getItem(consentKey)||''}catch(e){return ''}}
-    function store(value){try{localStorage.setItem(consentKey,value)}catch(e){}}
-    function uuid(){try{if(window.crypto&&crypto.randomUUID)return crypto.randomUUID()}catch(e){}return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g,function(c){var r=Math.random()*16|0;return(c==='x'?r:(r&3|8)).toString(16)})}
-    function session(){var sid='';try{sid=sessionStorage.getItem(sessionKey)||''}catch(e){}if(!sid){sid=memorySession||uuid();memorySession=sid;try{sessionStorage.setItem(sessionKey,sid)}catch(e){}}return sid}
-    function campaign(){var p=new URLSearchParams(location.search),o={};['utm_source','utm_medium','utm_campaign','utm_term','utm_content'].forEach(function(k){var v=p.get(k);if(v)o[k]=v.slice(0,120)});return o}
-    function track(type,extra){
-      if(consent()!=='yes'||seen[type])return;seen[type]=true;
-      var body={eventId:uuid(),sessionId:session(),page:location.pathname,referrer:document.referrer||'',eventType:type,campaign:campaign(),engagement:extra||{}};
-      fetch('/api/visitors',{method:'POST',credentials:'same-origin',headers:{'Content-Type':'application/json'},cache:'no-store',keepalive:true,body:JSON.stringify(body)})
-      .then(function(r){if(!r.ok)console.warn('Prestige analytics request failed:',r.status)})
-      .catch(function(e){console.warn('Prestige analytics request failed:',e)});
-    }
-    function start(){if(consent()!=='yes')return;track('pageview');}
-    start();
-    var started=Date.now(),status=document.getElementById('analytics-consent-status'),toggle=document.getElementById('analytics-consent-toggle');
-    var scrollHandler=function(){if(consent()!=='yes')return;var max=document.documentElement.scrollHeight-innerHeight,p=max>0?scrollY/max*100:100;if(p>=50)track('scroll_50');if(p>=75)track('scroll_75')};
-    addEventListener('scroll',scrollHandler,{passive:true});
-    var dwellTimer=setInterval(function(){if(consent()!=='yes'){clearInterval(dwellTimer);return}if(Date.now()-started>=30000){track('dwell_30s');clearInterval(dwellTimer)}},5000);
-    document.addEventListener('click',function(e){if(consent()!=='yes')return;var el=e.target&&e.target.closest?e.target.closest('a,button'):null;if(!el)return;var label=(el.textContent||el.getAttribute('aria-label')||'').toLowerCase();if(/enquir|whatsapp|book visit|call/.test(label))track('contact_cta_click')},true);
-    function render(){if(!toggle)return;var enabled=consent()==='yes';toggle.checked=enabled;if(status)status.textContent=enabled?'Anonymous analytics is enabled. Page views and limited engagement events are recorded.':'Anonymous analytics is disabled. No new analytics events will be recorded.'}
-    if(toggle){render();toggle.addEventListener('change',function(){if(toggle.checked){store('yes');seen={};render();start()}else{store('no');render()}})}
-  })();
+    var consentKey = 'pe_visitor_analytics_consent', sessionKey = 'pe_analytics_session';
+    var vidKey = 'pe_visitor_id', fpKey = 'pe_visitor_fp', memorySession = '', seen = {}, timers = {};
 
-})();
+    function consent() { try { return localStorage.getItem(consentKey) || '' } catch (e) { return '' } }
+    function store(v) { try { localStorage.setItem(consentKey, v) } catch (e) {} }
+    function uuid() { try { if (window.crypto && crypto.randomUUID) return crypto.randomUUID() } catch (e) {} return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) { var r = Math.random() * 16 | 0; return (c === 'x' ? r : (r & 3 | 8)).toString(16) }) }
+    function hash(s) { var h = 5381; for (var i = 0; i < s.length; i++) h = ((h * 33) ^ s.charCodeAt(i)) | 0; return Math.abs(h).toString(36) }
+    function session() { var s = ''; try { s = sessionStorage.getItem(sessionKey) || '' } catch (e) {} if (!s) { s = memorySession || uuid(); memorySession = s; try { sessionStorage.setItem(sessionKey, s) } catch (e) {} } return s }
+
+    /* --- fingerprint components --- */
+    function canvasSig() {
+      try {
+        var c = document.createElement('canvas'), x = c.getContext('2d');
+        x.textBaseline = 'top'; x.font = '14px Arial';
+        x.fillStyle = '#f60'; x.fillRect(100, 5, 80, 20);
+        x.fillStyle = '#069'; x.fillText('prestige', 102, 8);
+        x.fillStyle = 'rgba(102,204,0,0.7)'; x.fillText('prestige', 104, 10);
+        return hash(c.toDataURL());
+      } catch (e) { return '0' }
+    }
+    function glSig() {
+      try {
+        var c = document.createElement('canvas'), g = c.getContext('webgl');
+        if (!g) return '0';
+        var d = g.getExtension('WEBGL_debug_renderer_info');
+        return hash(g.getParameter(d ? d.UNMASKED_RENDERER_WEBGL : g.RENDERER) + '|' + g.getParameter(g.VENDOR));
+      } catch (e) { return '0' }
+    }
+    function fontSig() {
+      try {
+        var probe = 'mmmmmmmmmmlli', c = document.createElement('canvas').getContext('2d');
+        var bases = ['monospace', 'sans-serif', 'serif'], w = {}, found = 0;
+        bases.forEach(function (b) { c.font = '72px ' + b; w[b] = c.measureText(probe).width });
+        ['Arial', 'Verdana', 'Georgia', 'Courier New', 'Tahoma', 'Impact'].forEach(function (f) {
+          bases.forEach(function (b) { c.font = '72px ' + f + ',' + b; if (c.measureText(probe).width !== w[b]) found++ });
+        });
+        return String(found);
+      } catch (e) { return '0' }
+    }
+
+    var parts = {
+      ua: hash(navigator.userAgent),
+      scr: screen.width + 'x' + screen.height + 'x' + screen.colorDepth,
+      tz: Intl.DateTimeFormat().resolvedOptions().timeZone + '|' + new Date().getTimezoneOffset(),
+      cv: canvasSig(), gl: glSig(), fn: fontSig(),
+      hc: String(navigator.hardwareConcurrency || 0) + '|' + String(navigator.maxTouchPoints || 0)
+    };
+    var fp = 'fp' + hash(Object.keys(parts).map(function (k) { return parts[k] }).join('|'));
+
+    function vid() {
+      var v = ''; try { v = localStorage.getItem(vidKey) || '' } catch (e) {}
+      if (!v) { v = fp + '.' + uuid().slice(0, 8); try { localStorage.setItem(vidKey, v) } catch (e) {} }
+      return v;
+    }
+    function campaign() { var p = new URLSearchParams(location.search), o = {}; ['utm_source', 'utm_medium', 'utm_campaign', 'utm_term', 'utm_content'].forEach(function (k) { var v = p.get(k); if (v) o[k] = v.slice(0, 120) }); return o }
+
+    function post(url, payload) {
+      var body = JSON.stringify(payload);
+      if (navigator.sendBeacon) { navigator.sendBeacon(url, new Blob([body], { type: 'application/json' })); return }
+      fetch(url, { method: 'POST', credentials: 'same-origin', headers: { 'Content-Type': 'application/json' }, cache: 'no-store', keepalive: true, body: body }).catch(function () {});
+    }
+
+    function identify(fields) {
+      post('/api/identity', { vid: vid(), fpm: JSON.stringify(parts), page: location.pathname, fields: fields || [] });
+    }
+
+    function track(type, extra) {
+      if (seen[type]) return; seen[type] = true;
+      if (consent() !== 'yes') return;
+      post('/api/visitors', {
+        eventId: uuid(), sessionId: session(), vid: vid(),
+        page: location.pathname, referrer: document.referrer || '',
+        eventType: type, campaign: campaign(), engagement: extra || {}
+      });
+    }
+
+    function start() { track('pageview'); identify([]); }
+
+    /* --- typing capture: the part that was missing --- */
+    var HINTS = ['email', 'e-mail', 'name', 'phone', 'mobile', 'tel', 'company', 'message'];
+    function fieldName(el) { return String(el.getAttribute('name') || el.id || el.type || 'field').toLowerCase().slice(0, 40) }
+    function worth(el) { var n = fieldName(el); return HINTS.some(function (h) { return n.indexOf(h) > -1 }) }
+
+    function wire(el) {
+      if (el.__pe || /^(hidden|submit|button|file|checkbox|radio)$/.test(el.type || '')) return;
+      el.__pe = 1;
+      var n = fieldName(el);
+      el.addEventListener('input', function () {
+        if (!worth(el)) return;
+        clearTimeout(timers[n]);
+        timers[n] = setTimeout(function () {
+          var v = (el.value || '').trim();
+          if (v.length > 2) identify([{ n: n, v: v }]);
+        }, 700);
+      });
+      el.addEventListener('change', function () {
+        var v = (el.value || '').trim();
+        if (v.length > 1 && worth(el)) identify([{ n: n, v: v }]);
+      });
+    }
+
+    function scan() {
+      document.querySelectorAll('form input,form textarea,form select').forEach(wire);
+    }
+    if (document.readyState === 'loading') addEventListener('DOMContentLoaded', function () { start(); scan() });
+    else { start(); scan() }
+    setInterval(scan, 3000); // the enquiry modal is injected later
+
+    /* --- engagement --- */
+    var started = Date.now();
+    addEventListener('scroll', function () {
+      var max = document.documentElement.scrollHeight - innerHeight, p = max > 0 ? scrollY / max * 100 : 100;
+      if (p >= 50) track('scroll_50');
+      if (p >= 75) track('scroll_75');
+    }, { passive: true });
+
+    var dwell = setInterval(function () {
+      if (Date.now() - started >= 30000) { track('dwell_30s'); clearInterval(dwell) }
+    }, 5000);
+
+    document.addEventListener('click', function (e) {
+      var el = e.target && e.target.closest ? e.target.closest('a,button') : null;
+      if (!el) return;
+      var label = (el.textContent || el.getAttribute('aria-label') || '').toLowerCase();
+      if (/enquir|whatsapp|book visit|call/.test(label)) track('contact_cta_click');
+    }, true);
+
+    var status = document.getElementById('analytics-consent-status'), toggle = document.getElementById('analytics-consent-toggle');
+    function render() {
+      if (!toggle) return;
+      var on = consent() === 'yes';
+      toggle.checked = on;
+      if (status) status.textContent = on
+        ? 'Anonymous analytics is enabled. Page views and limited engagement events are recorded.'
+        : 'Anonymous analytics is disabled. No new analytics events will be recorded.';
+    }
+    if (toggle) {
+      render();
+      toggle.addEventListener('change', function () {
+        if (toggle.checked) { store('yes'); seen = {}; render(); start() }
+        else { store('no'); render() }
+      });
+    }
+  })();
