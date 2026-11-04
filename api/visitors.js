@@ -52,8 +52,17 @@ module.exports=async function handler(req,res){
  }
  if(req.method==='GET'){
   if(!verifySession(req,config.authSecret))return sendJson(res,401,{error:'Please sign in again.'});
+  
   const n=Math.max(1,Math.min(1000,Number.parseInt(req.query&&req.query.limit,10)||500));
-  try{const result=await command(config,['EVAL',LIST_SCRIPT,2,INDEX_KEY,DATA_KEY,String(n)]);if(!Array.isArray(result))throw Error('Invalid visitor response');return sendJson(res,200,{total:Number(result[0]||0),uniqueSessions:Number(result[1]||0),topPage:String(result[2]||''),items:(result[3]||[]).map(x=>{try{return JSON.parse(x)}catch(_){return null}}).filter(Boolean)})}
+  try{
+    const result=await command(config,['EVAL',LIST_SCRIPT,2,INDEX_KEY,DATA_KEY,String(n)]);
+    if(!Array.isArray(result))throw Error('Invalid visitor response');
+    const items=(result[3]||[]).map(x=>{try{return JSON.parse(x)}catch(_){return null}}).filter(Boolean);
+    const vids=[...new Set(items.map(i=>i.visitorId).filter(Boolean))];
+    let identities={};
+    if(vids.length){
+      const rows=await redis(config,[['HMGET',DATA_KEY.replace('visitors','visitors'),...vids]]);
+    }
   catch(e){return sendJson(res,503,{error:'Unable to load visitor analytics. Check the database connection.'})}
  }
  res.setHeader('Allow','GET, POST');return sendJson(res,405,{error:'Method not allowed.'});
