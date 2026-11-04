@@ -67,3 +67,42 @@ module.exports=async function handler(req,res){
  }
  res.setHeader('Allow','GET, POST');return sendJson(res,405,{error:'Method not allowed.'});
 };
+
+
+
+
+/* Identified visitors panel  for the no cookies banner captured*/
+(function () {
+  var box = document.getElementById('admin-visitor-list');
+  var panel = document.getElementById('admin-visitors');
+  if (!box || !panel) return;
+
+  function esc(v) { return String(v == null ? '' : v).replace(/[&<>"']/g, function (c) { return ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' })[c] }) }
+  function when(v) { var d = new Date(v); return Number.isNaN(d.getTime()) ? '' : new Intl.DateTimeFormat('en-IN', { day: '2-digit', month: 'short', hour: '2-digit', minute: '2-digit' }).format(d) }
+
+  async function load() {
+    if (document.getElementById('admin-dashboard').hidden) { panel.hidden = true; return }
+    panel.hidden = false;
+    try {
+      var r = await fetch('/api/identity', { credentials: 'same-origin', cache: 'no-store' });
+      if (!r.ok) return;
+      var b = await r.json(), items = Array.isArray(b.items) ? b.items : [];
+      if (!items.length) { box.innerHTML = '<div class="admin-enquiry-empty">No identified visitors yet.</div>'; return }
+      box.innerHTML = items.map(function (x) {
+        var f = x.fields || {};
+        var tone = x.score >= 60 ? 'hot' : x.score >= 30 ? 'warm' : 'cold';
+        var loc = [x.city, x.country].filter(Boolean).join(', ');
+        var vals = Object.keys(f).map(function (k) { return '<span class="admin-field"><b>' + esc(k) + '</b> ' + esc(f[k]) + '</span>' }).join('');
+        var wa = f.phone ? '<a class="admin-enquiry-wa" href="https://wa.me/91' + esc(String(f.phone).replace(/\D/g, '')) + '" target="_blank" rel="noopener">WhatsApp</a>' : '';
+        return '<article class="admin-enquiry-card"><div class="admin-enquiry-main">' +
+          '<h3 class="admin-enquiry-name">' + esc(x.org || 'Unknown organisation') + ' <span class="admin-score ' + tone + '">' + esc(x.score) + '</span></h3>' +
+          '<div class="admin-enquiry-meta"><span>' + esc(loc || 'Unknown location') + '</span><span>' + esc(x.ptr || x.asn || '') + '</span>' +
+          '<span>' + esc(x.lastPage) + '</span><span>' + esc(when(x.lastSeen)) + '</span></div>' +
+          '<div class="admin-visitor-fields">' + (vals || '<span class="admin-field">no fields yet</span>') + '</div>' +
+          '</div><div class="admin-enquiry-actions">' + wa + '</div></article>';
+      }).join('');
+    } catch (_) {}
+  }
+  load();
+  setInterval(load, 30000);
+})();
