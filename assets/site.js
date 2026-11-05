@@ -57,8 +57,11 @@
       en:{home:'Home',about:'About',projects:'Projects',plans:'Plans',gold:'Prestige Gold',pricing:'Pricing',services:'Services',guides:'Guides',contact:'Contact',areas:'Areas',kalyan:'Kalyan',whatsapp:'Chat on WhatsApp'},
       hi:{home:'होम',about:'हमारे बारे में',projects:'प्रोजेक्ट्स',plans:'प्लान्स',gold:'प्रेस्टीज गोल्ड',pricing:'कीमत',services:'सेवाएँ',guides:'गाइड',contact:'संपर्क',areas:'क्षेत्र',kalyan:'कल्याण',whatsapp:'व्हाट्सऐप पर चैट करें'},
       mr:{home:'मुख्यपृष्ठ',about:'आमच्याबद्दल',projects:'प्रकल्प',plans:'योजना',gold:'प्रेस्टीज गोल्ड',pricing:'किंमत',services:'सेवा',guides:'मार्गदर्शक',contact:'संपर्क',areas:'परिसर',kalyan:'कल्याण',whatsapp:'व्हॉट्सअ‍ॅपवर चॅट करा'}
-    }[lang] || null;
-    if (!t) return;
+    }[lang] || {
+      home:'Home',about:'About',projects:'Projects',plans:'Plans',gold:'Prestige Gold',
+      pricing:'Pricing',services:'Services',guides:'Guides',contact:'Contact',
+      areas:'Areas',kalyan:'Kalyan',whatsapp:'Chat on WhatsApp'
+    };
     var oldWhatsApp = panel.querySelector('a[href*="wa.me"]');
     var waHref = oldWhatsApp ? oldWhatsApp.getAttribute('href') :
       'https://wa.me/919689557788?text=Hello%20Prestige%20Enterprises%2C%20I%20would%20like%20more%20information%20about%20properties%20for%20sale%20in%20Kalyan.';
@@ -124,42 +127,78 @@
     }
   }
 
-  /* Mobile menu: accessible focus and keyboard behavior */
+  /* Mobile menu: resilient touch, keyboard and viewport behavior. */
   var ham = $('#navHam'), menu = $('#mnav');
   if (menu) upgradeMobileMenu(menu);
+
   if (ham && menu) {
+    var focusSafely = function (target) {
+      if (!target || typeof target.focus !== 'function') return;
+      try { target.focus({ preventScroll: true }); }
+      catch (e) { try { target.focus(); } catch (ignore) {} }
+    };
+
     var setMenu = function (open) {
+      open = !!open;
       menu.hidden = !open;
       menu.setAttribute('aria-hidden', open ? 'false' : 'true');
       ham.classList.toggle('open', open);
       ham.setAttribute('aria-expanded', open ? 'true' : 'false');
       ham.setAttribute('aria-label', open ? 'Close menu' : 'Open menu');
-      nav.classList.toggle('menu-open', open);
+      if (nav) nav.classList.toggle('menu-open', open);
+
       document.body.style.overflow = open ? 'hidden' : '';
       document.body.classList.toggle('mobile-menu-open', open);
+
       if (open) {
         menu.scrollTop = 0;
-        var first = $('a[href]', menu);
-        if (first) first.focus({preventScroll:true});
-      } else ham.focus({preventScroll:true});
+        focusSafely($('a[href], button:not([disabled])', menu));
+      } else {
+        focusSafely(ham);
+      }
     };
-    ham.addEventListener('click', function () { setMenu(menu.hidden); });
-    menu.addEventListener('click', function (e) { if (e.target.closest('a')) setMenu(false); });
-    document.addEventListener('keydown', function (e) {
+
+    ham.addEventListener('click', function (event) {
+      event.preventDefault();
+      setMenu(menu.hidden);
+    });
+
+    menu.addEventListener('click', function (event) {
+      var link = event.target && event.target.closest ? event.target.closest('a[href]') : null;
+      if (link) setMenu(false);
+    });
+
+    document.addEventListener('keydown', function (event) {
       if (menu.hidden) return;
-      if (e.key === 'Escape') { e.preventDefault(); setMenu(false); return; }
-      if (e.key === 'Tab') {
+      if (event.key === 'Escape') {
+        event.preventDefault();
+        setMenu(false);
+        return;
+      }
+      if (event.key === 'Tab') {
         var items = $$('a[href],button:not([disabled])', menu);
         if (!items.length) return;
-        if (e.shiftKey && document.activeElement === items[0]) { e.preventDefault(); items[items.length-1].focus(); }
-        else if (!e.shiftKey && document.activeElement === items[items.length-1]) { e.preventDefault(); items[0].focus(); }
+        if (event.shiftKey && document.activeElement === items[0]) {
+          event.preventDefault();
+          focusSafely(items[items.length - 1]);
+        } else if (!event.shiftKey && document.activeElement === items[items.length - 1]) {
+          event.preventDefault();
+          focusSafely(items[0]);
+        }
       }
     });
-    var mq = window.matchMedia('(min-width:981px)');
-    (mq.addEventListener ? mq.addEventListener.bind(mq, 'change') : mq.addListener.bind(mq))(function (q) {
-      if (q.matches && !menu.hidden) { menu.hidden=true; menu.setAttribute('aria-hidden','true'); ham.classList.remove('open'); ham.setAttribute('aria-expanded','false'); ham.setAttribute('aria-label','Open menu'); nav.classList.remove('menu-open'); document.body.classList.remove('mobile-menu-open'); document.body.style.overflow=''; }
-    });
+
+    if (window.matchMedia) {
+      var desktopQuery = window.matchMedia('(min-width: 981px)');
+      var closeOnDesktop = function (query) {
+        if (query.matches && !menu.hidden) setMenu(false);
+      };
+      if (desktopQuery.addEventListener) desktopQuery.addEventListener('change', closeOnDesktop);
+      else if (desktopQuery.addListener) desktopQuery.addListener(closeOnDesktop);
+    }
+
     menu.setAttribute('aria-hidden', menu.hidden ? 'true' : 'false');
+    ham.setAttribute('aria-expanded', menu.hidden ? 'false' : 'true');
   }
 
   /* Hero slider + rotating tagline (home only) */
