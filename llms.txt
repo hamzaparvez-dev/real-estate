@@ -1,40 +1,50 @@
 # Prestige Enterprises
 
-> Property consultants in Kalyan, Maharashtra, helping buyers, sellers, tenants and investors across the Mumbai Metropolitan Region. Site available in English (/), Hindi (/hi/) and Marathi (/mr/).
+> Official property website for Prestige Enterprises, focused on residential and commercial property enquiries in Kalyan, Maharashtra.
+
+The website publishes property information for Kalyan, details about the Prestige Gold project, and general buyer education. Public pages are available in English, Hindi and Marathi. Use the linked page as the source of truth for the latest published information.
+
+## Start here
+
+- [Homepage](https://www.prestigeenterprises.in/): Overview of Prestige Enterprises, property configurations, published listing information and enquiry options.
+- [Properties in Kalyan](https://www.prestigeenterprises.in/areas/kalyan/): Public property information focused on Kalyan, Maharashtra.
+- [Areas directory](https://www.prestigeenterprises.in/areas/): Main directory for location-related website content.
+- [Prestige Gold project](https://www.prestigeenterprises.in/projects/prestige-gold/): Project overview, residential configurations, floor-plan information and site-visit enquiries. The page publishes MahaRERA registration number P51700052362.
+- [Buyer guides](https://www.prestigeenterprises.in/blog/): Educational articles about property purchase, due diligence, home loans and ownership in Maharashtra.
+
+## Buying and property guides
+
+- [How to Buy a Flat in Kalyan–Dombivli](https://www.prestigeenterprises.in/blog/how-to-buy-a-flat-in-kalyan-dombivli/): Buyer journey, shortlisting, due diligence, registration and possession.
+- [Stamp Duty and Registration Charges in Maharashtra](https://www.prestigeenterprises.in/blog/stamp-duty-registration-charges-maharashtra/): Overview of property transaction charges and the need to verify current local rates.
+- [How to Check RERA Registration Before You Buy](https://www.prestigeenterprises.in/blog/check-rera-registration-before-you-buy/): MahaRERA project checks and due-diligence points.
+- [Home Loan Eligibility and EMI Guide](https://www.prestigeenterprises.in/blog/home-loan-eligibility-emi-guide/): Income, existing obligations, loan eligibility and EMI planning.
+- [Under-Construction vs Ready-to-Move Flats](https://www.prestigeenterprises.in/blog/under-construction-vs-ready-to-move/): Practical comparison of delivery, payment and possession considerations.
+- [Documents to Check Before Buying Property](https://www.prestigeenterprises.in/blog/documents-to-check-before-buying-property/): Title, approvals, property records and document review.
+- [Buying a Resale Flat in Maharashtra](https://www.prestigeenterprises.in/blog/buying-a-resale-flat-checklist/): Resale due diligence, society records, dues and building checks.
+- [Ready Reckoner Rate Explained](https://www.prestigeenterprises.in/blog/ready-reckoner-rate-explained/): What the Ready Reckoner rate is and why it matters during a property transaction.
+- [Rent or Buy in the Mumbai Metropolitan Region](https://www.prestigeenterprises.in/blog/rent-or-buy-in-mumbai-metropolitan-region/): Factors to compare when deciding whether to rent or purchase.
+- [Capital Gains Tax When Selling Property in India](https://www.prestigeenterprises.in/blog/capital-gains-tax-on-property-sale/): General overview of capital-gains considerations for property sellers.
+- [Investing in the Kalyan Corridor](https://www.prestigeenterprises.in/blog/property-investment-kalyan-corridor/): Local infrastructure, market considerations and property-investment risks.
+- [NRIs Buying Property in Maharashtra](https://www.prestigeenterprises.in/blog/nri-buying-property-in-maharashtra/): General purchase-process and regulatory considerations for NRI and OCI buyers.
+
+## Language versions
+
+- [Hindi homepage](https://www.prestigeenterprises.in/hi/): Hindi-language website entry point.
+- [Marathi homepage](https://www.prestigeenterprises.in/mr/): Marathi-language website entry point.
+- [Hindi Kalyan property page](https://www.prestigeenterprises.in/hi/areas/kalyan/): Hindi property information for Kalyan.
+- [Marathi Kalyan property page](https://www.prestigeenterprises.in/mr/areas/kalyan/): Marathi property information for Kalyan.
+- [Hindi buyer guides](https://www.prestigeenterprises.in/hi/blog/): Hindi-language buyer education.
+- [Marathi buyer guides](https://www.prestigeenterprises.in/mr/blog/): Marathi-language buyer education.
 
 ## Contact
-- Office: Prestige One, Godrej Hill, Khadakpada, Kalyan, Maharashtra 421301
-- Phone / WhatsApp: +91 96895 57788
-- Email: prestigeprojects1956@gmail.com
 
-## Featured project
-- [Prestige Gold, Kalyan West](https://www.prestigeenterprises.in/projects/prestige-gold/): 1, 2 and 3 BHK residential configurations with MahaRERA registration P51700052362. Confirm current inventory and pricing with the project team.
+- Office: Prestige One, Godrej Hill, Khadakpada, Kalyan, Maharashtra 421301.
+- Phone / WhatsApp: +91 96895 57788.
+- Email: prestigeprojects1956@gmail.com.
 
-## Areas served
-- [Kalyan](https://www.prestigeenterprises.in/areas/kalyan/): Khadakpada, Kalyan West, Kalyan East and Titwala. Our home base.
-- [Dombivli](https://www.prestigeenterprises.in/areas/dombivli/): Dombivli East and West, Manpada Road, Thakurli and Palava.
-- [Thane](https://www.prestigeenterprises.in/areas/thane/): Naupada, Majiwada, Ghodbunder Road and Kolshet.
-- [Ulhasnagar](https://www.prestigeenterprises.in/areas/ulhasnagar/): Camps 1 to 5, Vitthalwadi and the Shahad edge.
-- [Ambernath](https://www.prestigeenterprises.in/areas/ambernath/): Ambernath East and West, Anand Nagar and the Badlapur road belt.
-- [Badlapur](https://www.prestigeenterprises.in/areas/badlapur/): Katrap, Belvali, Kulgaon and the Barvi Dam side.
-- [Bhiwandi](https://www.prestigeenterprises.in/areas/bhiwandi/): Dhamankar Naka, Kalyan Road, Anjurphata and Kasheli.
-- [Mumbai](https://www.prestigeenterprises.in/areas/mumbai/): Central and eastern suburbs, Western suburbs, island city and the harbour belt.
-- [Navi Mumbai](https://www.prestigeenterprises.in/areas/navi-mumbai/): Kharghar, Ulwe, Vashi, Nerul and Airoli.
-- [Panvel](https://www.prestigeenterprises.in/areas/panvel/): New Panvel, Old Panvel, Kalamboli and Khanda Colony.
+## Important information and content scope
 
-## Guides
-- [How to Buy a Flat in Kalyan–Dombivli: A Step-by-Step Guide](https://www.prestigeenterprises.in/blog/how-to-buy-a-flat-in-kalyan-dombivli/): Set a total budget that includes stamp duty and other costs, shortlist three or four projects, verify RERA and title, sign and register the agreement, then arrange the loan and take possession with an occupancy certificate.
-- [Stamp Duty and Registration Charges in Maharashtra Explained](https://www.prestigeenterprises.in/blog/stamp-duty-registration-charges-maharashtra/): At the time of writing, stamp duty in Mumbai is 6% for men and 5% for women buying residential property in their sole name, including 1% metro cess. Registration is 1% of the value, capped at ₹30,000 above ₹30 lakh. Rates in other municipal areas can differ, so confirm locally.
-- [How to Check RERA Registration Before You Buy in Maharashtra](https://www.prestigeenterprises.in/blog/check-rera-registration-before-you-buy/): Look up the project's MahaRERA registration number on the official MahaRERA website, confirm that the promoter, plot, approvals and completion date match what you were told, and never pay a token amount for a project that is not registered.
-- [Home Loan Eligibility and EMI: A Practical Guide for Buyers](https://www.prestigeenterprises.in/blog/home-loan-eligibility-emi-guide/): Lenders look at your income, existing EMIs, credit score and the property itself. RBI limits how much of the value a lender can finance, so you need to arrange a down payment of roughly 10% to 25% depending on loan size, plus the costs on top of the price.
-- [Under-Construction vs Ready-to-Move Flats: What to Choose](https://www.prestigeenterprises.in/blog/under-construction-vs-ready-to-move/): Ready-to-move flats cost more upfront but carry less risk and, with an occupancy certificate, no GST. Under-construction homes are cheaper and can be paid in stages, but you wait for possession and carry delivery risk, which RERA reduces but does not remove.
-- [Documents to Check Before Buying Property in Maharashtra](https://www.prestigeenterprises.in/blog/documents-to-check-before-buying-property/): Check the chain of title, the approved plan and commencement or occupancy certificate, RERA registration for new projects, the 7/12 extract or property card for land, and society or builder NOCs. Have your lawyer review everything before you pay.
-- [Buying a Resale Flat in Maharashtra: The Complete Checklist](https://www.prestigeenterprises.in/blog/buying-a-resale-flat-checklist/): For a resale flat, confirm clear title, a society NOC, the share certificate, no outstanding dues, the state of the building and any redevelopment plan, and ask the society about transfer charges before you commit.
-- [What Is the Ready Reckoner Rate and Why Does It Matter?](https://www.prestigeenterprises.in/blog/ready-reckoner-rate-explained/): The Ready Reckoner rate is the government's minimum per-square-foot value for a locality. Stamp duty is charged on the higher of the agreement value and the Ready Reckoner value, so you cannot reduce stamp duty by showing a lower price.
-- [Rent or Buy in the Mumbai Metropolitan Region?](https://www.prestigeenterprises.in/blog/rent-or-buy-in-mumbai-metropolitan-region/): Buy if you plan to stay at least five to seven years, can manage the EMI comfortably and have the down payment ready. Rent if you are likely to move, or if the rent is much lower than the EMI and you can invest the difference with discipline.
-- [Capital Gains Tax When You Sell Property in India](https://www.prestigeenterprises.in/blog/capital-gains-tax-on-property-sale/): Property held for more than 24 months is taxed on long-term gains at 12.5% without indexation. For property bought before 23 July 2024, resident individuals and HUFs can choose the lower of 12.5% without indexation or 20% with indexation. Reinvestment exemptions can reduce the tax.
-- [Investing in the Kalyan Corridor: Opportunities and Risks](https://www.prestigeenterprises.in/blog/property-investment-kalyan-corridor/): Buyers are watching the Kalyan corridor because of its rail links, lower prices than Thane and Mumbai, and metro and road projects. The risks are project delays, oversupply in some pockets and uneven quality, so choose RERA-registered projects with a strong delivery record.
-- [NRIs Buying Property in Maharashtra: Rules and Steps](https://www.prestigeenterprises.in/blog/nri-buying-property-in-maharashtra/): NRIs and OCI cardholders can buy residential and commercial property in India without special RBI permission, but not agricultural land, plantation property or a farmhouse. Payment must go through proper banking channels, and rules on repatriation and tax apply.
-
-## Notes
-Information is general guidance, not legal, tax or financial advice. Confirm rates and rules with official sources.
+- Published prices, areas, configurations, project details and availability are subject to change. They are not a guarantee of current inventory or a substitute for a unit-specific written offer.
+- Before booking, buyers should confirm current availability, the applicable RERA carpet area, total price, taxes, statutory charges and inclusions directly with the project team in a dated cost sheet.
+- Buyer guides are general educational information, not legal, tax, financial or investment advice. Verify current rules with the relevant official authority and qualified professionals.
+- Do not infer that an advertised configuration or property is currently available merely because it appears on a website page.
