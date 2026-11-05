@@ -127,20 +127,50 @@
     }
   }
 
-  /* Mobile menu: resilient touch, keyboard and viewport behavior. */
+  /* Mobile menu: delegated tap handling with a standalone fallback. */
   var ham = $('#navHam'), menu = $('#mnav');
-  if (menu) upgradeMobileMenu(menu);
+
+  function renderMobileMenuFallback(panel) {
+    if (!panel || panel.querySelector('.mnav-content')) return;
+    var lang = (document.documentElement.lang || 'en').slice(0, 2).toLowerCase();
+    var prefix = lang === 'en' ? '' : '/' + lang;
+    var labels = lang === 'hi'
+      ? ['होम','हमारे बारे में','प्रोजेक्ट्स','कीमत','सेवाएँ','गाइड','संपर्क','कल्याण']
+      : lang === 'mr'
+        ? ['मुख्यपृष्ठ','आमच्याबद्दल','प्रकल्प','किंमत','सेवा','मार्गदर्शक','संपर्क','कल्याण']
+        : ['Home','About','Projects','Pricing','Services','Guides','Contact','Kalyan'];
+    var links = [
+      prefix + '/#home', prefix + '/#about', '/projects/prestige-gold/',
+      prefix + '/#pricing', prefix + '/#services', prefix + '/blog/',
+      prefix + '/#contact', prefix + '/areas/kalyan/'
+    ];
+    panel.innerHTML = '<div class="mnav-content mnav-fallback">' +
+      labels.map(function (label, index) {
+        return '<a class="mnav-item mnav-full-item" href="' + links[index] + '"><span class="mnav-label">' + label + '</span><span aria-hidden="true">›</span></a>';
+      }).join('') +
+      '<div class="mnav-footer"><a class="mnav-whatsapp" href="https://wa.me/919689557788" target="_blank" rel="noopener">Chat on WhatsApp</a></div>' +
+      '</div>';
+  }
+
+  if (menu) {
+    try { upgradeMobileMenu(menu); }
+    catch (error) { renderMobileMenuFallback(menu); }
+    if (!menu.querySelector('.mnav-content')) renderMobileMenuFallback(menu);
+  }
 
   if (ham && menu) {
     var focusSafely = function (target) {
       if (!target || typeof target.focus !== 'function') return;
       try { target.focus({ preventScroll: true }); }
-      catch (e) { try { target.focus(); } catch (ignore) {} }
+      catch (error) { try { target.focus(); } catch (ignore) {} }
     };
 
     var setMenu = function (open) {
       open = !!open;
       menu.hidden = !open;
+      menu.style.display = open ? 'flex' : 'none';
+      menu.style.visibility = open ? 'visible' : 'hidden';
+      menu.style.pointerEvents = open ? 'auto' : 'none';
       menu.setAttribute('aria-hidden', open ? 'false' : 'true');
       ham.classList.toggle('open', open);
       ham.setAttribute('aria-expanded', open ? 'true' : 'false');
@@ -158,15 +188,20 @@
       }
     };
 
-    ham.addEventListener('click', function (event) {
-      event.preventDefault();
-      setMenu(menu.hidden);
-    });
+    /* Capture phase runs before target/bubble handlers, avoiding double toggles. */
+    document.addEventListener('click', function (event) {
+      var target = event.target;
+      var toggle = target && target.closest ? target.closest('#navHam') : null;
+      if (toggle === ham) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+        setMenu(menu.hidden);
+        return;
+      }
 
-    menu.addEventListener('click', function (event) {
-      var link = event.target && event.target.closest ? event.target.closest('a[href]') : null;
-      if (link) setMenu(false);
-    });
+      var link = target && target.closest ? target.closest('#mnav a[href]') : null;
+      if (link && !menu.hidden) setMenu(false);
+    }, true);
 
     document.addEventListener('keydown', function (event) {
       if (menu.hidden) return;
@@ -199,6 +234,9 @@
 
     menu.setAttribute('aria-hidden', menu.hidden ? 'true' : 'false');
     ham.setAttribute('aria-expanded', menu.hidden ? 'false' : 'true');
+    menu.style.display = menu.hidden ? 'none' : 'flex';
+    menu.style.visibility = menu.hidden ? 'hidden' : 'visible';
+    menu.style.pointerEvents = menu.hidden ? 'none' : 'auto';
   }
 
   /* Hero slider + rotating tagline (home only) */
