@@ -69,6 +69,60 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
+  /* Home hero background video (Vercel Blob) */
+  if (isHomeVideo) {
+    var heroVideo = $('#heroVideo') || $('.hero-video');
+    var heroSection = $('#home');
+    var HERO_URL = 'https://8ps1sfxuipndwxps.public.blob.vercel-storage.com/Prestige_Projects_Kalyan_30s.mp4';
+    var reduceMotion = false;
+    try {
+      reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    } catch (e) {}
+
+    if (heroVideo) {
+      if (!heroVideo.getAttribute('src')) heroVideo.setAttribute('src', HERO_URL);
+      heroVideo.muted = true;
+      heroVideo.defaultMuted = true;
+      heroVideo.playsInline = true;
+      heroVideo.setAttribute('playsinline', '');
+      heroVideo.setAttribute('webkit-playsinline', '');
+
+      var markPlaying = function () {
+        if (heroSection) heroSection.classList.add('hero-video-ready');
+      };
+
+      var tryPlay = function () {
+        if (reduceMotion) {
+          try { heroVideo.pause(); } catch (ignore) {}
+          markPlaying();
+          return;
+        }
+        var attempt = heroVideo.play();
+        if (attempt && typeof attempt.then === 'function') {
+          attempt.then(markPlaying).catch(function () {
+            if (heroSection) heroSection.classList.add('hero-video-blocked');
+          });
+        } else {
+          markPlaying();
+        }
+      };
+
+      heroVideo.addEventListener('loadeddata', markPlaying, { once: true });
+      heroVideo.addEventListener('playing', markPlaying);
+      heroVideo.addEventListener('canplay', tryPlay);
+      heroVideo.addEventListener('error', function () {
+        if (heroSection) heroSection.classList.add('hero-video-error');
+      });
+
+      if (heroVideo.readyState >= 2) tryPlay();
+      else heroVideo.load();
+
+      document.addEventListener('visibilitychange', function () {
+        if (!document.hidden) tryPlay();
+      });
+    }
+  }
+
   /* Projects dropdown */
   var projects = $('#navProjects');
   if (projects) {
