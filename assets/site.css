@@ -2120,3 +2120,25 @@ body.home-video-page .hero-video-hero .hero-video-shade{
   body.home-video-page .hero-video-hero .hero-video{display:none}
   body.home-video-page .hero.hero-video-hero{background:#080b11}
 }
+
+
+/* Keep the MENU label and render its three hamburger strokes vertically. */
+body.home-video-page nav#nav.home-hero-nav .nav-ham{
+  width:78px;height:44px;padding:0;position:absolute;
+  display:flex!important;flex-direction:row;align-items:center;justify-content:flex-start;
+  gap:0;
+}
+body.home-video-page nav#nav.home-hero-nav .nav-ham::before{
+  flex:none;margin:0;
+}
+body.home-video-page nav#nav.home-hero-nav .nav-ham span{
+  position:absolute;right:0;width:18px;height:1px;margin:0;
+}
+body.home-video-page nav#nav.home-hero-nav .nav-ham span:nth-child(1){top:14px}
+body.home-video-page nav#nav.home-hero-nav .nav-ham span:nth-child(2){top:21px;width:13px}
+body.home-video-page nav#nav.home-hero-nav .nav-ham span:nth-child(3){top:28px}
+@media(max-width:700px){
+  body.home-video-page nav#nav.home-hero-nav .nav-ham{width:69px}
+  body.home-video-page nav#nav.home-hero-nav .nav-ham span{width:15px}
+  body.home-video-page nav#nav.home-hero-nav .nav-ham span:nth-child(2){width:11px}
+}
