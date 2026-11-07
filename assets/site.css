@@ -2119,15 +2119,19 @@ body.home-video-page #mnav[aria-hidden="true"]{
 }
 body.home-video-page .hero.hero-video-hero{
   position:relative;display:block;width:100%;height:100vh;height:100svh;
-  min-height:560px;margin:0;padding:0;overflow:hidden;
-  background:#080b11 url("/img/hero-day.jpg") center/cover no-repeat;
+  min-height:560px;margin:0;padding:0;overflow:hidden;background:#080b11;
 }
 body.home-video-page .hero-video-hero .hero-video{
   position:absolute;inset:0;z-index:0;display:block;width:100%;height:100%;max-width:none;
-  object-fit:cover;object-position:center center;background:transparent;
+  object-fit:cover;object-position:center center;background:#080b11;
+  opacity:1;visibility:visible;
 }
-body.home-video-page .hero.hero-video-hero.hero-video-ready{
-  background-image:none;
+body.home-video-page .hero-video-hero .hero-video.is-playing,
+body.home-video-page .hero.hero-video-hero.hero-video-ready .hero-video{
+  background:transparent;
+}
+body.home-video-page .hero.hero-video-hero.hero-video-error{
+  background:#080b11 url("/img/hero-day.jpg") center/cover no-repeat;
 }
 body.home-video-page .hero-video-hero .hero-video-shade{
   position:absolute;inset:0;z-index:1;pointer-events:none;

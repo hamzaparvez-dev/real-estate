@@ -69,7 +69,7 @@
   window.addEventListener('scroll', onScroll, { passive: true });
   onScroll();
 
-  /* Home hero background video (Vercel Blob) */
+  /* Home hero background video (Vercel Blob) — autoplay + seamless loop */
   if (isHomeVideo) {
     var heroVideo = $('#heroVideo') || $('.hero-video');
     var heroSection = $('#home');
@@ -81,20 +81,25 @@
 
     if (heroVideo) {
       if (!heroVideo.getAttribute('src')) heroVideo.setAttribute('src', HERO_URL);
+      heroVideo.removeAttribute('poster');
       heroVideo.muted = true;
       heroVideo.defaultMuted = true;
+      heroVideo.loop = true;
       heroVideo.playsInline = true;
       heroVideo.setAttribute('playsinline', '');
       heroVideo.setAttribute('webkit-playsinline', '');
+      heroVideo.setAttribute('autoplay', '');
 
       var markPlaying = function () {
+        heroVideo.classList.add('is-playing');
         if (heroSection) heroSection.classList.add('hero-video-ready');
       };
 
       var tryPlay = function () {
         if (reduceMotion) {
           try { heroVideo.pause(); } catch (ignore) {}
-          markPlaying();
+          heroVideo.classList.add('is-paused');
+          if (heroSection) heroSection.classList.add('hero-video-ready');
           return;
         }
         var attempt = heroVideo.play();
@@ -102,24 +107,35 @@
           attempt.then(markPlaying).catch(function () {
             if (heroSection) heroSection.classList.add('hero-video-blocked');
           });
-        } else {
-          markPlaying();
         }
       };
 
-      heroVideo.addEventListener('loadeddata', markPlaying, { once: true });
       heroVideo.addEventListener('playing', markPlaying);
+      heroVideo.addEventListener('ended', function () {
+        try {
+          heroVideo.currentTime = 0;
+          tryPlay();
+        } catch (ignore) {}
+      });
       heroVideo.addEventListener('canplay', tryPlay);
+      heroVideo.addEventListener('canplaythrough', tryPlay);
+      heroVideo.addEventListener('loadeddata', tryPlay, { once: true });
       heroVideo.addEventListener('error', function () {
         if (heroSection) heroSection.classList.add('hero-video-error');
       });
 
-      if (heroVideo.readyState >= 2) tryPlay();
-      else heroVideo.load();
+      tryPlay();
+      if (heroVideo.readyState < 2) heroVideo.load();
 
       document.addEventListener('visibilitychange', function () {
         if (!document.hidden) tryPlay();
       });
+
+      var unlock = function () {
+        tryPlay();
+      };
+      document.addEventListener('touchstart', unlock, { once: true, passive: true });
+      document.addEventListener('click', unlock, { once: true });
     }
   }
 
