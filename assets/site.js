@@ -103,6 +103,8 @@
           '</button>'+
           '<div class="mnav-plan-sub"><div>'+
             '<a class="mnav-plan-link" href="/projects/prestige-gold/"><span>'+t.gold+'</span>'+icon('chevron')+'</a>'+
+            '<a class="mnav-plan-link" href="/projects/prestige-one/"><span>Prestige One</span>'+icon('chevron')+'</a>'+
+            '<a class="mnav-plan-link" href="/projects/shri-durga-enterprises/"><span>Shri Durga Enterprises</span>'+icon('chevron')+'</a>'+
           '</div></div>'+
         '</div>'+
         item('pricing',paths.pricing,'pricing','')+
