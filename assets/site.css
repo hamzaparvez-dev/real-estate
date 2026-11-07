@@ -2040,3 +2040,80 @@ section#process.dark-bg{
 /* The Shri Durga artwork is a portrait image; never crop it into the landscape project-card ratio. */
 .pg-overview-image.pg-image-full{width:100%;max-width:100%;}
 .pg-overview-image.pg-image-full img{display:block;width:100%;height:auto!important;max-height:none!important;aspect-ratio:auto!important;object-fit:contain!important;object-position:center;}
+
+
+/* ---------- cinematic video hero / minimal centered brand navigation ---------- */
+body.home-hero-mode{background:#090b10}
+body.home-hero-mode nav#nav,
+body.home-hero-mode nav#nav.up,
+body.home-hero-mode nav#nav.solid,
+body.home-hero-mode nav#nav.menu-open{
+  position:fixed;top:0;left:0;right:0;height:88px;z-index:400;
+  background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
+  box-shadow:none!important;border:0;padding:0 var(--pad);
+}
+body.home-hero-mode nav#nav .nav-r{display:contents}
+body.home-hero-mode nav#nav .nav-r>*:not(#navHam){display:none!important}
+body.home-hero-mode nav#nav .nav-logo,
+body.home-hero-mode nav#nav .nav-logo.home-wordmark{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  display:flex!important;flex-direction:column;align-items:center;justify-content:center;
+  width:auto!important;height:auto!important;max-width:none;padding:0!important;margin:0;
+  text-decoration:none;white-space:nowrap;gap:0;z-index:2;
+}
+body.home-hero-mode nav#nav .nav-logo img{display:none!important}
+body.home-hero-mode nav#nav .nav-logo::after{display:none!important;content:none!important}
+body.home-hero-mode .home-wordmark-main{
+  display:block;color:#fff;font:400 clamp(28px,3vw,39px)/.92 var(--serif);
+  letter-spacing:.08em;text-shadow:0 2px 18px rgba(0,0,0,.28);
+}
+body.home-hero-mode .home-wordmark-sub{
+  display:block;margin-top:6px;color:rgba(255,255,255,.9);
+  font:500 8px/1 var(--sans);letter-spacing:.34em;text-transform:uppercase;
+  text-shadow:0 1px 12px rgba(0,0,0,.35);
+}
+body.home-hero-mode nav#nav .nav-ham{
+  display:flex!important;position:absolute;left:clamp(24px,6vw,88px);top:50%;
+  transform:translateY(-50%);width:auto;height:44px;padding:0;border:0;
+  flex-direction:row;align-items:center;justify-content:center;gap:12px;
+  color:#fff;background:transparent;z-index:3;
+}
+body.home-hero-mode nav#nav .nav-ham::before{
+  content:"MENU";display:block;color:#fff;font:600 12px/1 var(--sans);
+  letter-spacing:.08em;text-shadow:0 1px 10px rgba(0,0,0,.45);
+}
+body.home-hero-mode nav#nav .nav-ham.open::before{content:"CLOSE"}
+body.home-hero-mode nav#nav .nav-ham span{
+  width:18px;height:1px;background:#fff;box-shadow:0 1px 8px rgba(0,0,0,.25);
+}
+body.home-hero-mode nav#nav .nav-ham.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+body.home-hero-mode nav#nav .nav-ham.open span:nth-child(2){opacity:0}
+body.home-hero-mode nav#nav .nav-ham.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+body.home-hero-mode .hero.hero-campaign{
+  display:block;position:relative;margin:0!important;padding:0;width:100%;
+  height:100vh;height:100svh;min-height:560px;overflow:hidden;background:#100d0b;
+}
+body.home-hero-mode .hero-campaign .hero-video{
+  position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;
+  object-fit:cover;object-position:center center;background:#100d0b;
+}
+body.home-hero-mode .hero-campaign .hero-video-veil{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(4,7,12,.34) 0%,rgba(4,7,12,.12) 32%,rgba(4,7,12,.08) 65%,rgba(4,7,12,.26) 100%);
+}
+@media(max-width:700px){
+  body.home-hero-mode nav#nav,
+  body.home-hero-mode nav#nav.up,
+  body.home-hero-mode nav#nav.menu-open{height:76px;padding:0 20px}
+  body.home-hero-mode nav#nav .nav-ham{left:20px;gap:9px}
+  body.home-hero-mode nav#nav .nav-ham::before{font-size:10px;letter-spacing:.07em}
+  body.home-hero-mode nav#nav .nav-ham span{width:15px}
+  body.home-hero-mode .home-wordmark-main{font-size:29px}
+  body.home-hero-mode .home-wordmark-sub{font-size:7px;letter-spacing:.3em}
+  body.home-hero-mode .hero.hero-campaign{min-height:520px;height:88svh}
+  body.home-hero-mode .hero-campaign .hero-video{object-position:center center}
+}
+@media(prefers-reduced-motion:reduce){
+  body.home-hero-mode .hero-campaign .hero-video{display:none}
+  body.home-hero-mode .hero.hero-campaign{background:#18110f url('/img/Prestige%20Kalyan%20Homes%20Advertisement.png') center/cover no-repeat}
+}
