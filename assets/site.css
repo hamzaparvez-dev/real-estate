@@ -2055,14 +2055,23 @@ body.home-video-page nav#nav.home-hero-nav.up{
   background:transparent!important;
   backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
 }
-/* Hide hero overlay nav once the user scrolls past the video hero. */
+/* Scroll down: hide bar. Scroll up: slide back with a solid header (Sobha-style). */
+body.home-video-page nav#nav.home-hero-nav{
+  transition:opacity .32s ease,transform .32s ease,background .25s ease,
+    backdrop-filter .25s ease,visibility 0s linear .32s;
+}
 body.home-video-page nav#nav.home-hero-nav.home-nav-hidden:not(.menu-open){
   opacity:0!important;visibility:hidden!important;pointer-events:none!important;
-  transform:translateY(-110%)!important;
-  transition:opacity .28s ease,transform .28s ease,visibility 0s linear .28s;
+  transform:translateY(calc(-100% - 8px))!important;
 }
-body.home-video-page nav#nav.home-hero-nav:not(.home-nav-hidden):not(.menu-open){
-  transition:opacity .28s ease,transform .28s ease,visibility 0s;
+body.home-video-page nav#nav.home-hero-nav:not(.home-nav-hidden){
+  opacity:1!important;visibility:visible!important;pointer-events:auto!important;
+  transform:translateY(0)!important;transition:opacity .32s ease,transform .32s ease,background .25s ease,visibility 0s;
+}
+body.home-video-page nav#nav.home-hero-nav.home-nav-solid:not(.menu-open){
+  background:rgba(8,12,19,.9)!important;
+  backdrop-filter:blur(14px)!important;-webkit-backdrop-filter:blur(14px)!important;
+  box-shadow:0 1px 0 rgba(255,255,255,.06)!important;
 }
 body.home-video-page nav#nav.home-hero-nav .nav-r.nav-r-home-fallback{display:none!important;visibility:hidden!important}
 body.home-video-page nav#nav.home-hero-nav > .nav-ham{

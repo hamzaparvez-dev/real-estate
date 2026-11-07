@@ -19,24 +19,44 @@
   /* Nav background and progress bar */
   var nav = $('#nav'), prog = $('#prog');
   var isHomeVideo = document.body.classList.contains('home-video-page');
-  var homeHero = isHomeVideo ? $('#home') : null;
+  var homeScrollY = 0;
+  var HOME_SCROLL_DELTA = 6;
 
-  function homeNavHideThreshold() {
-    if (!homeHero) return 72;
-    var h = homeHero.offsetHeight || 0;
-    return Math.max(72, h - 48);
+  function updateHomeHeroNav(y) {
+    if (!nav || !isHomeVideo) return;
+    nav.classList.remove('up');
+    if (nav.classList.contains('menu-open')) {
+      nav.classList.remove('home-nav-hidden');
+      nav.classList.toggle('home-nav-solid', y > 48);
+      document.body.classList.remove('home-nav-hidden');
+      homeScrollY = y;
+      return;
+    }
+    if (y <= 8) {
+      nav.classList.remove('home-nav-hidden', 'home-nav-solid');
+      document.body.classList.remove('home-nav-hidden');
+      homeScrollY = y;
+      return;
+    }
+    var delta = y - homeScrollY;
+    if (delta > HOME_SCROLL_DELTA) {
+      nav.classList.add('home-nav-hidden');
+      document.body.classList.add('home-nav-hidden');
+    } else if (delta < -HOME_SCROLL_DELTA) {
+      nav.classList.remove('home-nav-hidden');
+      document.body.classList.remove('home-nav-hidden');
+      nav.classList.add('home-nav-solid');
+    }
+    homeScrollY = y;
   }
 
   function onScroll() {
     var y = window.pageYOffset || document.documentElement.scrollTop;
     if (nav) {
       if (isHomeVideo) {
-        nav.classList.remove('up');
-        var hide = y >= homeNavHideThreshold();
-        nav.classList.toggle('home-nav-hidden', hide);
-        document.body.classList.toggle('home-nav-hidden', hide);
+        updateHomeHeroNav(y);
       } else {
-        nav.classList.remove('home-nav-hidden');
+        nav.classList.remove('home-nav-hidden', 'home-nav-solid');
         document.body.classList.remove('home-nav-hidden');
         nav.classList.toggle('up', y > 40);
       }
