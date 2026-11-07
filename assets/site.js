@@ -50,8 +50,12 @@
   }
 
   /* Apply the same premium drawer to all legacy interior-page menus. */
+  function homeMenuReady(panel) {
+    return panel && (panel.querySelector('.mnav-home-primary') || panel.querySelector('.mnav-content'));
+  }
+
   function upgradeMobileMenu(panel) {
-    if (!panel || panel.querySelector('.mnav-content')) return;
+    if (!panel || homeMenuReady(panel)) return;
     if (document.body.classList.contains('home-video-page')) {
       panel.innerHTML =
         '<div class="mnav-home-primary" aria-label="Main navigation">' +
@@ -158,7 +162,7 @@
   var ham = $('#navHam'), menu = $('#mnav');
 
   function renderMobileMenuFallback(panel) {
-    if (!panel || panel.querySelector('.mnav-content')) return;
+    if (!panel || homeMenuReady(panel)) return;
     var lang = (document.documentElement.lang || 'en').slice(0, 2).toLowerCase();
     var prefix = lang === 'en' ? '' : '/' + lang;
     var labels = lang === 'hi'
@@ -182,7 +186,7 @@
   if (menu) {
     try { upgradeMobileMenu(menu); }
     catch (error) { renderMobileMenuFallback(menu); }
-    if (!menu.querySelector('.mnav-content')) renderMobileMenuFallback(menu);
+    if (!homeMenuReady(menu)) renderMobileMenuFallback(menu);
   }
 
   if (ham && menu) {
@@ -268,7 +272,7 @@
     }
 
     menu.setAttribute('aria-hidden', menu.hidden ? 'true' : 'false');
-    ham.setAttribute('aria-expanded', menu.hidden ? 'false' : 'true');
+    ham.setAttribute('aria-expanded', 'false');
     menu.style.display = menu.hidden ? 'none' : 'flex';
     menu.style.visibility = menu.hidden ? 'hidden' : 'visible';
     menu.style.pointerEvents = menu.hidden ? 'none' : 'auto';

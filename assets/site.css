@@ -2055,8 +2055,10 @@ body.home-video-page nav#nav.home-hero-nav.up{
   background:rgba(8,12,19,.82)!important;
   backdrop-filter:blur(12px)!important;-webkit-backdrop-filter:blur(12px)!important;
 }
-body.home-video-page nav#nav.home-hero-nav .nav-r{display:contents}
-body.home-video-page nav#nav.home-hero-nav .nav-r>*:not(#navHam){display:none!important}
+body.home-video-page nav#nav.home-hero-nav .nav-r.nav-r-home-fallback{display:none!important;visibility:hidden!important}
+body.home-video-page nav#nav.home-hero-nav > .nav-ham{
+  order:0;flex:0 0 auto;
+}
 body.home-video-page nav#nav.home-hero-nav .nav-logo,
 body.home-video-page nav#nav.home-hero-nav .nav-logo.home-wordmark{
   position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
@@ -2092,7 +2094,10 @@ body.home-video-page nav#nav.home-hero-nav .nav-ham span{
 body.home-video-page nav#nav.home-hero-nav .nav-ham.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
 body.home-video-page nav#nav.home-hero-nav .nav-ham.open span:nth-child(2){opacity:0}
 body.home-video-page nav#nav.home-hero-nav .nav-ham.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
-body.home-video-page #mnav[aria-hidden="false"]{display:flex!important}
+body.home-video-page #mnav[hidden],
+body.home-video-page #mnav[aria-hidden="true"]{
+  display:none!important;visibility:hidden!important;pointer-events:none!important;
+}
 body.home-video-page .hero.hero-video-hero{
   position:relative;display:block;width:100%;height:100vh;height:100svh;
   min-height:560px;margin:0;padding:0;overflow:hidden;background:#080b11;
@@ -2219,7 +2224,7 @@ body.home-video-page .mnav-home-languages a{
 }
 body.home-video-page .mnav-home-languages a:hover{color:#142b45!important}
 body.home-video-page .mnav-home-footer{
-  flex:0 0 auto;padding:18px 24px calc(18px + env(safe-area-inset-bottom,0px));
+  flex:0 0 auto;margin-top:auto;padding:18px 24px calc(18px + env(safe-area-inset-bottom,0px));
   background:#f0f0f0!important;border-top:1px solid #dedede;
 }
 body.home-video-page .mnav-home-footer a{
