@@ -2064,7 +2064,6 @@ body.home-video-page nav#nav.home-hero-nav .nav-logo.home-wordmark{
   width:auto;height:auto;max-width:none;margin:0;padding:0;gap:0;
   text-decoration:none;white-space:nowrap;z-index:2;
 }
-body.home-video-page nav#nav.home-hero-nav .nav-logo img{display:none!important}
 body.home-video-page nav#nav.home-hero-nav .nav-logo::after{display:none!important;content:none!important}
 body.home-video-page .home-wordmark-main{
   display:block;color:#fff;font:400 clamp(28px,3vw,39px)/.9 var(--serif);
@@ -2149,19 +2148,17 @@ body.home-video-page nav#nav.home-hero-nav .nav-logo.home-wordmark{
   position:absolute!important;left:50%!important;top:50%!important;
   transform:translate(-50%,-50%)!important;
   display:flex!important;align-items:center!important;justify-content:center!important;
-  width:auto!important;height:auto!important;max-width:none!important;
-  padding:5px 10px!important;margin:0!important;
-  background:rgba(255,255,255,.97)!important;
-  border:1px solid rgba(255,255,255,.78)!important;
-  border-radius:2px!important;
-  box-shadow:0 5px 24px rgba(0,0,0,.12)!important;
-  z-index:2!important;
+  width:auto!important;height:auto!important;max-width:min(92vw,420px)!important;
+  padding:0!important;margin:0!important;
+  background:transparent!important;border:0!important;border-radius:0!important;
+  box-shadow:none!important;z-index:2!important;
 }
 body.home-video-page nav#nav.home-hero-nav .nav-logo.home-wordmark img{
   display:block!important;visibility:visible!important;opacity:1!important;
-  width:clamp(175px,15vw,205px)!important;height:auto!important;
-  max-width:none!important;max-height:56px!important;
+  width:clamp(168px,22vw,248px)!important;height:auto!important;
+  max-width:100%!important;max-height:62px!important;
   object-fit:contain!important;
+  filter:drop-shadow(0 3px 18px rgba(0,0,0,.38));
 }
 body.home-video-page nav#nav.home-hero-nav .nav-logo.home-wordmark::after{
   display:none!important;content:none!important;
@@ -2253,7 +2250,7 @@ body.home-video-page.mobile-menu-open .wa{display:none!important;visibility:hidd
 
 @media(max-width:700px){
   body.home-video-page nav#nav.home-hero-nav .nav-logo.home-wordmark img{
-    width:clamp(150px,43vw,190px)!important;max-height:50px!important;
+    width:clamp(148px,52vw,220px)!important;max-height:54px!important;
   }
   body.home-video-page .mnav-home-primary{min-height:330px;padding:72px 28px 20px!important}
   body.home-video-page .mnav-home-link{min-height:49px;font-size:14px!important}
@@ -2281,4 +2278,14 @@ body.home-video-page nav#nav.home-hero-nav.menu-open .nav-logo.home-wordmark{
 }
 body.home-video-page nav#nav.home-hero-nav.menu-open .nav-ham.open{
   z-index:5!important;
+}
+
+/* Dimmed hero + allow drawer on desktop (overrides global .mnav hide at 981px). */
+body.home-video-page.mobile-menu-open::before{
+  content:"";position:fixed;inset:0;z-index:1298;pointer-events:none;
+  background:rgba(6,10,16,.42);
+}
+@media(min-width:981px){
+  body.home-video-page #mnav[aria-hidden="false"]{display:flex!important}
+  body.home-video-page nav#nav.home-hero-nav .nav-ham{display:flex!important}
 }

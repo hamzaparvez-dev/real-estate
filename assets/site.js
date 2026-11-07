@@ -230,6 +230,13 @@
       if (link && !menu.hidden) setMenu(false);
     }, true);
 
+    document.addEventListener('click', function (event) {
+      if (!document.body.classList.contains('home-video-page') || menu.hidden) return;
+      var target = event.target;
+      if (target && target.closest && (target.closest('#mnav') || target.closest('#navHam'))) return;
+      setMenu(false);
+    });
+
     document.addEventListener('keydown', function (event) {
       if (menu.hidden) return;
       if (event.key === 'Escape') {
@@ -253,6 +260,7 @@
     if (window.matchMedia) {
       var desktopQuery = window.matchMedia('(min-width: 981px)');
       var closeOnDesktop = function (query) {
+        if (document.body.classList.contains('home-video-page')) return;
         if (query.matches && !menu.hidden) setMenu(false);
       };
       if (desktopQuery.addEventListener) desktopQuery.addEventListener('change', closeOnDesktop);
