@@ -2036,3 +2036,7 @@ section#process.dark-bg{
 .seo-buyer-checklist{background:#f7f8fa}
 .seo-buyer-checklist .lead{max-width:850px}
 @media(max-width:700px){.seo-data-table{font-size:13px}.seo-data-table th,.seo-data-table td{padding:11px 12px}.seo-data-table-wrap{border-radius:9px}}
+
+/* The Shri Durga artwork is a portrait image; never crop it into the landscape project-card ratio. */
+.pg-overview-image.pg-image-full{width:100%;max-width:100%;}
+.pg-overview-image.pg-image-full img{display:block;width:100%;height:auto!important;max-height:none!important;aspect-ratio:auto!important;object-fit:contain!important;object-position:center;}
