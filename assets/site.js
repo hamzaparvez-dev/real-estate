@@ -18,9 +18,29 @@
 
   /* Nav background and progress bar */
   var nav = $('#nav'), prog = $('#prog');
+  var isHomeVideo = document.body.classList.contains('home-video-page');
+  var homeHero = isHomeVideo ? $('#home') : null;
+
+  function homeNavHideThreshold() {
+    if (!homeHero) return 72;
+    var h = homeHero.offsetHeight || 0;
+    return Math.max(72, h - 48);
+  }
+
   function onScroll() {
     var y = window.pageYOffset || document.documentElement.scrollTop;
-    if (nav) nav.classList.toggle('up', y > 40);
+    if (nav) {
+      if (isHomeVideo) {
+        nav.classList.remove('up');
+        var hide = y >= homeNavHideThreshold();
+        nav.classList.toggle('home-nav-hidden', hide);
+        document.body.classList.toggle('home-nav-hidden', hide);
+      } else {
+        nav.classList.remove('home-nav-hidden');
+        document.body.classList.remove('home-nav-hidden');
+        nav.classList.toggle('up', y > 40);
+      }
+    }
     if (prog) {
       var h = document.documentElement.scrollHeight - window.innerHeight;
       prog.style.width = (h > 0 ? Math.min(100, (y / h) * 100) : 0) + '%';
