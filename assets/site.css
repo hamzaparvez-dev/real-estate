@@ -2269,3 +2269,16 @@ body.home-video-page.mobile-menu-open .wa{display:none!important;visibility:hidd
 @media(prefers-reduced-motion:reduce){
   body.home-video-page .mnav-home-link span:last-child{transition:none}
 }
+
+/* Keep the homepage navigation controls above the open drawer so CLOSE stays clickable. */
+body.home-video-page nav#nav.home-hero-nav.menu-open{
+  z-index:1301!important;
+  background:transparent!important;
+  box-shadow:none!important;
+}
+body.home-video-page nav#nav.home-hero-nav.menu-open .nav-logo.home-wordmark{
+  z-index:3!important;
+}
+body.home-video-page nav#nav.home-hero-nav.menu-open .nav-ham.open{
+  z-index:5!important;
+}
