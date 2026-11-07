@@ -2042,78 +2042,81 @@ section#process.dark-bg{
 .pg-overview-image.pg-image-full img{display:block;width:100%;height:auto!important;max-height:none!important;aspect-ratio:auto!important;object-fit:contain!important;object-position:center;}
 
 
-/* ---------- cinematic video hero / minimal centered brand navigation ---------- */
-body.home-hero-mode{background:#090b10}
-body.home-hero-mode nav#nav,
-body.home-hero-mode nav#nav.up,
-body.home-hero-mode nav#nav.solid,
-body.home-hero-mode nav#nav.menu-open{
-  position:fixed;top:0;left:0;right:0;height:88px;z-index:400;
-  background:transparent!important;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
-  box-shadow:none!important;border:0;padding:0 var(--pad);
+/* ---------- Sobha-inspired full-screen video hero ---------- */
+body.home-video-page{background:#fff}
+body.home-video-page nav#nav.home-hero-nav{
+  position:fixed;top:0;inset-inline:0;z-index:400;height:84px;
+  display:flex;align-items:center;justify-content:space-between;
+  padding:0 var(--pad);gap:20px;
+  background:transparent!important;box-shadow:none!important;
+  border:0;backdrop-filter:none!important;-webkit-backdrop-filter:none!important;
 }
-body.home-hero-mode nav#nav .nav-r{display:contents}
-body.home-hero-mode nav#nav .nav-r>*:not(#navHam){display:none!important}
-body.home-hero-mode nav#nav .nav-logo,
-body.home-hero-mode nav#nav .nav-logo.home-wordmark{
+body.home-video-page nav#nav.home-hero-nav.up{
+  background:rgba(8,12,19,.82)!important;
+  backdrop-filter:blur(12px)!important;-webkit-backdrop-filter:blur(12px)!important;
+}
+body.home-video-page nav#nav.home-hero-nav .nav-r{display:contents}
+body.home-video-page nav#nav.home-hero-nav .nav-r>*:not(#navHam){display:none!important}
+body.home-video-page nav#nav.home-hero-nav .nav-logo,
+body.home-video-page nav#nav.home-hero-nav .nav-logo.home-wordmark{
   position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
   display:flex!important;flex-direction:column;align-items:center;justify-content:center;
-  width:auto!important;height:auto!important;max-width:none;padding:0!important;margin:0;
-  text-decoration:none;white-space:nowrap;gap:0;z-index:2;
+  width:auto;height:auto;max-width:none;margin:0;padding:0;gap:0;
+  text-decoration:none;white-space:nowrap;z-index:2;
 }
-body.home-hero-mode nav#nav .nav-logo img{display:none!important}
-body.home-hero-mode nav#nav .nav-logo::after{display:none!important;content:none!important}
-body.home-hero-mode .home-wordmark-main{
-  display:block;color:#fff;font:400 clamp(28px,3vw,39px)/.92 var(--serif);
-  letter-spacing:.08em;text-shadow:0 2px 18px rgba(0,0,0,.28);
+body.home-video-page nav#nav.home-hero-nav .nav-logo img{display:none!important}
+body.home-video-page nav#nav.home-hero-nav .nav-logo::after{display:none!important;content:none!important}
+body.home-video-page .home-wordmark-main{
+  display:block;color:#fff;font:400 clamp(28px,3vw,39px)/.9 var(--serif);
+  letter-spacing:.075em;text-shadow:0 2px 18px rgba(0,0,0,.3);
 }
-body.home-hero-mode .home-wordmark-sub{
-  display:block;margin-top:6px;color:rgba(255,255,255,.9);
-  font:500 8px/1 var(--sans);letter-spacing:.34em;text-transform:uppercase;
+body.home-video-page .home-wordmark-sub{
+  display:block;margin-top:6px;color:rgba(255,255,255,.92);
+  font:600 8px/1 var(--sans);letter-spacing:.34em;text-transform:uppercase;
   text-shadow:0 1px 12px rgba(0,0,0,.35);
 }
-body.home-hero-mode nav#nav .nav-ham{
-  display:flex!important;position:absolute;left:clamp(24px,6vw,88px);top:50%;
+body.home-video-page nav#nav.home-hero-nav .nav-ham{
+  display:flex!important;position:absolute;left:clamp(22px,6vw,88px);top:50%;
   transform:translateY(-50%);width:auto;height:44px;padding:0;border:0;
   flex-direction:row;align-items:center;justify-content:center;gap:12px;
-  color:#fff;background:transparent;z-index:3;
+  background:transparent;color:#fff;z-index:3;
 }
-body.home-hero-mode nav#nav .nav-ham::before{
+body.home-video-page nav#nav.home-hero-nav .nav-ham::before{
   content:"MENU";display:block;color:#fff;font:600 12px/1 var(--sans);
-  letter-spacing:.08em;text-shadow:0 1px 10px rgba(0,0,0,.45);
+  letter-spacing:.08em;text-shadow:0 1px 10px rgba(0,0,0,.4);
 }
-body.home-hero-mode nav#nav .nav-ham.open::before{content:"CLOSE"}
-body.home-hero-mode nav#nav .nav-ham span{
-  width:18px;height:1px;background:#fff;box-shadow:0 1px 8px rgba(0,0,0,.25);
+body.home-video-page nav#nav.home-hero-nav .nav-ham.open::before{content:"CLOSE"}
+body.home-video-page nav#nav.home-hero-nav .nav-ham span{
+  display:block;width:19px;height:1px;background:#fff;
+  box-shadow:0 1px 8px rgba(0,0,0,.24);transition:transform .25s,opacity .2s;
 }
-body.home-hero-mode nav#nav .nav-ham.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
-body.home-hero-mode nav#nav .nav-ham.open span:nth-child(2){opacity:0}
-body.home-hero-mode nav#nav .nav-ham.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
-body.home-hero-mode .hero.hero-campaign{
-  display:block;position:relative;margin:0!important;padding:0;width:100%;
-  height:100vh;height:100svh;min-height:560px;overflow:hidden;background:#100d0b;
+body.home-video-page nav#nav.home-hero-nav .nav-ham.open span:nth-child(1){transform:translateY(6px) rotate(45deg)}
+body.home-video-page nav#nav.home-hero-nav .nav-ham.open span:nth-child(2){opacity:0}
+body.home-video-page nav#nav.home-hero-nav .nav-ham.open span:nth-child(3){transform:translateY(-6px) rotate(-45deg)}
+body.home-video-page #mnav[aria-hidden="false"]{display:flex!important}
+body.home-video-page .hero.hero-video-hero{
+  position:relative;display:block;width:100%;height:100vh;height:100svh;
+  min-height:560px;margin:0;padding:0;overflow:hidden;background:#080b11;
 }
-body.home-hero-mode .hero-campaign .hero-video{
+body.home-video-page .hero-video-hero .hero-video{
   position:absolute;inset:0;display:block;width:100%;height:100%;max-width:none;
-  object-fit:cover;object-position:center center;background:#100d0b;
+  object-fit:cover;object-position:center center;background:#080b11;
 }
-body.home-hero-mode .hero-campaign .hero-video-veil{
+body.home-video-page .hero-video-hero .hero-video-shade{
   position:absolute;inset:0;z-index:1;pointer-events:none;
-  background:linear-gradient(180deg,rgba(4,7,12,.34) 0%,rgba(4,7,12,.12) 32%,rgba(4,7,12,.08) 65%,rgba(4,7,12,.26) 100%);
+  background:linear-gradient(180deg,rgba(3,7,13,.28) 0%,rgba(3,7,13,.06) 38%,rgba(3,7,13,.12) 72%,rgba(3,7,13,.3) 100%);
 }
 @media(max-width:700px){
-  body.home-hero-mode nav#nav,
-  body.home-hero-mode nav#nav.up,
-  body.home-hero-mode nav#nav.menu-open{height:76px;padding:0 20px}
-  body.home-hero-mode nav#nav .nav-ham{left:20px;gap:9px}
-  body.home-hero-mode nav#nav .nav-ham::before{font-size:10px;letter-spacing:.07em}
-  body.home-hero-mode nav#nav .nav-ham span{width:15px}
-  body.home-hero-mode .home-wordmark-main{font-size:29px}
-  body.home-hero-mode .home-wordmark-sub{font-size:7px;letter-spacing:.3em}
-  body.home-hero-mode .hero.hero-campaign{min-height:520px;height:88svh}
-  body.home-hero-mode .hero-campaign .hero-video{object-position:center center}
+  body.home-video-page nav#nav.home-hero-nav{height:74px;padding:0 20px}
+  body.home-video-page nav#nav.home-hero-nav .nav-ham{left:20px;gap:9px}
+  body.home-video-page nav#nav.home-hero-nav .nav-ham::before{font-size:10px;letter-spacing:.07em}
+  body.home-video-page nav#nav.home-hero-nav .nav-ham span{width:15px}
+  body.home-video-page .home-wordmark-main{font-size:29px}
+  body.home-video-page .home-wordmark-sub{font-size:7px;letter-spacing:.3em}
+  body.home-video-page .hero.hero-video-hero{min-height:520px;height:100svh}
+  body.home-video-page .hero-video-hero .hero-video{object-position:center center}
 }
 @media(prefers-reduced-motion:reduce){
-  body.home-hero-mode .hero-campaign .hero-video{display:none}
-  body.home-hero-mode .hero.hero-campaign{background:#18110f url('/img/Prestige%20Kalyan%20Homes%20Advertisement.png') center/cover no-repeat}
+  body.home-video-page .hero-video-hero .hero-video{display:none}
+  body.home-video-page .hero.hero-video-hero{background:#080b11}
 }
