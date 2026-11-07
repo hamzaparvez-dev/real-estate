@@ -74,10 +74,6 @@
     var heroVideo = $('#heroVideo') || $('.hero-video');
     var heroSection = $('#home');
     var HERO_URL = 'https://8ps1sfxuipndwxps.public.blob.vercel-storage.com/Prestige_Projects_Kalyan_30s.mp4';
-    var reduceMotion = false;
-    try {
-      reduceMotion = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    } catch (e) {}
 
     if (heroVideo) {
       if (!heroVideo.getAttribute('src')) heroVideo.setAttribute('src', HERO_URL);
@@ -96,12 +92,7 @@
       };
 
       var tryPlay = function () {
-        if (reduceMotion) {
-          try { heroVideo.pause(); } catch (ignore) {}
-          heroVideo.classList.add('is-paused');
-          if (heroSection) heroSection.classList.add('hero-video-ready');
-          return;
-        }
+        if (!heroVideo.paused) return;
         var attempt = heroVideo.play();
         if (attempt && typeof attempt.then === 'function') {
           attempt.then(markPlaying).catch(function () {
@@ -169,9 +160,9 @@
     if (document.body.classList.contains('home-video-page')) {
       panel.innerHTML =
         '<div class="mnav-home-primary" aria-label="Main navigation">' +
-          '<a class="mnav-home-link" href="/#about"><span>WHO WE ARE</span><span aria-hidden="true">→</span></a>' +
-          '<a class="mnav-home-link" href="/#services"><span>WHAT WE DO</span><span aria-hidden="true">→</span></a>' +
-          '<a class="mnav-home-link" href="/#plans"><span>PROJECTS</span><span aria-hidden="true">→</span></a>' +
+          '<a class="mnav-home-link" href="/#about"><span>WHO WE ARE</span><span class="mnav-home-arrow" aria-hidden="true">→</span></a>' +
+          '<a class="mnav-home-link" href="/#services"><span>WHAT WE DO</span><span class="mnav-home-arrow" aria-hidden="true">→</span></a>' +
+          '<a class="mnav-home-link" href="/#plans"><span>PROJECTS</span><span class="mnav-home-arrow" aria-hidden="true">→</span></a>' +
           '<a class="mnav-home-link" href="/#contact"><span>CONTACT US</span></a>' +
           '<a class="mnav-home-link" href="/blog/"><span>REAL ESTATE LIBRARY</span></a>' +
         '</div>' +
