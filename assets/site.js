@@ -52,6 +52,31 @@
   /* Apply the same premium drawer to all legacy interior-page menus. */
   function upgradeMobileMenu(panel) {
     if (!panel || panel.querySelector('.mnav-content')) return;
+    if (document.body.classList.contains('home-video-page')) {
+      panel.innerHTML =
+        '<div class="mnav-home-primary" aria-label="Main navigation">' +
+          '<a class="mnav-home-link" href="/#about"><span>WHO WE ARE</span><span aria-hidden="true">→</span></a>' +
+          '<a class="mnav-home-link" href="/#services"><span>WHAT WE DO</span><span aria-hidden="true">→</span></a>' +
+          '<a class="mnav-home-link" href="/#plans"><span>PROJECTS</span><span aria-hidden="true">→</span></a>' +
+          '<a class="mnav-home-link" href="/#contact"><span>CONTACT US</span></a>' +
+          '<a class="mnav-home-link" href="/blog/"><span>REAL ESTATE LIBRARY</span></a>' +
+        '</div>' +
+        '<div class="mnav-home-secondary" aria-label="Explore projects and areas">' +
+          '<a class="mnav-home-secondary-link" href="/projects/prestige-gold/">PRESTIGE GOLD</a>' +
+          '<a class="mnav-home-secondary-link" href="/projects/prestige-one/">PRESTIGE ONE</a>' +
+          '<a class="mnav-home-secondary-link" href="/projects/shri-durga-enterprises/">SHRI DURGA ENTERPRISES</a>' +
+          '<a class="mnav-home-secondary-link" href="/areas/kalyan/">KALYAN</a>' +
+          '<div class="mnav-home-languages" aria-label="Choose language">' +
+            '<a href="/" hreflang="en" lang="en">EN</a>' +
+            '<a href="/hi/" hreflang="hi" lang="hi">हिन्दी</a>' +
+            '<a href="/mr/" hreflang="mr" lang="mr">मराठी</a>' +
+          '</div>' +
+        '</div>' +
+        '<div class="mnav-home-footer">' +
+          '<a href="https://wa.me/919689557788?text=Hello%20Prestige%20Enterprises%2C%20I%20would%20like%20more%20information%20about%20properties%20in%20Kalyan." target="_blank" rel="noopener">CHAT ON WHATSAPP <span aria-hidden="true">↗</span></a>' +
+        '</div>';
+      return;
+    }
     var lang = (document.documentElement.lang || 'en').slice(0,2).toLowerCase();
     var t = {
       en:{home:'Home',about:'About',projects:'Projects',plans:'Plans',gold:'Prestige Gold',pricing:'Pricing',services:'Services',guides:'Guides',contact:'Contact',areas:'Areas',kalyan:'Kalyan',whatsapp:'Chat on WhatsApp'},
