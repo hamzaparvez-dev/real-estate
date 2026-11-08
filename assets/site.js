@@ -101,6 +101,16 @@
         }
       };
 
+      var syncHeroVideoAspect = function () {
+        var w = heroVideo.videoWidth;
+        var h = heroVideo.videoHeight;
+        if (w > 0 && h > 0 && heroSection) {
+          heroSection.style.setProperty('--hero-video-ar', w + ' / ' + h);
+        }
+      };
+      heroVideo.addEventListener('loadedmetadata', syncHeroVideoAspect, { once: true });
+      if (heroVideo.readyState >= 1) syncHeroVideoAspect();
+
       heroVideo.addEventListener('playing', markPlaying);
       heroVideo.addEventListener('ended', function () {
         try {
