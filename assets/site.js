@@ -19,6 +19,8 @@
   /* Nav background and progress bar */
   var nav = $('#nav'), prog = $('#prog');
   var isHomeVideo = document.body.classList.contains('home-video-page');
+  var isHomePremium = document.body.classList.contains('home-premium');
+  var isHomeVideoPlayback = isHomeVideo || isHomePremium;
   var homeScrollY = 0;
   var HOME_SCROLL_DELTA = 6;
 
@@ -55,9 +57,11 @@
     if (nav) {
       if (isHomeVideo) {
         updateHomeHeroNav(y);
-      } else {
+      } else if (!isHomePremium) {
         nav.classList.remove('home-nav-hidden', 'home-nav-solid');
         document.body.classList.remove('home-nav-hidden');
+        nav.classList.toggle('up', y > 40);
+      } else {
         nav.classList.toggle('up', y > 40);
       }
     }
@@ -70,7 +74,7 @@
   onScroll();
 
   /* Home hero background video (Vercel Blob) — autoplay + seamless loop */
-  if (isHomeVideo) {
+  if (isHomeVideoPlayback) {
     var heroVideo = $('#heroVideo') || $('.hero-video');
     var heroSection = $('#home');
     var HERO_URL = 'https://8ps1sfxuipndwxps.public.blob.vercel-storage.com/Prestige_Projects_Kalyan_30s.mp4';

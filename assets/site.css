@@ -2059,6 +2059,33 @@ section#process.dark-bg{
 .pg-overview-image.pg-image-full img{display:block;width:100%;height:auto!important;max-height:none!important;aspect-ratio:auto!important;object-fit:contain!important;object-position:center;}
 
 
+/* Home: standard nav + video hero (home-premium) */
+body.home-premium{background:#fff}
+body.home-premium .hero.hero-video-hero.hero-under-nav{
+  position:relative;display:block;width:100%;margin-top:76px;
+  aspect-ratio:var(--hero-video-ar,16/9);min-height:0;overflow:hidden;background:#080b11;
+}
+body.home-premium .hero-video-hero.hero-under-nav .hero-video{
+  position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center center;
+}
+body.home-premium .hero-video-hero .hero-video-shade{
+  position:absolute;inset:0;z-index:1;pointer-events:none;
+  background:linear-gradient(180deg,rgba(3,7,13,.35) 0%,rgba(3,7,13,.15) 50%,rgba(3,7,13,.45) 100%);
+}
+body.home-premium .hero-c.hero-c-video{
+  position:absolute;inset:auto 0 0 0;z-index:2;padding:0 var(--pad) 42px;text-align:center;
+}
+body.home-premium .hero-c.hero-c-video .hero-name{
+  font-size:clamp(42px,8vw,72px);margin:0 0 12px;color:#F8FAFC;
+}
+body.home-premium .hero-video-lead{
+  max-width:520px;margin:0 auto 22px;color:rgba(250,246,240,.88);font-size:clamp(15px,2.2vw,18px);line-height:1.5;
+}
+body.home-premium .hero-c.hero-c-video .hero-btns{justify-content:center}
+@media(max-width:980px){
+  body.home-premium .hero.hero-video-hero.hero-under-nav{aspect-ratio:var(--hero-video-ar,16/9);margin-top:64px}
+}
+
 /* ---------- Sobha-inspired full-screen video hero ---------- */
 body.home-video-page{background:#fff}
 body.home-video-page nav#nav.home-hero-nav{

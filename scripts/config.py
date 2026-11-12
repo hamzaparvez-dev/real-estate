@@ -18,7 +18,7 @@ MAPS_URL = 'https://maps.app.goo.gl/VFL4kqKsmQ6XdHS69'
 MAPS_EMBED = 'https://www.google.com/maps?q=Prestige+One,+Godrej+Hill,+Khadakpada,+Kalyan,+Maharashtra+421301&output=embed'
 
 # Fill these in when you have them. Empty = not shown anywhere on the site.
-RERA_NO = ''            # your MahaRERA agent registration number, e.g. 'A51700012345'
+RERA_NO = 'P51700052362'
 META_PIXEL_ID = ''      # Meta (Facebook) Pixel ID for YOUR ad account. The old client's pixel was removed.
 SAME_AS = []            # profile URLs, e.g. your Facebook Page and Instagram
 

@@ -244,7 +244,9 @@ def nav(l, alts, solid=True):
                     + f'>{C.LANG_SHORT[k]}</a>' for k in alts)
     mlinks = (f'<li><a href="{h}#home">{esc(U["home"])}</a></li>'
               f'<li><a href="{h}#about">{esc(U["nav_about"])}</a></li>'
-              f'<li class="mnav-projects"><span>{esc(U["nav_projects"])}</span><span class="mnav-subhead">{esc(U["nav_plans"])}</span><a href="/projects/prestige-gold/">Prestige Gold</a></li>'
+              f'<li class="mnav-projects"><span>{esc(U["nav_projects"])}</span><span class="mnav-subhead">{esc(U["nav_plans"])}</span>'
+              f'<a href="/projects/prestige-gold/">Prestige Gold</a><a href="/projects/prestige-gold/#commercial">Commercial</a>'
+              f'<a href="/projects/prestige-one/">Prestige One</a></li>'
               f'<li><a href="{h}#pricing">{esc(U["nav_pricing"])}</a></li>'
               f'<li><a href="{h}#services">{esc(U["nav_services"])}</a></li>'
               f'<li><a href="{url(l, "/blog/")}">{esc(U["nav_blog"])}</a></li>'
@@ -257,7 +259,10 @@ def nav(l, alts, solid=True):
             f'<a class="nav-a" href="{h}#home">{esc(U["home"])}</a>'
             f'<a class="nav-a" href="{h}#about">{esc(U["nav_about"])}</a>'
             f'<div class="nav-dd" id="navProjects"><button class="nav-dd-btn" type="button" aria-expanded="false" aria-controls="ddProjects">{esc(U["nav_projects"])}{I["caret"]}</button>'
-            f'<div class="nav-dd-menu nav-projects-menu" id="ddProjects" role="region" aria-label="{attr(U["nav_projects"])}"><div class="nav-projects-group"><span class="nav-projects-label">{esc(U["nav_plans"])}</span><a class="nav-projects-item" href="/projects/prestige-gold/">Prestige Gold</a></div></div></div>'
+            f'<div class="nav-dd-menu nav-projects-menu" id="ddProjects" role="region" aria-label="{attr(U["nav_projects"])}"><div class="nav-projects-group"><span class="nav-projects-label">{esc(U["nav_plans"])}</span>'
+            f'<a class="nav-projects-item" href="/projects/prestige-gold/">Prestige Gold</a>'
+            f'<a class="nav-projects-item" href="/projects/prestige-gold/#commercial">Commercial</a>'
+            f'<a class="nav-projects-item" href="/projects/prestige-one/">Prestige One</a></div></div></div>'
             f'<a class="nav-a" href="{h}#pricing">{esc(U["nav_pricing"])}</a>'
             f'<a class="nav-a" href="{h}#services">{esc(U["nav_services"])}</a>'
             f'<div class="nav-dd" id="navAreas"><button class="nav-dd-btn" type="button" aria-expanded="false" aria-controls="ddAreas">{esc(U["nav_areas"])}{I["caret"]}</button>'
@@ -276,18 +281,23 @@ def nav(l, alts, solid=True):
 def footer(l, alts):
     U, h = UI[l], url(l, '/')
     langs = ''.join(f'<li><a href="{alts[k]}" hreflang="{k}" lang="{k}">{C.LANG_NAME[k]}</a></li>' for k in alts)
-    rera = f'<p>{esc(U["rera_label"])}: {esc(C.RERA_NO)}</p>' if C.RERA_NO else ''
+    rera = f'<p class="foot-rera"><strong>{esc(U["rera_label"])}:</strong> {esc(C.RERA_NO)}</p>' if C.RERA_NO else ''
+    js_ver = fver('assets/site.js')
     return (f'<footer><div class="foot-grid"><div>'
             f'<a class="foot-logo-link" href="{h}" aria-label="{attr(C.BRAND)}"><img src="/img/new-logo.png" width="210" height="65" alt="{attr(C.BRAND)}" class="foot-logo"></a>'
-            f'<p>{esc(U["foot_tag"])}</p>{rera}</div>'
+            f'<p>{esc(U["foot_tag"])}</p></div>'
             f'<div><h4>{esc(U["foot_links"])}</h4><ul><li><a href="{h}">{esc(U["home"])}</a></li><li><a href="{h}#plans">{esc(U["nav_plans"])}</a></li><li><a href="{url(l, "/areas/")}">{esc(U["areas"])}</a></li>'
             f'<li><a href="{url(l, "/blog/")}">{esc(U["blog"])}</a></li><li><a href="{h}#contact">{esc(U["nav_contact"])}</a></li></ul></div>'
+            f'<div><h4>{esc(U["foot_projects"])}</h4><ul>'
+            f'<li><a href="/projects/prestige-gold/">Prestige Gold</a></li>'
+            f'<li><a href="/projects/prestige-gold/#commercial">Commercial</a></li>'
+            f'<li><a href="/projects/prestige-one/">Prestige One</a></li></ul></div>'
             f'<div><h4>{esc(U["foot_contact"])}</h4><p>{esc(C.ADDRESS_LINE)}</p><p><a href="tel:{C.PHONE_TEL}">{C.PHONE_DISPLAY}</a><br>'
             f'<a href="mailto:{C.EMAIL}">{C.EMAIL}</a></p></div>'
             f'<div><h4>{esc(U["foot_lang"])}</h4><ul>{langs}</ul></div></div>'
-            f'<div class="foot-legal"><p>{esc(U["disclaimer"])}</p><p>{esc(U["rights"])}</p></div></footer>\n'
+            f'<div class="foot-legal">{rera}<p>{esc(U["disclaimer"])}</p><p>{esc(U["rights"])}</p></div></footer>\n'
             f'<a class="wa" href="{waurl(U["wa_default"])}" target="_blank" rel="noopener" aria-label="{attr(U["wa_btn"])}">{I["chat"]}<span>{esc(U["float_wa"])}</span></a>\n'
-            '<script src="/assets/site.js?v=crm-dashboard-20261103-v2" defer></script>\n</body>\n</html>\n')
+            f'<script src="/assets/site.js?v={js_ver}" defer></script>\n</body>\n</html>\n')
 
 
 def page(l, path, alts, head_html, body):
@@ -333,14 +343,15 @@ def post_card(l, slug):
 
 def contact_block(l, h2, p_txt, dark_eye=True, wa_text=None):
     U, H = UI[l], HOME[l]
-    rera = f'<li><b>{esc(U["rera_label"])}</b><span>{esc(C.RERA_NO)}</span></li>' if C.RERA_NO else ''
+    brochure_wa = wa_text or (U['wa_default'] + ' Please share the Prestige Gold / Prestige One brochure.')
     return ('<section class="sec contact" id="contact"><div class="in contact-grid"><div>'
             f'{eye(esc(H["contact_eye"]))}<h2 class="dh light">{h2}</h2><p class="lead light" style="margin-top:18px">{esc(p_txt)}</p>'
             f'<ul class="contact-list"><li><b>{esc(U["addr_label"])}</b><span>{esc(C.ADDRESS_LINE)}</span></li>'
             f'<li><b>{esc(U["phone_label"])}</b><a href="tel:{C.PHONE_TEL}">{C.PHONE_DISPLAY}</a></li>'
             f'<li><b>WhatsApp</b><a href="{waurl(wa_text or U["wa_default"])}" target="_blank" rel="noopener">{C.PHONE_DISPLAY}</a></li>'
-            f'<li><b>{esc(U["email_label"])}</b><a href="mailto:{C.EMAIL}">{C.EMAIL}</a></li>{rera}</ul>'
-            f'<div class="cta-row"><a class="btn-wa" href="{waurl(wa_text or U["wa_default"])}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(U["wa_btn"])}</span></a>'
+            f'<li><b>{esc(U["email_label"])}</b><a href="mailto:{C.EMAIL}">{C.EMAIL}</a></li></ul>'
+            f'<div class="cta-row"><a class="btn-g" href="{waurl(brochure_wa)}" target="_blank" rel="noopener"><span>{esc(U["brochure_btn"])}</span></a>'
+            f'<a class="btn-wa" href="{waurl(wa_text or U["wa_default"])}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(U["wa_btn"])}</span></a>'
             f'<a class="btn-o" href="tel:{C.PHONE_TEL}">{I["phone"]}<span>{esc(U["call_btn"])}</span></a></div></div>'
             f'<div><iframe class="map" src="{C.MAPS_EMBED}" title="{attr(C.ADDRESS_LINE)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>'
             f'<p style="margin:12px 0 0"><a class="btn-o" href="{C.MAPS_URL}" target="_blank" rel="noopener">{esc(U["open_maps"])} {I["arrow"]}</a></p></div></div></section>\n')
@@ -367,21 +378,27 @@ def build_home(l):
             f'<div class="hero-pills">{"".join(f"<span class=hero-pill>{esc(p)}</span>" for p in H["pills"])}</div>'
             f'<div class="hero-btns"><a class="btn-g" href="{waurl(U["wa_default"])}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(H["btn1"])}</span></a>'
             f'<a class="btn-o" href="{url(l, "/areas/")}"><span>{esc(H["btn2"])}</span>{I["arrow"]}</a></div></div>'
-            f'<div class="hero-dots">{dots}</div></section>\n'
-            f'<div class="stats">{"".join(f"<div class='{stat_class(t)}'><span class=stat-n>{esc(n)}</span><span class=stat-l>{esc(t)}</span></div>" for n, t in H["stats"])}</div>\n')
+            f'<div class="hero-dots">{dots}</div></section>\n')
     about = ('<section class="sec" id="about"><div class="in about-grid"><div>' + eye(esc(H['about_eye'])) + f'<h2 class="dh">{H["about_h"]}</h2>'
              f'<div class="about-body" style="margin-top:30px">{"".join(f"<p>{esc(p)}</p>" for p in H["about"])}</div>'
              f'<div class="tags">{"".join(f"<span class=tag>{esc(t)}</span>" for t in H["tags"])}</div>'
              f'</div>'
              f'<div><div class="about-photo"><img src="/img/about.jpg" width="900" height="1125" loading="lazy" alt="{attr(H["about_alt"])}"></div>'
              f'<div class="about-quote"><p>{esc(H["quote"])}</p><cite>{esc(H["quote_by"])}</cite></div></div></div></section>\n')
-    kinds = ['apartments', 'villas', 'plots', 'commercial', 'rentals', 'redevelopment']
-    cards = ''.join(f'<a class="type" href="{waurl(U["wa_default"] + " (" + t[2] + ")")}" target="_blank" rel="noopener">'
-                    f'<img src="/img/types/{k}.jpg" width="900" height="1200" loading="lazy" alt="{attr(H["types_alt"][i])}">'
-                    f'<div class="type-ov"><h3>{esc(t[0])}</h3><p>{esc(t[1])}</p></div></a>' for i, (k, t) in enumerate(zip(kinds, H['types'])))
-    types = ('<section class="sec types dark-bg" id="types"><div class="in"><div class="types-hd"><div>' + eye(esc(H['types_eye']))
-             + f'<h2 class="dh light">{H["types_h"]}</h2></div><span class="types-hint">{esc(H["types_hint"])}</span></div><div class="types-grid">{cards}</div>'
-             f'</div></section>\n')
+    projects = (
+        '<section class="sec project-showcase" id="projects"><div class="in project-showcase-grid">'
+        '<div class="project-showcase-media"><img src="/img/prestige-tower-day.jpg" width="1200" height="900" loading="lazy" alt="Prestige Gold tower, Kalyan West"></div>'
+        '<div class="project-showcase-copy"><div class="eye"><span class="eye-line"></span><span class="eye-txt">Prestige Gold</span></div>'
+        '<h2 class="dh">Prime location · <em>1, 2 & 3 BHK</em></h2>'
+        '<p class="lead">Residential and commercial. Luxury amenities, modern security, 3 BHK across the complete site from ₹1.40 Cr.</p>'
+        '<a class="btn-o dark" href="/projects/prestige-gold/">Prestige Gold</a></div></div>'
+        '<div class="in project-showcase-grid" style="margin-top:48px"><div class="project-showcase-media">'
+        '<img src="/img/Prestige%20One%20Tower%20in%20Daylight.png" width="991" height="1536" loading="lazy" alt="Prestige One tower"></div>'
+        '<div class="project-showcase-copy"><div class="eye"><span class="eye-line"></span><span class="eye-txt">Prestige One</span></div>'
+        '<h2 class="dh">Elite <em>5 BHK</em> residences</h2>'
+        '<p class="lead">Spacious layouts. Configuration on request — pricing shared privately with serious buyers.</p>'
+        '<a class="btn-o dark" href="/projects/prestige-one/">Prestige One</a></div></div></section>\n'
+    )
     def plan_card(p):
         if p[3]:
             visual = (f'<div class="plan-img-wrap" data-full="{p[3]}" data-title="{attr(p[1])}">'
@@ -415,36 +432,40 @@ def build_home(l):
     guides = ('<section class="sec" id="guides" style="background:#fff"><div class="in">' + eye(esc(H['guides_eye'])) + f'<h2 class="dh">{H["guides_h"]}</h2>'
               f'<div class="cards">{"".join(post_card(l, s) for s in FEATURED)}</div>'
               f'<p style="margin-top:36px"><a class="btn-o dark" href="{url(l, "/blog/")}"><span>{esc(H["guides_btn"])}</span>{I["arrow"]}</a></p></div></section>\n')
-    faq = (f'<section class="sec faq-sec" id="faq"><div class="in faq-center">'
-           f'<div class="faq-hd">{eye(esc(H["faq_eye"]))}<h2 class="dh">{H["faq_h"]}</h2></div>'
-           f'{faq_html(H["faq"])}'
-           f'</div></section>\n')
     contact = contact_block(l, H['contact_h'], H['contact_p'])
     ld = [agent_ld(l), {'@type': 'WebSite', '@id': C.SITE + '/#website', 'url': C.SITE + '/', 'name': C.BRAND, 'inLanguage': ['en-IN', 'hi-IN', 'mr-IN'],
-                        'publisher': {'@id': C.SITE + '/#agent'}}, faq_ld(H['faq'])]
+                        'publisher': {'@id': C.SITE + '/#agent'}}]
     h = head(l, H['title'], H['desc'], alts, '/img/og-default.jpg', C.BRAND, ld, preload='/img/hero-day.jpg')
-    page(l, '/', alts, h, hero + about + types + plans + svc + proc + areas + guides + faq + contact + '</main>\n')
+    page(l, '/', alts, h, hero + about + projects + plans + svc + areas + guides + contact + '</main>\n')
     PAGES.append(alts)
 
 
 
 # ------------------------------------------------------------------ Prestige Gold project page
 
+GOLD_WA = '918446652600'
+HERO_VIDEO_BLOB = 'https://8ps1sfxuipndwxps.public.blob.vercel-storage.com/Prestige_Projects_Kalyan_30s.mp4'
+
+
 def build_prestige_gold():
     path = '/projects/prestige-gold/'
     nav_alts = {k: url(k, '/') for k in LANGS}
     seo_alts = {'en': path}
-    title = 'Prestige Gold Kalyan West | 1, 2 & 3 BHK Homes'
-    desc = 'Explore Prestige Gold in Kalyan West: 1, 2, 3, 4 and 5 BHK residences, RERA details, indicative pricing, floor plans, amenities and site visit enquiries.'
-    wa_text = 'Hello, I would like to know more about Prestige Gold, Kalyan West. Please share current availability, floor plans and the latest cost sheet.'
-    wa_link = 'https://wa.me/918446652600?text=' + urllib.parse.quote(wa_text)
+    title = 'Prestige Gold | 1, 2 & 3 BHK + Commercial | Kalyan West'
+    desc = 'Prestige Gold — prime Kalyan West address. 1, 2 & 3 BHK from ₹55 Lakh; 3 BHK complete site from ₹1.40 Cr. Commercial space. Luxury amenities. Site visits open.'
+    wa_text = 'Hello, I would like the Prestige Gold brochure, floor plans and current 3 BHK availability in Kalyan West.'
+    wa_link = 'https://wa.me/' + GOLD_WA + '?text=' + urllib.parse.quote(wa_text)
     units = [
-        ('1 BHK', '₹55,00,000', '404–519 sq. ft.', 'Compact planning with living and dining, bedroom, kitchen provision and balcony.'),
-        ('2 BHK', '₹75,00,000', '577–721 sq. ft.', 'Spacious living and dining, two bedrooms, kitchen provision and balcony.'),
-        ('3 BHK', '₹1,20,00,000', '873–1,040 sq. ft.', 'Grand living and dining, master bedroom with walk-in wardrobe, two additional bedrooms, three bathrooms, two full-sized balconies and a dedicated pooja room.'),
-        ('4 BHK', 'Price on request', 'Area details on request', 'Layout and configuration details available on request. Ask for verified unit-specific information and the latest approved floor plan.'),
-        ('5 BHK', 'Price on request', 'Area details on request', 'Layout and configuration details available on request. Ask for verified unit-specific information and the latest approved floor plan.')
+        ('1 BHK', '₹55,00,000', '404–519 sq. ft.', 'Compact elite layout — living, bedroom, kitchen provision, balcony.'),
+        ('2 BHK', '₹75,00,000', '577–721 sq. ft.', 'Spacious living and dining, two bedrooms, balcony, modern finishes.'),
+        ('3 BHK', '₹1,40,00,000', '873–1,040 sq. ft.', 'Available across the complete site. Grand living, master suite, balconies, pooja room.'),
     ]
+    commercial = (
+        '<article class="pg-unit" id="commercial"><span class="pg-unit-k">COMMERCIAL</span><h3>Retail &amp; office</h3>'
+        '<p class="pg-price">On request</p><p class="pg-area">Ground &amp; podium levels</p>'
+        '<p>Prime frontage at Prestige Gold. High footfall Kalyan West corridor. Request the commercial brochure.</p>'
+        f'<a class="btn-g" href="{wa_link}" target="_blank" rel="noopener">Request commercial brochure</a></article>'
+    )
     unit_cards = ''.join(
         f'<article class="pg-unit"><span class="pg-unit-k">RESIDENTIAL CONFIGURATION</span><h3>{esc(name)}</h3>'
         f'<p class="pg-price">{esc(price)}</p><p class="pg-area">RERA area · {esc(area)}</p>'
@@ -460,37 +481,32 @@ def build_prestige_gold():
         ('Sample flat ready', 'Arrange a guided walkthrough to experience the sample flat in person.')
     ]
     amenity_cards = ''.join(f'<article class="pg-amenity"><span>✦</span><div><h3>{esc(a)}</h3><p>{esc(d)}</p></div></article>' for a, d in amenities)
-    faq_items = [
-        ('Where is Prestige Gold located?', 'Prestige Gold is in Kalyan West, Thane, Maharashtra 421301. Contact the project team for exact directions and a guided site visit.'),
-        ('Is Prestige Gold RERA registered?', 'The project website lists MahaRERA registration number P51700052362. Buyers should verify the latest registration details and disclosures on the official MahaRERA portal before booking.'),
-        ('Which configurations are listed?', 'The project website lists 1 BHK, 2 BHK, 3 BHK, 4 BHK and 5 BHK configurations. Confirm current inventory and unit-specific areas with the sales team.'),
-        ('What are the indicative starting prices?', 'The project website lists indicative starting prices for 1 BHK, 2 BHK and 3 BHK only. Pricing for 4 BHK and 5 BHK is available on request. Confirm all prices and availability in a current written cost sheet.'),
-        ('When is possession expected?', 'The project website states June 2027 as the expected possession timeline. Confirm the applicable date against the latest MahaRERA record and your agreement for sale.')
-    ]
     hero = (
-        '<main id="main"><header class="ph pg-hero"><img src="/img/prestige-tower-day.jpg" width="1920" height="1080" fetchpriority="high" alt="Prestige Gold residential tower, Kalyan West">'
+        '<main id="main"><header class="ph pg-hero"><img src="/img/hero-day.jpg" width="1920" height="1080" fetchpriority="high" alt="Prestige Gold — prime Kalyan West">'
         '<div class="ph-c">' + crumbs([(UI['en']['home'], '/'), ('Projects', None), ('Plans', None), ('Prestige Gold', None)]) +
-        eye('KALYAN WEST · RESIDENTIAL + COMMERCIAL') +
+        eye('PRIME KALYAN WEST · RESIDENTIAL + COMMERCIAL') +
         '<h1>Prestige <b>Gold</b></h1>'
-        '<p class="ph-lead">A considered address for everyday living and long-term value in Kalyan West. Explore the project, compare configurations and arrange a guided visit.</p>'
-        '<div class="pg-hero-facts"><span>1, 2, 3, 4 &amp; 5 BHK</span><span>MahaRERA · P51700052362</span><span>G + 5 floors</span><span>70% completed · Sample flat ready</span></div>'
-        f'<div class="section-cta"><a class="cta-enq" href="{wa_link}" target="_blank" rel="noopener">Enquire on WhatsApp</a><a class="cta-wa" href="tel:+918446652600">Call +91 84466 52600</a></div>'
+        '<p class="ph-lead">Elite living in a full residential project — luxury amenities, modern security, 1, 2 &amp; 3 BHK homes and commercial space.</p>'
+        '<div class="pg-hero-facts"><span>1, 2 &amp; 3 BHK</span><span>Commercial</span><span>G + 5 floors</span><span>Expected possession June 2027</span></div>'
+        f'<div class="section-cta"><a class="cta-enq" href="{wa_link}" target="_blank" rel="noopener">Request brochure</a><a class="cta-wa" href="tel:+' + GOLD_WA + '">Call +91 84466 52600</a></div>'
         '</div></header>'
     )
     overview = (
         '<section class="sec pg-overview"><div class="in pg-overview-grid"><div>'
-        + eye('THE PROJECT') + '<h2 class="dh">A premium address in <em>Kalyan West</em></h2>'
-        '<p class="lead">Prestige Gold is presented as a mixed-use development bringing residential homes and commercial opportunity together. The project website highlights vastu-compliant planning, modern infrastructure and a rooftop leisure zone.</p>'
-        '<dl class="pg-facts"><div><dt>Project type</dt><dd>Residential + Commercial</dd></div><div><dt>Configurations</dt><dd>1, 2, 3, 4 &amp; 5 BHK</dd></div><div><dt>MahaRERA</dt><dd>P51700052362</dd></div><div><dt>Expected possession</dt><dd>June 2027*</dd></div><div><dt>Construction status</dt><dd>70% completed*</dd></div><div><dt>Sample flat</dt><dd>Ready to visit</dd></div></dl>'
-        '<p class="pg-note">*Construction status and possession timeline are as stated on the project website and may change. Verify the latest MahaRERA disclosures, construction progress and agreement for sale before making a purchase decision.</p>'
+        + eye('THE PROJECT') + '<h2 class="dh">Full residential · <em>prime location</em></h2>'
+        '<p class="lead">A landmark mixed-use address: vastu-friendly homes, rooftop leisure, power backup and smart security — built for elite everyday living.</p>'
+        '<dl class="pg-facts"><div><dt>Project type</dt><dd>Residential + Commercial</dd></div><div><dt>Configurations</dt><dd>1, 2 &amp; 3 BHK + Commercial</dd></div>'
+        '<div><dt>Expected possession</dt><dd>June 2027</dd></div><div><dt>Construction</dt><dd>Brickwork &amp; internal works complete</dd></div>'
+        '<div><dt>Sample flat</dt><dd>Ready for visits</dd></div></dl>'
+        '<p class="pg-note"><strong>Nearby:</strong> Khadakpada, Godrej Hill, KDMC services, Kalyan West station, schools and daily retail.</p>'
         '</div><figure class="pg-overview-image"><img src="/img/prestige-tower-night.jpg" width="1200" height="900" loading="lazy" alt="Prestige Gold tower at night"><figcaption>Prestige Gold · Kalyan West</figcaption></figure></div></section>'
     )
     pricing = (
         '<section class="sec pg-pricing" id="pg-configurations"><div class="in">'
-        + eye('CONFIGURATIONS & INDICATIVE PRICING') + '<h2 class="dh">Find a home that <em>fits your plans</em></h2>'
-        '<p class="lead">Compare the configurations listed on the project website. Areas and prices are indicative and must be reconfirmed for the selected unit.</p>'
-        f'<div class="cards three pg-units">{unit_cards}</div>'
-        '<p class="pg-note">Prices are indicative starting figures published on the project website. Final pricing, taxes, statutory charges, parking, inclusions and availability must be confirmed in a current written cost sheet.</p>'
+        + eye('CONFIGURATIONS') + '<h2 class="dh">1, 2 &amp; 3 BHK · <em>Prestige Gold</em></h2>'
+        '<p class="lead">3 BHK available across the complete site. Confirm unit-wise cost sheets before booking.</p>'
+        f'<div class="cards three pg-units">{unit_cards}{commercial}</div>'
+        '<p class="pg-note">Indicative starting prices. Taxes, parking and final agreement values confirmed in writing at booking.</p>'
         '</div></section>'
     )
     floorplans = (
@@ -511,9 +527,9 @@ def build_prestige_gold():
     )
     progress = (
         '<section class="sec pg-progress"><div class="in"><div class="pg-progress-head">' + eye('CONSTRUCTION UPDATE') + '<h2 class="dh">Built with <em>transparency</em></h2>' +
-        '<p class="lead">The project website currently states 70% completion, with the sample flat ready for a guided walkthrough. Confirm the latest on-site status before booking.</p>' +
-        '<div class="pg-progress-meter"><div class="pg-progress-copy"><b>70%</b><span>Project status as stated on the project website</span></div><div class="pg-progress-track"><span></span></div></div>' +
-        '<div class="pg-milestones"><article><b>01</b><h3>Land, legal &amp; RERA registration</h3><p>Registration and approvals stated as completed on the project website.</p></article><article><b>02</b><h3>Foundation &amp; excavation</h3><p>Foundation and plinth work stated as completed.</p></article><article><b>03</b><h3>RCC structure</h3><p>Structure progress stated on the project website; verify current slab and site status.</p></article><article><b>04</b><h3>Brickwork &amp; internal works</h3><p>Brickwork and internal works are stated as in progress.</p></article><article><b>05</b><h3>Finishes &amp; fittings</h3><p>Plaster, tiling, fittings and painting are listed as upcoming works.</p></article><article><b>06</b><h3>OC, possession &amp; handover</h3><p>Expected possession is stated as June 2027; confirm against the latest RERA record.</p></article></div>' +
+        '<p class="lead">Brickwork and internal works are complete on site. Finishes and handover in progress toward expected possession.</p>' +
+        '<div class="pg-progress-meter"><div class="pg-progress-copy"><b>On track</b><span>Brickwork &amp; internal works · done</span></div><div class="pg-progress-track"><span style="width:78%"></span></div></div>' +
+        '<div class="pg-milestones"><article><b>01</b><h3>Land, legal &amp; approvals</h3><p>Complete.</p></article><article><b>02</b><h3>Foundation &amp; RCC</h3><p>Complete.</p></article><article><b>03</b><h3>Brickwork &amp; internal works</h3><p><strong>Done.</strong> Walls, ducts and internal masonry complete.</p></article><article><b>04</b><h3>Finishes &amp; fittings</h3><p>In progress — plaster, tiling, MEP.</p></article><article><b>05</b><h3>Possession</h3><p>Expected June 2027.</p></article></div>' +
         '</div></section>'
     )
     gallery = (
@@ -536,20 +552,118 @@ def build_prestige_gold():
         '<section class="sec pg-contact" id="pg-enquire"><div class="in pg-contact-inner">'
         + eye('NEXT STEP') + '<h2 class="dh">Experience Prestige <em>Gold</em></h2>'
         '<p class="lead">Ask for current availability, unit-wise pricing, approved floor plans and a guided site visit.</p>'
-        '<div class="section-cta"><a class="cta-enq" href="' + wa_link + '" target="_blank" rel="noopener">WhatsApp the project team</a>'
-        '<a class="cta-wa" href="tel:+918446652600">Call +91 84466 52600</a></div>'
-        '<p class="pg-contact-email">Email: <a href="mailto:shreedurgaenterprise21@gmail.com">shreedurgaenterprise21@gmail.com</a></p>'
-        '</div></section>'
+        '<div class="section-cta"><a class="cta-enq" href="' + wa_link + '" target="_blank" rel="noopener">Request brochure</a>'
+        '<a class="cta-wa" href="tel:+' + GOLD_WA + '">Call +91 84466 52600</a></div>'
+        '<p class="pg-contact-email">Our team is ready to assist.</p>'
+        '</div></section></main>'
     )
-    faq = (
-        '<section class="sec pg-faq"><div class="in"><div class="faq-hd">' + eye('BUYER INFORMATION') +
-        '<h2 class="dh">Frequently asked <em>questions</em></h2></div>' + faq_html(faq_items) + '</div></section></main>'
-    )
-    body = hero + overview + pricing + floorplans + amenities_section + progress + gallery + location + contact + faq
+    body = hero + overview + pricing + floorplans + amenities_section + progress + gallery + location + contact
     ld = [agent_ld('en'), breadcrumb_ld('en', [(UI['en']['home'], url('en', '/')), ('Prestige Gold', path)])]
     html = head('en', title, desc, seo_alts, '/img/prestige-tower-day.jpg', 'Prestige Gold project in Kalyan West', ld)
     write(path.lstrip('/') + 'index.html', html + '<body>\n' + nav('en', nav_alts) + body + footer('en', nav_alts))
     PAGES.append(seo_alts)
+
+
+def build_prestige_one():
+    path = '/projects/prestige-one/'
+    nav_alts = {k: url(k, '/') for k in LANGS}
+    seo_alts = {'en': path}
+    title = 'Prestige One | 5 BHK Elite Residences | Kalyan'
+    desc = 'Prestige One — 5 BHK luxury homes in Kalyan. Spacious layouts from 999.4 & 1001.4 sq. ft. No public price list. Request brochure and site visit.'
+    wa_text = 'Hello, I am interested in Prestige One 5 BHK in Kalyan. Please share the brochure and floor plans.'
+    wa_link = waurl(wa_text)
+    hero = (
+        '<main id="main"><header class="ph pg-hero"><img src="/img/Prestige%20One%20Tower%20in%20Daylight.png" width="1600" height="1000" fetchpriority="high" alt="Prestige One tower">'
+        '<div class="ph-c">' + crumbs([(UI['en']['home'], '/'), ('Projects', None), ('Plans', None), ('Prestige One', None)]) +
+        eye('KALYAN · PRESTIGE ONE') +
+        '<h1>Prestige <b>One</b></h1>'
+        '<p class="ph-lead">Elite 5 BHK living — prime location, modern amenities, luxury finishes and integrated security.</p>'
+        '<div class="pg-hero-facts"><span>5 BHK</span><span>999.4 &amp; 1001.4 sq. ft.</span><span>Pricing on request</span><span>Our team is ready to assist</span></div>'
+        f'<div class="section-cta"><a class="cta-enq" href="{wa_link}" target="_blank" rel="noopener">Request brochure</a>'
+        f'<a class="cta-wa" href="tel:{C.PHONE_TEL}">Call {C.PHONE_DISPLAY}</a></div></div></header>'
+    )
+    overview = (
+        '<section class="sec pg-overview"><div class="in pg-overview-grid"><div>'
+        + eye('PRESTIGE ONE') + '<h2 class="dh">Full residential · <em>elite 5 BHK</em></h2>'
+        '<p class="lead">A striking tower for families who want space, privacy and a prime Kalyan address — without compromise on security or amenities.</p>'
+        '<dl class="pg-facts"><div><dt>Configuration</dt><dd>5 BHK</dd></div><div><dt>Areas</dt><dd>999.4 &amp; 1001.4 sq. ft.</dd></div>'
+        '<div><dt>Starting price</dt><dd>Shared on request</dd></div><div><dt>Office</dt><dd>Prestige One, Godrej Hill, Khadakpada</dd></div></dl>'
+        '</div><figure class="pg-overview-image pg-image-full"><img src="/img/Prestige%20One%20Tower%20in%20Daylight.png" loading="lazy" alt="Prestige One tower"><figcaption>Prestige One</figcaption></figure></div></section>'
+    )
+    pricing = (
+        '<section class="sec pg-pricing" id="pg-configurations"><div class="in">'
+        + eye('5 BHK') + '<h2 class="dh">Spacious layouts · <em>on request</em></h2>'
+        '<p class="lead">Floor plans, views and pricing are shared privately with serious buyers.</p>'
+        '<div class="cards pg-units"><article class="pg-unit"><span class="pg-unit-k">5 BHK</span><h3>Layout A</h3>'
+        '<p class="pg-price">Price on request</p><p class="pg-area">999.4 sq. ft.</p>'
+        f'<a class="btn-g" href="{wa_link}" target="_blank" rel="noopener">Request brochure</a></article>'
+        '<article class="pg-unit"><span class="pg-unit-k">5 BHK</span><h3>Layout B</h3>'
+        '<p class="pg-price">Price on request</p><p class="pg-area">1001.4 sq. ft.</p>'
+        f'<a class="btn-g" href="{wa_link}" target="_blank" rel="noopener">Request brochure</a></article></div></div></section>'
+    )
+    contact = (
+        '<section class="sec pg-contact" id="contact"><div class="in pg-contact-inner">'
+        + eye('CONTACT') + '<h2 class="dh">Our team is <em>ready to assist</em></h2>'
+        '<p class="lead">Book a visit or request the Prestige One brochure.</p>'
+        f'<div class="section-cta"><a class="cta-enq" href="{wa_link}" target="_blank" rel="noopener">Request brochure</a>'
+        f'<a class="cta-wa" href="tel:{C.PHONE_TEL}">Call {C.PHONE_DISPLAY}</a></div></div></section></main>'
+    )
+    body = hero + overview + pricing + contact
+    ld = [{'@type': 'WebPage', 'name': 'Prestige One', 'url': C.SITE + path, 'description': desc, 'inLanguage': 'en-IN'}]
+    html = head('en', title, desc, seo_alts, '/img/Prestige%20One%20Tower%20in%20Daylight.png', 'Prestige One Kalyan', ld)
+    write(path.lstrip('/') + 'index.html', html + '<body>\n' + nav('en', nav_alts) + body + footer('en', nav_alts))
+    PAGES.append(seo_alts)
+
+
+def build_home_en_video():
+    """English home: standard nav + video hero (not Sobha overlay nav)."""
+    U, H = UI['en'], HOME['en']
+    alts = {k: url(k, '/') for k in LANGS}
+    css_ver = fver('assets/site.css')
+    hero = (
+        '<main id="main"><section id="home" class="hero hero-video-hero hero-under-nav" aria-label="Prestige projects in Kalyan">'
+        f'<video class="hero-video" id="heroVideo" src="{HERO_VIDEO_BLOB}" autoplay muted loop playsinline webkit-playsinline preload="auto" aria-hidden="true" tabindex="-1"></video>'
+        '<div class="hero-video-shade" aria-hidden="true"></div>'
+        '<div class="hero-c hero-c-video">'
+        f'<div class="hero-tag"><span class="hero-dot"></span>{esc(H["tag"])}</div>'
+        '<h1 class="hero-name">Elite living in <b>Kalyan</b></h1>'
+        f'<p class="hero-video-lead">{esc(H["taglines"][0])}</p>'
+        f'<div class="hero-btns"><a class="btn-g" href="/projects/prestige-gold/"><span>Prestige Gold</span></a>'
+        f'<a class="btn-o" href="{waurl(U["wa_default"])}" target="_blank" rel="noopener"><span>{esc(H["btn1"])}</span></a></div></div></section>\n'
+        '<section class="home-seo-intro home-passion"><div class="in home-passion-in">'
+        '<p class="home-passion-title">Prime location · Luxury · Security</p>'
+        '<div class="home-passion-copy"><p>Prestige Gold — 1, 2 &amp; 3 BHK and commercial. Prestige One — elite 5 BHK.</p>'
+        f'<p>{esc(U["team_ready"])}</p></div></div></section>\n'
+    )
+    about = ('<section class="sec" id="about"><div class="in about-grid"><div>' + eye(esc(H['about_eye'])) + f'<h2 class="dh">{H["about_h"]}</h2>'
+             f'<div class="about-body" style="margin-top:24px">{"".join(f"<p>{esc(p)}</p>" for p in H["about"])}</div>'
+             f'<div class="tags">{"".join(f"<span class=tag>{esc(t)}</span>" for t in H["tags"])}</div></div>'
+             f'<div class="about-photo"><img src="/img/prestige-tower-day.jpg" width="900" height="1125" loading="lazy" alt="{attr(H["about_alt"])}"></div></div></section>\n')
+    projects = (
+        '<section class="sec project-showcase" id="pricing"><div class="in project-showcase-grid">'
+        '<div class="project-showcase-media"><img src="/img/prestige-tower-night.jpg" width="1200" height="900" loading="lazy" alt="Prestige Gold"></div>'
+        '<div class="project-showcase-copy"><div class="eye"><span class="eye-line"></span><span class="eye-txt">Prestige Gold</span></div>'
+        '<h2 class="dh">1, 2 &amp; 3 BHK · <em>from ₹55 Lakh</em></h2>'
+        '<p class="lead">3 BHK complete site ₹1.40 Cr. Commercial space available.</p>'
+        '<a class="btn-o dark" href="/projects/prestige-gold/">View Prestige Gold</a></div></div></section>\n'
+    )
+    plans = (f'<section class="sec plans dark-bg" id="plans"><div class="in"><div class="plans-hd"><div>{eye(esc(H["plans_eye"]))}'
+             f'<h2 class="dh light">{H["plans_h"]}</h2><p class="lead light" style="margin-top:14px;max-width:640px">{esc(H["plans_p"])}</p></div></div>'
+             f'<p style="margin-top:28px"><a class="btn-o" href="/projects/prestige-gold/"><span>Request brochure</span></a></p></div></section>\n')
+    assist = (
+        '<section class="sec" id="services"><div class="in" style="text-align:center;padding:40px 0">'
+        f'<p class="lead" style="max-width:560px;margin:0 auto">{esc(U["team_ready"])} '
+        '<a href="/projects/prestige-one/">Prestige One</a> · <a href="/projects/prestige-gold/#commercial">Commercial</a></p></div></section>\n'
+    )
+    contact = contact_block('en', H['contact_h'], H['contact_p'])
+    ld = [agent_ld('en'), {'@type': 'WebSite', '@id': C.SITE + '/#website', 'url': C.SITE + '/', 'name': C.BRAND, 'inLanguage': ['en-IN', 'hi-IN', 'mr-IN'],
+                           'publisher': {'@id': C.SITE + '/#agent'}}]
+    extra = (f'<link rel="preconnect" href="https://8ps1sfxuipndwxps.public.blob.vercel-storage.com" crossorigin>\n'
+             f'<link rel="dns-prefetch" href="https://8ps1sfxuipndwxps.public.blob.vercel-storage.com">\n')
+    h = head('en', H['title'], H['desc'], alts, '/img/og-default.jpg', C.BRAND, ld, extra=extra)
+    h = h.replace(f'/assets/site.css?v={fver("assets/site.css")}', f'/assets/site.css?v={css_ver}')
+    body_main = hero + about + projects + plans + assist + contact + '</main>\n'
+    write('index.html', h + '<body class="home-premium">\n' + nav('en', alts) + body_main + footer('en', alts))
 
 
 # ------------------------------------------------------------------ areas
@@ -723,7 +837,10 @@ def main():
     for d in ('en', 'hi', 'mr', 'areas', 'blog'):  # generated trees (old Spanish site included)
         shutil.rmtree(os.path.join(ROOT, d), ignore_errors=True)
     for l in LANGS:
-        build_home(l)
+        if l == 'en':
+            build_home_en_video()
+        else:
+            build_home(l)
         build_hub(l)
         for s in CITY_SLUGS:
             build_city(l, s)
@@ -732,6 +849,7 @@ def main():
             build_post(l, s)
         build_feed(l)
     build_prestige_gold()
+    build_prestige_one()
     build_login_page()
     build_404()
     build_sitemap()

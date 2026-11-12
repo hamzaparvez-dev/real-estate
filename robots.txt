@@ -1,13 +1,4 @@
-# Prestige Enterprises — public crawl policy
-# Public pages and static assets are crawlable. Private/admin endpoints are excluded.
-# robots.txt is crawl guidance, not an access-control mechanism.
-
 User-agent: *
 Allow: /
-Allow: /assets/
-Allow: /img/
-Disallow: /admin/
-Disallow: /api/
-Disallow: /login/
 
 Sitemap: https://www.prestigeenterprises.in/sitemap.xml
