@@ -180,7 +180,7 @@ HOME = {
         'types_alt': ['3D isometric floor layout of modern 2 BHK apartment', 'Illustration of villas', 'Illustration of open plots with survey flags', 'Illustration of office towers', 'Illustration of city rentals with a key', 'Illustration of a redevelopment site with a crane'],
         'plans_eye': 'Prestige Gold',
         'plans_h': '1, 2 & 3 BHK · <em>Prestige Gold</em>',
-        'plans_p': 'Residential and commercial at one prime Kalyan West address. 3 BHK available across the complete site — from ₹1.40 Cr.',
+        'plans_p': 'Residential and commercial at one prime Kalyan West address. 3 BHK available across the complete site — from ₹1.40 Cr (₹1,40,20,000), RERA area 999.4–1,001.4 sq. ft.',
         'plans_zoom': 'Tap to enlarge',
         'plans_enquire': 'Request brochure',
         'plans_request': '3BHK images available on request',

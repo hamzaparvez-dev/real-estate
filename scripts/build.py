@@ -390,7 +390,7 @@ def build_home(l):
         '<div class="project-showcase-media"><img src="/img/prestige-tower-day.jpg" width="1200" height="900" loading="lazy" alt="Prestige Gold tower, Kalyan West"></div>'
         '<div class="project-showcase-copy"><div class="eye"><span class="eye-line"></span><span class="eye-txt">Prestige Gold</span></div>'
         '<h2 class="dh">Prime location · <em>1, 2 & 3 BHK</em></h2>'
-        '<p class="lead">Residential and commercial. Luxury amenities, modern security, 3 BHK across the complete site from ₹1.40 Cr.</p>'
+        '<p class="lead">Residential and commercial. Luxury amenities, modern security, 3 BHK across the complete site from ₹1.40 Cr (₹1,40,20,000).</p>'
         '<a class="btn-o dark" href="/projects/prestige-gold/">Prestige Gold</a></div></div>'
         '<div class="in project-showcase-grid" style="margin-top:48px"><div class="project-showcase-media">'
         '<img src="/img/Prestige%20One%20Tower%20in%20Daylight.png" width="991" height="1536" loading="lazy" alt="Prestige One tower"></div>'
@@ -452,13 +452,13 @@ def build_prestige_gold():
     nav_alts = {k: url(k, '/') for k in LANGS}
     seo_alts = {'en': path}
     title = 'Prestige Gold | 1, 2 & 3 BHK + Commercial | Kalyan West'
-    desc = 'Prestige Gold — prime Kalyan West address. 1, 2 & 3 BHK from ₹55 Lakh; 3 BHK complete site from ₹1.40 Cr. Commercial space. Luxury amenities. Site visits open.'
+    desc = 'Prestige Gold — prime Kalyan West address. 1, 2 & 3 BHK from ₹55 Lakh; 3 BHK complete site from ₹1.40 Cr (₹1,40,20,000). RERA area 999.4–1,001.4 sq. ft. Commercial space. Site visits open.'
     wa_text = 'Hello, I would like the Prestige Gold brochure, floor plans and current 3 BHK availability in Kalyan West.'
     wa_link = 'https://wa.me/' + GOLD_WA + '?text=' + urllib.parse.quote(wa_text)
     units = [
         ('1 BHK', '₹55,00,000', '404–519 sq. ft.', 'Compact elite layout — living, bedroom, kitchen provision, balcony.'),
         ('2 BHK', '₹75,00,000', '577–721 sq. ft.', 'Spacious living and dining, two bedrooms, balcony, modern finishes.'),
-        ('3 BHK', '₹1,40,00,000', '873–1,040 sq. ft.', 'Available across the complete site. Grand living, master suite, balconies, pooja room.'),
+        ('3 BHK', '₹1,40,20,000', '999.4–1,001.4 sq. ft.', 'Available across the complete site. Grand living, master suite, balconies, pooja room.'),
     ]
     commercial = (
         '<article class="pg-unit" id="commercial"><span class="pg-unit-k">COMMERCIAL</span><h3>Retail &amp; office</h3>'
@@ -504,7 +504,7 @@ def build_prestige_gold():
     pricing = (
         '<section class="sec pg-pricing" id="pg-configurations"><div class="in">'
         + eye('CONFIGURATIONS') + '<h2 class="dh">1, 2 &amp; 3 BHK · <em>Prestige Gold</em></h2>'
-        '<p class="lead">3 BHK available across the complete site. Confirm unit-wise cost sheets before booking.</p>'
+        '<p class="lead">3 BHK available across the complete site from ₹1.40 Cr (₹1,40,20,000). RERA area 999.4–1,001.4 sq. ft. Confirm unit-wise cost sheets before booking.</p>'
         f'<div class="cards three pg-units">{unit_cards}{commercial}</div>'
         '<p class="pg-note">Indicative starting prices. Taxes, parking and final agreement values confirmed in writing at booking.</p>'
         '</div></section>'
@@ -644,7 +644,7 @@ def build_home_en_video():
         '<div class="project-showcase-media"><img src="/img/prestige-tower-night.jpg" width="1200" height="900" loading="lazy" alt="Prestige Gold"></div>'
         '<div class="project-showcase-copy"><div class="eye"><span class="eye-line"></span><span class="eye-txt">Prestige Gold</span></div>'
         '<h2 class="dh">1, 2 &amp; 3 BHK · <em>from ₹55 Lakh</em></h2>'
-        '<p class="lead">3 BHK complete site ₹1.40 Cr. Commercial space available.</p>'
+        '<p class="lead">3 BHK complete site ₹1.40 Cr (₹1,40,20,000) · 999.4–1,001.4 sq. ft. Commercial space available.</p>'
         '<a class="btn-o dark" href="/projects/prestige-gold/">View Prestige Gold</a></div></div></section>\n'
     )
     plans = (f'<section class="sec plans dark-bg" id="plans"><div class="in"><div class="plans-hd"><div>{eye(esc(H["plans_eye"]))}'
