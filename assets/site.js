@@ -172,28 +172,42 @@
   function upgradeMobileMenu(panel) {
     if (!panel || homeMenuReady(panel)) return;
     if (document.body.classList.contains('home-video-page')) {
+      var hl = (document.documentElement.lang || 'en').slice(0, 2).toLowerCase();
+      var hp = hl === 'hi' || hl === 'mr' ? '/' + hl : '';
+      var ht = {
+        en: ['WHO WE ARE', 'PROJECTS', 'AMENITIES', 'FLOOR PLANS', 'LOCATION', 'CONTACT US', 'REAL ESTATE LIBRARY', 'CHAT ON WHATSAPP'],
+        hi: ['हमारे बारे में', 'प्रोजेक्ट्स', 'सुविधाएँ', 'फ़्लोर प्लान', 'लोकेशन', 'संपर्क करें', 'गाइड', 'WhatsApp पर बात करें'],
+        mr: ['आमच्याबद्दल', 'प्रकल्प', 'सुविधा', 'फ्लोअर प्लॅन', 'लोकेशन', 'संपर्क साधा', 'मार्गदर्शक', 'WhatsApp वर बोला']
+      }[hl] || null;
+      if (!ht) ht = ['WHO WE ARE', 'PROJECTS', 'AMENITIES', 'FLOOR PLANS', 'LOCATION', 'CONTACT US', 'REAL ESTATE LIBRARY', 'CHAT ON WHATSAPP'];
+      var arrow = '<span class="mnav-home-arrow" aria-hidden="true">→</span>';
+      var primary = [['#about', 0], ['#projects', 1], ['#amenities', 2], ['#plans', 3], ['#location', 4], ['#contact', 5]];
+      var langLinks = [['/', 'en', 'EN'], ['/hi/', 'hi', 'हिन्दी'], ['/mr/', 'mr', 'मराठी']];
       panel.innerHTML =
         '<div class="mnav-home-primary" aria-label="Main navigation">' +
-          '<a class="mnav-home-link" href="/#about"><span>WHO WE ARE</span><span class="mnav-home-arrow" aria-hidden="true">→</span></a>' +
-          '<a class="mnav-home-link" href="/#services"><span>WHAT WE DO</span><span class="mnav-home-arrow" aria-hidden="true">→</span></a>' +
-          '<a class="mnav-home-link" href="/#plans"><span>PROJECTS</span><span class="mnav-home-arrow" aria-hidden="true">→</span></a>' +
-          '<a class="mnav-home-link" href="/#contact"><span>CONTACT US</span></a>' +
-          '<a class="mnav-home-link" href="/blog/"><span>REAL ESTATE LIBRARY</span></a>' +
+          primary.map(function (p, i) {
+            return '<a class="mnav-home-link" href="' + hp + '/' + p[0] + '"><span>' + ht[p[1]] + '</span>' + (i < 3 ? arrow : '') + '</a>';
+          }).join('') +
         '</div>' +
-        '<div class="mnav-home-secondary" aria-label="Explore projects and areas">' +
+        '<div class="mnav-home-secondary" aria-label="Explore projects">' +
           '<a class="mnav-home-secondary-link" href="/projects/prestige-gold/">PRESTIGE GOLD</a>' +
           '<a class="mnav-home-secondary-link" href="/projects/prestige-one/">PRESTIGE ONE</a>' +
           '<a class="mnav-home-secondary-link" href="/projects/shri-durga-enterprises/">SHRI DURGA ENTERPRISES</a>' +
-          '<a class="mnav-home-secondary-link" href="/areas/kalyan/">KALYAN</a>' +
+          '<a class="mnav-home-secondary-link" href="' + hp + '/blog/">' + ht[6] + '</a>' +
           '<div class="mnav-home-languages" aria-label="Choose language">' +
-            '<a href="/" hreflang="en" lang="en">EN</a>' +
-            '<a href="/hi/" hreflang="hi" lang="hi">हिन्दी</a>' +
-            '<a href="/mr/" hreflang="mr" lang="mr">मराठी</a>' +
+            langLinks.map(function (x) {
+              return '<a href="' + x[0] + '" hreflang="' + x[1] + '" lang="' + x[1] + '"' + (x[1] === hl ? ' aria-current="true"' : '') + '>' + x[2] + '</a>';
+            }).join('') +
           '</div>' +
         '</div>' +
         '<div class="mnav-home-footer">' +
-          '<a href="https://wa.me/919689557788?text=Hello%20Prestige%20Enterprises%2C%20I%20would%20like%20more%20information%20about%20properties%20in%20Kalyan." target="_blank" rel="noopener">CHAT ON WHATSAPP <span aria-hidden="true">↗</span></a>' +
+          '<a href="https://wa.me/919689557788?text=Hello%20Prestige%20Enterprises%2C%20I%20would%20like%20to%20arrange%20a%20site%20visit%20in%20Kalyan%20West." target="_blank" rel="noopener">' + ht[7] + ' <span aria-hidden="true">↗</span></a>' +
         '</div>';
+      $$('.mnav-home-languages a', panel).forEach(function (link) {
+        link.addEventListener('click', function () {
+          try { localStorage.setItem('pe_lang', link.getAttribute('hreflang')); } catch (ignore) {}
+        });
+      });
       return;
     }
     var lang = (document.documentElement.lang || 'en').slice(0,2).toLowerCase();
