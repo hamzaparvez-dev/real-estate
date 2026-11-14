@@ -10,7 +10,7 @@ import urllib.parse
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261114-v25'
+ASSET_VER = 'prestige-home-revamp-20261114-v26'
 VIDEO = 'https://8ps1sfxuipndwxps.public.blob.vercel-storage.com/Prestige_Projects_Kalyan_30s.mp4'
 PHONE_TEL = '+919689557788'
 PHONE = '+91 96895 57788'
@@ -138,8 +138,21 @@ T['en'] = dict(
            ('3 BHK', '999.4–1,001.4', '₹1,40,00,000', '', '3 BHK floor plan',
             ['Available across the complete site', 'Grand living and dining', 'Master bedroom with walk-in wardrobe', 'Two additional bedrooms', 'Three bathrooms (two attached)', 'Two full-size balconies', 'Dedicated pooja room'])],
     plan_req='Layout shared on request',
-    big_units='<strong>Elite 5 BHK residences at Prestige One</strong> are offered privately. Ask our team for layouts, carpet areas and pricing.',
-    big_units_btn='Request details',
+    more_eye='Also available',
+    more_h='Commercial, 4 BHK &amp; 5 BHK',
+    more_p='Separate options beyond the published 1, 2 and 3 BHK homes. Details are shared privately with serious buyers.',
+    more_units=[
+        ('Commercial', 'CO', 'Ground & podium levels', 'On request',
+         ['Retail and office frontage', 'High-footfall Kalyan West corridor', 'Brochure and sizes on request', 'Pricing shared in writing'],
+         'Hello Prestige Enterprises, I would like the Prestige Gold commercial brochure for retail and office space in Kalyan West.'),
+        ('4 BHK', '4B', 'Layout shared on request', 'On request',
+         ['Larger family layouts', 'Multiple balconies', 'Premium finishes', 'Availability confirmed privately'],
+         'Hello Prestige Enterprises, I would like details for 4 BHK residences in Kalyan West. Please share layouts, availability and pricing.'),
+        ('5 BHK', '5B', '999.4 & 1,001.4 sq. ft.', 'On request',
+         ['Elite Prestige One residences', 'Spacious private layouts', 'Shared privately with serious buyers', 'Site visit on request'],
+         'Hello Prestige Enterprises, I would like details for Prestige One 5 BHK residences. Please share layouts, carpet areas and pricing.'),
+    ],
+    more_enquire='Request details',
     price_note='Prices and areas are indicative. Final pricing, availability, taxes, statutory charges and parking are confirmed in a current written cost sheet before booking.',
     plans_eye='Floor plans', plans_h='Layouts planned <em>for everyday life</em>',
     plans_p='Explore 3D and top-view layouts. Tap any plan to view it full size.',
@@ -153,7 +166,7 @@ T['en'] = dict(
     km='km', mins='min', loc_note='Distances and drive times are approximate and vary with traffic.',
     faq_eye='FAQ', faq_h='Common <em>questions</em>',
     faq=[('Where are the residences located?', 'In Kalyan West, around Khadakpada and Godrej Hill. Our office is at Prestige One, Godrej Hill, Khadakpada, Kalyan 421301.'),
-         ('Which configurations are available?', '1, 2 and 3 BHK residences with published starting prices from ₹55 Lakh at Prestige Gold, along with commercial spaces. Elite 5 BHK residences at Prestige One are offered privately on request.'),
+         ('Which configurations are available?', '1, 2 and 3 BHK residences with published starting prices from ₹55 Lakh at Prestige Gold, plus commercial space. 4 BHK and elite 5 BHK residences are offered privately on request.'),
          ('What amenities do residents enjoy?', 'A 298 sq. m. landscaped rooftop garden with a water body, gazebos and open gym, along with a swimming pool, fitness centre, mini theatre, games lounge, library and sports courts.'),
          ('What security systems are in place?', 'CCTV surveillance across common areas, a secured gated entrance, well-lit common spaces and branded lifts with power backup.'),
          ('Is the project RERA registered?', f'Yes. MahaRERA registration number {RERA}. We share the registration details and documents before you book.'),
@@ -231,8 +244,21 @@ T['hi'] = dict(
            ('3 BHK', '999.4–1,001.4', '₹1,40,00,000', '', '3 BHK फ़्लोर प्लान',
             ['पूरे साइट पर उपलब्ध', 'बड़ा लिविंग और डाइनिंग', 'वॉक-इन वार्डरोब के साथ मास्टर बेडरूम', 'दो अतिरिक्त बेडरूम', 'तीन बाथरूम (दो अटैच्ड)', 'दो फुल-साइज़ बालकनी', 'अलग पूजा कक्ष'])],
     plan_req='लेआउट अनुरोध पर',
-    big_units='<strong>Prestige One में एलीट 5 BHK घर</strong> निजी तौर पर उपलब्ध हैं। लेआउट, कारपेट एरिया और कीमत के लिए हमारी टीम से पूछें।',
-    big_units_btn='जानकारी माँगें',
+    more_eye='और विकल्प',
+    more_h='कमर्शियल, 4 BHK और 5 BHK',
+    more_p='प्रकाशित 1, 2 और 3 BHK घरों के अलावा अलग विकल्प। विवरण गंभीर खरीदारों के साथ निजी तौर पर साझा किए जाते हैं।',
+    more_units=[
+        ('कमर्शियल', 'CO', 'ग्राउंड और पोडियम लेवल', 'अनुरोध पर',
+         ['रिटेल और ऑफिस फ्रंटेज', 'कल्याण वेस्ट का व्यस्त कॉरिडोर', 'ब्रोशर और साइज़ अनुरोध पर', 'कीमत लिखित में साझा'],
+         'नमस्ते Prestige Enterprises, मुझे कल्याण वेस्ट में Prestige Gold की कमर्शियल (रिटेल/ऑफिस) जानकारी चाहिए।'),
+        ('4 BHK', '4B', 'लेआउट अनुरोध पर', 'अनुरोध पर',
+         ['बड़े पारिवारिक लेआउट', 'कई बालकनियाँ', 'प्रीमियम फ़िनिश', 'उपलब्धता निजी तौर पर'],
+         'नमस्ते Prestige Enterprises, मुझे कल्याण वेस्ट में 4 BHK घरों की जानकारी चाहिए।'),
+        ('5 BHK', '5B', '999.4 एवं 1,001.4 वर्ग फुट', 'अनुरोध पर',
+         ['Prestige One के एलीट घर', 'विशाल निजी लेआउट', 'गंभीर खरीदारों के साथ निजी', 'साइट विज़िट अनुरोध पर'],
+         'नमस्ते Prestige Enterprises, मुझे Prestige One 5 BHK घरों की जानकारी चाहिए।'),
+    ],
+    more_enquire='जानकारी माँगें',
     price_note='कीमतें और क्षेत्रफल सांकेतिक हैं। बुकिंग से पहले अंतिम कीमत, उपलब्धता, टैक्स, वैधानिक शुल्क और पार्किंग की पुष्टि नवीनतम लिखित लागत विवरण से करें।',
     plans_eye='फ़्लोर प्लान', plans_h='रोज़मर्रा की ज़िंदगी के लिए <em>सोचे-समझे लेआउट</em>',
     plans_p='3D और टॉप-व्यू लेआउट देखें। पूरा आकार देखने के लिए किसी भी प्लान पर टैप करें।',
@@ -246,7 +272,7 @@ T['hi'] = dict(
     km='किमी', mins='मिनट', loc_note='दूरी और समय अनुमानित हैं और ट्रैफ़िक के अनुसार बदल सकते हैं।',
     faq_eye='सवाल-जवाब', faq_h='आम <em>सवाल</em>',
     faq=[('घर कहाँ स्थित हैं?', 'कल्याण वेस्ट में, खड़कपाड़ा और गोदरेज हिल के आसपास। हमारा ऑफिस Prestige One, गोदरेज हिल, खड़कपाड़ा, कल्याण 421301 में है।'),
-         ('कौन-से कॉन्फ़िगरेशन उपलब्ध हैं?', '1, 2 और 3 BHK घर, जिनकी शुरुआती कीमत ₹55 लाख से है, साथ ही व्यावसायिक जगह भी (Prestige Gold)। Prestige One में एलीट 5 BHK घर अनुरोध पर निजी तौर पर उपलब्ध हैं।'),
+         ('कौन-से कॉन्फ़िगरेशन उपलब्ध हैं?', '1, 2 और 3 BHK घर, जिनकी शुरुआती कीमत ₹55 लाख से है, साथ ही कमर्शियल जगह भी। 4 BHK और एलीट 5 BHK घर अनुरोध पर निजी तौर पर उपलब्ध हैं।'),
          ('निवासियों के लिए कौन-सी सुविधाएँ हैं?', 'वॉटर बॉडी, गज़ेबो और ओपन जिम के साथ 298 वर्ग मीटर का रूफटॉप गार्डन, साथ ही स्विमिंग पूल, फ़िटनेस सेंटर, मिनी थिएटर, गेम्स लाउंज, लाइब्रेरी और स्पोर्ट्स कोर्ट।'),
          ('सुरक्षा के लिए क्या व्यवस्था है?', 'कॉमन एरिया में CCTV निगरानी, सुरक्षित गेटेड प्रवेश, रोशन कॉमन स्पेस और पावर बैकअप वाली ब्रांडेड लिफ़्ट।'),
          ('क्या प्रोजेक्ट RERA पंजीकृत है?', f'हाँ। MahaRERA पंजीकरण संख्या {RERA}। बुकिंग से पहले हम पंजीकरण विवरण और दस्तावेज़ साझा करते हैं।'),
@@ -324,8 +350,21 @@ T['mr'] = dict(
            ('3 BHK', '999.4–1,001.4', '₹1,40,00,000', '', '3 BHK फ्लोअर प्लॅन',
             ['संपूर्ण साइटवर उपलब्ध', 'मोठे लिव्हिंग आणि डायनिंग', 'वॉक-इन वॉर्डरोबसह मास्टर बेडरूम', 'दोन अतिरिक्त बेडरूम', 'तीन बाथरूम (दोन अटॅच्ड)', 'दोन पूर्ण आकाराच्या बाल्कनी', 'स्वतंत्र पूजा कक्ष'])],
     plan_req='लेआउट विनंतीवर',
-    big_units='<strong>Prestige One मधील एलीट 5 BHK घरे</strong> खासगीरीत्या उपलब्ध आहेत. लेआउट, कार्पेट एरिया आणि किंमतीसाठी आमच्या टीमला विचारा.',
-    big_units_btn='माहिती मागवा',
+    more_eye='आणखी पर्याय',
+    more_h='कमर्शियल, 4 BHK आणि 5 BHK',
+    more_p='प्रकाशित 1, 2 आणि 3 BHK घरांखेरीज वेगळे पर्याय. तपशील गंभीर खरेदीदारांसोबत खासगीरीत्या शेअर केले जातात.',
+    more_units=[
+        ('कमर्शियल', 'CO', 'ग्राउंड आणि पोडियम लेव्हल', 'विनंतीवर',
+         ['रिटेल आणि ऑफिस फ्रंटेज', 'कल्याण वेस्टचा व्यस्त कॉरिडॉर', 'ब्रोशर आणि आकार विनंतीवर', 'किंमत लेखी दिली जाते'],
+         'नमस्कार Prestige Enterprises, मला कल्याण वेस्टमधील Prestige Gold कमर्शियल (रिटेल/ऑफिस) माहिती हवी आहे.'),
+        ('4 BHK', '4B', 'लेआउट विनंतीवर', 'विनंतीवर',
+         ['मोठे कौटुंबिक लेआउट', 'अनेक बाल्कनी', 'प्रीमियम फिनिश', 'उपलब्धता खासगीरीत्या'],
+         'नमस्कार Prestige Enterprises, मला कल्याण वेस्टमधील 4 BHK घरांची माहिती हवी आहे.'),
+        ('5 BHK', '5B', '999.4 व 1,001.4 चौ. फूट', 'विनंतीवर',
+         ['Prestige One मधील एलीट घरे', 'प्रशस्त खासगी लेआउट', 'गंभीर खरेदीदारांसोबत खासगी', 'साइट भेट विनंतीवर'],
+         'नमस्कार Prestige Enterprises, मला Prestige One 5 BHK घरांची माहिती हवी आहे.'),
+    ],
+    more_enquire='माहिती मागवा',
     price_note='किंमती आणि क्षेत्रफळ सूचक आहेत. बुकिंगपूर्वी अंतिम किंमत, उपलब्धता, कर, वैधानिक शुल्क आणि पार्किंगची खात्री अद्ययावत लेखी खर्चपत्रकातून करा.',
     plans_eye='फ्लोअर प्लॅन', plans_h='रोजच्या जगण्यासाठी <em>विचारपूर्वक लेआउट</em>',
     plans_p='3D आणि टॉप-व्ह्यू लेआउट पाहा. पूर्ण आकारात पाहण्यासाठी कोणत्याही प्लॅनवर टॅप करा.',
@@ -339,7 +378,7 @@ T['mr'] = dict(
     km='किमी', mins='मिनिटे', loc_note='अंतर आणि वेळ अंदाजे आहेत आणि ट्रॅफिकनुसार बदलू शकतात.',
     faq_eye='प्रश्नोत्तरे', faq_h='नेहमीचे <em>प्रश्न</em>',
     faq=[('घरे कुठे आहेत?', 'कल्याण वेस्टमध्ये, खडकपाडा आणि गोदरेज हिल परिसरात. आमचे कार्यालय Prestige One, गोदरेज हिल, खडकपाडा, कल्याण 421301 येथे आहे.'),
-         ('कोणते कॉन्फिगरेशन उपलब्ध आहेत?', '1, 2 आणि 3 BHK घरे, ज्यांची सुरुवातीची किंमत ₹55 लाखांपासून आहे, सोबत व्यावसायिक जागाही (Prestige Gold). Prestige One मधील एलीट 5 BHK घरे विनंतीवर खासगीरीत्या उपलब्ध आहेत.'),
+         ('कोणते कॉन्फिगरेशन उपलब्ध आहेत?', '1, 2 आणि 3 BHK घरे, ज्यांची सुरुवातीची किंमत ₹55 लाखांपासून आहे, सोबत कमर्शियल जागाही. 4 BHK आणि एलीट 5 BHK घरे विनंतीवर खासगीरीत्या उपलब्ध आहेत.'),
          ('रहिवाशांसाठी कोणत्या सुविधा आहेत?', 'वॉटर बॉडी, गझेबो आणि ओपन जिमसह 298 चौ. मी.चे रूफटॉप गार्डन, तसेच स्विमिंग पूल, फिटनेस सेंटर, मिनी थिएटर, गेम्स लाउंज, वाचनालय आणि स्पोर्ट्स कोर्ट.'),
          ('सुरक्षेसाठी कोणती व्यवस्था आहे?', 'कॉमन एरियात CCTV देखरेख, सुरक्षित गेटेड प्रवेश, प्रकाशमान कॉमन जागा आणि पॉवर बॅकअप असलेल्या ब्रँडेड लिफ्ट.'),
          ('प्रकल्प RERA नोंदणीकृत आहे का?', f'हो. MahaRERA नोंदणी क्रमांक {RERA}. बुकिंगपूर्वी आम्ही नोंदणीचा तपशील आणि कागदपत्रे देतो.'),
@@ -509,6 +548,7 @@ def amenities(t):
 
 
 def pricing(t, l):
+    total = len(t['units'])
     rows = ''
     for i, (name, area, price, img, alt, feats) in enumerate(t['units']):
         if img:
@@ -520,20 +560,32 @@ def pricing(t, l):
         msg = t['wa_text'] + f' ({name})'
         rows += (
             f'<article class="price-row"><div class="price-row-visual-wrap">{visual}</div>'
-            f'<div class="price-row-identity"><span class="price-row-number">0{i + 1} / 03</span><h3>{name}</h3>'
+            f'<div class="price-row-identity"><span class="price-row-number">0{i + 1} / 0{total}</span><h3>{name}</h3>'
             f'<span class="price-row-area-label">{e(t["area_label"])}</span><strong class="price-row-area">{area} {e(t["sqft"])}</strong></div>'
             f'<div class="price-row-specs"><span class="price-row-spec-heading">{e(t["details"])}</span><ul>{"".join(f"<li>{e(x)}</li>" for x in feats)}</ul></div>'
             f'<div class="price-row-offer"><span class="price-row-starting">{e(t["starting"])}</span><strong class="price-row-price">{price}</strong>'
             f'<span class="price-row-onwards">{e(t["onwards"])}</span>'
             f'<a class="price-row-cta" href="{a(wa(msg))}" target="_blank" rel="noopener">{e(t["enquire"])}<span aria-hidden="true">↗</span></a></div></article>'
         )
-    big_msg = t['wa_text'] + ' (Prestige One 5 BHK)'
+    more_cards = ''.join(
+        f'<article class="price-more-card">'
+        f'<div class="price-more-top"><span class="price-visual-monogram">{e(mono)}</span>'
+        f'<div><span class="price-more-kicker">{e(t["more_eye"])}</span><h3>{e(name)}</h3></div></div>'
+        f'<p class="price-more-area"><span>{e(t["area_label"])}</span><strong>{e(area)}</strong></p>'
+        f'<ul>{"".join(f"<li>{e(x)}</li>" for x in feats)}</ul>'
+        f'<div class="price-more-offer"><strong>{e(price)}</strong>'
+        f'<a class="price-row-cta" href="{a(wa(msg))}" target="_blank" rel="noopener">{e(t["more_enquire"])}<span aria-hidden="true">↗</span></a></div>'
+        f'</article>'
+        for name, mono, area, price, feats, msg in t['more_units']
+    )
     return (
         '<section class="sec price-section" id="pricing"><div class="in"><div class="price-section-head"><div>'
         f'{eye(t["price_eye"])}<h2 class="dh price-section-title">{t["price_h"]}</h2><p class="price-section-intro">{e(t["price_p"])}</p></div>'
         '<div class="price-section-aside"><span class="price-aside-rule"></span><strong>KALYAN WEST</strong><span>RESIDENTIAL COLLECTION</span></div></div>'
         f'<div class="price-rows">{rows}</div>'
-        f'<div class="price-bigunits"><p>{t["big_units"]}</p><a class="btn-o dark" href="{a(wa(big_msg))}" target="_blank" rel="noopener"><span>{e(t["big_units_btn"])}</span>{icon("arrow")}</a></div>'
+        f'<div class="price-more"><div class="price-more-head">{eye(t["more_eye"])}<h3 class="price-more-title">{t["more_h"]}</h3>'
+        f'<p class="price-more-intro">{e(t["more_p"])}</p></div>'
+        f'<div class="price-more-grid">{more_cards}</div></div>'
         f'<p class="price-section-note">{e(t["price_note"])}</p></div></section>\n'
     )
 
