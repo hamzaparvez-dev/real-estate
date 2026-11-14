@@ -2572,21 +2572,8 @@ body.has-video-hero .site-video-hero .hero-video{
 body.has-video-hero{background:#fff}
 body.has-video-hero nav#nav.solid{background:rgba(10,21,37,.97)}
 
-/* Title band under the shared video hero */
-.page-intro{background:#fff;border-bottom:1px solid var(--border)}
-.page-intro-inner{padding:clamp(36px,5vw,64px) 0}
-.page-intro .crumbs{color:var(--faint)}
-.page-intro .crumbs a{color:var(--muted)}
-.page-intro .crumbs a:hover{color:var(--gold)}
-.page-intro .crumbs li+li::before{color:rgba(11,18,32,.28)}
-.page-intro h1{font:300 clamp(36px,5.4vw,72px)/1.08 var(--serif);color:var(--navy);margin:16px 0 18px;text-wrap:balance}
-.page-intro h1 b{font-weight:600;color:var(--gold)}
-.page-intro .ph-lead{font-size:clamp(16px,1.6vw,19px);line-height:1.75;color:var(--muted);max-width:66ch;margin:0 0 28px}
-.page-intro .ph-meta{display:flex;flex-wrap:wrap;gap:16px;font:400 11px/1 var(--mono);letter-spacing:.12em;text-transform:uppercase;color:var(--faint);margin-bottom:6px}
-.page-intro .pg-hero-facts{color:var(--muted)}
-.page-intro .pg-hero-facts span{border-left-color:var(--gold)}
-.page-intro .btn-o{border-color:rgba(10,21,37,.25);color:var(--navy)}
-.page-intro .btn-o:hover{border-color:var(--gold);color:var(--gold)}
+.post > h1{font:400 clamp(34px,4.6vw,56px)/1.12 var(--serif);color:var(--navy);margin:0 0 12px;text-wrap:balance}
+.post-meta{margin:0 0 28px;color:var(--faint);font:400 13px/1.5 var(--sans)}
 
 .blog-insight{background:#fff;text-align:center;padding-block:clamp(56px,8vw,88px)}
 .blog-insight .in{max-width:1180px}

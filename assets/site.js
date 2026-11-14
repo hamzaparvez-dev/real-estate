@@ -562,9 +562,11 @@
     };
     modal.querySelector('.enq-close').addEventListener('click', close);
     modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
-    /* Homepage: open enquiry once when the visitor reaches mid-page; X dismisses for this session. */
+    /* Homepage only: open enquiry once when the visitor reaches mid-page; X dismisses for this session. */
     (function () {
       if (!document.body.classList.contains('home-video-page')) return;
+      var path = (location.pathname || '/').replace(/\/+$/, '') || '/';
+      if (path !== '/' && path !== '/hi' && path !== '/mr') return;
       try { if (sessionStorage.getItem(MID_KEY) === '1') return; } catch (ignore) {}
       var opened = false;
       var onScroll = function () {

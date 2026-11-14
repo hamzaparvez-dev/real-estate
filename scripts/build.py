@@ -234,50 +234,25 @@ def head(l, title, desc, alts, img, img_alt, ld, preload=None, og_type='website'
 
 
 def nav(l, alts, solid=True):
+    """Same homepage overlay navbar on every public page."""
     U, h = UI[l], url(l, '/')
-    sol = SOLID if solid else ''
-    cols = []
-    for g, slugs in MENU:
-        cols.append(f'<div class="nav-dd-col"><span class="nav-dd-h">{esc(U["grp_" + g])}</span>'
-                    + ''.join(f'<a href="{url(l, "/areas/" + s + "/")}">{esc(city(l, s)["name"])}</a>' for s in slugs) + '</div>')
-    langs = ''.join(f'<a href="{alts[k]}" hreflang="{k}" lang="{k}" aria-label="{attr(C.LANG_NAME[k])}"' + (' aria-current="true"' if k == l else '')
-                    + f'>{C.LANG_SHORT[k]}</a>' for k in alts)
-    mlinks = (f'<li><a href="{h}#home">{esc(U["home"])}</a></li>'
-              f'<li><a href="{h}#about">{esc(U["nav_about"])}</a></li>'
-              f'<li class="mnav-projects"><span>{esc(U["nav_projects"])}</span><span class="mnav-subhead">{esc(U["nav_plans"])}</span>'
-              f'<a href="/projects/prestige-gold/">Prestige Gold</a><a href="/projects/prestige-gold/#commercial">Commercial</a>'
-              f'<a href="/projects/prestige-gold/#shri-durga">Shri Durga Enterprises</a>'
-              f'<a href="/projects/prestige-one/">Prestige One</a></li>'
-              f'<li><a href="{h}#pricing">{esc(U["nav_pricing"])}</a></li>'
-              f'<li><a href="{h}#services">{esc(U["nav_services"])}</a></li>'
-              f'<li><a href="{url(l, "/blog/")}">{esc(U["nav_blog"])}</a></li>'
-              f'<li><a href="{h}#contact">{esc(U["nav_contact"])}</a></li>')
-    mareas = ''.join(f'<a href="{url(l, "/areas/" + s + "/")}">{esc(city(l, s)["name"])}</a>' for s in CITY_SLUGS)
-    return (f'<a class="skip" href="#main">{esc(U["skip"])}</a><div id="prog"></div>\n'
-            f'<nav id="nav"{SOLID if solid else ""} aria-label="{attr(U["main_menu"])}">'
-            f'<a class="nav-logo" href="{h}" aria-label="{attr(C.BRAND)}"><img src="/img/new-logo.png" width="160" height="49" alt="{attr(C.BRAND)}"></a>'
-            '<div class="nav-r">'
-            f'<a class="nav-a" href="{h}#home">{esc(U["home"])}</a>'
-            f'<a class="nav-a" href="{h}#about">{esc(U["nav_about"])}</a>'
-            f'<div class="nav-dd" id="navProjects"><button class="nav-dd-btn" type="button" aria-expanded="false" aria-controls="ddProjects">{esc(U["nav_projects"])}{I["caret"]}</button>'
-            f'<div class="nav-dd-menu nav-projects-menu" id="ddProjects" role="region" aria-label="{attr(U["nav_projects"])}"><div class="nav-projects-group"><span class="nav-projects-label">{esc(U["nav_plans"])}</span>'
-            f'<a class="nav-projects-item" href="/projects/prestige-gold/">Prestige Gold</a>'
-            f'<a class="nav-projects-item" href="/projects/prestige-gold/#commercial">Commercial</a>'
-            f'<a class="nav-projects-item" href="/projects/prestige-gold/#shri-durga">Shri Durga Enterprises</a>'
-            f'<a class="nav-projects-item" href="/projects/prestige-one/">Prestige One</a></div></div></div>'
-            f'<a class="nav-a" href="{h}#pricing">{esc(U["nav_pricing"])}</a>'
-            f'<a class="nav-a" href="{h}#services">{esc(U["nav_services"])}</a>'
-            f'<div class="nav-dd" id="navAreas"><button class="nav-dd-btn" type="button" aria-expanded="false" aria-controls="ddAreas">{esc(U["nav_areas"])}{I["caret"]}</button>'
-            f'<div class="nav-dd-menu" id="ddAreas" role="region" aria-label="{attr(U["menu_label"])}">{"".join(cols)}'
-            f'<a class="nav-dd-all" href="{url(l, "/areas/")}">{esc(U["all_areas"])} &rarr;</a></div></div>'
-            f'<a class="nav-a" href="{url(l, "/blog/")}">{esc(U["nav_blog"])}</a>'
-            f'<div class="lang" role="group" aria-label="{attr(U["lang_label"])}">{langs}</div>'
-            f'<a class="nav-cta" href="{h}#contact">{I["chat"]}{esc(U["nav_contact"])}</a>'
-            f'<button class="nav-ham" id="navHam" type="button" aria-label="{attr(U["main_menu"])}" aria-expanded="false" aria-controls="mnav"><span></span><span></span><span></span></button>'
-            '</div></nav>\n'
-            f'<div class="mnav" id="mnav" hidden><ul>{mlinks}</ul><p class="mnav-h">{esc(U["nav_areas"])}</p><div class="mnav-areas">{mareas}</div>'
-            f'<a class="mnav-all" href="{url(l, "/areas/")}">{esc(U["all_areas"])} &rarr;</a><br><div class="lang" role="group" aria-label="{attr(U["lang_label"])}">{langs}</div><br>'
-            f'<a class="btn-wa" href="{waurl(U["wa_default"])}" target="_blank" rel="noopener" style="width:100%">{I["chat"]}<span>{esc(U["wa_btn"])}</span></a></div>\n')
+    open_menu = {'en': 'Open menu', 'hi': 'मेन्यू खोलें', 'mr': 'मेनू उघडा'}[l]
+    langs = ''.join(
+        f'<a href="{alts[k]}" hreflang="{k}" lang="{k}" aria-label="{attr(C.LANG_NAME[k])}"'
+        + (' aria-current="true"' if k == l else '')
+        + f'>{C.LANG_SHORT[k]}</a>' for k in alts)
+    return (
+        f'<a class="skip" href="#main">{esc(U["skip"])}</a><div id="prog"></div>\n'
+        f'<nav id="nav" class="home-hero-nav" aria-label="{attr(U["main_menu"])}">'
+        f'<button class="nav-ham" id="navHam" type="button" aria-label="{attr(open_menu)}" aria-expanded="false" aria-controls="mnav">'
+        '<span></span><span></span><span></span></button>'
+        f'<a class="nav-logo home-wordmark" href="{h}" aria-label="{attr(C.BRAND)}">'
+        '<img class="home-logo-dark" src="/img/logo-on-dark.png" width="248" height="83" alt="Prestige Enterprises" decoding="async">'
+        '<img class="home-logo-light" src="/img/logo.png" width="248" height="83" alt="" aria-hidden="true" decoding="async"></a>'
+        f'<div class="nav-r nav-r-home-fallback" hidden aria-hidden="true">'
+        f'<div class="lang" role="group" aria-label="{attr(U["lang_label"])}">{langs}</div></div></nav>\n'
+        '<div class="mnav" id="mnav" hidden aria-hidden="true"></div>\n'
+    )
 
 
 def footer(l, alts):
@@ -322,7 +297,7 @@ def footer(l, alts):
 def page(l, path, alts, head_html, body):
     """Write one page; alts maps lang -> url path."""
     write((url(l, path)).lstrip('/') + 'index.html',
-          head_html + '<body class="has-video-hero">\n' + nav(l, alts) + body + footer(l, alts))
+          head_html + '<body class="home-video-page has-video-hero">\n' + nav(l, alts) + body + footer(l, alts))
 
 
 def breadcrumb_ld(l, trail):
@@ -359,11 +334,6 @@ def video_hero(label='Prestige Enterprises residences in Kalyan West'):
         'preload="auto" disablepictureinpicture disableremoteplayback x-webkit-airplay="deny" aria-hidden="true" tabindex="-1"></video>'
         '<div class="hero-video-shade" aria-hidden="true"></div></section>'
     )
-
-
-def page_intro(inner):
-    """Page title band under the shared video hero (former ph-c content)."""
-    return f'<section class="page-intro"><div class="in page-intro-inner">{inner}</div></section>'
 
 
 def video_preconnect():
@@ -543,17 +513,10 @@ def build_prestige_gold():
         f'<figure><img src="{src}" width="{w}" height="{h}" loading="lazy" alt="{esc(alt)}"><figcaption>{esc(cap)}</figcaption></figure>'
         for src, w, h, alt, cap in gallery_items
     )
-    hero = video_hero('Prestige Gold — prime Kalyan West') + page_intro(
-        crumbs([(UI['en']['home'], '/'), ('Projects', None), ('Plans', None), ('Prestige Gold', None)]) +
-        eye('PRIME KALYAN WEST · RESIDENTIAL + COMMERCIAL') +
-        '<h1>Prestige <b>Gold</b></h1>'
-        '<p class="ph-lead">Elite living in a full residential project — luxury amenities, modern security, 1, 2 &amp; 3 BHK homes and commercial space.</p>'
-        '<div class="pg-hero-facts"><span>1, 2 &amp; 3 BHK</span><span>Commercial</span><span>Shri Durga Enterprises</span><span>G + 5 floors</span><span>Expected possession June 2027</span></div>'
-        f'<div class="section-cta"><a class="cta-enq" href="{wa_link}" target="_blank" rel="noopener">Request brochure</a><a class="cta-wa" href="tel:+' + GOLD_WA + '">Call +91 84466 52600</a></div>'
-    )
+    hero = video_hero('Prestige Gold — prime Kalyan West')
     overview = (
         '<section class="sec pg-overview"><div class="in pg-overview-grid"><div>'
-        + eye('THE PROJECT') + '<h2 class="dh">Full residential · <em>prime location</em></h2>'
+        + eye('THE PROJECT') + '<h1 class="dh">Full residential · <em>prime location</em></h1>'
         '<p class="lead">A landmark mixed-use address: vastu-friendly homes, rooftop leisure, power backup and smart security — built for elite everyday living.</p>'
         '<dl class="pg-facts"><div><dt>Project type</dt><dd>Residential + Commercial</dd></div><div><dt>Configurations</dt><dd>1, 2 &amp; 3 BHK + Commercial</dd></div>'
         '<div><dt>Expected possession</dt><dd>June 2027</dd></div><div><dt>Construction</dt><dd>Brickwork &amp; internal works complete</dd></div>'
@@ -673,7 +636,7 @@ def build_prestige_gold():
     body = hero + overview + pricing + floorplans + gallery + amenities_section + progress + location + shri_durga + contact
     ld = [agent_ld('en'), breadcrumb_ld('en', [(UI['en']['home'], url('en', '/')), ('Prestige Gold', path)])]
     html = head('en', title, desc, seo_alts, '/img/prestige-tower-day.jpg', 'Prestige Gold project in Kalyan West', ld, extra=video_preconnect())
-    write(path.lstrip('/') + 'index.html', html + '<body class="has-video-hero">\n' + nav('en', nav_alts) + body + footer('en', nav_alts))
+    write(path.lstrip('/') + 'index.html', html + '<body class="home-video-page has-video-hero">\n' + nav('en', nav_alts) + body + footer('en', nav_alts))
     PAGES.append(seo_alts)
 
 
@@ -685,18 +648,10 @@ def build_prestige_one():
     desc = 'Prestige One — 5 BHK luxury homes in Kalyan. Spacious layouts from 999.4 & 1001.4 sq. ft. No public price list. Request brochure and site visit.'
     wa_text = 'Hello, I am interested in Prestige One 5 BHK in Kalyan. Please share the brochure and floor plans.'
     wa_link = waurl(wa_text)
-    hero = video_hero('Prestige One tower') + page_intro(
-        crumbs([(UI['en']['home'], '/'), ('Projects', None), ('Plans', None), ('Prestige One', None)]) +
-        eye('KALYAN · PRESTIGE ONE') +
-        '<h1>Prestige <b>One</b></h1>'
-        '<p class="ph-lead">Elite 5 BHK living — prime location, modern amenities, luxury finishes and integrated security.</p>'
-        '<div class="pg-hero-facts"><span>5 BHK</span><span>999.4 &amp; 1001.4 sq. ft.</span><span>Pricing on request</span><span>Our team is ready to assist</span></div>'
-        f'<div class="section-cta"><a class="cta-enq" href="{wa_link}" target="_blank" rel="noopener">Request brochure</a>'
-        f'<a class="cta-wa" href="tel:{C.PHONE_TEL}">Call {C.PHONE_DISPLAY}</a></div>'
-    )
+    hero = video_hero('Prestige One tower')
     overview = (
         '<section class="sec pg-overview"><div class="in pg-overview-grid"><div>'
-        + eye('PRESTIGE ONE') + '<h2 class="dh">Full residential · <em>elite 5 BHK</em></h2>'
+        + eye('PRESTIGE ONE') + '<h1 class="dh">Full residential · <em>elite 5 BHK</em></h1>'
         '<p class="lead">A striking tower for families who want space, privacy and a prime Kalyan address — without compromise on security or amenities.</p>'
         '<dl class="pg-facts"><div><dt>Configuration</dt><dd>5 BHK</dd></div><div><dt>Areas</dt><dd>999.4 &amp; 1001.4 sq. ft.</dd></div>'
         '<div><dt>Starting price</dt><dd>Shared on request</dd></div><div><dt>Office</dt><dd>Prestige One, Godrej Hill, Khadakpada</dd></div></dl>'
@@ -723,7 +678,7 @@ def build_prestige_one():
     body = hero + overview + pricing + contact
     ld = [{'@type': 'WebPage', 'name': 'Prestige One', 'url': C.SITE + path, 'description': desc, 'inLanguage': 'en-IN'}]
     html = head('en', title, desc, seo_alts, '/img/Prestige%20One%20Tower%20in%20Daylight.png', 'Prestige One Kalyan', ld, extra=video_preconnect())
-    write(path.lstrip('/') + 'index.html', html + '<body class="has-video-hero">\n' + nav('en', nav_alts) + body + footer('en', nav_alts))
+    write(path.lstrip('/') + 'index.html', html + '<body class="home-video-page has-video-hero">\n' + nav('en', nav_alts) + body + footer('en', nav_alts))
     PAGES.append(seo_alts)
 
 
@@ -789,10 +744,8 @@ def build_hub(l):
             f'<a class="card" href="{url(l, "/areas/" + s + "/")}"><img src="/img/areas/{s}.jpg" width="1200" height="630" loading="lazy" alt="{attr(city(l, s)["alt"])}">'
             f'<div class="card-b"><h3>{esc(city(l, s)["name"])}</h3><p>{esc(city(l, s)["card"])}</p><span class="card-m">{esc(U["hub_more"].format(name=city(l, s)["name"]))} →</span></div></a>'
             for s in slugs) + '</div>'
-    body = (video_hero(U['hub_eyebrow']) + page_intro(
-            crumbs([(U['home'], url(l, '/')), (U['areas'], None)]) + eye(esc(U['hub_eyebrow'])) + f'<h1>{U["hub_h1"]}</h1>'
-            f'<p class="ph-lead">{esc(U["hub_lead"])}</p>')
-            + f'<section class="sec"><div class="in">{out}</div></section>\n'
+    body = (video_hero(U['hub_eyebrow'])
+            + f'<section class="sec"><div class="in"><h1 class="dh">{U["hub_h1"]}</h1><p class="lead" style="margin-top:18px">{esc(U["hub_lead"])}</p>{out}</div></section>\n'
             + contact_block(l, U['hub_contact_h'], HOME[l]['contact_p']) + '</main>\n')
     ld = [agent_ld(l), breadcrumb_ld(l, [(U['home'], url(l, '/')), (U['areas'], url(l, '/areas/'))])]
     page(l, '/areas/', alts, head(l, U['hub_title'], U['hub_desc'], alts, '/img/og-default.jpg', C.BRAND, ld, extra=video_preconnect()), body)
@@ -811,12 +764,8 @@ def build_city(l, s):
     near = ''.join(f'<a class="card" href="{url(l, "/areas/" + x + "/")}"><img src="/img/areas/{x}.jpg" width="1200" height="630" loading="lazy" alt="{attr(city(l, x)["alt"])}">'
                    f'<div class="card-b"><h3>{esc(city(l, x)["name"])}</h3><p>{esc(city(l, x)["card"])}</p></div></a>' for x in NEAR[s])
     near_section = (f'<section class="sec"><div class="in"><h2 class="dh" style="font-size:clamp(28px,3.4vw,42px)">{esc(U["near_h"])}</h2><div class="cards">{near}</div></div></section>\n' if near else '')
-    body = (video_hero(c['alt']) + page_intro(
-            crumbs([(U['home'], url(l, '/')), (U['areas'], url(l, '/areas/')), (n, None)]) + eye(esc(U['city_eyebrow'].format(name=n)))
-            + f'<h1>{U["city_h1"].format(name=esc(n))}</h1><p class="ph-lead">{esc(c["lead"])}</p>'
-            f'<div class="cta-row"><a class="btn-wa" href="{waurl(wa_t)}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(U["btn_wa"])}</span></a>'
-            f'<a class="btn-o dark" href="#hoods"><span>{esc(U["btn_hoods"])}</span></a></div>')
-            + f'\n<section class="sec"><div class="in two-col"><div>{eye(esc(U["intro_eye"].format(name=n)))}<h2 class="dh">{U["intro_h"].format(name=esc(n))}</h2>'
+    body = (video_hero(c['alt'])
+            + f'\n<section class="sec"><div class="in two-col"><div>{eye(esc(U["intro_eye"].format(name=n)))}<h1 class="dh">{U["intro_h"].format(name=esc(n))}</h1>'
             f'<div class="prose" style="margin-top:28px">{"".join(f"<p>{esc(p)}</p>" for p in c["intro"])}</div></div>'
             f'<aside class="facts"><h3>{esc(U["facts_h"])}</h3><dl>{facts}</dl></aside></div></section>\n'
             f'<section class="sec" id="hoods" style="background:#fff"><div class="in">{eye(esc(U["hoods_eye"]))}<h2 class="dh">{U["hoods_h"].format(name=esc(n))}</h2><div class="hoods">{hoods}</div></div></section>\n'
@@ -836,9 +785,9 @@ def build_city(l, s):
 def build_blog_index(l):
     U = UI[l]
     alts = {k: url(k, '/blog/') for k in LANGS}
-    body = (video_hero(U['blog_eyebrow']) + page_intro(
-            crumbs([(U['home'], url(l, '/')), (U['blog'], None)]) + eye(esc(U['blog_eyebrow'])) + f'<h1>{U["blog_h1"]}</h1><p class="ph-lead">{esc(U["blog_lead"])}</p>')
-            + f'<section class="sec"><div class="in"><div class="cards">{"".join(post_card(l, s) for s in ORDER)}</div></div></section>\n'
+    body = (video_hero(U['blog_eyebrow'])
+            + f'<section class="sec"><div class="in"><h1 class="dh">{U["blog_h1"]}</h1><p class="lead" style="margin-top:18px">{esc(U["blog_lead"])}</p>'
+            f'<div class="cards" style="margin-top:36px">{"".join(post_card(l, s) for s in ORDER)}</div></div></section>\n'
             + contact_block(l, U['cta_h'], U['cta_p']) + '</main>\n')
     ld = [agent_ld(l), breadcrumb_ld(l, [(U['home'], url(l, '/')), (U['blog'], url(l, '/blog/'))])]
     feed = video_preconnect() + f'<link rel="alternate" type="application/rss+xml" title="{attr(C.BRAND)}" href="{url(l, "/blog/feed.xml")}">\n'
@@ -857,11 +806,10 @@ def build_post(l, s):
     idx = ORDER.index(s)
     rel = [ORDER[(idx + k) % len(ORDER)] for k in (1, 2, 3)]
     wa_t = U['post_wa'].format(title=p['title'])
-    body = (video_hero(p['title']) + page_intro(
-            crumbs([(U['home'], url(l, '/')), (U['blog'], url(l, '/blog/')), (p['title'], None)]) + eye(esc(U['cat_' + p['cat']]))
-            + f'<h1>{esc(p["title"])}</h1><div class="ph-meta"><span>{esc(U["by"])}</span><span>{esc(U["updated"].format(date=DATE_FMT[l]))}</span>'
-            f'<span>{esc(U["min_read"].format(n=p["read"]))}</span></div>')
-            + f'\n<article class="sec"><div class="post"><div class="answer"><b>{esc(U["quick_answer"])}</b><p>{esc(p["answer"])}</p></div>{secs}'
+    body = (video_hero(p['title'])
+            + f'\n<article class="sec"><div class="post"><h1>{esc(p["title"])}</h1>'
+            f'<p class="post-meta">{esc(U["by"])} · {esc(U["updated"].format(date=DATE_FMT[l]))} · {esc(U["min_read"].format(n=p["read"]))}</p>'
+            f'<div class="answer"><b>{esc(U["quick_answer"])}</b><p>{esc(p["answer"])}</p></div>{secs}'
             f'<h2>{esc(U["post_faq"])}</h2>{faq_html(p["faq"])}'
             f'<div class="cta-box"><h2>{esc(U["cta_h"])}</h2><p>{esc(U["cta_p"])}</p><a class="btn-wa" href="{waurl(wa_t)}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(U["wa_btn"])}</span></a></div>'
             f'</div></article>\n<section class="sec" style="background:#fff"><div class="in"><h2 class="dh" style="font-size:clamp(28px,3.4vw,42px)">{esc(U["related"])}</h2>'
@@ -891,7 +839,7 @@ def build_404():
     body = (f'<main id="main" class="sec" style="padding-top:170px;min-height:70vh"><div class="in"><h1 class="dh">{esc(U["notfound_h"])}</h1><p class="lead" style="margin:20px 0 28px">{esc(U["notfound_p"])}</p>'
             f'<a class="btn-g" href="/">{esc(U["home"])}</a> <a class="btn-o dark" href="/blog/">{esc(U["blog"])}</a></div></main>\n')
     h = head(l, f'{U["notfound_h"]} | {C.BRAND}', U['notfound_p'], {'en': '/404.html'}, '/img/og-default.jpg', C.BRAND, [], extra='').replace('content="index, follow', 'content="noindex, follow')
-    write('404.html', h + '<body>\n' + nav(l, {'en': '/', 'hi': '/hi/', 'mr': '/mr/'}) + body + footer(l, {'en': '/', 'hi': '/hi/', 'mr': '/mr/'}))
+    write('404.html', h + '<body class="home-video-page">\n' + nav(l, {'en': '/', 'hi': '/hi/', 'mr': '/mr/'}) + body + footer(l, {'en': '/', 'hi': '/hi/', 'mr': '/mr/'}))
 
 
 def build_login_page():
