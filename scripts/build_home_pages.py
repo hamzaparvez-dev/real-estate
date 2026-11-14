@@ -198,7 +198,7 @@ T['en'] = dict(
     wa_text='Hello Prestige Enterprises, I would like to arrange a site visit and receive current availability in Kalyan West.',
     foot_tag='Thoughtfully planned residences in Kalyan West, Maharashtra.',
     foot_explore='Explore', foot_projects='Projects', foot_contact='Contact',
-    foot_links=[('#about', 'About'), ('#amenities', 'Amenities'), ('#plans', 'Floor plans'), ('#location', 'Location'), ('/blog/', 'Guides'), ('#contact', 'Contact')],
+    foot_links=[('#about', 'About'), ('#amenities', 'Amenities'), ('#location', 'Location'), ('/blog/', 'Guides'), ('#contact', 'Contact')],
     privacy='Privacy Policy', rera_verified='Verified & Registered',
     disclaimer='Images are artistic impressions for representation only. Amenities, specifications, prices and distances are indicative and may change; confirm current details in writing before booking.',
     rights='© 2026 Prestige Enterprises. All rights reserved.',
@@ -309,7 +309,7 @@ T['hi'] = dict(
     wa_text='नमस्ते Prestige Enterprises, मैं कल्याण वेस्ट में साइट विज़िट बुक करना और मौजूदा उपलब्धता जानना चाहता/चाहती हूँ।',
     foot_tag='कल्याण वेस्ट, महाराष्ट्र में सोच-समझकर बनाए गए घर।',
     foot_explore='देखें', foot_projects='प्रोजेक्ट्स', foot_contact='संपर्क',
-    foot_links=[('#about', 'हमारे बारे में'), ('#amenities', 'सुविधाएँ'), ('#plans', 'फ़्लोर प्लान'), ('#location', 'लोकेशन'), ('/blog/', 'गाइड'), ('#contact', 'संपर्क')],
+    foot_links=[('#about', 'हमारे बारे में'), ('#amenities', 'सुविधाएँ'), ('#location', 'लोकेशन'), ('/blog/', 'गाइड'), ('#contact', 'संपर्क')],
     privacy='गोपनीयता नीति', rera_verified='सत्यापित और पंजीकृत',
     disclaimer='तस्वीरें केवल प्रस्तुति के लिए कलात्मक चित्रण हैं। सुविधाएँ, स्पेसिफ़िकेशन, कीमतें और दूरियाँ सांकेतिक हैं और बदल सकती हैं; बुकिंग से पहले लिखित में पुष्टि करें।',
     rights='© 2026 Prestige Enterprises. सर्वाधिकार सुरक्षित।',
@@ -420,7 +420,7 @@ T['mr'] = dict(
     wa_text='नमस्कार Prestige Enterprises, मला कल्याण वेस्टमध्ये साइट व्हिजिट बुक करायची आहे आणि सध्याची उपलब्धता जाणून घ्यायची आहे.',
     foot_tag='कल्याण वेस्ट, महाराष्ट्रातील विचारपूर्वक नियोजित घरे.',
     foot_explore='पाहा', foot_projects='प्रकल्प', foot_contact='संपर्क',
-    foot_links=[('#about', 'आमच्याबद्दल'), ('#amenities', 'सुविधा'), ('#plans', 'फ्लोअर प्लॅन'), ('#location', 'लोकेशन'), ('/blog/', 'मार्गदर्शक'), ('#contact', 'संपर्क')],
+    foot_links=[('#about', 'आमच्याबद्दल'), ('#amenities', 'सुविधा'), ('#location', 'लोकेशन'), ('/blog/', 'मार्गदर्शक'), ('#contact', 'संपर्क')],
     privacy='गोपनीयता धोरण', rera_verified='सत्यापित आणि नोंदणीकृत',
     disclaimer='चित्रे केवळ सादरीकरणासाठी कलात्मक प्रतिमा आहेत. सुविधा, स्पेसिफिकेशन, किंमती आणि अंतरे सूचक असून बदलू शकतात; बुकिंगपूर्वी लेखी खात्री करा.',
     rights='© 2026 Prestige Enterprises. सर्व हक्क राखीव.',
@@ -726,7 +726,7 @@ def footer(l, t):
 def build(l):
     t = T[l]
     page = (head(l, t) + nav(l, t) + hero(t) + intro(t) + about(t) + projects(t) + amenities(t)
-            + pricing(t, l) + plans(t) + location(t) + faq(t) + guides(t, l) + contact(t) + footer(l, t))
+            + pricing(t, l) + location(t) + faq(t) + guides(t, l) + contact(t) + footer(l, t))
     out = os.path.join(ROOT, PREFIX[l].lstrip('/'), 'index.html')
     with open(out, 'w', encoding='utf-8') as f:
         f.write(page)

@@ -240,7 +240,7 @@ def nav(l, alts, solid=True):
     langs = ''.join(
         f'<a href="{alts[k]}" hreflang="{k}" lang="{k}" aria-label="{attr(C.LANG_NAME[k])}"'
         + (' aria-current="true"' if k == l else '')
-        + f'>{C.LANG_SHORT[k]}</a>' for k in alts)
+                    + f'>{C.LANG_SHORT[k]}</a>' for k in alts)
     return (
         f'<a class="skip" href="#main">{esc(U["skip"])}</a><div id="prog"></div>\n'
         f'<nav id="nav" class="home-hero-nav" aria-label="{attr(U["main_menu"])}">'
@@ -275,21 +275,21 @@ def footer(l, alts):
         f'<div><h4>{esc(U["foot_links"])}</h4><ul>'
         f'<li><a href="{h}#about">{esc(U["nav_about"])}</a></li>'
         f'<li><a href="{h}#amenities">{esc(U["foot_amenities"])}</a></li>'
-        f'<li><a href="{h}#plans">{esc(U["foot_plans"])}</a></li>'
+        f'<li><a href="/projects/prestige-gold/">{esc(U["foot_plans"])}</a></li>'
         f'<li><a href="{h}#location">{esc(U["foot_location"])}</a></li>'
         f'<li><a href="{url(l, "/blog/")}">{esc(U["blog"])}</a></li>'
         f'<li><a href="{h}#contact">{esc(U["nav_contact"])}</a></li></ul></div>'
-        f'<div><h4>{esc(U["foot_projects"])}</h4><ul>'
-        f'<li><a href="/projects/prestige-gold/">Prestige Gold</a></li>'
+            f'<div><h4>{esc(U["foot_projects"])}</h4><ul>'
+            f'<li><a href="/projects/prestige-gold/">Prestige Gold</a></li>'
         f'<li><a href="/projects/prestige-gold/#shri-durga">Shri Durga Enterprises</a></li>'
-        f'<li><a href="/projects/prestige-one/">Prestige One</a></li></ul></div>'
+            f'<li><a href="/projects/prestige-one/">Prestige One</a></li></ul></div>'
         f'<div><h4>{esc(U["foot_contact"])}</h4><p>{esc(C.ADDRESS_LINE)}</p>'
         f'<p><a href="tel:{C.PHONE_TEL}">{C.PHONE_DISPLAY}</a><br>'
         f'<a href="mailto:{C.EMAIL}">{C.EMAIL}</a></p></div></div>'
         f'<div class="foot-legal">{rera}'
         f'<p><a href="/privacy/">{esc(U["privacy"])}</a></p>'
         f'<p>{esc(U["disclaimer"])}</p><p>{esc(U["rights"])}</p></div></footer>\n'
-        f'<a class="wa" href="{waurl(U["wa_default"])}" target="_blank" rel="noopener" aria-label="{attr(U["wa_btn"])}">{I["chat"]}<span>{esc(U["float_wa"])}</span></a>\n'
+            f'<a class="wa" href="{waurl(U["wa_default"])}" target="_blank" rel="noopener" aria-label="{attr(U["wa_btn"])}">{I["chat"]}<span>{esc(U["float_wa"])}</span></a>\n'
         f'<script src="/assets/site.js?v={js_ver}" defer></script>\n</body>\n</html>\n'
     )
 

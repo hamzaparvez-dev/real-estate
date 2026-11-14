@@ -200,13 +200,13 @@
       var hl = (document.documentElement.lang || 'en').slice(0, 2).toLowerCase();
       var hp = hl === 'hi' || hl === 'mr' ? '/' + hl : '';
       var ht = {
-        en: ['WHO WE ARE', 'PROJECTS', 'AMENITIES', 'FLOOR PLANS', 'LOCATION', 'CONTACT US', 'REAL ESTATE LIBRARY', 'CHAT ON WHATSAPP'],
-        hi: ['हमारे बारे में', 'प्रोजेक्ट्स', 'सुविधाएँ', 'फ़्लोर प्लान', 'लोकेशन', 'संपर्क करें', 'गाइड', 'WhatsApp पर बात करें'],
-        mr: ['आमच्याबद्दल', 'प्रकल्प', 'सुविधा', 'फ्लोअर प्लॅन', 'लोकेशन', 'संपर्क साधा', 'मार्गदर्शक', 'WhatsApp वर बोला']
+        en: ['WHO WE ARE', 'PROJECTS', 'AMENITIES', 'LOCATION', 'CONTACT US', 'REAL ESTATE LIBRARY', 'CHAT ON WHATSAPP'],
+        hi: ['हमारे बारे में', 'प्रोजेक्ट्स', 'सुविधाएँ', 'लोकेशन', 'संपर्क करें', 'गाइड', 'WhatsApp पर बात करें'],
+        mr: ['आमच्याबद्दल', 'प्रकल्प', 'सुविधा', 'लोकेशन', 'संपर्क साधा', 'मार्गदर्शक', 'WhatsApp वर बोला']
       }[hl] || null;
-      if (!ht) ht = ['WHO WE ARE', 'PROJECTS', 'AMENITIES', 'FLOOR PLANS', 'LOCATION', 'CONTACT US', 'REAL ESTATE LIBRARY', 'CHAT ON WHATSAPP'];
+      if (!ht) ht = ['WHO WE ARE', 'PROJECTS', 'AMENITIES', 'LOCATION', 'CONTACT US', 'REAL ESTATE LIBRARY', 'CHAT ON WHATSAPP'];
       var arrow = '<span class="mnav-home-arrow" aria-hidden="true">→</span>';
-      var primary = [['#about', 0], ['#projects', 1], ['#amenities', 2], ['#plans', 3], ['#location', 4], ['#contact', 5]];
+      var primary = [['#about', 0], ['#projects', 1], ['#amenities', 2], ['#location', 3], ['#contact', 4]];
       var langLinks = [['/', 'en', 'EN'], ['/hi/', 'hi', 'हिन्दी'], ['/mr/', 'mr', 'मराठी']];
       panel.innerHTML =
         '<div class="mnav-home-primary" aria-label="Main navigation">' +
@@ -218,7 +218,7 @@
           '<a class="mnav-home-secondary-link" href="/projects/prestige-gold/">PRESTIGE GOLD</a>' +
           '<a class="mnav-home-secondary-link" href="/projects/prestige-gold/#shri-durga">SHRI DURGA · GOLD</a>' +
           '<a class="mnav-home-secondary-link" href="/projects/prestige-one/">PRESTIGE ONE</a>' +
-          '<a class="mnav-home-secondary-link" href="' + hp + '/blog/">' + ht[6] + '</a>' +
+          '<a class="mnav-home-secondary-link" href="' + hp + '/blog/">' + ht[5] + '</a>' +
           '<div class="mnav-home-languages" aria-label="Choose language">' +
             langLinks.map(function (x) {
               return '<a href="' + x[0] + '" hreflang="' + x[1] + '" lang="' + x[1] + '"' + (x[1] === hl ? ' aria-current="true"' : '') + '>' + x[2] + '</a>';
@@ -226,7 +226,7 @@
           '</div>' +
         '</div>' +
         '<div class="mnav-home-footer">' +
-          '<a href="https://wa.me/919689557788?text=Hello%20Prestige%20Enterprises%2C%20I%20would%20like%20to%20arrange%20a%20site%20visit%20in%20Kalyan%20West." target="_blank" rel="noopener">' + ht[7] + ' <span aria-hidden="true">↗</span></a>' +
+          '<a href="https://wa.me/919689557788?text=Hello%20Prestige%20Enterprises%2C%20I%20would%20like%20to%20arrange%20a%20site%20visit%20in%20Kalyan%20West." target="_blank" rel="noopener">' + ht[6] + ' <span aria-hidden="true">↗</span></a>' +
         '</div>';
       $$('.mnav-home-languages a', panel).forEach(function (link) {
         link.addEventListener('click', function () {
