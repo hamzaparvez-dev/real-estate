@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261114-v39'
+ASSET_VER = 'prestige-home-revamp-20261114-v40'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -87,20 +87,12 @@ AMENITY_IMGS = ['swimming-pool', 'cricket', 'games-lounge', 'library', 'mini-the
 
 # Outline icons for the Features & Amenities card grid (reference layout).
 FEAT_ICONS = {
-    'pool': ('<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
-             '<path d="M8 40c4 0 4-3 8-3s4 3 8 3 4-3 8-3 4 3 8 3 4-3 8-3 4 3 8 3"/><path d="M8 48c4 0 4-3 8-3s4 3 8 3 4-3 8-3 4 3 8 3 4-3 8-3 4 3 8 3"/>'
-             '<circle cx="24" cy="24" r="5"/><path d="M20 28c2 6 10 8 14 2"/></svg>'),
-    'star': ('<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
-             '<circle cx="32" cy="18" r="5"/><path d="M32 23v10M26 48l6-15 6 15M22 36h20"/><path d="M18 52h28"/></svg>'),
-    'cinema': ('<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
-               '<path d="M10 16c8 6 12 6 22 0"/><path d="M10 16v32c8-6 12-6 22 0V16"/><path d="M54 16c-8 6-12 6-22 0"/><path d="M54 16v32c-8-6-12-6-22 0V16"/>'
-               '<rect x="24" y="24" width="16" height="12" rx="1"/></svg>'),
-    'club': ('<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
-             '<path d="M12 52V28l20-12 20 12v24"/><path d="M22 52V36h20v16"/><path d="M28 24h8"/><path d="M8 52h48"/></svg>'),
-    'vip': ('<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
-            '<path d="M20 28c0-6 5-10 12-10s12 4 12 10v4H20v-4z"/><path d="M18 32h28l4 20H14l4-20z"/><path d="M26 20c0-4 3-7 6-7s6 3 6 7"/></svg>'),
-    'lift': ('<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
-             '<rect x="14" y="8" width="36" height="48" rx="2"/><path d="M32 8v48"/><path d="M24 28l8-8 8 8"/><path d="M32 20v16"/></svg>'),
+    'pool': '/img/features/infinity-pool.svg',
+    'star': '/img/features/stargazing-deck.svg',
+    'cinema': '/img/features/private-cinema.svg',
+    'club': '/img/features/clubhouse.svg',
+    'vip': '/img/features/vip-guest-suites.svg',
+    'lift': '/img/features/high-speed-elevators.svg',
 }
 
 # Distances are approximate drive times from Khadakpada, Kalyan West.
@@ -598,8 +590,9 @@ def projects(t):
 
 def features_amenities(t):
     cards = ''.join(
-        f'<article class="feat-card"><div class="feat-icon" aria-hidden="true">{FEAT_ICONS[ic]}</div>'
-        f'<h3>{e(title)}</h3><p>{e(desc)}</p></article>'
+        f'<article class="feat-card"><div class="feat-icon" aria-hidden="true">'
+        f'<img src="{FEAT_ICONS[ic]}" alt="" width="78" height="78" loading="lazy" decoding="async">'
+        f'</div><h3>{e(title)}</h3><p>{e(desc)}</p></article>'
         for ic, title, desc in t['feat_cards']
     )
     return (

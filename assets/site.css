@@ -2560,10 +2560,10 @@ body.home-video-page{--bronze:#A8783E;--bronze-soft:rgba(168,120,62,.16);--ink-s
 }
 .feat-card:hover{transform:translateY(-3px);box-shadow:0 16px 34px rgba(80,52,28,.1)}
 .feat-icon{
-  width:74px;height:74px;margin:0 auto 18px;border-radius:50%;
-  border:1.5px solid #2C241C;display:grid;place-items:center;color:#2C241C;
+  width:78px;height:78px;margin:0 auto 18px;
+  display:grid;place-items:center;
 }
-.feat-icon svg{width:34px;height:34px}
+.feat-icon img{display:block;width:78px;height:78px;object-fit:contain}
 .feat-card h3{
   margin:0 0 12px;color:#3B2A1E;
   font:700 17px/1.35 var(--sans);
