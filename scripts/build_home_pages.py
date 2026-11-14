@@ -10,7 +10,7 @@ import urllib.parse
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261114-v21'
+ASSET_VER = 'prestige-home-revamp-20261114-v22'
 VIDEO = 'https://8ps1sfxuipndwxps.public.blob.vercel-storage.com/Prestige_Projects_Kalyan_30s.mp4'
 PHONE_TEL = '+919689557788'
 PHONE = '+91 96895 57788'
@@ -420,7 +420,7 @@ def nav(l, t):
 def hero(t):
     return (
         f'<main id="main"><section id="home" class="hero hero-video-hero" aria-label="{a(t["hero_label"])}">\n'
-        f'  <video class="hero-video" id="heroVideo" src="{VIDEO}" autoplay muted loop playsinline webkit-playsinline preload="auto" aria-hidden="true" tabindex="-1"></video>\n'
+        f'  <video class="hero-video" id="heroVideo" src="{VIDEO}" autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture disableremoteplayback x-webkit-airplay="deny" aria-hidden="true" tabindex="-1"></video>\n'
         '  <div class="hero-video-shade" aria-hidden="true"></div>\n</section>\n'
     )
 
