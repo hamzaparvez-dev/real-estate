@@ -158,7 +158,7 @@ T['en'] = dict(
         ('4 BHK', '4B', 'Layout shared on request', 'On request',
          ['Larger family layouts', 'Multiple balconies', 'Premium finishes', 'Availability confirmed privately'],
          'Hello Prestige Enterprises, I would like details for 4 BHK residences in Kalyan West. Please share layouts, availability and pricing.'),
-        ('5 BHK', '5B', '999.4 & 1,001.4 sq. ft.', 'On request',
+        ('5 BHK', '5B', '', 'On request',
          ['Elite Prestige One residences', 'Spacious private layouts', 'Shared privately with serious buyers', 'Site visit on request'],
          'Hello Prestige Enterprises, I would like details for Prestige One 5 BHK residences. Please share layouts, carpet areas and pricing.'),
     ],
@@ -267,7 +267,7 @@ T['hi'] = dict(
         ('4 BHK', '4B', 'लेआउट अनुरोध पर', 'अनुरोध पर',
          ['बड़े पारिवारिक लेआउट', 'कई बालकनियाँ', 'प्रीमियम फ़िनिश', 'उपलब्धता निजी तौर पर'],
          'नमस्ते Prestige Enterprises, मुझे कल्याण वेस्ट में 4 BHK घरों की जानकारी चाहिए।'),
-        ('5 BHK', '5B', '999.4 एवं 1,001.4 वर्ग फुट', 'अनुरोध पर',
+        ('5 BHK', '5B', '', 'अनुरोध पर',
          ['Prestige One के एलीट घर', 'विशाल निजी लेआउट', 'गंभीर खरीदारों के साथ निजी', 'साइट विज़िट अनुरोध पर'],
          'नमस्ते Prestige Enterprises, मुझे Prestige One 5 BHK घरों की जानकारी चाहिए।'),
     ],
@@ -376,7 +376,7 @@ T['mr'] = dict(
         ('4 BHK', '4B', 'लेआउट विनंतीवर', 'विनंतीवर',
          ['मोठे कौटुंबिक लेआउट', 'अनेक बाल्कनी', 'प्रीमियम फिनिश', 'उपलब्धता खासगीरीत्या'],
          'नमस्कार Prestige Enterprises, मला कल्याण वेस्टमधील 4 BHK घरांची माहिती हवी आहे.'),
-        ('5 BHK', '5B', '999.4 व 1,001.4 चौ. फूट', 'विनंतीवर',
+        ('5 BHK', '5B', '', 'विनंतीवर',
          ['Prestige One मधील एलीट घरे', 'प्रशस्त खासगी लेआउट', 'गंभीर खरेदीदारांसोबत खासगी', 'साइट भेट विनंतीवर'],
          'नमस्कार Prestige Enterprises, मला Prestige One 5 BHK घरांची माहिती हवी आहे.'),
     ],
@@ -590,8 +590,8 @@ def pricing(t, l):
         f'<article class="price-more-card">'
         f'<div class="price-more-top"><span class="price-visual-monogram">{e(mono)}</span>'
         f'<div><span class="price-more-kicker">{e(t["more_eye"])}</span><h3>{e(name)}</h3></div></div>'
-        f'<p class="price-more-area"><span>{e(t["area_label"])}</span><strong>{e(area)}</strong></p>'
-        f'<ul>{"".join(f"<li>{e(x)}</li>" for x in feats)}</ul>'
+        + (f'<p class="price-more-area"><span>{e(t["area_label"])}</span><strong>{e(area)}</strong></p>' if area else '')
+        + f'<ul>{"".join(f"<li>{e(x)}</li>" for x in feats)}</ul>'
         f'<div class="price-more-offer"><strong>{e(price)}</strong>'
         f'<a class="price-row-cta" href="{a(wa(msg))}" target="_blank" rel="noopener">{e(t["more_enquire"])}<span aria-hidden="true">↗</span></a></div>'
         f'</article>'
