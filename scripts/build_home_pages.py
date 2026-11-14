@@ -10,7 +10,7 @@ import urllib.parse
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261114-v16'
+ASSET_VER = 'prestige-home-revamp-20261114-v17'
 VIDEO = 'https://8ps1sfxuipndwxps.public.blob.vercel-storage.com/Prestige_Projects_Kalyan_30s.mp4'
 PHONE_TEL = '+919689557788'
 PHONE = '+91 96895 57788'
@@ -462,7 +462,7 @@ def projects(t):
             f'<a class="btn-o dark" href="{href}"><span>{e(btn)}</span>{icon("arrow")}</a></div></div>'
         )
         if is_one:
-            rows += f'<div class="project-banner">{zoom_img("/img/prestige-one/one-life-one-home.webp", 1774, 887, t["one_poster_alt"], t, "project-banner-media")}</div>'
+            rows += f'<div class="in project-banner">{zoom_img("/img/prestige-one/one-life-one-home.webp", 1774, 887, t["one_poster_alt"], t, "project-banner-media")}</div>'
     return (
         '<section class="sec project-showcase home-projects" id="projects"><span id="types" class="home-anchor" aria-hidden="true"></span>'
         f'<div class="in home-sec-head">{eye(t["projects_eye"], "eye-center")}<h2 class="dh">{t["projects_h"]}</h2></div>'
