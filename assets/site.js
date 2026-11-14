@@ -20,7 +20,8 @@
   var nav = $('#nav'), prog = $('#prog');
   var isHomeVideo = document.body.classList.contains('home-video-page');
   var isHomePremium = document.body.classList.contains('home-premium');
-  var isHomeVideoPlayback = isHomeVideo || isHomePremium;
+  var hasSharedVideoHero = document.body.classList.contains('has-video-hero') || !!document.querySelector('.site-video-hero .hero-video, .hero-video-hero .hero-video');
+  var isHomeVideoPlayback = isHomeVideo || isHomePremium || hasSharedVideoHero;
   var homeScrollY = 0;
   var HOME_SCROLL_DELTA = 6;
 
@@ -76,8 +77,8 @@
   /* Home hero background video (Vercel Blob) — autoplay + seamless loop */
   if (isHomeVideoPlayback) {
     var heroVideo = $('#heroVideo') || $('.hero-video');
-    var heroSection = $('#home');
-    var HERO_URL = 'https://8ps1sfxuipndwxps.public.blob.vercel-storage.com/Prestige_Projects_Kalyan_30s.mp4';
+    var heroSection = $('#home') || $('.site-video-hero') || $('.hero-video-hero');
+    var HERO_URL = 'https://bjoj2azd7axubq1h.public.blob.vercel-storage.com/Prestige_One_Kalyan_Sales_Video_1080p%20(1).mp4';
 
     if (heroVideo) {
       if (!heroVideo.getAttribute('src')) heroVideo.setAttribute('src', HERO_URL);

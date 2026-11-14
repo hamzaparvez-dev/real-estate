@@ -321,7 +321,8 @@ def footer(l, alts):
 
 def page(l, path, alts, head_html, body):
     """Write one page; alts maps lang -> url path."""
-    write((url(l, path)).lstrip('/') + 'index.html', head_html + '<body>\n' + nav(l, alts) + body + footer(l, alts))
+    write((url(l, path)).lstrip('/') + 'index.html',
+          head_html + '<body class="has-video-hero">\n' + nav(l, alts) + body + footer(l, alts))
 
 
 def breadcrumb_ld(l, trail):
@@ -344,6 +345,30 @@ def eye(txt):
 
 def crumbs(items):
     return '<ol class="crumbs">' + ''.join(f'<li>{"<a href=" + chr(34) + u + chr(34) + ">" + esc(n) + "</a>" if u else esc(n)}</li>' for n, u in items) + '</ol>'
+
+
+HERO_VIDEO_BLOB = 'https://bjoj2azd7axubq1h.public.blob.vercel-storage.com/Prestige_One_Kalyan_Sales_Video_1080p%20%281%29.mp4'
+HERO_VIDEO_HOST = 'https://bjoj2azd7axubq1h.public.blob.vercel-storage.com'
+
+
+def video_hero(label='Prestige Enterprises residences in Kalyan West'):
+    """Same homepage video hero used on every public page."""
+    return (
+        f'<main id="main"><section id="home" class="hero hero-video-hero site-video-hero" aria-label="{attr(label)}">'
+        f'<video class="hero-video" id="heroVideo" src="{HERO_VIDEO_BLOB}" autoplay muted loop playsinline webkit-playsinline '
+        'preload="auto" disablepictureinpicture disableremoteplayback x-webkit-airplay="deny" aria-hidden="true" tabindex="-1"></video>'
+        '<div class="hero-video-shade" aria-hidden="true"></div></section>'
+    )
+
+
+def page_intro(inner):
+    """Page title band under the shared video hero (former ph-c content)."""
+    return f'<section class="page-intro"><div class="in page-intro-inner">{inner}</div></section>'
+
+
+def video_preconnect():
+    return (f'<link rel="preconnect" href="{HERO_VIDEO_HOST}" crossorigin>\n'
+            f'<link rel="dns-prefetch" href="{HERO_VIDEO_HOST}">\n')
 
 
 PAGES = []  # alts dicts (lang -> path); deduplicated when the sitemap is written
@@ -463,7 +488,6 @@ def build_home(l):
 # ------------------------------------------------------------------ Prestige Gold project page
 
 GOLD_WA = '918446652600'
-HERO_VIDEO_BLOB = 'https://bjoj2azd7axubq1h.public.blob.vercel-storage.com/Prestige_One_Kalyan_Sales_Video_1080p%20%281%29.mp4'
 
 
 def build_prestige_gold():
@@ -519,15 +543,13 @@ def build_prestige_gold():
         f'<figure><img src="{src}" width="{w}" height="{h}" loading="lazy" alt="{esc(alt)}"><figcaption>{esc(cap)}</figcaption></figure>'
         for src, w, h, alt, cap in gallery_items
     )
-    hero = (
-        '<main id="main"><header class="ph pg-hero"><img src="/img/hero-day.jpg" width="1920" height="1080" fetchpriority="high" alt="Prestige Gold — prime Kalyan West">'
-        '<div class="ph-c">' + crumbs([(UI['en']['home'], '/'), ('Projects', None), ('Plans', None), ('Prestige Gold', None)]) +
+    hero = video_hero('Prestige Gold — prime Kalyan West') + page_intro(
+        crumbs([(UI['en']['home'], '/'), ('Projects', None), ('Plans', None), ('Prestige Gold', None)]) +
         eye('PRIME KALYAN WEST · RESIDENTIAL + COMMERCIAL') +
         '<h1>Prestige <b>Gold</b></h1>'
         '<p class="ph-lead">Elite living in a full residential project — luxury amenities, modern security, 1, 2 &amp; 3 BHK homes and commercial space.</p>'
         '<div class="pg-hero-facts"><span>1, 2 &amp; 3 BHK</span><span>Commercial</span><span>Shri Durga Enterprises</span><span>G + 5 floors</span><span>Expected possession June 2027</span></div>'
         f'<div class="section-cta"><a class="cta-enq" href="{wa_link}" target="_blank" rel="noopener">Request brochure</a><a class="cta-wa" href="tel:+' + GOLD_WA + '">Call +91 84466 52600</a></div>'
-        '</div></header>'
     )
     overview = (
         '<section class="sec pg-overview"><div class="in pg-overview-grid"><div>'
@@ -650,8 +672,8 @@ def build_prestige_gold():
     )
     body = hero + overview + pricing + floorplans + gallery + amenities_section + progress + location + shri_durga + contact
     ld = [agent_ld('en'), breadcrumb_ld('en', [(UI['en']['home'], url('en', '/')), ('Prestige Gold', path)])]
-    html = head('en', title, desc, seo_alts, '/img/prestige-tower-day.jpg', 'Prestige Gold project in Kalyan West', ld)
-    write(path.lstrip('/') + 'index.html', html + '<body>\n' + nav('en', nav_alts) + body + footer('en', nav_alts))
+    html = head('en', title, desc, seo_alts, '/img/prestige-tower-day.jpg', 'Prestige Gold project in Kalyan West', ld, extra=video_preconnect())
+    write(path.lstrip('/') + 'index.html', html + '<body class="has-video-hero">\n' + nav('en', nav_alts) + body + footer('en', nav_alts))
     PAGES.append(seo_alts)
 
 
@@ -663,15 +685,14 @@ def build_prestige_one():
     desc = 'Prestige One — 5 BHK luxury homes in Kalyan. Spacious layouts from 999.4 & 1001.4 sq. ft. No public price list. Request brochure and site visit.'
     wa_text = 'Hello, I am interested in Prestige One 5 BHK in Kalyan. Please share the brochure and floor plans.'
     wa_link = waurl(wa_text)
-    hero = (
-        '<main id="main"><header class="ph pg-hero"><img src="/img/Prestige%20One%20Tower%20in%20Daylight.png" width="1600" height="1000" fetchpriority="high" alt="Prestige One tower">'
-        '<div class="ph-c">' + crumbs([(UI['en']['home'], '/'), ('Projects', None), ('Plans', None), ('Prestige One', None)]) +
+    hero = video_hero('Prestige One tower') + page_intro(
+        crumbs([(UI['en']['home'], '/'), ('Projects', None), ('Plans', None), ('Prestige One', None)]) +
         eye('KALYAN · PRESTIGE ONE') +
         '<h1>Prestige <b>One</b></h1>'
         '<p class="ph-lead">Elite 5 BHK living — prime location, modern amenities, luxury finishes and integrated security.</p>'
         '<div class="pg-hero-facts"><span>5 BHK</span><span>999.4 &amp; 1001.4 sq. ft.</span><span>Pricing on request</span><span>Our team is ready to assist</span></div>'
         f'<div class="section-cta"><a class="cta-enq" href="{wa_link}" target="_blank" rel="noopener">Request brochure</a>'
-        f'<a class="cta-wa" href="tel:{C.PHONE_TEL}">Call {C.PHONE_DISPLAY}</a></div></div></header>'
+        f'<a class="cta-wa" href="tel:{C.PHONE_TEL}">Call {C.PHONE_DISPLAY}</a></div>'
     )
     overview = (
         '<section class="sec pg-overview"><div class="in pg-overview-grid"><div>'
@@ -701,8 +722,8 @@ def build_prestige_one():
     )
     body = hero + overview + pricing + contact
     ld = [{'@type': 'WebPage', 'name': 'Prestige One', 'url': C.SITE + path, 'description': desc, 'inLanguage': 'en-IN'}]
-    html = head('en', title, desc, seo_alts, '/img/Prestige%20One%20Tower%20in%20Daylight.png', 'Prestige One Kalyan', ld)
-    write(path.lstrip('/') + 'index.html', html + '<body>\n' + nav('en', nav_alts) + body + footer('en', nav_alts))
+    html = head('en', title, desc, seo_alts, '/img/Prestige%20One%20Tower%20in%20Daylight.png', 'Prestige One Kalyan', ld, extra=video_preconnect())
+    write(path.lstrip('/') + 'index.html', html + '<body class="has-video-hero">\n' + nav('en', nav_alts) + body + footer('en', nav_alts))
     PAGES.append(seo_alts)
 
 
@@ -768,12 +789,13 @@ def build_hub(l):
             f'<a class="card" href="{url(l, "/areas/" + s + "/")}"><img src="/img/areas/{s}.jpg" width="1200" height="630" loading="lazy" alt="{attr(city(l, s)["alt"])}">'
             f'<div class="card-b"><h3>{esc(city(l, s)["name"])}</h3><p>{esc(city(l, s)["card"])}</p><span class="card-m">{esc(U["hub_more"].format(name=city(l, s)["name"]))} →</span></div></a>'
             for s in slugs) + '</div>'
-    body = ('<main id="main"><header class="ph"><img src="/img/hero-day.jpg" width="1920" height="1080" alt=""><div class="ph-c">'
-            + crumbs([(U['home'], url(l, '/')), (U['areas'], None)]) + eye(esc(U['hub_eyebrow'])) + f'<h1>{U["hub_h1"]}</h1>'
-            f'<p class="ph-lead">{esc(U["hub_lead"])}</p></div></header><section class="sec"><div class="in" style="margin-top:-30px">{out}</div></section>\n'
+    body = (video_hero(U['hub_eyebrow']) + page_intro(
+            crumbs([(U['home'], url(l, '/')), (U['areas'], None)]) + eye(esc(U['hub_eyebrow'])) + f'<h1>{U["hub_h1"]}</h1>'
+            f'<p class="ph-lead">{esc(U["hub_lead"])}</p>')
+            + f'<section class="sec"><div class="in">{out}</div></section>\n'
             + contact_block(l, U['hub_contact_h'], HOME[l]['contact_p']) + '</main>\n')
     ld = [agent_ld(l), breadcrumb_ld(l, [(U['home'], url(l, '/')), (U['areas'], url(l, '/areas/'))])]
-    page(l, '/areas/', alts, head(l, U['hub_title'], U['hub_desc'], alts, '/img/og-default.jpg', C.BRAND, ld), body)
+    page(l, '/areas/', alts, head(l, U['hub_title'], U['hub_desc'], alts, '/img/og-default.jpg', C.BRAND, ld, extra=video_preconnect()), body)
     PAGES.append(alts)
 
 
@@ -789,12 +811,12 @@ def build_city(l, s):
     near = ''.join(f'<a class="card" href="{url(l, "/areas/" + x + "/")}"><img src="/img/areas/{x}.jpg" width="1200" height="630" loading="lazy" alt="{attr(city(l, x)["alt"])}">'
                    f'<div class="card-b"><h3>{esc(city(l, x)["name"])}</h3><p>{esc(city(l, x)["card"])}</p></div></a>' for x in NEAR[s])
     near_section = (f'<section class="sec"><div class="in"><h2 class="dh" style="font-size:clamp(28px,3.4vw,42px)">{esc(U["near_h"])}</h2><div class="cards">{near}</div></div></section>\n' if near else '')
-    body = (f'<main id="main"><header class="ph"><img src="/img/areas/{s}.jpg" width="1200" height="630" alt="{attr(c["alt"])}" fetchpriority="high"><div class="ph-c">'
-            + crumbs([(U['home'], url(l, '/')), (U['areas'], url(l, '/areas/')), (n, None)]) + eye(esc(U['city_eyebrow'].format(name=n)))
+    body = (video_hero(c['alt']) + page_intro(
+            crumbs([(U['home'], url(l, '/')), (U['areas'], url(l, '/areas/')), (n, None)]) + eye(esc(U['city_eyebrow'].format(name=n)))
             + f'<h1>{U["city_h1"].format(name=esc(n))}</h1><p class="ph-lead">{esc(c["lead"])}</p>'
             f'<div class="cta-row"><a class="btn-wa" href="{waurl(wa_t)}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(U["btn_wa"])}</span></a>'
-            f'<a class="btn-o" href="#hoods"><span>{esc(U["btn_hoods"])}</span></a></div></div></header>\n'
-            f'<section class="sec"><div class="in two-col"><div>{eye(esc(U["intro_eye"].format(name=n)))}<h2 class="dh">{U["intro_h"].format(name=esc(n))}</h2>'
+            f'<a class="btn-o dark" href="#hoods"><span>{esc(U["btn_hoods"])}</span></a></div>')
+            + f'\n<section class="sec"><div class="in two-col"><div>{eye(esc(U["intro_eye"].format(name=n)))}<h2 class="dh">{U["intro_h"].format(name=esc(n))}</h2>'
             f'<div class="prose" style="margin-top:28px">{"".join(f"<p>{esc(p)}</p>" for p in c["intro"])}</div></div>'
             f'<aside class="facts"><h3>{esc(U["facts_h"])}</h3><dl>{facts}</dl></aside></div></section>\n'
             f'<section class="sec" id="hoods" style="background:#fff"><div class="in">{eye(esc(U["hoods_eye"]))}<h2 class="dh">{U["hoods_h"].format(name=esc(n))}</h2><div class="hoods">{hoods}</div></div></section>\n'
@@ -805,7 +827,7 @@ def build_city(l, s):
             + contact_block(l, U['contact_h'].format(name=esc(n)), HOME[l]['contact_p'], wa_text=wa_t) + '</main>\n')
     trail = [(U['home'], url(l, '/')), (U['areas'], url(l, '/areas/')), (n, url(l, f'/areas/{s}/'))]
     ld = [agent_ld(l), breadcrumb_ld(l, trail), faq_ld(c['faq'])]
-    page(l, f'/areas/{s}/', alts, head(l, U['city_title'].format(name=n), c['desc'], alts, f'/img/areas/{s}.jpg', c['alt'], ld), body)
+    page(l, f'/areas/{s}/', alts, head(l, U['city_title'].format(name=n), c['desc'], alts, f'/img/areas/{s}.jpg', c['alt'], ld, extra=video_preconnect()), body)
     PAGES.append(alts)
 
 
@@ -814,12 +836,12 @@ def build_city(l, s):
 def build_blog_index(l):
     U = UI[l]
     alts = {k: url(k, '/blog/') for k in LANGS}
-    body = ('<main id="main"><header class="ph" style="min-height:460px"><img src="/img/hero-night.jpg" width="1920" height="1080" alt=""><div class="ph-c">'
-            + crumbs([(U['home'], url(l, '/')), (U['blog'], None)]) + eye(esc(U['blog_eyebrow'])) + f'<h1>{U["blog_h1"]}</h1><p class="ph-lead">{esc(U["blog_lead"])}</p></div></header>'
-            f'<section class="sec"><div class="in" style="margin-top:-20px"><div class="cards">{"".join(post_card(l, s) for s in ORDER)}</div></div></section>\n'
+    body = (video_hero(U['blog_eyebrow']) + page_intro(
+            crumbs([(U['home'], url(l, '/')), (U['blog'], None)]) + eye(esc(U['blog_eyebrow'])) + f'<h1>{U["blog_h1"]}</h1><p class="ph-lead">{esc(U["blog_lead"])}</p>')
+            + f'<section class="sec"><div class="in"><div class="cards">{"".join(post_card(l, s) for s in ORDER)}</div></div></section>\n'
             + contact_block(l, U['cta_h'], U['cta_p']) + '</main>\n')
     ld = [agent_ld(l), breadcrumb_ld(l, [(U['home'], url(l, '/')), (U['blog'], url(l, '/blog/'))])]
-    feed = f'<link rel="alternate" type="application/rss+xml" title="{attr(C.BRAND)}" href="{url(l, "/blog/feed.xml")}">\n'
+    feed = video_preconnect() + f'<link rel="alternate" type="application/rss+xml" title="{attr(C.BRAND)}" href="{url(l, "/blog/feed.xml")}">\n'
     page(l, '/blog/', alts, head(l, U['blog_title'], U['blog_desc'], alts, '/img/og-default.jpg', C.BRAND, ld, extra=feed), body)
     PAGES.append(alts)
 
@@ -835,11 +857,11 @@ def build_post(l, s):
     idx = ORDER.index(s)
     rel = [ORDER[(idx + k) % len(ORDER)] for k in (1, 2, 3)]
     wa_t = U['post_wa'].format(title=p['title'])
-    body = (f'<main id="main"><header class="ph" style="min-height:500px"><img src="/img/blog/{s}.jpg?v={BLOG_PHOTO_VERSION}" width="800" height="420" alt="{attr(p["title"] + " — editorial real estate photograph")}" fetchpriority="high" decoding="async"><div class="ph-c">'
-            + crumbs([(U['home'], url(l, '/')), (U['blog'], url(l, '/blog/')), (p['title'], None)]) + eye(esc(U['cat_' + p['cat']]))
-            + f'<h1 style="font-size:clamp(34px,5vw,64px)">{esc(p["title"])}</h1><div class="ph-meta"><span>{esc(U["by"])}</span><span>{esc(U["updated"].format(date=DATE_FMT[l]))}</span>'
-            f'<span>{esc(U["min_read"].format(n=p["read"]))}</span></div></div></header>\n'
-            f'<article class="sec"><div class="post"><div class="answer"><b>{esc(U["quick_answer"])}</b><p>{esc(p["answer"])}</p></div>{secs}'
+    body = (video_hero(p['title']) + page_intro(
+            crumbs([(U['home'], url(l, '/')), (U['blog'], url(l, '/blog/')), (p['title'], None)]) + eye(esc(U['cat_' + p['cat']]))
+            + f'<h1>{esc(p["title"])}</h1><div class="ph-meta"><span>{esc(U["by"])}</span><span>{esc(U["updated"].format(date=DATE_FMT[l]))}</span>'
+            f'<span>{esc(U["min_read"].format(n=p["read"]))}</span></div>')
+            + f'\n<article class="sec"><div class="post"><div class="answer"><b>{esc(U["quick_answer"])}</b><p>{esc(p["answer"])}</p></div>{secs}'
             f'<h2>{esc(U["post_faq"])}</h2>{faq_html(p["faq"])}'
             f'<div class="cta-box"><h2>{esc(U["cta_h"])}</h2><p>{esc(U["cta_p"])}</p><a class="btn-wa" href="{waurl(wa_t)}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(U["wa_btn"])}</span></a></div>'
             f'</div></article>\n<section class="sec" style="background:#fff"><div class="in"><h2 class="dh" style="font-size:clamp(28px,3.4vw,42px)">{esc(U["related"])}</h2>'
@@ -847,7 +869,7 @@ def build_post(l, s):
     ld = [agent_ld(l), breadcrumb_ld(l, [(U['home'], url(l, '/')), (U['blog'], url(l, '/blog/')), (p['title'], url(l, f'/blog/{s}/'))]), faq_ld(p['faq']),
           {'@type': 'Article', 'headline': p['title'], 'description': p['desc'], 'inLanguage': C.HTML_LANG[l], 'datePublished': C.BUILD_DATE, 'dateModified': C.BUILD_DATE,
            'image': f'{C.SITE}/img/blog/{s}.jpg?v={BLOG_PHOTO_VERSION}', 'mainEntityOfPage': C.SITE + alts[l], 'author': {'@id': C.SITE + '/#agent'}, 'publisher': {'@id': C.SITE + '/#agent'}}]
-    page(l, f'/blog/{s}/', alts, head(l, (p['title'] + ' | ' + C.BRAND) if len(p['title']) + len(C.BRAND) + 3 <= 70 else p['title'], p['desc'], alts, f'/img/blog/{s}.jpg', p['title'], ld, og_type='article'), body)
+    page(l, f'/blog/{s}/', alts, head(l, (p['title'] + ' | ' + C.BRAND) if len(p['title']) + len(C.BRAND) + 3 <= 70 else p['title'], p['desc'], alts, f'/img/blog/{s}.jpg', p['title'], ld, og_type='article', extra=video_preconnect()), body)
     PAGES.append(alts)
 
 

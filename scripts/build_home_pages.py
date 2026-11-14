@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261114-v33'
+ASSET_VER = 'prestige-home-revamp-20261114-v34'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -489,7 +489,7 @@ def nav(l, t):
 
 def hero(t):
     return (
-        f'<main id="main"><section id="home" class="hero hero-video-hero" aria-label="{a(t["hero_label"])}">\n'
+        f'<main id="main"><section id="home" class="hero hero-video-hero site-video-hero" aria-label="{a(t["hero_label"])}">\n'
         f'  <video class="hero-video" id="heroVideo" src="{VIDEO}" autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture disableremoteplayback x-webkit-airplay="deny" aria-hidden="true" tabindex="-1"></video>\n'
         '  <div class="hero-video-shade" aria-hidden="true"></div>\n</section>\n'
     )
