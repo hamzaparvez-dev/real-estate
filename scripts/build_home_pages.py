@@ -10,7 +10,7 @@ import urllib.parse
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261114-v20'
+ASSET_VER = 'prestige-home-revamp-20261114-v21'
 VIDEO = 'https://8ps1sfxuipndwxps.public.blob.vercel-storage.com/Prestige_Projects_Kalyan_30s.mp4'
 PHONE_TEL = '+919689557788'
 PHONE = '+91 96895 57788'
@@ -82,9 +82,9 @@ T['en'] = dict(
     title='Luxury Homes in Kalyan West | Prestige Enterprises',
     desc='Residences in Khadakpada, Kalyan West: prime location, luxury living, modern amenities and round-the-clock security. 1, 2 & 3 BHK from ₹55 Lakh. Book a private site visit.',
     nav_label='Main menu', menu_open='Open menu', hero_label='Prestige Enterprises residences in Kalyan West',
-    intro_h='Elevated living in Kalyan West',
-    intro=['Prestige Enterprises presents thoughtfully planned residences in Khadakpada, one of Kalyan West\u2019s most sought-after neighbourhoods, where schools, hospitals and everyday conveniences sit minutes from your door.',
-           'Every home pairs generous, light-filled layouts with branded finishes, and every building is protected by CCTV surveillance, a secured entrance and power-backed lifts.'],
+    intro_h='A home that feels worth the wait',
+    intro=['Sunlit rooms. Branded finishes. Amenities that feel like a private club. Prestige Enterprises creates residences for families who expect more than another flat on the market.',
+           'Homes are limited and pricing is clear. The fastest way to know if this one is yours is a private viewing with our team.'],
     intro_cta='Book a private viewing',
     pillars=[('pin', 'Prime location', 'Khadakpada, Kalyan West. Leading schools, hospitals and shopping within a short drive.'),
              ('crown', 'Luxury living', 'Designer lobbies, branded fittings, vitrified flooring and aluminium French windows.'),
@@ -175,9 +175,9 @@ T['hi'] = dict(
     title='कल्याण वेस्ट में लग्ज़री घर | Prestige Enterprises',
     desc='खड़कपाड़ा, कल्याण वेस्ट में घर: प्राइम लोकेशन, लग्ज़री लिविंग, आधुनिक सुविधाएँ और चौबीसों घंटे सुरक्षा। 1, 2 और 3 BHK ₹55 लाख से। निजी साइट विज़िट बुक करें।',
     nav_label='मुख्य मेन्यू', menu_open='मेन्यू खोलें', hero_label='कल्याण वेस्ट में Prestige Enterprises के घर',
-    intro_h='कल्याण वेस्ट में बेहतरीन जीवनशैली',
-    intro=['Prestige Enterprises खड़कपाड़ा में सोच-समझकर डिज़ाइन किए गए घर प्रस्तुत करता है। यह कल्याण वेस्ट के सबसे पसंदीदा इलाकों में से एक है, जहाँ स्कूल, अस्पताल और रोज़मर्रा की सुविधाएँ आपके घर से कुछ ही मिनटों की दूरी पर हैं।',
-           'हर घर में खुला, रोशनी से भरा लेआउट और ब्रांडेड फ़िनिश है, और हर बिल्डिंग CCTV निगरानी, सुरक्षित प्रवेश द्वार और पावर बैकअप वाली लिफ़्ट से सुरक्षित है।'],
+    intro_h='एक घर, जिसका इंतज़ार सही लगता है',
+    intro=['रोशनी से भरे कमरे। ब्रांडेड फ़िनिश। ऐसी सुविधाएँ जो निजी क्लब जैसी लगें। Prestige Enterprises उन परिवारों के लिए घर बनाता है जो बाज़ार में सिर्फ़ एक और फ़्लैट नहीं चाहते।',
+           'घर सीमित हैं और कीमतें साफ़ हैं। यह घर आपका है या नहीं, यह जानने का सबसे तेज़ तरीका है हमारी टीम के साथ निजी विज़िट।'],
     intro_cta='निजी विज़िट बुक करें',
     pillars=[('pin', 'प्राइम लोकेशन', 'खड़कपाड़ा, कल्याण वेस्ट। प्रमुख स्कूल, अस्पताल और शॉपिंग कुछ ही मिनटों में।'),
              ('crown', 'लग्ज़री लिविंग', 'डिज़ाइनर लॉबी, ब्रांडेड फिटिंग्स, विट्रिफाइड फ़्लोरिंग और एल्युमिनियम फ्रेंच विंडो।'),
@@ -268,9 +268,9 @@ T['mr'] = dict(
     title='कल्याण वेस्टमध्ये लक्झरी घरे | Prestige Enterprises',
     desc='खडकपाडा, कल्याण वेस्टमधील घरे: प्राइम लोकेशन, लक्झरी लिव्हिंग, आधुनिक सुविधा आणि चोवीस तास सुरक्षा. 1, 2 आणि 3 BHK ₹55 लाखांपासून. खासगी साइट व्हिजिट बुक करा.',
     nav_label='मुख्य मेनू', menu_open='मेनू उघडा', hero_label='कल्याण वेस्टमधील Prestige Enterprises ची घरे',
-    intro_h='कल्याण वेस्टमधील उत्कृष्ट जीवनशैली',
-    intro=['Prestige Enterprises खडकपाड्यात विचारपूर्वक डिझाइन केलेली घरे सादर करते. हा कल्याण वेस्टमधील सर्वाधिक पसंतीच्या परिसरांपैकी एक आहे, जिथे शाळा, रुग्णालये आणि रोजच्या सोयी तुमच्या घरापासून काही मिनिटांवर आहेत.',
-           'प्रत्येक घरात मोकळा, प्रकाशमान लेआउट आणि ब्रँडेड फिनिश आहे, आणि प्रत्येक इमारत CCTV देखरेख, सुरक्षित प्रवेशद्वार आणि पॉवर बॅकअप असलेल्या लिफ्टने सुरक्षित आहे.'],
+    intro_h='एक घर, ज्याची वाट बघणे योग्य वाटते',
+    intro=['प्रकाशमान खोल्या. ब्रँडेड फिनिश. अशा सुविधा ज्या खासगी क्लबसारख्या वाटतात. Prestige Enterprises अशा कुटुंबांसाठी घरे उभारते, ज्यांना बाजारातील आणखी एक फ्लॅट नको असतो.',
+           'घरे मर्यादित आहेत आणि किंमती स्पष्ट आहेत. हे घर तुमचे आहे का, हे जाणून घेण्याचा सर्वात जलद मार्ग म्हणजे आमच्या टीमसोबत खासगी व्हिजिट.'],
     intro_cta='खासगी व्हिजिट बुक करा',
     pillars=[('pin', 'प्राइम लोकेशन', 'खडकपाडा, कल्याण वेस्ट. नामांकित शाळा, रुग्णालये आणि शॉपिंग काही मिनिटांवर.'),
              ('crown', 'लक्झरी लिव्हिंग', 'डिझायनर लॉबी, ब्रँडेड फिटिंग्ज, व्हिट्रिफाइड फ्लोअरिंग आणि ॲल्युमिनियम फ्रेंच विंडो.'),
