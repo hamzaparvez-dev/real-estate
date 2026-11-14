@@ -279,25 +279,42 @@ def nav(l, alts, solid=True):
 
 
 def footer(l, alts):
+    """Sitewide footer — same structure/copy as the homepage home-footer."""
     U, h = UI[l], url(l, '/')
-    langs = ''.join(f'<li><a href="{alts[k]}" hreflang="{k}" lang="{k}">{C.LANG_NAME[k]}</a></li>' for k in alts)
+    lang_keys = [k for k in ('en', 'hi', 'mr') if k in alts] or list(alts)
+    langs = ''.join(
+        f'<a href="{alts[k]}" hreflang="{k}" lang="{k}"'
+        + (' aria-current="true"' if k == l else '')
+        + f'>{C.LANG_NAME[k]}</a>'
+        for k in lang_keys
+    )
     rera = f'<p class="foot-rera"><strong>{esc(U["rera_label"])}:</strong> {esc(C.RERA_NO)}</p>' if C.RERA_NO else ''
     js_ver = fver('assets/site.js')
-    return (f'<footer><div class="foot-grid"><div>'
-            f'<a class="foot-logo-link" href="{h}" aria-label="{attr(C.BRAND)}"><img src="/img/new-logo.png" width="210" height="65" alt="{attr(C.BRAND)}" class="foot-logo"></a>'
-            f'<p>{esc(U["foot_tag"])}</p></div>'
-            f'<div><h4>{esc(U["foot_links"])}</h4><ul><li><a href="{h}">{esc(U["home"])}</a></li><li><a href="{h}#plans">{esc(U["nav_plans"])}</a></li><li><a href="{url(l, "/areas/")}">{esc(U["areas"])}</a></li>'
-            f'<li><a href="{url(l, "/blog/")}">{esc(U["blog"])}</a></li><li><a href="{h}#contact">{esc(U["nav_contact"])}</a></li></ul></div>'
-            f'<div><h4>{esc(U["foot_projects"])}</h4><ul>'
-            f'<li><a href="/projects/prestige-gold/">Prestige Gold</a></li>'
-            f'<li><a href="/projects/prestige-gold/#commercial">Commercial</a></li>'
-            f'<li><a href="/projects/prestige-one/">Prestige One</a></li></ul></div>'
-            f'<div><h4>{esc(U["foot_contact"])}</h4><p>{esc(C.ADDRESS_LINE)}</p><p><a href="tel:{C.PHONE_TEL}">{C.PHONE_DISPLAY}</a><br>'
-            f'<a href="mailto:{C.EMAIL}">{C.EMAIL}</a></p></div>'
-            f'<div><h4>{esc(U["foot_lang"])}</h4><ul>{langs}</ul></div></div>'
-            f'<div class="foot-legal">{rera}<p>{esc(U["disclaimer"])}</p><p>{esc(U["rights"])}</p></div></footer>\n'
-            f'<a class="wa" href="{waurl(U["wa_default"])}" target="_blank" rel="noopener" aria-label="{attr(U["wa_btn"])}">{I["chat"]}<span>{esc(U["float_wa"])}</span></a>\n'
-            f'<script src="/assets/site.js?v={js_ver}" defer></script>\n</body>\n</html>\n')
+    return (
+        f'<footer class="home-footer"><div class="foot-grid"><div>'
+        f'<a class="foot-logo-link" href="{h}" aria-label="{attr(C.BRAND)}">'
+        f'<img src="/img/logo-on-dark.png" width="210" height="70" alt="{attr(C.BRAND)}" class="foot-logo"></a>'
+        f'<p>{esc(U["foot_tag"])}</p><div class="foot-langs">{langs}</div></div>'
+        f'<div><h4>{esc(U["foot_links"])}</h4><ul>'
+        f'<li><a href="{h}#about">{esc(U["nav_about"])}</a></li>'
+        f'<li><a href="{h}#amenities">{esc(U["foot_amenities"])}</a></li>'
+        f'<li><a href="{h}#plans">{esc(U["foot_plans"])}</a></li>'
+        f'<li><a href="{h}#location">{esc(U["foot_location"])}</a></li>'
+        f'<li><a href="{url(l, "/blog/")}">{esc(U["blog"])}</a></li>'
+        f'<li><a href="{h}#contact">{esc(U["nav_contact"])}</a></li></ul></div>'
+        f'<div><h4>{esc(U["foot_projects"])}</h4><ul>'
+        f'<li><a href="/projects/prestige-gold/">Prestige Gold</a></li>'
+        f'<li><a href="/projects/prestige-one/">Prestige One</a></li>'
+        f'<li><a href="/projects/shri-durga-enterprises/">Shri Durga Enterprises</a></li></ul></div>'
+        f'<div><h4>{esc(U["foot_contact"])}</h4><p>{esc(C.ADDRESS_LINE)}</p>'
+        f'<p><a href="tel:{C.PHONE_TEL}">{C.PHONE_DISPLAY}</a><br>'
+        f'<a href="mailto:{C.EMAIL}">{C.EMAIL}</a></p></div></div>'
+        f'<div class="foot-legal">{rera}'
+        f'<p><a href="/privacy/">{esc(U["privacy"])}</a></p>'
+        f'<p>{esc(U["disclaimer"])}</p><p>{esc(U["rights"])}</p></div></footer>\n'
+        f'<a class="wa" href="{waurl(U["wa_default"])}" target="_blank" rel="noopener" aria-label="{attr(U["wa_btn"])}">{I["chat"]}<span>{esc(U["float_wa"])}</span></a>\n'
+        f'<script src="/assets/site.js?v={js_ver}" defer></script>\n</body>\n</html>\n'
+    )
 
 
 def page(l, path, alts, head_html, body):
