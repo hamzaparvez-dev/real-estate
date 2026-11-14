@@ -10,7 +10,7 @@ import urllib.parse
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261114-v24'
+ASSET_VER = 'prestige-home-revamp-20261114-v25'
 VIDEO = 'https://8ps1sfxuipndwxps.public.blob.vercel-storage.com/Prestige_Projects_Kalyan_30s.mp4'
 PHONE_TEL = '+919689557788'
 PHONE = '+91 96895 57788'
@@ -135,7 +135,7 @@ T['en'] = dict(
             ['Living and dining room', 'Bedroom with attached bath', 'Modular kitchen provision', 'Balcony with city view', 'Utility / dry balcony', 'Premium vitrified flooring']),
            ('2 BHK', '577–721', '₹75,00,000', '/img/plans/2bhk-layout.webp', '2 BHK floor plan',
             ['Spacious living and dining', 'Master bedroom with attached bath', 'Second bedroom with common bath', 'Modular kitchen and dry balcony', 'Twin balconies', 'UPVC sliding windows']),
-           ('3 BHK', '999.4–1,001.4', '₹1,40,20,000', '', '3 BHK floor plan',
+           ('3 BHK', '999.4–1,001.4', '₹1,40,00,000', '', '3 BHK floor plan',
             ['Available across the complete site', 'Grand living and dining', 'Master bedroom with walk-in wardrobe', 'Two additional bedrooms', 'Three bathrooms (two attached)', 'Two full-size balconies', 'Dedicated pooja room'])],
     plan_req='Layout shared on request',
     big_units='<strong>Elite 5 BHK residences at Prestige One</strong> are offered privately. Ask our team for layouts, carpet areas and pricing.',
@@ -228,7 +228,7 @@ T['hi'] = dict(
             ['लिविंग और डाइनिंग रूम', 'अटैच्ड बाथ के साथ बेडरूम', 'मॉड्यूलर किचन की सुविधा', 'शहर के दृश्य वाली बालकनी', 'यूटिलिटी / ड्राई बालकनी', 'प्रीमियम विट्रिफाइड फ़्लोरिंग']),
            ('2 BHK', '577–721', '₹75,00,000', '/img/plans/2bhk-layout.webp', '2 BHK फ़्लोर प्लान',
             ['विशाल लिविंग और डाइनिंग', 'अटैच्ड बाथ के साथ मास्टर बेडरूम', 'कॉमन बाथ के साथ दूसरा बेडरूम', 'मॉड्यूलर किचन और ड्राई बालकनी', 'दो बालकनी', 'UPVC स्लाइडिंग विंडो']),
-           ('3 BHK', '999.4–1,001.4', '₹1,40,20,000', '', '3 BHK फ़्लोर प्लान',
+           ('3 BHK', '999.4–1,001.4', '₹1,40,00,000', '', '3 BHK फ़्लोर प्लान',
             ['पूरे साइट पर उपलब्ध', 'बड़ा लिविंग और डाइनिंग', 'वॉक-इन वार्डरोब के साथ मास्टर बेडरूम', 'दो अतिरिक्त बेडरूम', 'तीन बाथरूम (दो अटैच्ड)', 'दो फुल-साइज़ बालकनी', 'अलग पूजा कक्ष'])],
     plan_req='लेआउट अनुरोध पर',
     big_units='<strong>Prestige One में एलीट 5 BHK घर</strong> निजी तौर पर उपलब्ध हैं। लेआउट, कारपेट एरिया और कीमत के लिए हमारी टीम से पूछें।',
@@ -321,7 +321,7 @@ T['mr'] = dict(
             ['लिव्हिंग आणि डायनिंग रूम', 'अटॅच्ड बाथसह बेडरूम', 'मॉड्युलर किचनची सुविधा', 'शहराचे दृश्य असलेली बाल्कनी', 'युटिलिटी / ड्राय बाल्कनी', 'प्रीमियम व्हिट्रिफाइड फ्लोअरिंग']),
            ('2 BHK', '577–721', '₹75,00,000', '/img/plans/2bhk-layout.webp', '2 BHK फ्लोअर प्लॅन',
             ['प्रशस्त लिव्हिंग आणि डायनिंग', 'अटॅच्ड बाथसह मास्टर बेडरूम', 'कॉमन बाथसह दुसरी बेडरूम', 'मॉड्युलर किचन आणि ड्राय बाल्कनी', 'दोन बाल्कनी', 'UPVC स्लायडिंग विंडो']),
-           ('3 BHK', '999.4–1,001.4', '₹1,40,20,000', '', '3 BHK फ्लोअर प्लॅन',
+           ('3 BHK', '999.4–1,001.4', '₹1,40,00,000', '', '3 BHK फ्लोअर प्लॅन',
             ['संपूर्ण साइटवर उपलब्ध', 'मोठे लिव्हिंग आणि डायनिंग', 'वॉक-इन वॉर्डरोबसह मास्टर बेडरूम', 'दोन अतिरिक्त बेडरूम', 'तीन बाथरूम (दोन अटॅच्ड)', 'दोन पूर्ण आकाराच्या बाल्कनी', 'स्वतंत्र पूजा कक्ष'])],
     plan_req='लेआउट विनंतीवर',
     big_units='<strong>Prestige One मधील एलीट 5 BHK घरे</strong> खासगीरीत्या उपलब्ध आहेत. लेआउट, कार्पेट एरिया आणि किंमतीसाठी आमच्या टीमला विचारा.',
