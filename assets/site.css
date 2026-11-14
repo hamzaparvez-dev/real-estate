@@ -2497,8 +2497,8 @@ body.home-video-page{--bronze:#A8783E;--bronze-soft:rgba(168,120,62,.16);--ink-s
 .home-pillars{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:0;max-width:1180px;margin:clamp(36px,5vw,56px) auto 0;border-top:1px solid #E6E1D8;border-bottom:1px solid #E6E1D8}
 .home-pillar{padding:30px 26px;text-align:center;border-left:1px solid #E6E1D8}
 .home-pillar:first-child{border-left:0}
-.home-pillar-icon{width:30px;height:30px;color:var(--bronze);margin:0 auto 14px;display:block}
-.home-pillar h3{margin:0 0 8px;font:500 12px/1.4 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:#1C2330}
+.home-pillar-icon{width:30px;height:30px;color:var(--navy);margin:0 auto 14px;display:block}
+.home-pillar h3{margin:0 0 8px;font:500 12px/1.4 var(--sans);letter-spacing:.2em;text-transform:uppercase;color:var(--navy)}
 .home-pillar p{margin:0;font:300 14px/1.7 var(--sans);color:var(--ink-soft)}
 
 .home-about{background:#FBF9F6}
