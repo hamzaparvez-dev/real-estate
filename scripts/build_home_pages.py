@@ -10,7 +10,7 @@ import urllib.parse
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261114-v17'
+ASSET_VER = 'prestige-home-revamp-20261114-v18'
 VIDEO = 'https://8ps1sfxuipndwxps.public.blob.vercel-storage.com/Prestige_Projects_Kalyan_30s.mp4'
 PHONE_TEL = '+919689557788'
 PHONE = '+91 96895 57788'
@@ -488,8 +488,8 @@ def amenities(t):
         f'<div class="amen-feature-copy">{eye(t["roof_eye"])}<h3 class="dh">{t["roof_h"]}</h3><p class="lead">{e(t["roof_p"])}</p>'
         f'<ul class="amen-dims">{feats}</ul><p class="amen-note">{e(t["roof_note"])}</p></div></div>'
         '<div class="in amen-feature is-flipped">'
-        f'<div class="amen-feature-media plan-img-wrap" data-full="/img/amenities/specifications.webp" data-title="{a(t["spec_alt"])}" role="button" tabindex="0" aria-label="{a(t["spec_alt"])}">'
-        f'<img src="/img/amenities/specifications.webp" width="1024" height="682" loading="lazy" alt="{a(t["spec_alt"])}">'
+        f'<div class="amen-feature-media plan-img-wrap" data-full="/img/amenities/specifications.webp?v=18" data-title="{a(t["spec_alt"])}" role="button" tabindex="0" aria-label="{a(t["spec_alt"])}">'
+        f'<img src="/img/amenities/specifications.webp?v=18" width="1024" height="682" loading="lazy" alt="{a(t["spec_alt"])}">'
         f'<span class="plan-zoom-hint">{icon("zoom")}<span>{e(t["tap"])}</span></span></div>'
         f'<div class="amen-feature-copy">{eye(t["spec_eye"])}<h3 class="dh">{t["spec_h"]}</h3>'
         f'<div class="amen-lists"><div><h4>{e(t["spec_h1"])}</h4><ul class="amen-list">{specs}</ul></div>'
