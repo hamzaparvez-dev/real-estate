@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261114-v28'
+ASSET_VER = 'prestige-home-revamp-20261114-v29'
 BLOG_PHOTO_VERSION = '20261101-editorial-photo-set-3'
 FEATURED_GUIDES = posts_en.FEATURED
 POSTS = {'en': posts_en.POSTS, 'hi': posts_hi.POSTS, 'mr': posts_mr.POSTS}

@@ -533,7 +533,13 @@
       if (intent === 'rera-plan') return { title: 'Download RERA Area Plan', submit: 'DOWNLOAD RERA PLAN', line: 'download the Prestige Gold RERA area plan.' };
       return { title: 'Enquire Now', submit: 'ENQUIRE NOW', line: 'make a property enquiry.' };
     };
+    var MID_KEY = 'pe_enq_mid_dismissed';
+    var midAutoShown = false;
+    var rememberMidDismiss = function () {
+      try { sessionStorage.setItem(MID_KEY, '1'); } catch (ignore) {}
+    };
     var close = function () {
+      if (midAutoShown) rememberMidDismiss();
       modal.classList.remove('open');
       modal.setAttribute('aria-hidden', 'true');
       document.body.style.overflow = '';
@@ -555,6 +561,25 @@
     };
     modal.querySelector('.enq-close').addEventListener('click', close);
     modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
+    /* Homepage: open enquiry once when the visitor reaches mid-page; X dismisses for this session. */
+    (function () {
+      if (!document.body.classList.contains('home-video-page')) return;
+      try { if (sessionStorage.getItem(MID_KEY) === '1') return; } catch (ignore) {}
+      var opened = false;
+      var onScroll = function () {
+        if (opened || modal.classList.contains('open')) return;
+        var max = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
+        if ((window.scrollY || window.pageYOffset || 0) / max < 0.45) return;
+        opened = true;
+        midAutoShown = true;
+        window.removeEventListener('scroll', onScroll);
+        var trigger = document.createElement('button');
+        trigger.setAttribute('data-enquiry-intent', 'property');
+        openModal(trigger);
+      };
+      window.addEventListener('scroll', onScroll, { passive: true });
+      window.setTimeout(onScroll, 800);
+    })();
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && modal.classList.contains('open')) close();
       if (e.key === 'Tab' && modal.classList.contains('open')) {
@@ -623,6 +648,7 @@
         });
       }).then(function () {
         if (isDownload) downloadFile(DOWNLOADS[enquiryIntent]);
+        rememberMidDismiss();
         close();
         form.reset();
         if (!isDownload) {
