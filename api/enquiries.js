@@ -82,7 +82,7 @@ module.exports = async function handler(req, res) {
       const phone = typeof body.phone === 'string' ? body.phone.replace(/\D/g, '') : '';
       const configuration = typeof body.configuration === 'string' ? body.configuration : '';
       const purpose = typeof body.purpose === 'string' ? body.purpose.trim().slice(0, 80) : '';
-      const intent = body.intent === 'site-visit' ? 'site-visit' : 'property';
+      const intent = ['site-visit', 'brochure', 'rera-plan'].includes(body.intent) ? body.intent : 'property';
       const message = typeof body.message === 'string' ? body.message.trim().slice(0, 1000) : '';
       const sourceRaw = typeof body.source === 'string' ? body.source : '/';
       const source = sourceRaw.startsWith('/') ? sourceRaw.split('?')[0].slice(0, 160) : '/';

@@ -10,7 +10,7 @@ import urllib.parse
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261114-v19'
+ASSET_VER = 'prestige-home-revamp-20261114-v20'
 VIDEO = 'https://8ps1sfxuipndwxps.public.blob.vercel-storage.com/Prestige_Projects_Kalyan_30s.mp4'
 PHONE_TEL = '+919689557788'
 PHONE = '+91 96895 57788'
@@ -116,6 +116,7 @@ T['en'] = dict(
                 ('Open-air gym', '4.50 × 5.00 m'), ('Planting area with pathways', '4.50 × 6.00 m'),
                 ('Central stone and wooden-deck walkway', '2.00 m wide'), ('Direct lift and staircase access', 'Wings A & B')],
     roof_note='Dimensions are approximate, as per plan.',
+    roof_cta='Download RERA area plan',
     roof_alt='Rooftop garden with water body, gazebos, open gym and landscaped walkway',
     spec_eye='Specifications & security', spec_h='Finished with care, <em>protected around the clock</em>',
     spec_h1='Specifications',
@@ -208,6 +209,7 @@ T['hi'] = dict(
                 ('ओपन-एयर जिम', '4.50 × 5.00 मी'), ('पाथवे के साथ प्लांटिंग एरिया', '4.50 × 6.00 मी'),
                 ('पत्थर और लकड़ी के डेक का सेंट्रल वॉकवे', '2.00 मी चौड़ा'), ('लिफ़्ट और सीढ़ी से सीधी पहुँच', 'विंग A और B')],
     roof_note='माप प्लान के अनुसार अनुमानित हैं।',
+    roof_cta='RERA एरिया प्लान डाउनलोड करें',
     roof_alt='वॉटर बॉडी, गज़ेबो, ओपन जिम और वॉकवे वाला रूफटॉप गार्डन',
     spec_eye='स्पेसिफ़िकेशन और सुरक्षा', spec_h='बारीकी से तैयार, <em>हर समय सुरक्षित</em>',
     spec_h1='स्पेसिफ़िकेशन',
@@ -300,6 +302,7 @@ T['mr'] = dict(
                 ('ओपन-एअर जिम', '4.50 × 5.00 मी'), ('पाथवेसह प्लांटिंग एरिया', '4.50 × 6.00 मी'),
                 ('दगड आणि लाकडी डेकचा मध्यवर्ती वॉकवे', '2.00 मी रुंद'), ('लिफ्ट आणि जिन्याने थेट प्रवेश', 'विंग A आणि B')],
     roof_note='मापे प्लॅननुसार अंदाजे आहेत.',
+    roof_cta='RERA एरिया प्लॅन डाउनलोड करा',
     roof_alt='वॉटर बॉडी, गझेबो, ओपन जिम आणि वॉकवे असलेले रूफटॉप गार्डन',
     spec_eye='स्पेसिफिकेशन आणि सुरक्षा', spec_h='काळजीपूर्वक पूर्ण केलेले, <em>सतत सुरक्षित</em>',
     spec_h1='स्पेसिफिकेशन',
@@ -491,7 +494,9 @@ def amenities(t):
         f'<img src="/img/amenities/rooftop-garden.webp" width="1024" height="682" loading="lazy" alt="{a(t["roof_alt"])}">'
         f'<span class="plan-zoom-hint">{icon("zoom")}<span>{e(t["tap"])}</span></span></div>'
         f'<div class="amen-feature-copy">{eye(t["roof_eye"])}<h3 class="dh">{t["roof_h"]}</h3><p class="lead">{e(t["roof_p"])}</p>'
-        f'<ul class="amen-dims">{feats}</ul><p class="amen-note">{e(t["roof_note"])}</p></div></div>'
+        f'<ul class="amen-dims">{feats}</ul><p class="amen-note">{e(t["roof_note"])}</p>'
+        f'<div class="amen-feature-actions"><button class="btn-o dark enquire-trigger" type="button" data-enquiry-intent="rera-plan"><span>{e(t["roof_cta"])}</span>{icon("arrow")}</button></div>'
+        '</div></div>'
         '<div class="in amen-feature is-flipped">'
         f'<div class="amen-feature-media plan-img-wrap" data-full="/img/amenities/specifications.webp?v=18" data-title="{a(t["spec_alt"])}" role="button" tabindex="0" aria-label="{a(t["spec_alt"])}">'
         f'<img src="/img/amenities/specifications.webp?v=18" width="1024" height="682" loading="lazy" alt="{a(t["spec_alt"])}">'

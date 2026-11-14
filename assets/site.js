@@ -488,6 +488,27 @@
     var form = modal.querySelector('form');
     var lastFocus = null;
     var enquiryIntent = 'property';
+    var DOWNLOADS = {
+      brochure: { href: '/downloads/prestige-gold-catalogue.pdf', name: 'Prestige-Gold-Catalogue.pdf' },
+      'rera-plan': { href: '/downloads/prestige-gold-rera-area-plan.pdf', name: 'Prestige-Gold-RERA-Area-Plan.pdf' }
+    };
+    var downloadFile = function (file) {
+      if (!file) return;
+      var link = document.createElement('a');
+      link.href = file.href;
+      link.download = file.name;
+      link.rel = 'noopener';
+      link.style.display = 'none';
+      document.body.appendChild(link);
+      link.click();
+      link.remove();
+    };
+    var intentCopy = function (intent) {
+      if (intent === 'site-visit') return { title: 'Book Your Site Visit', submit: 'ENQUIRE NOW', line: 'book a site visit.' };
+      if (intent === 'brochure') return { title: 'Get the Brochure', submit: 'DOWNLOAD BROCHURE', line: 'receive the project brochure.' };
+      if (intent === 'rera-plan') return { title: 'Download RERA Area Plan', submit: 'DOWNLOAD RERA PLAN', line: 'download the Prestige Gold RERA area plan.' };
+      return { title: 'Enquire Now', submit: 'ENQUIRE NOW', line: 'make a property enquiry.' };
+    };
     var close = function () {
       modal.classList.remove('open');
       modal.setAttribute('aria-hidden', 'true');
@@ -497,8 +518,10 @@
     var openModal = function (trigger) {
       lastFocus = trigger || document.activeElement;
       var requested = trigger && trigger.getAttribute('data-enquiry-intent');
-      enquiryIntent = requested === 'site-visit' || requested === 'brochure' ? requested : 'property';
-      modal.querySelector('#enqTitle').textContent = enquiryIntent === 'site-visit' ? 'Book Your Site Visit' : enquiryIntent === 'brochure' ? 'Get the Brochure' : 'Enquire Now';
+      enquiryIntent = requested === 'site-visit' || requested === 'brochure' || requested === 'rera-plan' ? requested : 'property';
+      var copy = intentCopy(enquiryIntent);
+      modal.querySelector('#enqTitle').textContent = copy.title;
+      form.querySelector('.enq-submit').textContent = copy.submit;
       modal.classList.add('open');
       modal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
@@ -533,8 +556,9 @@
         form.querySelector('[name="phone"]').focus();
         return;
       }
+      var copy = intentCopy(enquiryIntent);
       var lines = [
-        'Hello Prestige Enterprises, I would like to ' + (enquiryIntent === 'site-visit' ? 'book a site visit.' : enquiryIntent === 'brochure' ? 'receive the project brochure.' : 'make a property enquiry.'),
+        'Hello Prestige Enterprises, I would like to ' + copy.line,
         '',
         'Name: ' + data.get('name'),
         'Mobile: ' + phone,
@@ -555,10 +579,14 @@
       };
       var submitButton = form.querySelector('.enq-submit');
       var originalLabel = submitButton.textContent;
+      var isDownload = !!DOWNLOADS[enquiryIntent];
       submitButton.disabled = true;
-      submitButton.textContent = 'SAVING ENQUIRY…';
-      var waWindow = window.open('about:blank', '_blank');
-      if (waWindow) waWindow.opener = null;
+      submitButton.textContent = isDownload ? 'PREPARING DOWNLOAD…' : 'SAVING ENQUIRY…';
+      var waWindow = null;
+      if (!isDownload) {
+        waWindow = window.open('about:blank', '_blank');
+        if (waWindow) waWindow.opener = null;
+      }
       fetch('/api/enquiries', {
         method: 'POST',
         credentials: 'same-origin',
@@ -570,10 +598,13 @@
           return body;
         });
       }).then(function () {
+        if (isDownload) downloadFile(DOWNLOADS[enquiryIntent]);
         close();
         form.reset();
-        if (waWindow) waWindow.location.href = url;
-        else window.location.href = url;
+        if (!isDownload) {
+          if (waWindow) waWindow.location.href = url;
+          else window.location.href = url;
+        }
       }).catch(function (err) {
         if (waWindow) waWindow.close();
         error.textContent = err.message || 'We could not save your enquiry. Please try again.';
