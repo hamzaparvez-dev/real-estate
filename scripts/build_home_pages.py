@@ -10,7 +10,7 @@ import urllib.parse
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261114-v15'
+ASSET_VER = 'prestige-home-revamp-20261114-v16'
 VIDEO = 'https://8ps1sfxuipndwxps.public.blob.vercel-storage.com/Prestige_Projects_Kalyan_30s.mp4'
 PHONE_TEL = '+919689557788'
 PHONE = '+91 96895 57788'
@@ -95,6 +95,8 @@ T['en'] = dict(
            'Every home is offered with transparent pricing, MahaRERA-registered paperwork and a written cost sheet, so the only surprise is how quickly it feels like yours.'],
     about_alt='Prestige Gold residential tower in Kalyan West',
     quote='A home is the biggest decision most families make. Our role is to make it a confident one.',
+    one_view_alt='Prestige One living room opening onto a balcony with riverside sunset views',
+    one_poster_alt='Prestige One: One Life. One Home.',
     projects_eye='Our residences', projects_h='Two addresses, <em>one standard</em>',
     projects=[('/projects/prestige-gold/', '/img/prestige-tower-day.jpg', 1920, 1080, 'Prestige Gold residential tower in Kalyan West',
                'Prestige Gold', 'Contemporary <em>1, 2 &amp; 3 BHK</em> residences',
@@ -184,6 +186,8 @@ T['hi'] = dict(
            'हर घर पारदर्शी कीमत, MahaRERA पंजीकृत दस्तावेज़ों और लिखित लागत विवरण के साथ दिया जाता है।'],
     about_alt='कल्याण वेस्ट में Prestige Gold आवासीय टावर',
     quote='घर ज़्यादातर परिवारों का सबसे बड़ा फ़ैसला होता है। हमारा काम इसे भरोसेमंद बनाना है।',
+    one_view_alt='Prestige One का लिविंग रूम, बालकनी से नदी किनारे सूर्यास्त का नज़ारा',
+    one_poster_alt='Prestige One: One Life. One Home.',
     projects_eye='हमारे प्रोजेक्ट्स', projects_h='दो पते, <em>एक ही मानक</em>',
     projects=[('/projects/prestige-gold/', '/img/prestige-tower-day.jpg', 1920, 1080, 'कल्याण वेस्ट में Prestige Gold आवासीय टावर',
                'Prestige Gold', 'आधुनिक <em>1, 2 और 3 BHK</em> घर',
@@ -273,6 +277,8 @@ T['mr'] = dict(
            'प्रत्येक घर पारदर्शक किंमत, MahaRERA नोंदणीकृत कागदपत्रे आणि लेखी खर्चपत्रकासह दिले जाते.'],
     about_alt='कल्याण वेस्टमधील Prestige Gold निवासी टॉवर',
     quote='घर हा बहुतेक कुटुंबांचा सर्वात मोठा निर्णय असतो. तो आत्मविश्वासाने घेता यावा, हे आमचे काम आहे.',
+    one_view_alt='Prestige One ची लिव्हिंग रूम, बाल्कनीतून नदीकाठचा सूर्यास्त',
+    one_poster_alt='Prestige One: One Life. One Home.',
     projects_eye='आमचे प्रकल्प', projects_h='दोन पत्ते, <em>एकच दर्जा</em>',
     projects=[('/projects/prestige-gold/', '/img/prestige-tower-day.jpg', 1920, 1080, 'कल्याण वेस्टमधील Prestige Gold निवासी टॉवर',
                'Prestige Gold', 'आधुनिक <em>1, 2 आणि 3 BHK</em> घरे',
@@ -436,17 +442,27 @@ def about(t):
     )
 
 
+def zoom_img(src, w, h, alt, t, cls):
+    return (f'<div class="{cls} plan-img-wrap" data-full="{src}" data-title="{a(alt)}" role="button" tabindex="0" aria-label="{a(alt)}">'
+            f'<img src="{src}" width="{w}" height="{h}" loading="lazy" alt="{a(alt)}">'
+            f'<span class="plan-zoom-hint">{icon("zoom")}<span>{e(t["tap"])}</span></span></div>')
+
+
 def projects(t):
     rows = ''
     for i, (href, img, w, h, alt, name, title, lead, btn) in enumerate(t['projects']):
         landscape = ' is-landscape' if w > h else ''
         flip = ' is-flipped' if i % 2 else ''
+        is_one = href == '/projects/prestige-one/'
+        inline = zoom_img('/img/prestige-one/riverside-interior.webp', 1774, 887, t['one_view_alt'], t, 'project-inline-media') if is_one else ''
         rows += (
             f'<div class="in project-showcase-grid home-project{flip}"><div class="project-showcase-media{landscape}">'
             f'<img src="{img}" width="{w}" height="{h}" loading="lazy" alt="{a(alt)}"></div>'
-            f'<div class="project-showcase-copy">{eye(name)}<h3 class="dh">{title}</h3><p class="lead">{e(lead)}</p>'
+            f'<div class="project-showcase-copy">{eye(name)}<h3 class="dh">{title}</h3><p class="lead">{e(lead)}</p>{inline}'
             f'<a class="btn-o dark" href="{href}"><span>{e(btn)}</span>{icon("arrow")}</a></div></div>'
         )
+        if is_one:
+            rows += f'<div class="project-banner">{zoom_img("/img/prestige-one/one-life-one-home.webp", 1774, 887, t["one_poster_alt"], t, "project-banner-media")}</div>'
     return (
         '<section class="sec project-showcase home-projects" id="projects"><span id="types" class="home-anchor" aria-hidden="true"></span>'
         f'<div class="in home-sec-head">{eye(t["projects_eye"], "eye-center")}<h2 class="dh">{t["projects_h"]}</h2></div>'
@@ -473,7 +489,7 @@ def amenities(t):
         f'<ul class="amen-dims">{feats}</ul><p class="amen-note">{e(t["roof_note"])}</p></div></div>'
         '<div class="in amen-feature is-flipped">'
         f'<div class="amen-feature-media plan-img-wrap" data-full="/img/amenities/specifications.webp" data-title="{a(t["spec_alt"])}" role="button" tabindex="0" aria-label="{a(t["spec_alt"])}">'
-        f'<img src="/img/amenities/specifications.webp" width="486" height="340" loading="lazy" alt="{a(t["spec_alt"])}">'
+        f'<img src="/img/amenities/specifications.webp" width="1024" height="682" loading="lazy" alt="{a(t["spec_alt"])}">'
         f'<span class="plan-zoom-hint">{icon("zoom")}<span>{e(t["tap"])}</span></span></div>'
         f'<div class="amen-feature-copy">{eye(t["spec_eye"])}<h3 class="dh">{t["spec_h"]}</h3>'
         f'<div class="amen-lists"><div><h4>{e(t["spec_h1"])}</h4><ul class="amen-list">{specs}</ul></div>'
@@ -576,7 +592,7 @@ def footer(l, t):
         f'<div><h4>{e(t["foot_projects"])}</h4><ul><li><a href="/projects/prestige-gold/">Prestige Gold</a></li><li><a href="/projects/prestige-one/">Prestige One</a></li>'
         '<li><a href="/projects/shri-durga-enterprises/">Shri Durga Enterprises</a></li></ul></div>'
         f'<div><h4>{e(t["foot_contact"])}</h4><p>{ADDRESS}</p><p><a href="tel:{PHONE_TEL}">{PHONE}</a><br><a href="mailto:{EMAIL}">{EMAIL}</a></p></div></div>'
-        f'<div class="foot-legal"><p class="foot-rera"><strong>MahaRERA Reg. No:</strong> {RERA} <span aria-hidden="true">·</span> {e(t["rera_verified"])}</p>'
+        f'<div class="foot-legal"><p class="foot-rera"><strong>MahaRERA Reg. No:</strong> {RERA}</p>'
         f'<p><a href="/privacy/">{e(t["privacy"])}</a></p><p>{e(t["disclaimer"])}</p><p>{e(t["rights"])}</p></div></footer>\n'
         f'<a class="wa" href="{a(wa(t["wa_text"]))}" target="_blank" rel="noopener" aria-label="{a(t["wa_btn"])}">{icon("chat")}<span>{e(t["float_wa"])}</span></a>\n'
         f'<script src="/assets/site.js?v={ASSET_VER}" defer></script>\n</body>\n</html>\n'

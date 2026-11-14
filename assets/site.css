@@ -2440,6 +2440,14 @@ body.home-video-page{--bronze:#A8783E;--bronze-soft:rgba(168,120,62,.16);--ink-s
 .project-showcase-media.is-landscape img{aspect-ratio:4/3;object-fit:cover}
 .home-project .project-showcase-media::before{border-color:var(--bronze-soft);border-width:1px}
 .home-project h3.dh{font-size:clamp(30px,4vw,48px)}
+.project-inline-media.plan-img-wrap,.project-banner-media.plan-img-wrap{display:block;padding:0;aspect-ratio:auto;background:#0A1525;cursor:zoom-in}
+.project-inline-media.plan-img-wrap img,.project-banner-media.plan-img-wrap img{display:block;width:100%;height:auto;object-fit:cover;transition:transform .6s ease}
+.project-inline-media.plan-img-wrap:hover img,.project-banner-media.plan-img-wrap:hover img{transform:scale(1.03)}
+.project-inline-media{margin:26px 0 30px;border:1px solid #E6E1D8;box-shadow:0 20px 44px rgba(20,24,32,.1)}
+.project-banner{margin:clamp(48px,7vw,88px) calc(-1 * var(--pad)) 0}
+.home-projects:has(> .project-banner:last-child){padding-bottom:0}
+.project-banner-media{width:100%}
+.project-banner-media .plan-zoom-hint{top:12px;bottom:auto;right:auto;left:50%;transform:translateX(-50%)}
 
 .home-amenities{background:#FBF9F6}
 .amen-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(14px,2vw,24px)}

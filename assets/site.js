@@ -496,8 +496,9 @@
     };
     var openModal = function (trigger) {
       lastFocus = trigger || document.activeElement;
-      enquiryIntent = trigger && trigger.getAttribute('data-enquiry-intent') === 'site-visit' ? 'site-visit' : 'property';
-      modal.querySelector('#enqTitle').textContent = enquiryIntent === 'site-visit' ? 'Book Your Site Visit' : 'Enquire Now';
+      var requested = trigger && trigger.getAttribute('data-enquiry-intent');
+      enquiryIntent = requested === 'site-visit' || requested === 'brochure' ? requested : 'property';
+      modal.querySelector('#enqTitle').textContent = enquiryIntent === 'site-visit' ? 'Book Your Site Visit' : enquiryIntent === 'brochure' ? 'Get the Brochure' : 'Enquire Now';
       modal.classList.add('open');
       modal.setAttribute('aria-hidden', 'false');
       document.body.style.overflow = 'hidden';
@@ -533,7 +534,7 @@
         return;
       }
       var lines = [
-        'Hello Prestige Enterprises, I would like to ' + (enquiryIntent === 'site-visit' ? 'book a site visit.' : 'make a property enquiry.'),
+        'Hello Prestige Enterprises, I would like to ' + (enquiryIntent === 'site-visit' ? 'book a site visit.' : enquiryIntent === 'brochure' ? 'receive the project brochure.' : 'make a property enquiry.'),
         '',
         'Name: ' + data.get('name'),
         'Mobile: ' + phone,
@@ -585,7 +586,7 @@
     var float = document.createElement('div');
     float.className = 'floating-cta';
     float.setAttribute('aria-label', 'Quick contact actions');
-    float.innerHTML = '<a class="f-book" href="facetime:919689557788" aria-label="Book a site visit using FaceTime">BOOK VISIT</a><a class="f-wa" href="' + WA + '?text=' + encodeURIComponent('Hello Prestige Enterprises, I would like more information about homes in Kalyan.') + '" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20l1.2-4.3A8.4 8.4 0 1 1 20 11.5Z"/><path d="M8.5 8.2c.3-.6.6-.6.9-.6h.4c.2 0 .4.1.5.4l.7 1.7c.1.2.1.4-.1.6l-.5.6c-.2.2-.2.4 0 .7.6 1 1.4 1.7 2.4 2.2.3.1.5.1.7-.1l.7-.8c.2-.2.4-.3.7-.2l1.6.8c.3.1.4.3.4.5 0 .3-.2 1-.7 1.4-.5.4-1.1.6-1.8.5-1-.1-2.2-.6-3.6-1.8-1.6-1.4-2.6-3.1-2.8-4.1-.2-.9.1-1.5.5-1.8Z"/></svg><span>WHATSAPP</span></a><button class="f-enq" type="button" data-enquiry-intent="property" aria-label="Enquire now">ENQUIRE NOW</button>';
+    float.innerHTML = '<a class="f-book" href="tel:+919689557788" aria-label="Call to book a site visit">BOOK VISIT</a><a class="f-wa" href="' + WA + '?text=' + encodeURIComponent('Hello Prestige Enterprises, I would like more information about homes in Kalyan.') + '" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20l1.2-4.3A8.4 8.4 0 1 1 20 11.5Z"/><path d="M8.5 8.2c.3-.6.6-.6.9-.6h.4c.2 0 .4.1.5.4l.7 1.7c.1.2.1.4-.1.6l-.5.6c-.2.2-.2.4 0 .7.6 1 1.4 1.7 2.4 2.2.3.1.5.1.7-.1l.7-.8c.2-.2.4-.3.7-.2l1.6.8c.3.1.4.3.4.5 0 .3-.2 1-.7 1.4-.5.4-1.1.6-1.8.5-1-.1-2.2-.6-3.6-1.8-1.6-1.4-2.6-3.1-2.8-4.1-.2-.9.1-1.5.5-1.8Z"/></svg><span>WHATSAPP</span></a><button class="f-enq" type="button" data-enquiry-intent="brochure" aria-label="Get the brochure">BROCHURE</button>';
     document.body.appendChild(float);
     float.querySelector('.f-enq').addEventListener('click', function () { openModal(this); });
 
