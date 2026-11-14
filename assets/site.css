@@ -2531,6 +2531,8 @@ body.home-video-page{--bronze:#A8783E;--bronze-soft:rgba(168,120,62,.16);--ink-s
 .amen-list li::before{content:"";position:absolute;left:0;top:.62em;width:8px;height:1px;background:var(--bronze)}
 .amen-security{padding:20px 22px;background:#fff;border:1px solid var(--bronze-soft);border-left:3px solid var(--bronze)}
 
+.home-guides .cards{margin-top:36px}
+.home-guides-cta{margin:36px 0 0;text-align:center}
 .price-more{margin-top:34px;padding-top:28px;border-top:1px solid #D5DFE9}
 .price-more-head{max-width:720px;margin-bottom:20px}
 .price-more-title{margin:10px 0 0;font:400 clamp(28px,3.4vw,40px)/1.12 var(--serif);color:#142B45}
