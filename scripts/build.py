@@ -474,6 +474,8 @@ def build_prestige_gold():
     desc = 'Prestige Gold — prime Kalyan West address. 1, 2 & 3 BHK from ₹55 Lakh; 3 BHK complete site from ₹1.40 Cr (140 L). RERA area 999.4–1,001.4 sq. ft. Commercial space. Site visits open.'
     wa_text = 'Hello, I would like the Prestige Gold brochure, floor plans and current 3 BHK availability in Kalyan West.'
     wa_link = 'https://wa.me/' + GOLD_WA + '?text=' + urllib.parse.quote(wa_text)
+    commercial_wa = ('https://wa.me/' + GOLD_WA + '?text=' +
+                     urllib.parse.quote('Hello, I would like the Prestige Gold commercial brochure for retail and office space in Kalyan West. Please share availability, sizes and pricing.'))
     units = [
         ('1 BHK', '₹55,00,000', '404–519 sq. ft.', 'Compact elite layout — living, bedroom, kitchen provision, balcony.'),
         ('2 BHK', '₹75,00,000', '577–721 sq. ft.', 'Spacious living and dining, two bedrooms, balcony, modern finishes.'),
@@ -483,12 +485,12 @@ def build_prestige_gold():
         '<article class="pg-unit" id="commercial"><span class="pg-unit-k">COMMERCIAL</span><h3>Retail &amp; office</h3>'
         '<p class="pg-price">On request</p><p class="pg-area">Ground &amp; podium levels</p>'
         '<p>Prime frontage at Prestige Gold. High footfall Kalyan West corridor. Request the commercial brochure.</p>'
-        f'<a class="btn-g" href="{wa_link}" target="_blank" rel="noopener">Request commercial brochure</a></article>'
+        f'<a class="btn-g" href="{commercial_wa}" target="_blank" rel="noopener">Request commercial brochure</a></article>'
     )
     unit_cards = ''.join(
         f'<article class="pg-unit"><span class="pg-unit-k">RESIDENTIAL CONFIGURATION</span><h3>{esc(name)}</h3>'
         f'<p class="pg-price">{esc(price)}</p><p class="pg-area">RERA area · {esc(area)}</p>'
-        f'<p>{esc(summary)}</p><a class="btn-g" href="{wa_link}" target="_blank" rel="noopener">Enquire for {esc(name)}</a></article>'
+        f'<p>{esc(summary)}</p><a class="btn-g" href="https://wa.me/{GOLD_WA}?text={urllib.parse.quote("Hello, I would like details for Prestige Gold " + name + " in Kalyan West. Please share brochure, floor plans, availability and pricing.")}" target="_blank" rel="noopener">Enquire for {esc(name)}</a></article>'
         for name, price, area, summary in units)
     amenities = [
         ('Rooftop leisure zone', 'Rooftop garden with sit-outs, gazebo and fountain.'),
