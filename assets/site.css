@@ -2544,7 +2544,7 @@ body.home-video-page{--bronze:#A8783E;--bronze-soft:rgba(168,120,62,.16);--ink-s
 
 .home-guides .cards{margin-top:36px}
 .home-guides-cta{margin:36px 0 0;text-align:center}
-.blog-insight{--blog-copper:#B8915A;background:#FAF6F1;text-align:center;padding-block:clamp(56px,8vw,88px)}
+.blog-insight{--blog-copper:#B8915A;background:#fff;text-align:center;padding-block:clamp(56px,8vw,88px)}
 .blog-insight .in{max-width:1180px}
 .blog-insight-h{
   margin:0 auto;max-width:22ch;
