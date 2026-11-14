@@ -16,11 +16,12 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261114-v27'
+ASSET_VER = 'prestige-home-revamp-20261114-v28'
 BLOG_PHOTO_VERSION = '20261101-editorial-photo-set-3'
 FEATURED_GUIDES = posts_en.FEATURED
 POSTS = {'en': posts_en.POSTS, 'hi': posts_hi.POSTS, 'mr': posts_mr.POSTS}
-VIDEO = 'https://8ps1sfxuipndwxps.public.blob.vercel-storage.com/Prestige_Projects_Kalyan_30s.mp4'
+VIDEO = 'https://bjoj2azd7axubq1h.public.blob.vercel-storage.com/Prestige_One_Kalyan_Sales_Video_1080p%20%281%29.mp4'
+VIDEO_HOST = 'https://bjoj2azd7axubq1h.public.blob.vercel-storage.com'
 PHONE_TEL = '+919689557788'
 PHONE = '+91 96895 57788'
 WA = 'https://wa.me/919689557788'
@@ -449,7 +450,7 @@ def head(l, t):
         f'<meta property="og:image" content="{SITE}/img/og-default.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">'
         '<meta name="twitter:card" content="summary_large_image">\n'
         '<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png">\n'
-        '<link rel="preconnect" href="https://8ps1sfxuipndwxps.public.blob.vercel-storage.com" crossorigin>\n'
+        f'<link rel="preconnect" href="{VIDEO_HOST}" crossorigin>\n'
         '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
         f'<link href="https://fonts.googleapis.com/css2?{fonts}&display=swap" rel="stylesheet">\n'
         f'<link rel="stylesheet" href="/assets/site.css?v={ASSET_VER}">\n'

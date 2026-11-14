@@ -463,7 +463,7 @@ def build_home(l):
 # ------------------------------------------------------------------ Prestige Gold project page
 
 GOLD_WA = '918446652600'
-HERO_VIDEO_BLOB = 'https://8ps1sfxuipndwxps.public.blob.vercel-storage.com/Prestige_Projects_Kalyan_30s.mp4'
+HERO_VIDEO_BLOB = 'https://bjoj2azd7axubq1h.public.blob.vercel-storage.com/Prestige_One_Kalyan_Sales_Video_1080p%20%281%29.mp4'
 
 
 def build_prestige_gold():
@@ -731,8 +731,8 @@ def build_home_en_video():
     contact = contact_block('en', H['contact_h'], H['contact_p'])
     ld = [agent_ld('en'), {'@type': 'WebSite', '@id': C.SITE + '/#website', 'url': C.SITE + '/', 'name': C.BRAND, 'inLanguage': ['en-IN', 'hi-IN', 'mr-IN'],
                            'publisher': {'@id': C.SITE + '/#agent'}}]
-    extra = (f'<link rel="preconnect" href="https://8ps1sfxuipndwxps.public.blob.vercel-storage.com" crossorigin>\n'
-             f'<link rel="dns-prefetch" href="https://8ps1sfxuipndwxps.public.blob.vercel-storage.com">\n')
+    extra = ('<link rel="preconnect" href="https://bjoj2azd7axubq1h.public.blob.vercel-storage.com" crossorigin>\n'
+             '<link rel="dns-prefetch" href="https://bjoj2azd7axubq1h.public.blob.vercel-storage.com">\n')
     h = head('en', H['title'], H['desc'], alts, '/img/og-default.jpg', C.BRAND, ld, extra=extra)
     h = h.replace(f'/assets/site.css?v={fver("assets/site.css")}', f'/assets/site.css?v={css_ver}')
     body_main = hero + about + projects + plans + assist + contact + '</main>\n'
