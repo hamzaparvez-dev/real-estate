@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261114-v40'
+ASSET_VER = 'prestige-home-revamp-20261114-v41'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -136,8 +136,7 @@ T['en'] = dict(
     amen_eye='Amenities', amen_h='Leisure, wellness and play, <em>right at home</em>',
     amen_lead='Spaces designed for unhurried mornings, active evenings and weekends with family, all within the community.',
     amen_names=['Swimming pool', 'Cricket practice pitch', 'Games lounge', 'Reading library', 'Mini theatre', 'Pickleball court', 'Residents\u2019 lounge', 'Fitness centre'],
-    feat_h='Features & Amenities By Prestige Kalyan',
-    feat_p='Prestige is meticulously crafted for connoisseurs of luxury, where every detail enhances the living experience. Thoughtful architecture, elevated leisure and everyday comfort come together so every residence feels open, grand and quietly refined.',
+    feat_p='Prestige Kalyan is crafted for families who expect more from every day at home: elevated leisure, quiet comfort and architecture that feels open and refined.',
     feat_cards=[
         ('pool', 'Infinity Pool & Deck', 'Experience ultimate relaxation at the visually stunning pool and deck, offering breath-taking leisure views and a serene aquatic atmosphere for residents.'),
         ('star', 'Stargazing Deck', 'Elevate your evenings at this unique high-altitude viewing spot, designed for quiet nights under the open sky and unhurried conversations with family.'),
@@ -257,8 +256,7 @@ T['hi'] = dict(
     amen_eye='सुविधाएँ', amen_h='आराम, सेहत और खेल, <em>घर के पास ही</em>',
     amen_lead='सुकून भरी सुबह, सक्रिय शाम और परिवार के साथ वीकेंड के लिए बनाई गई जगहें, सब कुछ सोसाइटी के भीतर।',
     amen_names=['स्विमिंग पूल', 'क्रिकेट प्रैक्टिस पिच', 'गेम्स लाउंज', 'लाइब्रेरी', 'मिनी थिएटर', 'पिकलबॉल कोर्ट', 'रेज़िडेंट्स लाउंज', 'फ़िटनेस सेंटर'],
-    feat_h='Features & Amenities By Prestige Kalyan',
-    feat_p='Prestige लग्ज़री की समझ रखने वाले परिवारों के लिए सोच-समझकर बनाया गया है, जहाँ हर विवरण जीवन के अनुभव को बेहतर बनाता है। खुली योजना, ऊँची छत वाली भावना और रोज़मर्रा का आराम हर घर को भव्य और शांत बनाते हैं।',
+    feat_p='Prestige Kalyan उन परिवारों के लिए है जो घर में हर दिन से ज़्यादा उम्मीद करते हैं: ऊँचा आराम, शांत सुविधाएँ और खुली, परिष्कृत वास्तुकला।',
     feat_cards=[
         ('pool', 'Infinity Pool & Deck', 'पूल और डेक पर आराम करें — शांत पानी, खुला आसमान और परिवार के साथ सुकून भरी शाम।'),
         ('star', 'Stargazing Deck', 'ऊँचाई पर यह विशेष जगह रात के आसमान के नीचे शांत शाम और परिवार की बातचीत के लिए बनी है।'),
@@ -378,8 +376,7 @@ T['mr'] = dict(
     amen_eye='सुविधा', amen_h='विश्रांती, आरोग्य आणि खेळ, <em>घराजवळच</em>',
     amen_lead='निवांत सकाळ, उत्साही संध्याकाळ आणि कुटुंबासोबतच्या वीकेंडसाठी तयार केलेल्या जागा, सर्व काही सोसायटीच्या आत.',
     amen_names=['स्विमिंग पूल', 'क्रिकेट प्रॅक्टिस पिच', 'गेम्स लाउंज', 'वाचनालय', 'मिनी थिएटर', 'पिकलबॉल कोर्ट', 'रेसिडेंट्स लाउंज', 'फिटनेस सेंटर'],
-    feat_h='Features & Amenities By Prestige Kalyan',
-    feat_p='Prestige हे लक्झरी समजणाऱ्या कुटुंबांसाठी काळजीपूर्वक तयार केले आहे, जिथे प्रत्येक तपशील राहणीमानाचा अनुभव उंचावतो. खुली रचना, भव्यता आणि रोजच्या सुखाची जोड प्रत्येक घर शांत आणि अभिजात बनवते.',
+    feat_p='Prestige Kalyan त्या कुटुंबांसाठी आहे जे घरातून दररोज अधिक अपेक्षा करतात: उन्नत विश्रांती, शांत सुविधा आणि खुली, परिष्कृत वास्तुकला.',
     feat_cards=[
         ('pool', 'Infinity Pool & Deck', 'पूल आणि डेकवर विश्रांती घ्या — शांत पाणी, खुले आकाश आणि कुटुंबासोबतची निवांत संध्याकाळ.'),
         ('star', 'Stargazing Deck', 'उंचीवरील ही खास जागा रात्रीच्या आकाशाखाली शांत संध्याकाळ आणि कुटुंबाच्या गप्पांसाठी तयार आहे.'),
@@ -591,14 +588,14 @@ def projects(t):
 def features_amenities(t):
     cards = ''.join(
         f'<article class="feat-card"><div class="feat-icon" aria-hidden="true">'
-        f'<img src="{FEAT_ICONS[ic]}" alt="" width="78" height="78" loading="lazy" decoding="async">'
+        f'<img src="{FEAT_ICONS[ic]}" alt="" width="72" height="72" loading="lazy" decoding="async">'
         f'</div><h3>{e(title)}</h3><p>{e(desc)}</p></article>'
         for ic, title, desc in t['feat_cards']
     )
     return (
         '<section class="sec home-features" id="amenities"><span id="services" class="home-anchor" aria-hidden="true"></span>'
-        f'<div class="in home-features-head"><h2 class="feat-title">{e(t["feat_h"])}</h2>'
-        f'<p class="feat-lead">{e(t["feat_p"])}</p></div>'
+        f'<div class="in home-sec-head">{eye(t["amen_eye"], "eye-center")}<h2 class="dh">{t["amen_h"]}</h2>'
+        f'<p class="lead">{e(t["feat_p"])}</p></div>'
         f'<div class="in feat-grid">{cards}</div></section>\n'
     )
 
