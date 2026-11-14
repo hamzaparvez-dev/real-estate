@@ -492,16 +492,33 @@ def build_prestige_gold():
         f'<p class="pg-price">{esc(price)}</p><p class="pg-area">RERA area · {esc(area)}</p>'
         f'<p>{esc(summary)}</p><a class="btn-g" href="https://wa.me/{GOLD_WA}?text={urllib.parse.quote("Hello, I would like details for Prestige Gold " + name + " in Kalyan West. Please share brochure, floor plans, availability and pricing.")}" target="_blank" rel="noopener">Enquire for {esc(name)}</a></article>'
         for name, price, area, summary in units)
-    amenities = [
-        ('Rooftop leisure zone', 'Rooftop garden with sit-outs, gazebo and fountain.'),
-        ('Security-focused planning', 'Monitored common areas and controlled movement across key entry points.'),
-        ('Power backup', 'Backup provision for lifts, lobbies and common areas.'),
-        ('Water & utilities', 'KDMC water supply with borewell backup and planned utility infrastructure.'),
-        ('Sustainable operations', 'Waste segregation and green-zone planning.'),
-        ('Parking convenience', 'Two parking levels with optimized angle-parking design.'),
-        ('Sample flat ready', 'Arrange a guided walkthrough to experience the sample flat in person.')
+    amenity_tiles = [
+        ('swimming-pool', 'Swimming pool'),
+        ('cricket', 'Cricket practice pitch'),
+        ('games-lounge', 'Games lounge'),
+        ('library', 'Reading library'),
+        ('mini-theatre', 'Mini theatre'),
+        ('pickleball', 'Pickleball court'),
+        ('residents-lounge', 'Residents’ lounge'),
+        ('fitness-centre', 'Fitness centre'),
     ]
-    amenity_cards = ''.join(f'<article class="pg-amenity"><span>✦</span><div><h3>{esc(a)}</h3><p>{esc(d)}</p></div></article>' for a, d in amenities)
+    amenity_cards = ''.join(
+        f'<figure class="amen-tile"><img src="/img/amenities/{slug}.webp" width="456" height="384" loading="lazy" alt="{esc(name)}">'
+        f'<figcaption>{esc(name)}</figcaption></figure>'
+        for slug, name in amenity_tiles
+    )
+    gallery_items = [
+        ('/img/prestige-tower-day.jpg', 1400, 900, 'Prestige Gold exterior, day view', 'Day view'),
+        ('/img/prestige-tower-night.jpg', 1400, 900, 'Prestige Gold exterior, night view', 'Night view'),
+        ('/img/hero-day.jpg', 1920, 1080, 'Prestige Gold residential tower in Kalyan West', 'Tower view'),
+        ('/img/amenities/rooftop-garden.webp', 1200, 800, 'Rooftop garden amenity at Prestige Gold', 'Rooftop garden'),
+        ('/img/amenities/swimming-pool.webp', 912, 768, 'Swimming pool at Prestige Gold', 'Swimming pool'),
+        ('/img/amenities/fitness-centre.webp', 912, 768, 'Fitness centre at Prestige Gold', 'Fitness centre'),
+    ]
+    gallery_figures = ''.join(
+        f'<figure><img src="{src}" width="{w}" height="{h}" loading="lazy" alt="{esc(alt)}"><figcaption>{esc(cap)}</figcaption></figure>'
+        for src, w, h, alt, cap in gallery_items
+    )
     hero = (
         '<main id="main"><header class="ph pg-hero"><img src="/img/hero-day.jpg" width="1920" height="1080" fetchpriority="high" alt="Prestige Gold — prime Kalyan West">'
         '<div class="ph-c">' + crumbs([(UI['en']['home'], '/'), ('Projects', None), ('Plans', None), ('Prestige Gold', None)]) +
@@ -540,10 +557,18 @@ def build_prestige_gold():
         '<p class="pg-note">3, 4 and 5 BHK drawings and additional unit-specific plans can be requested from the project sales team.</p>'
         '</div></section>'
     )
+    gallery = (
+        '<section class="sec pg-gallery" id="gallery"><div class="in">'
+        + eye('PROJECT GALLERY') + '<h2 class="dh">A closer look at <em>Prestige Gold</em></h2>'
+        '<p class="lead">Tower views, leisure spaces and everyday amenities from the Prestige Gold community.</p>'
+        f'<div class="pg-gallery-grid pg-gallery-grid-rich">{gallery_figures}</div>'
+        '</div></section>'
+    )
     amenities_section = (
-        '<section class="sec pg-amenities"><div class="in">'
-        + eye('EVERYDAY COMFORT') + '<h2 class="dh">Thoughtful features for <em>daily living</em></h2>'
-        f'<div class="pg-amenities-grid">{amenity_cards}</div>'
+        '<section class="sec home-amenities pg-amenities-visual" id="amenities"><div class="in">'
+        + eye('AMENITIES') + '<h2 class="dh">Leisure, wellness and play, <em>right at home</em></h2>'
+        '<p class="lead">Spaces designed for unhurried mornings, active evenings and weekends with family, all within the community.</p>'
+        f'<div class="amen-grid" style="margin-top:36px">{amenity_cards}</div>'
         '</div></section>'
     )
     progress = (
@@ -591,13 +616,6 @@ def build_prestige_gold():
         '<p>Possession targeted for June 2027, subject to final approvals.</p></details>'
         '</div></div></section>'
     )
-    gallery = (
-        '<section class="sec pg-gallery"><div class="in">'
-        + eye('PROJECT GALLERY') + '<h2 class="dh">A closer look at <em>Prestige Gold</em></h2>'
-        '<div class="pg-gallery-grid"><figure><img src="/img/prestige-tower-day.jpg" width="1400" height="900" loading="lazy" alt="Prestige Gold exterior, day view"><figcaption>Day view</figcaption></figure>'
-        '<figure><img src="/img/prestige-tower-night.jpg" width="1400" height="900" loading="lazy" alt="Prestige Gold exterior, night view"><figcaption>Night view</figcaption></figure></div>'
-        '</div></section>'
-    )
     location = (
         '<section class="sec pg-location"><div class="in pg-location-grid"><div>'
         + eye('LOCATION ADVANTAGE') + '<h2 class="dh">Connected to <em>Kalyan West</em></h2>'
@@ -630,7 +648,7 @@ def build_prestige_gold():
         '<p class="pg-contact-email">Our team is ready to assist.</p>'
         '</div></section></main>'
     )
-    body = hero + overview + pricing + floorplans + amenities_section + progress + gallery + location + shri_durga + contact
+    body = hero + overview + pricing + floorplans + gallery + amenities_section + progress + location + shri_durga + contact
     ld = [agent_ld('en'), breadcrumb_ld('en', [(UI['en']['home'], url('en', '/')), ('Prestige Gold', path)])]
     html = head('en', title, desc, seo_alts, '/img/prestige-tower-day.jpg', 'Prestige Gold project in Kalyan West', ld)
     write(path.lstrip('/') + 'index.html', html + '<body>\n' + nav('en', nav_alts) + body + footer('en', nav_alts))
