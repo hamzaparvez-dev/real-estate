@@ -522,9 +522,9 @@ def build_prestige_gold():
     )
     pricing = (
         '<section class="sec pg-pricing" id="pg-configurations"><div class="in">'
-        + eye('CONFIGURATIONS') + '<h2 class="dh">1, 2 &amp; 3 BHK · <em>Prestige Gold</em></h2>'
-        '<p class="lead">3 BHK available across the complete site from ₹1.40 Cr (₹1,40,20,000). RERA area 999.4–1,001.4 sq. ft. Confirm unit-wise cost sheets before booking.</p>'
-        f'<div class="cards three pg-units">{unit_cards}{commercial}</div>'
+        + eye('CONFIGURATIONS') + '<h2 class="dh">1, 2 &amp; 3 BHK · <em>plus commercial</em></h2>'
+        '<p class="lead">3 BHK available across the complete site from ₹1.40 Cr (₹1,40,20,000). RERA area 999.4–1,001.4 sq. ft. Commercial is the fourth option — ground &amp; podium retail and office.</p>'
+        f'<div class="cards four pg-units">{unit_cards}{commercial}</div>'
         '<p class="pg-note">Indicative starting prices. Taxes, parking and final agreement values confirmed in writing at booking.</p>'
         '</div></section>'
     )
@@ -545,11 +545,49 @@ def build_prestige_gold():
         '</div></section>'
     )
     progress = (
-        '<section class="sec pg-progress"><div class="in"><div class="pg-progress-head">' + eye('CONSTRUCTION UPDATE') + '<h2 class="dh">Built with <em>transparency</em></h2>' +
-        '<p class="lead">Brickwork and internal works are complete on site. Finishes and handover in progress toward expected possession.</p>' +
-        '<div class="pg-progress-meter"><div class="pg-progress-copy"><b>On track</b><span>Brickwork &amp; internal works · done</span></div><div class="pg-progress-track"><span style="width:78%"></span></div></div>' +
-        '<div class="pg-milestones"><article><b>01</b><h3>Land, legal &amp; approvals</h3><p>Complete.</p></article><article><b>02</b><h3>Foundation &amp; RCC</h3><p>Complete.</p></article><article><b>03</b><h3>Brickwork &amp; internal works</h3><p><strong>Done.</strong> Walls, ducts and internal masonry complete.</p></article><article><b>04</b><h3>Finishes &amp; fittings</h3><p>In progress — plaster, tiling, MEP.</p></article><article><b>05</b><h3>Possession</h3><p>Expected June 2027.</p></article></div>' +
-        '</div></section>'
+        '<section class="sec pg-progress" id="construction"><div class="in pg-progress-layout">'
+        '<div class="pg-progress-left">'
+        + eye('CONSTRUCTION UPDATE') + '<h2 class="dh">Built with <em>transparency</em></h2>'
+        '<article class="pg-status-card">'
+        '<p class="pg-status-kicker">Current site status</p>'
+        '<p class="pg-status-pct">70% <span>Completed</span></p>'
+        '<p class="pg-status-copy">G + 5 floor development is advancing on schedule. Sample flat is ready for live walkthrough and quality checks.</p>'
+        '</article>'
+        '<article class="pg-status-card pg-status-meter-card">'
+        '<div class="pg-status-meter-top"><div><p class="pg-status-kicker">Project completion</p>'
+        '<p class="pg-status-sub">Brickwork complete · finishes underway</p></div>'
+        '<div class="pg-ring" role="img" aria-label="70 percent complete" style="--pct:70">'
+        '<svg viewBox="0 0 36 36" aria-hidden="true"><path class="pg-ring-bg" d="M18 2.5a15.5 15.5 0 1 1 0 31 15.5 15.5 0 1 1 0-31"/><path class="pg-ring-fg" pathLength="100" d="M18 2.5a15.5 15.5 0 1 1 0 31 15.5 15.5 0 1 1 0-31"/></svg>'
+        '<span>70%</span></div></div>'
+        '<div class="pg-seg-track" aria-hidden="true"><i class="done"></i><i class="done"></i><i class="done"></i><i class="live"></i><i></i><i></i></div>'
+        '<ul class="pg-seg-legend"><li><span class="dot done"></span>Completed</li><li><span class="dot live"></span>In progress</li><li><span class="dot"></span>Upcoming</li></ul>'
+        '</article></div>'
+        '<div class="pg-progress-right" role="list">'
+        '<details class="pg-stage is-done" open><summary><span class="pg-stage-mark" aria-hidden="true">✓</span>'
+        '<span class="pg-stage-body"><b>01</b><strong>Land, legal &amp; RERA registration</strong></span>'
+        '<span class="pg-stage-tag done">Completed</span></summary>'
+        '<p>Approvals and registration formalities for Prestige Gold are complete.</p></details>'
+        '<details class="pg-stage is-done" open><summary><span class="pg-stage-mark" aria-hidden="true">✓</span>'
+        '<span class="pg-stage-body"><b>02</b><strong>Foundation &amp; excavation</strong></span>'
+        '<span class="pg-stage-tag done">Completed</span></summary>'
+        '<p>Foundation and excavation works are finished on site.</p></details>'
+        '<details class="pg-stage is-done" open><summary><span class="pg-stage-mark" aria-hidden="true">✓</span>'
+        '<span class="pg-stage-body"><b>03</b><strong>RCC structure progress</strong></span>'
+        '<span class="pg-stage-tag done">Completed</span></summary>'
+        '<p>Structural RCC for the G + 5 development is complete.</p></details>'
+        '<details class="pg-stage is-done" open><summary><span class="pg-stage-mark" aria-hidden="true">✓</span>'
+        '<span class="pg-stage-body"><b>04</b><strong>Brickwork &amp; internal works</strong></span>'
+        '<span class="pg-stage-tag done">Completed</span></summary>'
+        '<p>Walls, ducts and internal masonry are done across the towers.</p></details>'
+        '<details class="pg-stage is-live" open><summary><span class="pg-stage-mark" aria-hidden="true"></span>'
+        '<span class="pg-stage-body"><b>05</b><strong>Finishes &amp; fittings</strong></span>'
+        '<span class="pg-stage-tag live">In progress</span></summary>'
+        '<p>Plaster, tiling, MEP and fittings are underway toward handover.</p></details>'
+        '<details class="pg-stage is-next"><summary><span class="pg-stage-mark" aria-hidden="true"></span>'
+        '<span class="pg-stage-body"><b>06</b><strong>OC, possession &amp; handover</strong></span>'
+        '<span class="pg-stage-tag">Expected June 2027</span></summary>'
+        '<p>Possession targeted for June 2027, subject to final approvals.</p></details>'
+        '</div></div></section>'
     )
     gallery = (
         '<section class="sec pg-gallery"><div class="in">'
