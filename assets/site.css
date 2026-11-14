@@ -2029,6 +2029,8 @@ section#process.dark-bg{
   letter-spacing:.34em;text-transform:uppercase;color:#3d3d3d;
 }
 .home-passion-copy{display:flex;flex-direction:column;gap:clamp(18px,3vw,26px)}
+.home-passion-cta{margin:clamp(28px,4vw,40px) 0 0;text-align:center}
+.home-passion-cta .btn-o{letter-spacing:.14em}
 .home-passion-copy p{
   margin:0;font:300 clamp(15px,2.1vw,17px)/1.85 var(--sans);
   color:#5a5a5a;letter-spacing:.01em;

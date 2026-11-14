@@ -10,7 +10,7 @@ import urllib.parse
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261114-v18'
+ASSET_VER = 'prestige-home-revamp-20261114-v19'
 VIDEO = 'https://8ps1sfxuipndwxps.public.blob.vercel-storage.com/Prestige_Projects_Kalyan_30s.mp4'
 PHONE_TEL = '+919689557788'
 PHONE = '+91 96895 57788'
@@ -85,6 +85,7 @@ T['en'] = dict(
     intro_h='Elevated living in Kalyan West',
     intro=['Prestige Enterprises presents thoughtfully planned residences in Khadakpada, one of Kalyan West\u2019s most sought-after neighbourhoods, where schools, hospitals and everyday conveniences sit minutes from your door.',
            'Every home pairs generous, light-filled layouts with branded finishes, and every building is protected by CCTV surveillance, a secured entrance and power-backed lifts.'],
+    intro_cta='Book a private viewing',
     pillars=[('pin', 'Prime location', 'Khadakpada, Kalyan West. Leading schools, hospitals and shopping within a short drive.'),
              ('crown', 'Luxury living', 'Designer lobbies, branded fittings, vitrified flooring and aluminium French windows.'),
              ('leaf', 'Modern amenities', 'A landscaped rooftop garden, open gym, pool, mini theatre and courts for every age.'),
@@ -176,6 +177,7 @@ T['hi'] = dict(
     intro_h='कल्याण वेस्ट में बेहतरीन जीवनशैली',
     intro=['Prestige Enterprises खड़कपाड़ा में सोच-समझकर डिज़ाइन किए गए घर प्रस्तुत करता है। यह कल्याण वेस्ट के सबसे पसंदीदा इलाकों में से एक है, जहाँ स्कूल, अस्पताल और रोज़मर्रा की सुविधाएँ आपके घर से कुछ ही मिनटों की दूरी पर हैं।',
            'हर घर में खुला, रोशनी से भरा लेआउट और ब्रांडेड फ़िनिश है, और हर बिल्डिंग CCTV निगरानी, सुरक्षित प्रवेश द्वार और पावर बैकअप वाली लिफ़्ट से सुरक्षित है।'],
+    intro_cta='निजी विज़िट बुक करें',
     pillars=[('pin', 'प्राइम लोकेशन', 'खड़कपाड़ा, कल्याण वेस्ट। प्रमुख स्कूल, अस्पताल और शॉपिंग कुछ ही मिनटों में।'),
              ('crown', 'लग्ज़री लिविंग', 'डिज़ाइनर लॉबी, ब्रांडेड फिटिंग्स, विट्रिफाइड फ़्लोरिंग और एल्युमिनियम फ्रेंच विंडो।'),
              ('leaf', 'आधुनिक सुविधाएँ', 'लैंडस्केप्ड रूफटॉप गार्डन, ओपन जिम, पूल, मिनी थिएटर और हर उम्र के लिए कोर्ट।'),
@@ -267,6 +269,7 @@ T['mr'] = dict(
     intro_h='कल्याण वेस्टमधील उत्कृष्ट जीवनशैली',
     intro=['Prestige Enterprises खडकपाड्यात विचारपूर्वक डिझाइन केलेली घरे सादर करते. हा कल्याण वेस्टमधील सर्वाधिक पसंतीच्या परिसरांपैकी एक आहे, जिथे शाळा, रुग्णालये आणि रोजच्या सोयी तुमच्या घरापासून काही मिनिटांवर आहेत.',
            'प्रत्येक घरात मोकळा, प्रकाशमान लेआउट आणि ब्रँडेड फिनिश आहे, आणि प्रत्येक इमारत CCTV देखरेख, सुरक्षित प्रवेशद्वार आणि पॉवर बॅकअप असलेल्या लिफ्टने सुरक्षित आहे.'],
+    intro_cta='खासगी व्हिजिट बुक करा',
     pillars=[('pin', 'प्राइम लोकेशन', 'खडकपाडा, कल्याण वेस्ट. नामांकित शाळा, रुग्णालये आणि शॉपिंग काही मिनिटांवर.'),
              ('crown', 'लक्झरी लिव्हिंग', 'डिझायनर लॉबी, ब्रँडेड फिटिंग्ज, व्हिट्रिफाइड फ्लोअरिंग आणि ॲल्युमिनियम फ्रेंच विंडो.'),
              ('leaf', 'आधुनिक सुविधा', 'लँडस्केप केलेले रूफटॉप गार्डन, ओपन जिम, पूल, मिनी थिएटर आणि सर्व वयोगटांसाठी कोर्ट.'),
@@ -427,7 +430,9 @@ def intro(t):
     return (
         '<section class="home-seo-intro home-passion" aria-labelledby="home-seo-title"><div class="in home-passion-in">'
         f'<h1 class="home-passion-title" id="home-seo-title">{e(t["intro_h"])}</h1>'
-        f'<div class="home-passion-copy">{paras}</div></div>'
+        f'<div class="home-passion-copy">{paras}</div>'
+        f'<p class="home-passion-cta"><button class="btn-o dark enquire-trigger" type="button" data-enquiry-intent="site-visit"><span>{e(t["intro_cta"])}</span>{icon("arrow")}</button></p>'
+        '</div>'
         f'<div class="in home-pillars">{pillars}</div></section>\n'
     )
 
