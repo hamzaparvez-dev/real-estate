@@ -16,8 +16,8 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261114-v29'
-BLOG_PHOTO_VERSION = '20261101-editorial-photo-set-3'
+ASSET_VER = 'prestige-home-revamp-20261114-v30'
+BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-1'
 FEATURED_GUIDES = posts_en.FEATURED
 POSTS = {'en': posts_en.POSTS, 'hi': posts_hi.POSTS, 'mr': posts_mr.POSTS}
 VIDEO = 'https://bjoj2azd7axubq1h.public.blob.vercel-storage.com/Prestige_One_Kalyan_Sales_Video_1080p%20%281%29.mp4'
@@ -181,8 +181,10 @@ T['en'] = dict(
          ('What security systems are in place?', 'CCTV surveillance across common areas, a secured gated entrance, well-lit common spaces and branded lifts with power backup.'),
          ('Is the project RERA registered?', f'Yes. MahaRERA registration number {RERA}. We share the registration details and documents before you book.'),
          ('How do I book a site visit?', 'Message us on WhatsApp or call +91 96895 57788. We will confirm a time that suits you and share the latest availability.')],
-    guides_eye='Guides', guides_h='Straight answers on <em>buying property in Kalyan</em>',
-    guides_btn='View all guides', guides_min='{n} min read',
+    guides_eye='Guides',
+    guides_h='Blogs Insight On Prestige Homes in Kalyan',
+    guides_p='Explore practical buyer guides covering 1, 2 & 3 BHK homes, stamp duty, MahaRERA checks and what to verify before you book in Kalyan West.',
+    guides_btn='View All', guides_date='October 29, 2026', guides_min='{n} min read',
     guide_cats={'buying': 'Buying', 'costs': 'Costs', 'legal': 'Legal checks', 'finance': 'Finance', 'tax': 'Tax', 'investing': 'Investing'},
     contact_eye='Contact', contact_h='Arrange a <em>private site visit</em>',
     contact_p='Tell us the home you have in mind. Our Khadakpada team will share live availability, floor plans and a written cost sheet, and arrange a visit at your convenience.',
@@ -284,8 +286,10 @@ T['hi'] = dict(
     loc_titles={'health': 'अस्पताल और स्वास्थ्य सेवा', 'shop': 'मॉल और मनोरंजन', 'school': 'स्कूल और कॉलेज'},
     km='किमी', mins='मिनट', loc_note='दूरी और समय अनुमानित हैं और ट्रैफ़िक के अनुसार बदल सकते हैं।',
     faq_eye='सवाल-जवाब', faq_h='आम <em>सवाल</em>',
-    guides_eye='गाइड', guides_h='<em>कल्याण में प्रॉपर्टी खरीदने</em> पर सीधे जवाब',
-    guides_btn='सभी गाइड देखें', guides_min='{n} मिनट में पढ़ें',
+    guides_eye='गाइड',
+    guides_h='कल्याण में Prestige Homes पर ब्लॉग इनसाइट',
+    guides_p='1, 2 और 3 BHK घर, स्टैंप ड्यूटी, MahaRERA जाँच और कल्याण वेस्ट में बुकिंग से पहले क्या देखें — इन व्यावहारिक गाइड्स को पढ़ें।',
+    guides_btn='सभी देखें', guides_date='29 अक्टूबर 2026', guides_min='{n} मिनट में पढ़ें',
     guide_cats={'buying': 'खरीद', 'costs': 'खर्च', 'legal': 'कानूनी जाँच', 'finance': 'वित्त', 'tax': 'टैक्स', 'investing': 'निवेश'},
     faq=[('घर कहाँ स्थित हैं?', 'कल्याण वेस्ट में, खड़कपाड़ा और गोदरेज हिल के आसपास। हमारा ऑफिस Prestige One, गोदरेज हिल, खड़कपाड़ा, कल्याण 421301 में है।'),
          ('कौन-से कॉन्फ़िगरेशन उपलब्ध हैं?', '1, 2 और 3 BHK घर, जिनकी शुरुआती कीमत ₹55 लाख से है, साथ ही कमर्शियल जगह भी। 4 BHK और एलीट 5 BHK घर अनुरोध पर निजी तौर पर उपलब्ध हैं।'),
@@ -393,8 +397,10 @@ T['mr'] = dict(
     loc_titles={'health': 'रुग्णालये आणि आरोग्यसेवा', 'shop': 'मॉल आणि मनोरंजन', 'school': 'शाळा आणि महाविद्यालये'},
     km='किमी', mins='मिनिटे', loc_note='अंतर आणि वेळ अंदाजे आहेत आणि ट्रॅफिकनुसार बदलू शकतात.',
     faq_eye='प्रश्नोत्तरे', faq_h='नेहमीचे <em>प्रश्न</em>',
-    guides_eye='मार्गदर्शक', guides_h='<em>कल्याणमधील मालमत्ता खरेदी</em>वर थेट उत्तरे',
-    guides_btn='सर्व मार्गदर्शक पाहा', guides_min='{n} मिनिटांत वाचा',
+    guides_eye='मार्गदर्शक',
+    guides_h='कल्याणमधील Prestige Homes वर ब्लॉग इनसाइट',
+    guides_p='1, 2 आणि 3 BHK घरे, स्टॅम्प ड्यूटी, MahaRERA तपासणी आणि कल्याण वेस्टमध्ये बुकिंगपूर्वी काय पाहावे — या व्यावहारिक मार्गदर्शकांचे अवलोकन करा.',
+    guides_btn='सर्व पाहा', guides_date='29 ऑक्टोबर 2026', guides_min='{n} मिनिटांत वाचा',
     guide_cats={'buying': 'खरेदी', 'costs': 'खर्च', 'legal': 'कायदेशीर तपासणी', 'finance': 'वित्त', 'tax': 'कर', 'investing': 'गुंतवणूक'},
     faq=[('घरे कुठे आहेत?', 'कल्याण वेस्टमध्ये, खडकपाडा आणि गोदरेज हिल परिसरात. आमचे कार्यालय Prestige One, गोदरेज हिल, खडकपाडा, कल्याण 421301 येथे आहे.'),
          ('कोणते कॉन्फिगरेशन उपलब्ध आहेत?', '1, 2 आणि 3 BHK घरे, ज्यांची सुरुवातीची किंमत ₹55 लाखांपासून आहे, सोबत कमर्शियल जागाही. 4 BHK आणि एलीट 5 BHK घरे विनंतीवर खासगीरीत्या उपलब्ध आहेत.'),
@@ -656,19 +662,19 @@ def guides(t, l):
     cards = ''
     for slug in FEATURED_GUIDES:
         p = guide_post(l, slug)
-        cat = t['guide_cats'].get(p['cat'], p['cat'])
         cards += (
-            f'<a class="card" href="{pfx}/blog/{slug}/">'
-            f'<img src="/img/blog/{slug}.jpg?v={BLOG_PHOTO_VERSION}" width="800" height="420" loading="lazy" decoding="async" '
-            f'alt="{a(p["title"])}">'
-            f'<div class="card-b"><span class="card-k">{e(cat)}</span><h3>{e(p["title"])}</h3>'
-            f'<p>{e(p["desc"])}</p><span class="card-m">{e(t["guides_min"].format(n=p["read"]))}</span></div></a>'
+            f'<a class="blog-insight-card" href="{pfx}/blog/{slug}/">'
+            f'<span class="blog-insight-media"><img src="/img/blog/{slug}.jpg?v={BLOG_PHOTO_VERSION}" width="1400" height="933" '
+            f'loading="lazy" decoding="async" alt="{a(p["title"])}"></span>'
+            f'<span class="blog-insight-body"><h3>{e(p["title"])}</h3>'
+            f'<time datetime="2026-10-29">{e(t["guides_date"])}</time></span></a>'
         )
     return (
-        '<section class="sec home-guides" id="guides" style="background:#fff"><div class="in">'
-        f'{eye(t["guides_eye"])}<h2 class="dh">{t["guides_h"]}</h2>'
-        f'<div class="cards">{cards}</div>'
-        f'<p class="home-guides-cta"><a class="btn-o dark" href="{pfx}/blog/"><span>{e(t["guides_btn"])}</span>{icon("arrow")}</a></p>'
+        '<section class="sec home-guides blog-insight" id="guides"><div class="in">'
+        f'<h2 class="blog-insight-h">{e(t["guides_h"])}</h2>'
+        f'<p class="blog-insight-lead">{e(t["guides_p"])}</p>'
+        f'<div class="blog-insight-grid">{cards}</div>'
+        f'<p class="home-guides-cta"><a class="btn-g blog-insight-btn" href="{pfx}/blog/"><span>{e(t["guides_btn"])}</span></a></p>'
         '</div></section>\n'
     )
 
