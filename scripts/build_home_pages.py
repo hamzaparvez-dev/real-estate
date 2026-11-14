@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261114-v38'
+ASSET_VER = 'prestige-home-revamp-20261114-v39'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -85,6 +85,24 @@ LOC_ICON = {
 
 AMENITY_IMGS = ['swimming-pool', 'cricket', 'games-lounge', 'library', 'mini-theatre', 'pickleball', 'residents-lounge', 'fitness-centre']
 
+# Outline icons for the Features & Amenities card grid (reference layout).
+FEAT_ICONS = {
+    'pool': ('<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+             '<path d="M8 40c4 0 4-3 8-3s4 3 8 3 4-3 8-3 4 3 8 3 4-3 8-3 4 3 8 3"/><path d="M8 48c4 0 4-3 8-3s4 3 8 3 4-3 8-3 4 3 8 3 4-3 8-3 4 3 8 3"/>'
+             '<circle cx="24" cy="24" r="5"/><path d="M20 28c2 6 10 8 14 2"/></svg>'),
+    'star': ('<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+             '<circle cx="32" cy="18" r="5"/><path d="M32 23v10M26 48l6-15 6 15M22 36h20"/><path d="M18 52h28"/></svg>'),
+    'cinema': ('<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+               '<path d="M10 16c8 6 12 6 22 0"/><path d="M10 16v32c8-6 12-6 22 0V16"/><path d="M54 16c-8 6-12 6-22 0"/><path d="M54 16v32c-8-6-12-6-22 0V16"/>'
+               '<rect x="24" y="24" width="16" height="12" rx="1"/></svg>'),
+    'club': ('<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+             '<path d="M12 52V28l20-12 20 12v24"/><path d="M22 52V36h20v16"/><path d="M28 24h8"/><path d="M8 52h48"/></svg>'),
+    'vip': ('<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+            '<path d="M20 28c0-6 5-10 12-10s12 4 12 10v4H20v-4z"/><path d="M18 32h28l4 20H14l4-20z"/><path d="M26 20c0-4 3-7 6-7s6 3 6 7"/></svg>'),
+    'lift': ('<svg viewBox="0 0 64 64" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">'
+             '<rect x="14" y="8" width="36" height="48" rx="2"/><path d="M32 8v48"/><path d="M24 28l8-8 8 8"/><path d="M32 20v16"/></svg>'),
+}
+
 # Distances are approximate drive times from Khadakpada, Kalyan West.
 LOCATIONS = {
     'health': [('Aayush Hospital', 2, 5), ('Fortis Hospital', 4, 8), ('Shwaas Multispeciality Hospital', 5, 9)],
@@ -126,6 +144,16 @@ T['en'] = dict(
     amen_eye='Amenities', amen_h='Leisure, wellness and play, <em>right at home</em>',
     amen_lead='Spaces designed for unhurried mornings, active evenings and weekends with family, all within the community.',
     amen_names=['Swimming pool', 'Cricket practice pitch', 'Games lounge', 'Reading library', 'Mini theatre', 'Pickleball court', 'Residents\u2019 lounge', 'Fitness centre'],
+    feat_h='Features & Amenities By Prestige Kalyan',
+    feat_p='Prestige is meticulously crafted for connoisseurs of luxury, where every detail enhances the living experience. Thoughtful architecture, elevated leisure and everyday comfort come together so every residence feels open, grand and quietly refined.',
+    feat_cards=[
+        ('pool', 'Infinity Pool & Deck', 'Experience ultimate relaxation at the visually stunning pool and deck, offering breath-taking leisure views and a serene aquatic atmosphere for residents.'),
+        ('star', 'Stargazing Deck', 'Elevate your evenings at this unique high-altitude viewing spot, designed for quiet nights under the open sky and unhurried conversations with family.'),
+        ('cinema', 'Private Cinema Theatre', 'Indulge in cinematic magic within an exclusive mini-theatre, providing a premium space for private screenings and movie nights.'),
+        ('club', 'Two-Tier Podium Clubhouse', 'This lavish social hub serves as the heart of community life, offering residents a grand space for gatherings, recreation and leisure.'),
+        ('vip', 'VIP Guest Suites', 'Welcome visiting guests with premium hospitality and comfort, ensuring they experience the same level of grandeur as residents.'),
+        ('lift', 'High-Speed Elevators', 'Vertical transit is redefined with branded lifts and power backup, ensuring seamless, quick and efficient movement across the residences.'),
+    ],
     roof_eye='Signature amenity', roof_h='A rooftop garden of <em>298 sq. m.</em>',
     roof_p='Spanning both wings across 45.85 metres, the terrace is landscaped into a private retreat above the city, with water, shade, greenery and space to move.',
     roof_feats=[('Water body with waterfall feature', '3.00 × 4.50 m'), ('Two seating gazebos', '3.00 × 3.00 m each'),
@@ -237,6 +265,16 @@ T['hi'] = dict(
     amen_eye='सुविधाएँ', amen_h='आराम, सेहत और खेल, <em>घर के पास ही</em>',
     amen_lead='सुकून भरी सुबह, सक्रिय शाम और परिवार के साथ वीकेंड के लिए बनाई गई जगहें, सब कुछ सोसाइटी के भीतर।',
     amen_names=['स्विमिंग पूल', 'क्रिकेट प्रैक्टिस पिच', 'गेम्स लाउंज', 'लाइब्रेरी', 'मिनी थिएटर', 'पिकलबॉल कोर्ट', 'रेज़िडेंट्स लाउंज', 'फ़िटनेस सेंटर'],
+    feat_h='Features & Amenities By Prestige Kalyan',
+    feat_p='Prestige लग्ज़री की समझ रखने वाले परिवारों के लिए सोच-समझकर बनाया गया है, जहाँ हर विवरण जीवन के अनुभव को बेहतर बनाता है। खुली योजना, ऊँची छत वाली भावना और रोज़मर्रा का आराम हर घर को भव्य और शांत बनाते हैं।',
+    feat_cards=[
+        ('pool', 'Infinity Pool & Deck', 'पूल और डेक पर आराम करें — शांत पानी, खुला आसमान और परिवार के साथ सुकून भरी शाम।'),
+        ('star', 'Stargazing Deck', 'ऊँचाई पर यह विशेष जगह रात के आसमान के नीचे शांत शाम और परिवार की बातचीत के लिए बनी है।'),
+        ('cinema', 'Private Cinema Theatre', 'एक्सक्लूसिव मिनी थिएटर में निजी स्क्रीनिंग और मूवी नाइट का मज़ा लें।'),
+        ('club', 'Two-Tier Podium Clubhouse', 'यह सामाजिक केंद्र समुदाय की धड़कन है — मिलन, मनोरंजन और आराम के लिए भव्य जगह।'),
+        ('vip', 'VIP Guest Suites', 'मेहमानों को प्रीमियम आतिथ्य और आराम दें, ताकि उन्हें भी रेज़िडेंट्स जैसा अनुभव मिले।'),
+        ('lift', 'High-Speed Elevators', 'ब्रांडेड लिफ्ट और पावर बैकअप से पूरे रेज़िडेंस में तेज़ और सहज आवाजाही।'),
+    ],
     roof_eye='ख़ास सुविधा', roof_h='<em>298 वर्ग मीटर</em> का रूफटॉप गार्डन',
     roof_p='दोनों विंग्स में 45.85 मीटर तक फैला यह टेरेस शहर के ऊपर एक निजी आरामगाह है, जहाँ पानी, छाँव, हरियाली और टहलने की जगह है।',
     roof_feats=[('झरने के साथ वॉटर बॉडी', '3.00 × 4.50 मी'), ('बैठने के लिए दो गज़ेबो', 'हर एक 3.00 × 3.00 मी'),
@@ -348,6 +386,16 @@ T['mr'] = dict(
     amen_eye='सुविधा', amen_h='विश्रांती, आरोग्य आणि खेळ, <em>घराजवळच</em>',
     amen_lead='निवांत सकाळ, उत्साही संध्याकाळ आणि कुटुंबासोबतच्या वीकेंडसाठी तयार केलेल्या जागा, सर्व काही सोसायटीच्या आत.',
     amen_names=['स्विमिंग पूल', 'क्रिकेट प्रॅक्टिस पिच', 'गेम्स लाउंज', 'वाचनालय', 'मिनी थिएटर', 'पिकलबॉल कोर्ट', 'रेसिडेंट्स लाउंज', 'फिटनेस सेंटर'],
+    feat_h='Features & Amenities By Prestige Kalyan',
+    feat_p='Prestige हे लक्झरी समजणाऱ्या कुटुंबांसाठी काळजीपूर्वक तयार केले आहे, जिथे प्रत्येक तपशील राहणीमानाचा अनुभव उंचावतो. खुली रचना, भव्यता आणि रोजच्या सुखाची जोड प्रत्येक घर शांत आणि अभिजात बनवते.',
+    feat_cards=[
+        ('pool', 'Infinity Pool & Deck', 'पूल आणि डेकवर विश्रांती घ्या — शांत पाणी, खुले आकाश आणि कुटुंबासोबतची निवांत संध्याकाळ.'),
+        ('star', 'Stargazing Deck', 'उंचीवरील ही खास जागा रात्रीच्या आकाशाखाली शांत संध्याकाळ आणि कुटुंबाच्या गप्पांसाठी तयार आहे.'),
+        ('cinema', 'Private Cinema Theatre', 'एक्सक्लुझिव्ह मिनी थिएटरमध्ये खाजगी स्क्रीनिंग आणि मूव्ही नाईटचा आनंद घ्या.'),
+        ('club', 'Two-Tier Podium Clubhouse', 'हे सामाजिक केंद्र समुदायाचे हृदय आहे — मेळावे, मनोरंजन आणि विश्रांतीसाठी भव्य जागा.'),
+        ('vip', 'VIP Guest Suites', 'पाहुण्यांना प्रीमियम आतिथ्य आणि आराम द्या, जेणेकरून त्यांनाही रहिवाशांसारखा अनुभव मिळेल.'),
+        ('lift', 'High-Speed Elevators', 'ब्रँडेड लिफ्ट आणि पॉवर बॅकअपमुळे संपूर्ण रेसिडेन्समध्ये जलद आणि सहज हालचाल.'),
+    ],
     roof_eye='खास सुविधा', roof_h='<em>298 चौ. मी.</em> चे रूफटॉप गार्डन',
     roof_p='दोन्ही विंग्जमध्ये 45.85 मीटरपर्यंत पसरलेले हे टेरेस शहराच्या वरचे खासगी विश्रांतीस्थान आहे, जिथे पाणी, सावली, हिरवाई आणि फिरण्यासाठी जागा आहे.',
     roof_feats=[('धबधब्यासह वॉटर बॉडी', '3.00 × 4.50 मी'), ('बसण्यासाठी दोन गझेबो', 'प्रत्येकी 3.00 × 3.00 मी'),
@@ -548,17 +596,26 @@ def projects(t):
     )
 
 
+def features_amenities(t):
+    cards = ''.join(
+        f'<article class="feat-card"><div class="feat-icon" aria-hidden="true">{FEAT_ICONS[ic]}</div>'
+        f'<h3>{e(title)}</h3><p>{e(desc)}</p></article>'
+        for ic, title, desc in t['feat_cards']
+    )
+    return (
+        '<section class="sec home-features" id="amenities"><span id="services" class="home-anchor" aria-hidden="true"></span>'
+        f'<div class="in home-features-head"><h2 class="feat-title">{e(t["feat_h"])}</h2>'
+        f'<p class="feat-lead">{e(t["feat_p"])}</p></div>'
+        f'<div class="in feat-grid">{cards}</div></section>\n'
+    )
+
+
 def amenities(t):
-    tiles = ''.join(
-        f'<figure class="amen-tile"><img src="/img/amenities/{img}.webp" width="456" height="384" loading="lazy" alt="{a(name)}"><figcaption>{e(name)}</figcaption></figure>'
-        for img, name in zip(AMENITY_IMGS, t['amen_names']))
     feats = ''.join(f'<li><span>{e(f)}</span><b>{e(d)}</b></li>' for f, d in t['roof_feats'])
     specs = ''.join(f'<li>{e(x)}</li>' for x in t['specs'])
     sec = ''.join(f'<li>{e(x)}</li>' for x in t['security'])
     return (
-        '<section class="sec home-amenities" id="amenities"><span id="services" class="home-anchor" aria-hidden="true"></span>'
-        f'<div class="in home-sec-head">{eye(t["amen_eye"], "eye-center")}<h2 class="dh">{t["amen_h"]}</h2><p class="lead">{e(t["amen_lead"])}</p></div>'
-        f'<div class="in amen-grid">{tiles}</div>'
+        '<section class="sec home-amenities" id="amenity-details">'
         '<div class="in amen-feature">'
         f'<div class="amen-feature-media plan-img-wrap" data-full="/img/amenities/rooftop-garden.webp" data-title="{a(t["roof_alt"])}" role="button" tabindex="0" aria-label="{a(t["roof_alt"])}">'
         f'<img src="/img/amenities/rooftop-garden.webp" width="1024" height="682" loading="lazy" alt="{a(t["roof_alt"])}">'
@@ -727,7 +784,8 @@ def footer(l, t):
 
 def build(l):
     t = T[l]
-    page = (head(l, t) + nav(l, t) + hero(t) + intro(t) + about(t) + projects(t) + amenities(t)
+    page = (head(l, t) + nav(l, t) + hero(t) + intro(t) + about(t) + projects(t)
+            + features_amenities(t) + amenities(t)
             + pricing(t, l) + location(t) + faq(t) + guides(t, l) + contact(t) + footer(l, t))
     out = os.path.join(ROOT, PREFIX[l].lstrip('/'), 'index.html')
     with open(out, 'w', encoding='utf-8') as f:
