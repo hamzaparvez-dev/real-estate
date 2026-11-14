@@ -1444,11 +1444,33 @@ html.lenis body{overscroll-behavior-y:auto}
 .pg-map-card h3{font:300 clamp(28px,3.6vw,42px)/1.15 var(--serif);margin:18px 0 10px;color:#F8FAFC}
 .pg-map-card p{color:rgba(248,250,252,.68);line-height:1.7}
 .pg-map-card .btn-g{margin-top:16px}
-.pg-contact{background:#0A1525;color:#F8FAFC;text-align:center}
-.pg-contact .in{max-width:850px}
-.pg-contact .dh{color:#F8FAFC}
-.pg-contact .lead{margin:20px auto 0;color:rgba(248,250,252,.75)}
-.pg-contact .section-cta{justify-content:center;margin-top:30px}
+.pg-contact{
+  background:radial-gradient(ellipse 80% 70% at 50% 0%,#15233A 0%,#0A1525 58%,#070E1C 100%);
+  color:#F8FAFC;text-align:center;
+}
+.pg-contact .pg-contact-inner{max-width:760px;margin:0 auto}
+.pg-contact .eye{justify-content:center}
+.pg-contact .eye-txt{color:var(--gold)}
+.pg-contact .dh{color:#F8FAFC;margin-top:14px}
+.pg-contact .dh em{color:var(--gold2)}
+.pg-contact .lead{margin:20px auto 0;max-width:54ch;color:rgba(248,250,252,.72)}
+.pg-contact-actions{
+  display:flex;flex-wrap:wrap;gap:12px;justify-content:center;margin-top:34px;
+}
+.pg-contact-actions .btn-g,
+.pg-contact-actions .btn-o{
+  min-width:min(100%,220px);justify-content:center;
+}
+.pg-contact-actions .btn-o{
+  border-color:rgba(248,250,252,.38);color:#F8FAFC;background:transparent;
+}
+.pg-contact-actions .btn-o:hover{
+  border-color:var(--gold2);color:var(--gold2);background:rgba(205,47,42,.08);
+}
+.pg-contact-note{
+  margin:28px 0 0;color:rgba(248,250,252,.55);
+  font:400 13px/1.5 var(--sans);letter-spacing:.02em;
+}
 .pg-contact-email{margin-top:26px;color:rgba(248,250,252,.65);font-size:13px}
 .pg-contact-email a{color:var(--gold2)}
 .pg-faq{background:#F7F8FA}

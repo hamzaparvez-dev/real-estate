@@ -626,11 +626,12 @@ def build_prestige_gold():
     )
     contact = (
         '<section class="sec pg-contact" id="pg-enquire"><div class="in pg-contact-inner">'
-        + eye('NEXT STEP') + '<h2 class="dh">Experience Prestige <em>Gold</em></h2>'
-        '<p class="lead">Ask for current availability, unit-wise pricing, approved floor plans and a guided site visit — including Shri Durga Enterprises.</p>'
-        '<div class="section-cta"><a class="cta-enq" href="' + wa_link + '" target="_blank" rel="noopener">Request brochure</a>'
-        '<a class="cta-wa" href="tel:+' + GOLD_WA + '">Call +91 84466 52600</a></div>'
-        '<p class="pg-contact-email">Our team is ready to assist.</p>'
+        + eye('NEXT STEP') + '<h2 class="dh light">Experience Prestige <em>Gold</em></h2>'
+        '<p class="lead light">Ask for current availability, unit-wise pricing, approved floor plans and a guided site visit — including Shri Durga Enterprises.</p>'
+        '<div class="pg-contact-actions">'
+        f'<a class="btn-g" href="{wa_link}" target="_blank" rel="noopener"><span>Request brochure</span></a>'
+        '<a class="btn-o" href="tel:+' + GOLD_WA + '"><span>Call +91 84466 52600</span></a></div>'
+        '<p class="pg-contact-note">Our team is ready to assist.</p>'
         '</div></section></main>'
     )
     body = hero + overview + pricing + floorplans + gallery + amenities_section + progress + location + shri_durga + contact
@@ -670,10 +671,12 @@ def build_prestige_one():
     )
     contact = (
         '<section class="sec pg-contact" id="contact"><div class="in pg-contact-inner">'
-        + eye('CONTACT') + '<h2 class="dh">Our team is <em>ready to assist</em></h2>'
-        '<p class="lead">Book a visit or request the Prestige One brochure.</p>'
-        f'<div class="section-cta"><a class="cta-enq" href="{wa_link}" target="_blank" rel="noopener">Request brochure</a>'
-        f'<a class="cta-wa" href="tel:{C.PHONE_TEL}">Call {C.PHONE_DISPLAY}</a></div></div></section></main>'
+        + eye('CONTACT') + '<h2 class="dh light">Our team is <em>ready to assist</em></h2>'
+        '<p class="lead light">Book a visit or request the Prestige One brochure.</p>'
+        f'<div class="pg-contact-actions"><a class="btn-g" href="{wa_link}" target="_blank" rel="noopener"><span>Request brochure</span></a>'
+        f'<a class="btn-o" href="tel:{C.PHONE_TEL}"><span>Call {C.PHONE_DISPLAY}</span></a></div>'
+        '<p class="pg-contact-note">Our team is ready to assist.</p>'
+        '</div></section></main>'
     )
     body = hero + overview + pricing + contact
     ld = [{'@type': 'WebPage', 'name': 'Prestige One', 'url': C.SITE + path, 'description': desc, 'inLanguage': 'en-IN'}]
