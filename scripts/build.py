@@ -283,7 +283,7 @@ def footer(l, alts):
             f'<li><a href="/projects/prestige-gold/">Prestige Gold</a></li>'
         f'<li><a href="/projects/prestige-gold/#shri-durga">Shri Durga Enterprises</a></li>'
             f'<li><a href="/projects/prestige-one/">Prestige One</a></li></ul></div>'
-        f'<div><h4>{esc(U["foot_contact"])}</h4><p>{esc(C.ADDRESS_LINE)}</p>'
+        f'<div><h4>{esc(U["foot_contact"])}</h4><p><a href="{C.MAPS_URL}" target="_blank" rel="noopener">{esc(C.ADDRESS_LINE)}</a></p>'
         f'<p><a href="tel:{C.PHONE_TEL}">{C.PHONE_DISPLAY}</a><br>'
         f'<a href="mailto:{C.EMAIL}">{C.EMAIL}</a></p></div></div>'
         f'<div class="foot-legal">{rera}'
@@ -606,7 +606,7 @@ def build_prestige_gold():
         + eye('LOCATION ADVANTAGE') + '<h2 class="dh">Connected to <em>Kalyan West</em></h2>'
         '<p class="lead">The project is located in Kalyan West, Thane, Maharashtra – 421301. Contact the sales team for the exact site pin, route guidance and a scheduled walkthrough.</p>'
         '<p class="pg-address"><b>Prestige Gold</b><br>Kalyan West, Thane<br>Maharashtra – 421301</p>'
-        '<a class="btn-o" href="https://www.google.com/maps/search/?api=1&amp;query=Prestige+Gold+Kalyan+West+Thane+421301" target="_blank" rel="noopener">Open location in Google Maps ↗</a>'
+        f'<a class="btn-o" href="{C.MAPS_URL}" target="_blank" rel="noopener">Open location in Google Maps ↗</a>'
         '</div><div class="pg-map-card"><span>VISIT THE PROJECT</span><h3>See the location and experience the sample flat.</h3><p>Site visits are arranged through the project sales team.</p>'
         f'<a class="btn-g" href="{wa_link}" target="_blank" rel="noopener">Arrange a site visit</a></div></div></section>'
     )

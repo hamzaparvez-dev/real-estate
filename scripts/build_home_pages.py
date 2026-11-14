@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261114-v36'
+ASSET_VER = 'prestige-home-revamp-20261114-v37'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -34,7 +34,7 @@ WA = 'https://wa.me/919689557788'
 EMAIL = 'prestigeprojects1956@gmail.com'
 ADDRESS = 'Prestige One, Godrej Hill, Khadakpada, Kalyan, Maharashtra 421301'
 MAPS_EMBED = 'https://www.google.com/maps?q=Prestige+One,+Godrej+Hill,+Khadakpada,+Kalyan,+Maharashtra+421301&output=embed'
-MAPS_URL = 'https://maps.app.goo.gl/VFL4kqKsmQ6XdHS69'
+MAPS_URL = 'https://maps.app.goo.gl/eeYrM93VwrmVuY5d6'
 RERA = 'P51700052362'
 LANGS = ('en', 'hi', 'mr')
 PREFIX = {'en': '', 'hi': '/hi', 'mr': '/mr'}
@@ -715,7 +715,8 @@ def footer(l, t):
         f'<div><h4>{e(t["foot_projects"])}</h4><ul><li><a href="/projects/prestige-gold/">Prestige Gold</a></li>'
         '<li><a href="/projects/prestige-gold/#shri-durga">Shri Durga Enterprises</a></li>'
         '<li><a href="/projects/prestige-one/">Prestige One</a></li></ul></div>'
-        f'<div><h4>{e(t["foot_contact"])}</h4><p>{ADDRESS}</p><p><a href="tel:{PHONE_TEL}">{PHONE}</a><br><a href="mailto:{EMAIL}">{EMAIL}</a></p></div></div>'
+        f'<div><h4>{e(t["foot_contact"])}</h4><p><a href="{MAPS_URL}" target="_blank" rel="noopener">{ADDRESS}</a></p>'
+        f'<p><a href="tel:{PHONE_TEL}">{PHONE}</a><br><a href="mailto:{EMAIL}">{EMAIL}</a></p></div></div>'
         f'<div class="foot-legal"><p class="foot-rera"><strong>MahaRERA Reg. No:</strong> {RERA}</p>'
         f'<p><a href="/privacy/">{e(t["privacy"])}</a></p><p>{e(t["disclaimer"])}</p><p>{e(t["rights"])}</p></div></footer>\n'
         f'<a class="wa" href="{a(wa(t["wa_text"]))}" target="_blank" rel="noopener" aria-label="{a(t["wa_btn"])}">{icon("chat")}<span>{e(t["float_wa"])}</span></a>\n'
