@@ -16,9 +16,15 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261114-v30'
-BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-1'
+ASSET_VER = 'prestige-home-revamp-20261114-v31'
+BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
+# Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
+FEATURED_GUIDE_IMAGES = {
+    'how-to-buy-a-flat-in-kalyan-dombivli': '/img/front-blog-buying.webp',
+    'stamp-duty-registration-charges-maharashtra': '/img/front-blog-stamp-duty.webp',
+    'check-rera-registration-before-you-buy': '/img/front-blog-rera.webp',
+}
 POSTS = {'en': posts_en.POSTS, 'hi': posts_hi.POSTS, 'mr': posts_mr.POSTS}
 VIDEO = 'https://bjoj2azd7axubq1h.public.blob.vercel-storage.com/Prestige_One_Kalyan_Sales_Video_1080p%20%281%29.mp4'
 VIDEO_HOST = 'https://bjoj2azd7axubq1h.public.blob.vercel-storage.com'
@@ -662,9 +668,10 @@ def guides(t, l):
     cards = ''
     for slug in FEATURED_GUIDES:
         p = guide_post(l, slug)
+        img = FEATURED_GUIDE_IMAGES[slug]
         cards += (
             f'<a class="blog-insight-card" href="{pfx}/blog/{slug}/">'
-            f'<span class="blog-insight-media"><img src="/img/blog/{slug}.jpg?v={BLOG_PHOTO_VERSION}" width="1400" height="933" '
+            f'<span class="blog-insight-media"><img src="{img}?v={BLOG_PHOTO_VERSION}" width="1400" height="933" '
             f'loading="lazy" decoding="async" alt="{a(p["title"])}"></span>'
             f'<span class="blog-insight-body"><h3>{e(p["title"])}</h3>'
             f'<time datetime="2026-10-29">{e(t["guides_date"])}</time></span></a>'
