@@ -10,7 +10,7 @@ import urllib.parse
 
 ROOT = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261114-v23'
+ASSET_VER = 'prestige-home-revamp-20261114-v24'
 VIDEO = 'https://8ps1sfxuipndwxps.public.blob.vercel-storage.com/Prestige_Projects_Kalyan_30s.mp4'
 PHONE_TEL = '+919689557788'
 PHONE = '+91 96895 57788'
@@ -599,8 +599,9 @@ def footer(l, t):
         f'<div><a class="foot-logo-link" href="{p}/" aria-label="Prestige Enterprises"><img src="/img/logo-on-dark.png" width="210" height="70" alt="Prestige Enterprises" class="foot-logo"></a>'
         f'<p>{e(t["foot_tag"])}</p><div class="foot-langs">{langs}</div></div>'
         f'<div><h4>{e(t["foot_explore"])}</h4><ul>{links}</ul></div>'
-        f'<div><h4>{e(t["foot_projects"])}</h4><ul><li><a href="/projects/prestige-gold/">Prestige Gold</a></li><li><a href="/projects/prestige-one/">Prestige One</a></li>'
-        '<li><a href="/projects/shri-durga-enterprises/">Shri Durga Enterprises</a></li></ul></div>'
+        f'<div><h4>{e(t["foot_projects"])}</h4><ul><li><a href="/projects/prestige-gold/">Prestige Gold</a></li>'
+        '<li><a href="/projects/prestige-gold/#shri-durga">Shri Durga Enterprises</a></li>'
+        '<li><a href="/projects/prestige-one/">Prestige One</a></li></ul></div>'
         f'<div><h4>{e(t["foot_contact"])}</h4><p>{ADDRESS}</p><p><a href="tel:{PHONE_TEL}">{PHONE}</a><br><a href="mailto:{EMAIL}">{EMAIL}</a></p></div></div>'
         f'<div class="foot-legal"><p class="foot-rera"><strong>MahaRERA Reg. No:</strong> {RERA}</p>'
         f'<p><a href="/privacy/">{e(t["privacy"])}</a></p><p>{e(t["disclaimer"])}</p><p>{e(t["rights"])}</p></div></footer>\n'

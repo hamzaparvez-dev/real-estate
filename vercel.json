@@ -5,6 +5,16 @@
   "trailingSlash": true,
   "redirects": [
     {
+      "source": "/projects/shri-durga-enterprises",
+      "destination": "/projects/prestige-gold/#shri-durga",
+      "permanent": true
+    },
+    {
+      "source": "/projects/shri-durga-enterprises/",
+      "destination": "/projects/prestige-gold/#shri-durga",
+      "permanent": true
+    },
+    {
       "source": "/en",
       "destination": "/",
       "permanent": true

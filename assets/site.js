@@ -215,8 +215,8 @@
         '</div>' +
         '<div class="mnav-home-secondary" aria-label="Explore projects">' +
           '<a class="mnav-home-secondary-link" href="/projects/prestige-gold/">PRESTIGE GOLD</a>' +
+          '<a class="mnav-home-secondary-link" href="/projects/prestige-gold/#shri-durga">SHRI DURGA · GOLD</a>' +
           '<a class="mnav-home-secondary-link" href="/projects/prestige-one/">PRESTIGE ONE</a>' +
-          '<a class="mnav-home-secondary-link" href="/projects/shri-durga-enterprises/">SHRI DURGA ENTERPRISES</a>' +
           '<a class="mnav-home-secondary-link" href="' + hp + '/blog/">' + ht[6] + '</a>' +
           '<div class="mnav-home-languages" aria-label="Choose language">' +
             langLinks.map(function (x) {
@@ -285,8 +285,8 @@
           '</button>'+
           '<div class="mnav-plan-sub"><div>'+
             '<a class="mnav-plan-link" href="/projects/prestige-gold/"><span>'+t.gold+'</span>'+icon('chevron')+'</a>'+
+            '<a class="mnav-plan-link" href="/projects/prestige-gold/#shri-durga"><span>Shri Durga · Prestige Gold</span>'+icon('chevron')+'</a>'+
             '<a class="mnav-plan-link" href="/projects/prestige-one/"><span>Prestige One</span>'+icon('chevron')+'</a>'+
-            '<a class="mnav-plan-link" href="/projects/shri-durga-enterprises/"><span>Shri Durga Enterprises</span>'+icon('chevron')+'</a>'+
           '</div></div>'+
         '</div>'+
         item('pricing',paths.pricing,'pricing','')+
