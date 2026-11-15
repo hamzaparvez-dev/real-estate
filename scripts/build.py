@@ -403,14 +403,14 @@ def build_home(l):
         '<section class="sec project-showcase" id="projects"><div class="in project-showcase-grid">'
         '<div class="project-showcase-media"><img src="/img/prestige-tower-day.jpg" width="1200" height="900" loading="lazy" alt="Prestige Gold tower, Kalyan West"></div>'
         '<div class="project-showcase-copy"><div class="eye"><span class="eye-line"></span><span class="eye-txt">Prestige Gold</span></div>'
-        '<h2 class="dh">Prime location · <em>1, 2 & 3 BHK</em></h2>'
-        '<p class="lead">Residential and commercial. Luxury amenities, modern security, 3 BHK across the complete site from ₹1.40 Cr (140 L).</p>'
+        '<h2 class="dh">1, 2 &amp; 3 BHK · <em>plus commercial</em></h2>'
+        '<p class="lead">Residential 1, 2 &amp; 3 BHK and commercial space. Luxury amenities, modern security, 3 BHK across the complete site from ₹1.40 Cr (140 L).</p>'
         '<a class="btn-o dark" href="/projects/prestige-gold/">Prestige Gold</a></div></div>'
         '<div class="in project-showcase-grid" style="margin-top:48px"><div class="project-showcase-media">'
         '<img src="/img/Prestige%20One%20Tower%20in%20Daylight.png" width="991" height="1536" loading="lazy" alt="Prestige One tower"></div>'
         '<div class="project-showcase-copy"><div class="eye"><span class="eye-line"></span><span class="eye-txt">Prestige One</span></div>'
-        '<h2 class="dh">Elite <em>5 BHK</em> residences</h2>'
-        '<p class="lead">Spacious layouts. Configuration on request — pricing shared privately with serious buyers.</p>'
+        '<h2 class="dh">Elite <em>3 &amp; 5 BHK</em> residences</h2>'
+        '<p class="lead">Offered only as 3 BHK and 5 BHK. Spacious layouts — pricing shared privately with serious buyers.</p>'
         '<a class="btn-o dark" href="/projects/prestige-one/">Prestige One</a></div></div></section>\n'
     )
     def plan_card(p):
@@ -539,7 +539,7 @@ def build_prestige_gold():
         '<div class="pg-plan-grid"><figure><img src="/img/prestige-plan-1bhk.png" width="1000" height="760" loading="lazy" alt="Prestige Gold 1 BHK floor plan"><figcaption><b>1 BHK</b><span>Indicative layout</span></figcaption></figure>'
         '<figure><img src="/img/prestige-iso-2bhk.png" width="1000" height="760" loading="lazy" alt="Prestige Gold 2 BHK isometric layout"><figcaption><b>2 BHK</b><span>Isometric layout reference</span></figcaption></figure>'
         '<figure><img src="/img/prestige-iso-1bhk.png" width="1000" height="760" loading="lazy" alt="Prestige Gold 1 BHK isometric layout"><figcaption><b>1 BHK</b><span>Isometric layout reference</span></figcaption></figure></div>'
-        '<p class="pg-note">3, 4 and 5 BHK drawings and additional unit-specific plans can be requested from the project sales team.</p>'
+        '<p class="pg-note">Additional unit-specific 1, 2 &amp; 3 BHK drawings and commercial layouts can be requested from the project sales team.</p>'
         '</div></section>'
     )
     gallery = (
@@ -645,29 +645,35 @@ def build_prestige_one():
     path = '/projects/prestige-one/'
     nav_alts = {k: url(k, '/') for k in LANGS}
     seo_alts = {'en': path}
-    title = 'Prestige One | 5 BHK Elite Residences | Kalyan'
-    desc = 'Prestige One — 5 BHK luxury homes in Kalyan. Spacious layouts from 999.4 & 1001.4 sq. ft. No public price list. Request brochure and site visit.'
-    wa_text = 'Hello, I am interested in Prestige One 5 BHK in Kalyan. Please share the brochure and floor plans.'
+    title = 'Prestige One | 3 & 5 BHK Residences | Kalyan'
+    desc = 'Prestige One — 3 & 5 BHK luxury homes in Kalyan at Godrej Hill, Khadakpada. Spacious layouts; pricing and floor plans shared on request. Book a site visit.'
+    wa_text = 'Hello, I am interested in Prestige One 3 & 5 BHK in Kalyan. Please share the brochure, floor plans and availability.'
     wa_link = waurl(wa_text)
+    wa_3 = waurl('Hello, I am interested in Prestige One 3 BHK in Kalyan. Please share layouts, carpet areas and pricing.')
+    wa_5 = waurl('Hello, I am interested in Prestige One 5 BHK in Kalyan. Please share layouts, carpet areas and pricing.')
     hero = video_hero('Prestige One tower')
     overview = (
         '<section class="sec pg-overview"><div class="in pg-overview-grid"><div>'
-        + eye('PRESTIGE ONE') + '<h1 class="dh">Full residential · <em>elite 5 BHK</em></h1>'
-        '<p class="lead">A striking tower for families who want space, privacy and a prime Kalyan address — without compromise on security or amenities.</p>'
-        '<dl class="pg-facts"><div><dt>Configuration</dt><dd>5 BHK</dd></div><div><dt>Areas</dt><dd>999.4 &amp; 1001.4 sq. ft.</dd></div>'
+        + eye('PRESTIGE ONE') + '<h1 class="dh">Full residential · <em>3 &amp; 5 BHK</em></h1>'
+        '<p class="lead">A striking tower for families who want space, privacy and a prime Kalyan address — offered only as 3 BHK and 5 BHK residences.</p>'
+        '<dl class="pg-facts"><div><dt>Configurations</dt><dd>3 BHK &amp; 5 BHK only</dd></div><div><dt>5 BHK areas</dt><dd>999.4 &amp; 1001.4 sq. ft.</dd></div>'
         '<div><dt>Starting price</dt><dd>Shared on request</dd></div><div><dt>Office</dt><dd>Prestige One, Godrej Hill, Khadakpada</dd></div></dl>'
         '</div><figure class="pg-overview-image pg-image-full"><img src="/img/Prestige%20One%20Tower%20in%20Daylight.png" loading="lazy" alt="Prestige One tower"><figcaption>Prestige One</figcaption></figure></div></section>'
     )
     pricing = (
         '<section class="sec pg-pricing" id="pg-configurations"><div class="in">'
-        + eye('5 BHK') + '<h2 class="dh">Spacious layouts · <em>on request</em></h2>'
-        '<p class="lead">Floor plans, views and pricing are shared privately with serious buyers.</p>'
-        '<div class="cards pg-units"><article class="pg-unit"><span class="pg-unit-k">5 BHK</span><h3>Layout A</h3>'
+        + eye('CONFIGURATIONS') + '<h2 class="dh">3 &amp; 5 BHK · <em>on request</em></h2>'
+        '<p class="lead">Prestige One is offered only in 3 BHK and 5 BHK. Floor plans, views and pricing are shared privately with serious buyers.</p>'
+        '<div class="cards pg-units">'
+        '<article class="pg-unit"><span class="pg-unit-k">3 BHK</span><h3>3 BHK residence</h3>'
+        '<p class="pg-price">Price on request</p><p class="pg-area">Layout &amp; carpet area on request</p>'
+        f'<a class="btn-g" href="{wa_3}" target="_blank" rel="noopener">Request 3 BHK details</a></article>'
+        '<article class="pg-unit"><span class="pg-unit-k">5 BHK</span><h3>5 BHK · Layout A</h3>'
         '<p class="pg-price">Price on request</p><p class="pg-area">999.4 sq. ft.</p>'
-        f'<a class="btn-g" href="{wa_link}" target="_blank" rel="noopener">Request brochure</a></article>'
-        '<article class="pg-unit"><span class="pg-unit-k">5 BHK</span><h3>Layout B</h3>'
+        f'<a class="btn-g" href="{wa_5}" target="_blank" rel="noopener">Request 5 BHK details</a></article>'
+        '<article class="pg-unit"><span class="pg-unit-k">5 BHK</span><h3>5 BHK · Layout B</h3>'
         '<p class="pg-price">Price on request</p><p class="pg-area">1001.4 sq. ft.</p>'
-        f'<a class="btn-g" href="{wa_link}" target="_blank" rel="noopener">Request brochure</a></article></div></div></section>'
+        f'<a class="btn-g" href="{wa_5}" target="_blank" rel="noopener">Request 5 BHK details</a></article></div></div></section>'
     )
     contact = (
         '<section class="sec pg-contact" id="contact"><div class="in pg-contact-inner">'
@@ -702,7 +708,7 @@ def build_home_en_video():
         f'<a class="btn-o" href="{waurl(U["wa_default"])}" target="_blank" rel="noopener"><span>{esc(H["btn1"])}</span></a></div></div></section>\n'
         '<section class="home-seo-intro home-passion"><div class="in home-passion-in">'
         '<p class="home-passion-title">Prime location · Luxury · Security</p>'
-        '<div class="home-passion-copy"><p>Prestige Gold — 1, 2 &amp; 3 BHK and commercial. Prestige One — elite 5 BHK.</p>'
+        '<div class="home-passion-copy"><p>Prestige Gold — 1, 2 &amp; 3 BHK and commercial. Prestige One — 3 &amp; 5 BHK only.</p>'
         f'<p>{esc(U["team_ready"])}</p></div></div></section>\n'
     )
     about = ('<section class="sec" id="about"><div class="in about-grid"><div>' + eye(esc(H['about_eye'])) + f'<h2 class="dh">{H["about_h"]}</h2>'
