@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261115-v44'
+ASSET_VER = 'prestige-home-revamp-20261115-v45'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -127,11 +127,13 @@ T['en'] = dict(
     projects_eye='Our residences', projects_h='Two addresses, <em>one standard</em>',
     projects=[('/projects/prestige-gold/', '/img/prestige-tower-day.jpg', 1920, 1080, 'Prestige Gold residential tower in Kalyan West',
                'Prestige Gold', '1, 2 &amp; 3 BHK · <em>plus commercial</em>',
-               'Efficient, light-filled 1, 2 &amp; 3 BHK homes with modular kitchens, city-view balconies and premium finishes — plus commercial retail and office space in Kalyan West.',
+               'Where Kalyan West comes home',
+               'Sunlit rooms. City-view balconies. A lifestyle that feels finished from day one. Prestige Gold brings 1, 2 & 3 BHK residences with modular kitchens and premium finishes — plus retail and office space in the heart of Kalyan West, starting from ₹55 Lakh.',
                'Explore Prestige Gold'),
               ('/projects/prestige-one/', '/img/Prestige%20One%20Tower%20in%20Daylight.png', 1011, 1555, 'Prestige One residential tower in daylight, Kalyan',
                'Prestige One', 'Elite <em>3 &amp; 5 BHK</em> residences',
-               'A striking tower at Godrej Hill, Khadakpada — offered only as 3 BHK and 5 BHK residences, shared privately with serious buyers.',
+               'Reserved for those who want more',
+               'More space. More presence. A landmark on Godrej Hill for families who will not settle for less. Prestige One is offered only as 3 & 5 BHK — layouts and pricing shared privately with serious buyers.',
                'Explore Prestige One')],
     amen_eye='Amenities', amen_h='Leisure, wellness and play, <em>right at home</em>',
     amen_lead='Spaces designed for unhurried mornings, active evenings and weekends with family, all within the community.',
@@ -247,11 +249,13 @@ T['hi'] = dict(
     projects_eye='हमारे प्रोजेक्ट्स', projects_h='दो पते, <em>एक ही मानक</em>',
     projects=[('/projects/prestige-gold/', '/img/prestige-tower-day.jpg', 1920, 1080, 'कल्याण वेस्ट में Prestige Gold आवासीय टावर',
                'Prestige Gold', '1, 2 और 3 BHK · <em>साथ में कमर्शियल</em>',
-               'मॉड्यूलर किचन, शहर के दृश्य वाली बालकनी और प्रीमियम फ़िनिश के साथ 1, 2 और 3 BHK घर — साथ ही कल्याण वेस्ट में रिटेल और ऑफिस कमर्शियल जगह।',
+               'जहाँ कल्याण वेस्ट घर बन जाता है',
+               'रोशनी भरे घर। शहर का नज़ारा वाली बालकनी। पहले दिन से पूरा लगता जीवन। Prestige Gold में 1, 2 और 3 BHK घर — मॉड्यूलर किचन और प्रीमियम फ़िनिश के साथ — और कल्याण वेस्ट के दिल में रिटेल व ऑफिस कमर्शियल जगह, ₹55 लाख से।',
                'Prestige Gold देखें'),
               ('/projects/prestige-one/', '/img/Prestige%20One%20Tower%20in%20Daylight.png', 1011, 1555, 'कल्याण में Prestige One आवासीय टावर',
                'Prestige One', 'एलीट <em>3 और 5 BHK</em> घर',
-               'गोदरेज हिल, खड़कपाड़ा का शानदार टावर — केवल 3 BHK और 5 BHK घर, जिनकी जानकारी गंभीर खरीदारों को निजी तौर पर दी जाती है।',
+               'उनके लिए जो और चाहते हैं',
+               'ज़्यादा जगह। ज़्यादा पहचान। गोदरेज हिल पर उन परिवारों के लिए टावर जो कम पर राज़ी नहीं होते। Prestige One केवल 3 और 5 BHK में — लेआउट और कीमत गंभीर खरीदारों के साथ निजी तौर पर।',
                'Prestige One देखें')],
     amen_eye='सुविधाएँ', amen_h='आराम, सेहत और खेल, <em>घर के पास ही</em>',
     amen_lead='सुकून भरी सुबह, सक्रिय शाम और परिवार के साथ वीकेंड के लिए बनाई गई जगहें, सब कुछ सोसाइटी के भीतर।',
@@ -367,11 +371,13 @@ T['mr'] = dict(
     projects_eye='आमचे प्रकल्प', projects_h='दोन पत्ते, <em>एकच दर्जा</em>',
     projects=[('/projects/prestige-gold/', '/img/prestige-tower-day.jpg', 1920, 1080, 'कल्याण वेस्टमधील Prestige Gold निवासी टॉवर',
                'Prestige Gold', '1, 2 आणि 3 BHK · <em>सोबत कमर्शियल</em>',
-               'मॉड्युलर किचन, शहराचे दृश्य असलेल्या बाल्कनी आणि प्रीमियम फिनिशसह 1, 2 आणि 3 BHK घरे — सोबत कल्याण वेस्टमध्ये रिटेल आणि ऑफिस कमर्शियल जागा.',
+               'जिथे कल्याण वेस्ट घर बनते',
+               'प्रकाशमान घरे. शहराचे दृश्य असलेल्या बाल्कनी. पहिल्या दिवसापासून पूर्ण वाटणारे जीवन. Prestige Gold मध्ये 1, 2 आणि 3 BHK घरे — मॉड्युलर किचन आणि प्रीमियम फिनिशसह — आणि कल्याण वेस्टच्या हृदयात रिटेल व ऑफिस कमर्शियल जागा, ₹55 लाखांपासून.',
                'Prestige Gold पाहा'),
               ('/projects/prestige-one/', '/img/Prestige%20One%20Tower%20in%20Daylight.png', 1011, 1555, 'कल्याणमधील Prestige One निवासी टॉवर',
                'Prestige One', 'एलीट <em>3 आणि 5 BHK</em> घरे',
-               'गोदरेज हिल, खडकपाडा येथील देखणा टॉवर — फक्त 3 BHK आणि 5 BHK घरे, ज्यांची माहिती गंभीर खरेदीदारांना खासगीरीत्या दिली जाते.',
+               'ज्यांना अधिक हवे आहे त्यांच्यासाठी',
+               'अधिक जागा. अधिक ओळख. गोदरेज हिलवरील तो टॉवर जे कुटुंबे कमीत राजी होत नाहीत. Prestige One फक्त 3 आणि 5 BHK मध्ये — लेआउट आणि किंमत गंभीर खरेदीदारांसोबत खासगीरीत्या.',
                'Prestige One पाहा')],
     amen_eye='सुविधा', amen_h='विश्रांती, आरोग्य आणि खेळ, <em>घराजवळच</em>',
     amen_lead='निवांत सकाळ, उत्साही संध्याकाळ आणि कुटुंबासोबतच्या वीकेंडसाठी तयार केलेल्या जागा, सर्व काही सोसायटीच्या आत.',
@@ -565,7 +571,7 @@ def zoom_img(src, w, h, alt, t, cls):
 
 def projects(t):
     rows = ''
-    for i, (href, img, w, h, alt, name, title, lead, btn) in enumerate(t['projects']):
+    for i, (href, img, w, h, alt, name, title, sell, lead, btn) in enumerate(t['projects']):
         landscape = ' is-landscape' if w > h else ''
         flip = ' is-flipped' if i % 2 else ''
         alt_band = ' is-alt' if i % 2 else ''
@@ -575,7 +581,8 @@ def projects(t):
             f'<div class="home-project-band{alt_band}">'
             f'<div class="in project-showcase-grid home-project{flip}"><div class="project-showcase-media{landscape}">'
             f'<img src="{img}" width="{w}" height="{h}" loading="lazy" alt="{a(alt)}"></div>'
-            f'<div class="project-showcase-copy">{eye(name)}<h3 class="dh">{title}</h3><p class="lead">{e(lead)}</p>{inline}'
+            f'<div class="project-showcase-copy">{eye(name)}<h3 class="dh">{title}</h3>'
+            f'<p class="project-sell">{e(sell)}</p><p class="lead">{e(lead)}</p>{inline}'
             f'<a class="btn-o dark" href="{href}"><span>{e(btn)}</span>{icon("arrow")}</a></div></div>'
         )
         if is_one:
