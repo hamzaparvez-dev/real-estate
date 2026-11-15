@@ -61,6 +61,12 @@ const UPDATE_SCRIPT = [
   "return cjson.encode(item)"
 ].join('; ');
 
+const DELETE_SCRIPT = [
+  "local removed = redis.call('HDEL', KEYS[1], ARGV[1])",
+  "redis.call('ZREM', KEYS[2], ARGV[1])",
+  "return removed"
+].join('; ');
+
 function safeInt(value, fallback, min, max) {
   const parsed = Number.parseInt(value, 10);
   return Number.isFinite(parsed) ? Math.max(min, Math.min(max, parsed)) : fallback;
@@ -180,6 +186,26 @@ module.exports = async function handler(req, res) {
     }
   }
 
-  res.setHeader('Allow', 'GET, POST, PATCH');
+  if (req.method === 'DELETE') {
+    if (!sameOrigin(req)) return sendJson(res, 403, { error: 'Request origin could not be verified.' });
+    if (!verifySession(req, config.authSecret)) return sendJson(res, 401, { error: 'Please sign in again.' });
+
+    try {
+      const body = await readJson(req, 2048);
+      const id = typeof body.id === 'string' ? body.id : '';
+      if (!/^[0-9a-f-]{36}$/i.test(id)) return sendJson(res, 400, { error: 'Invalid enquiry ID.' });
+
+      const removed = await command(config, [
+        'EVAL', DELETE_SCRIPT, 2, DATA_KEY, INDEX_KEY, id
+      ]);
+      if (!Number(removed)) return sendJson(res, 404, { error: 'Enquiry not found.' });
+      return sendJson(res, 200, { ok: true, id });
+    } catch (error) {
+      const tooLarge = error && error.message === 'Request too large';
+      return sendJson(res, tooLarge ? 413 : 503, { error: tooLarge ? 'Request too large.' : 'Could not delete this enquiry.' });
+    }
+  }
+
+  res.setHeader('Allow', 'GET, POST, PATCH, DELETE');
   return sendJson(res, 405, { error: 'Method not allowed.' });
 };

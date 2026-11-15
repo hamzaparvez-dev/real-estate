@@ -47,8 +47,9 @@
 .pill-new{background:#fff1ef;color:#b92d28}.pill-contacted{background:#eaf2ff;color:#285d9e}.pill-qualified{background:#e7f5ed;color:#276b47}.pill-closed{background:#edf0f3;color:#5b6471}
 .meta{display:flex;flex-wrap:wrap;gap:8px 16px;margin-top:7px;color:#69778a;font:400 11px var(--sans)}
 .badges{display:flex;flex-wrap:wrap;gap:7px;margin-top:10px}.badge{padding:6px 9px;background:#f4f6f9;color:#48566a;font:600 9px var(--sans);letter-spacing:.03em}.badge.red{background:#fff0ef;color:#b82420}.badge.yes{background:#e7f5ed;color:#276b47}
-.actions{display:flex;gap:8px;flex-shrink:0}.actions a{display:inline-flex;align-items:center;justify-content:center;min-width:66px;min-height:36px;padding:0 13px;text-decoration:none;font:600 10px var(--sans)}
-.call{border:1px solid #dce1e8;color:var(--navy)}.wa{background:var(--navy);color:#fff}
+.actions{display:flex;gap:8px;flex-shrink:0;flex-wrap:wrap}.actions a,.actions button{display:inline-flex;align-items:center;justify-content:center;min-width:66px;min-height:36px;padding:0 13px;text-decoration:none;font:600 10px var(--sans);cursor:pointer}
+.call{border:1px solid #dce1e8;color:var(--navy);background:#fff}.wa{background:var(--navy);color:#fff;border:0}
+.delete-lead{border:1px solid #f0c4c2;background:#fff7f6;color:#b82420}.delete-lead:hover{background:#ffe8e6;border-color:#e8a5a2}.delete-lead:disabled{opacity:.5;cursor:wait}
 .message{margin:14px 0 0;padding-top:12px;border-top:1px solid #edf0f3;color:#526176;font:400 12px/1.6 var(--sans);overflow-wrap:anywhere}
 .manage{display:grid;grid-template-columns:minmax(150px,.5fr) minmax(240px,1.5fr);gap:12px 16px;margin-top:17px;padding-top:15px;border-top:1px solid #edf0f3}
 .manage label{display:grid;gap:6px;color:#637187;font:600 9px var(--sans);letter-spacing:.05em;text-transform:uppercase}
@@ -307,9 +308,10 @@ function render(){
       var phoneMarkup=phone
         ? '<div class="lead-contact-line"><span class="phone-number">+91 '+esc(phone)+'</span><button class="copy-phone" type="button" data-copy-phone="'+esc(phone)+'" aria-label="Copy mobile number">Copy number</button></div>'
         : '<div class="lead-contact-line"><span class="phone-missing">No mobile number recorded</span></div>';
-      var actions=phone
-        ? '<div class="actions"><a class="call" href="tel:+91'+esc(phone)+'">Call</a><a class="wa" href="https://wa.me/91'+esc(phone)+'?text='+wa+'" target="_blank" rel="noopener">WhatsApp</a></div>'
-        : '<div class="actions"><span class="no-contact">Contact details unavailable</span></div>';
+      var actions='<div class="actions">'+(phone
+        ? '<a class="call" href="tel:+91'+esc(phone)+'">Call</a><a class="wa" href="https://wa.me/91'+esc(phone)+'?text='+wa+'" target="_blank" rel="noopener">WhatsApp</a>'
+        : '<span class="no-contact">Contact details unavailable</span>')+
+        '<button class="delete-lead" type="button" data-delete aria-label="Delete lead '+name+'">Delete</button></div>';
       return '<article class="enquiry enquiry-'+esc(statusValue)+'" data-id="'+esc(x.id)+'">'+
         '<div class="enquiry-top"><div class="lead-identity">'+
           '<div class="enquiry-title"><h3 class="enquiry-name">'+name+'</h3><span class="pill pill-'+esc(statusValue)+'">'+statusLabel+'</span></div>'+
@@ -370,6 +372,22 @@ list.addEventListener('click',async function(e){
       }
       showToast('Mobile number copied');
     }catch(error){showToast('Could not copy number. Please select it manually.')}
+    return;
+  }
+  var del=e.target.closest('[data-delete]');
+  if(del){
+    var delCard=del.closest('.enquiry');if(!delCard)return;
+    var leadName=(delCard.querySelector('.enquiry-name')||{}).textContent||'this lead';
+    if(!window.confirm('Delete enquiry for '+leadName+'? This cannot be undone.'))return;
+    del.disabled=true;del.textContent='Deleting…';apiErr.textContent='';
+    try{
+      var dr=await fetch('/api/enquiries',{method:'DELETE',credentials:'same-origin',headers:{'Content-Type':'application/json'},body:JSON.stringify({id:delCard.dataset.id})}),db=await dr.json().catch(function(){return{}});
+      if(dr.status===401){showLogin('Your session has expired. Please sign in again.');return}
+      if(!dr.ok)throw Error(db.error||'Could not delete this enquiry.');
+      showToast('Lead deleted');
+      if(items.length<=1&&offset>0)offset=Math.max(0,offset-limit);
+      await load(offset);
+    }catch(error){apiErr.textContent=error.message||'Could not delete this enquiry.';del.disabled=false;del.textContent='Delete'}
     return;
   }
   var btn=e.target.closest('[data-save]');
