@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261115-v43'
+ASSET_VER = 'prestige-home-revamp-20261115-v44'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -568,9 +568,11 @@ def projects(t):
     for i, (href, img, w, h, alt, name, title, lead, btn) in enumerate(t['projects']):
         landscape = ' is-landscape' if w > h else ''
         flip = ' is-flipped' if i % 2 else ''
+        alt_band = ' is-alt' if i % 2 else ''
         is_one = href == '/projects/prestige-one/'
         inline = zoom_img('/img/prestige-one/riverside-interior.webp', 1774, 887, t['one_view_alt'], t, 'project-inline-media') if is_one else ''
         rows += (
+            f'<div class="home-project-band{alt_band}">'
             f'<div class="in project-showcase-grid home-project{flip}"><div class="project-showcase-media{landscape}">'
             f'<img src="{img}" width="{w}" height="{h}" loading="lazy" alt="{a(alt)}"></div>'
             f'<div class="project-showcase-copy">{eye(name)}<h3 class="dh">{title}</h3><p class="lead">{e(lead)}</p>{inline}'
@@ -578,6 +580,7 @@ def projects(t):
         )
         if is_one:
             rows += f'<div class="in project-banner">{zoom_img("/img/prestige-one/one-life-one-home.webp", 1774, 887, t["one_poster_alt"], t, "project-banner-media")}</div>'
+        rows += '</div>'
     return (
         '<section class="sec project-showcase home-projects" id="projects"><span id="types" class="home-anchor" aria-hidden="true"></span>'
         f'<div class="in home-sec-head">{eye(t["projects_eye"], "eye-center")}<h2 class="dh">{t["projects_h"]}</h2></div>'
