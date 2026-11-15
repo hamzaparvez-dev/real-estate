@@ -9,7 +9,7 @@ module.exports=async function(req,res){
  try{
   if(!await rateLimit(c,req,'login',5,900))return sendJson(res,429,{error:'Too many sign-in attempts. Try again in 15 minutes.'});
   const body=await readJson(req,2048),password=typeof body.password==='string'?body.password:'';
-  if(password.length>256||!verifyPassword(password,c.passwordHash))return sendJson(res,401,{error:'Incorrect password.'});
+  if(password.length>256||!verifyPassword(password,c))return sendJson(res,401,{error:'Incorrect password.'});
   await command(c,['DEL','prestige:rate:login:'+clientHash(req,c.authSecret)]);
   res.setHeader('Set-Cookie',setCookie(req,c.authSecret));return sendJson(res,200,{ok:true});
  }catch(e){const tooLarge=e&&e.message==='Request too large';return sendJson(res,tooLarge?413:503,{error:tooLarge?'Request too large':'Sign-in service is temporarily unavailable.'});}
