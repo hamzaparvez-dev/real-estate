@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261115-v49'
+ASSET_VER = 'prestige-home-revamp-20261115-v50'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -61,6 +61,7 @@ SVG = {
     'crown': '<path d="M3 18h18M4 18l-1-10 5 4 4-7 4 7 5-4-1 10"/>',
     'leaf': '<path d="M5 19c0-8 6-14 15-14 0 9-6 15-14 15"/><path d="M5 19l8-8"/>',
     'shield': '<path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11z"/><path d="M9 12l2 2 4-4"/>',
+    'check': '<circle cx="12" cy="12" r="9"/><path d="M8.5 12.2l2.3 2.3 4.7-4.8"/>',
 }
 
 
@@ -128,7 +129,8 @@ T['en'] = dict(
     intro=['Sunlit rooms. Branded finishes. Amenities that feel like a private club. Prestige Enterprises creates residences for families who expect more than another flat on the market.',
            'Homes are limited and pricing is clear. The fastest way to know if this one is yours is a private viewing with our team.'],
     intro_cta='Book a private viewing',
-    pillars=[('pin', 'Prime location', 'Khadakpada, Kalyan West. Leading schools, hospitals and shopping within a short drive.'),
+    intro_address='Visit the site office — Prestige One, Godrej Hill, Khadakpada, Kalyan West 421301. Walk the home, review the cost sheet, and decide with confidence.',
+    pillars=[('check', 'Clear pricing', 'Published starting prices from ₹55 Lakh. A written cost sheet before you book — no guesswork, no last-minute surprises.'),
              ('crown', 'Luxury living', 'Designer lobbies, branded fittings, vitrified flooring and aluminium French windows.'),
              ('leaf', 'Modern amenities', 'A landscaped rooftop garden, open gym, pool, mini theatre and courts for every age.'),
              ('shield', 'Security systems', 'CCTV across common areas, a secured entrance gate and lifts with power backup.')],
@@ -254,7 +256,8 @@ T['hi'] = dict(
     intro=['रोशनी से भरे कमरे। ब्रांडेड फ़िनिश। ऐसी सुविधाएँ जो निजी क्लब जैसी लगें। Prestige Enterprises उन परिवारों के लिए घर बनाता है जो बाज़ार में सिर्फ़ एक और फ़्लैट नहीं चाहते।',
            'घर सीमित हैं और कीमतें साफ़ हैं। यह घर आपका है या नहीं, यह जानने का सबसे तेज़ तरीका है हमारी टीम के साथ निजी विज़िट।'],
     intro_cta='निजी विज़िट बुक करें',
-    pillars=[('pin', 'प्राइम लोकेशन', 'खड़कपाड़ा, कल्याण वेस्ट। प्रमुख स्कूल, अस्पताल और शॉपिंग कुछ ही मिनटों में।'),
+    intro_address='साइट ऑफिस पर आएँ — Prestige One, गोदरेज हिल, खड़कपाड़ा, कल्याण वेस्ट 421301। घर देखें, लागत विवरण समझें, और भरोसे के साथ फ़ैसला करें।',
+    pillars=[('check', 'स्पष्ट कीमतें', 'प्रकाशित शुरुआती कीमतें ₹55 लाख से। बुकिंग से पहले लिखित लागत विवरण — अनुमान नहीं, सरप्राइज़ नहीं।'),
              ('crown', 'लग्ज़री लिविंग', 'डिज़ाइनर लॉबी, ब्रांडेड फिटिंग्स, विट्रिफाइड फ़्लोरिंग और एल्युमिनियम फ्रेंच विंडो।'),
              ('leaf', 'आधुनिक सुविधाएँ', 'लैंडस्केप्ड रूफटॉप गार्डन, ओपन जिम, पूल, मिनी थिएटर और हर उम्र के लिए कोर्ट।'),
              ('shield', 'सुरक्षा व्यवस्था', 'कॉमन एरिया में CCTV, सुरक्षित प्रवेश द्वार और पावर बैकअप वाली लिफ़्ट।')],
@@ -380,7 +383,8 @@ T['mr'] = dict(
     intro=['प्रकाशमान खोल्या. ब्रँडेड फिनिश. अशा सुविधा ज्या खासगी क्लबसारख्या वाटतात. Prestige Enterprises अशा कुटुंबांसाठी घरे उभारते, ज्यांना बाजारातील आणखी एक फ्लॅट नको असतो.',
            'घरे मर्यादित आहेत आणि किंमती स्पष्ट आहेत. हे घर तुमचे आहे का, हे जाणून घेण्याचा सर्वात जलद मार्ग म्हणजे आमच्या टीमसोबत खासगी व्हिजिट.'],
     intro_cta='खासगी व्हिजिट बुक करा',
-    pillars=[('pin', 'प्राइम लोकेशन', 'खडकपाडा, कल्याण वेस्ट. नामांकित शाळा, रुग्णालये आणि शॉपिंग काही मिनिटांवर.'),
+    intro_address='साइट ऑफिसला भेट द्या — Prestige One, गोदरेज हिल, खडकपाडा, कल्याण वेस्ट 421301. घर पाहा, खर्चपत्रक समजून घ्या आणि आत्मविश्वासाने निर्णय घ्या.',
+    pillars=[('check', 'स्पष्ट किंमती', 'प्रकाशित सुरुवातीच्या किंमती ₹55 लाखांपासून. बुकिंगपूर्वी लेखी खर्चपत्रक — अंदाज नाही, सरप्राइझ नाही.'),
              ('crown', 'लक्झरी लिव्हिंग', 'डिझायनर लॉबी, ब्रँडेड फिटिंग्ज, व्हिट्रिफाइड फ्लोअरिंग आणि ॲल्युमिनियम फ्रेंच विंडो.'),
              ('leaf', 'आधुनिक सुविधा', 'लँडस्केप केलेले रूफटॉप गार्डन, ओपन जिम, पूल, मिनी थिएटर आणि सर्व वयोगटांसाठी कोर्ट.'),
              ('shield', 'सुरक्षा व्यवस्था', 'कॉमन एरियात CCTV, सुरक्षित प्रवेशद्वार आणि पॉवर बॅकअप असलेल्या लिफ्ट.')],
@@ -576,6 +580,7 @@ def intro(t):
         f'<h1 class="home-passion-title" id="home-seo-title">{e(t["intro_h"])}</h1>'
         f'<div class="home-passion-copy">{paras}</div>'
         f'<p class="home-passion-cta"><button class="btn-o dark enquire-trigger" type="button" data-enquiry-intent="site-visit"><span>{e(t["intro_cta"])}</span>{icon("arrow")}</button></p>'
+        f'<p class="home-passion-address">{icon("pin", "home-passion-pin")}<span>{e(t["intro_address"])}</span></p>'
         '</div>'
         f'<div class="in home-pillars">{pillars}</div></section>\n'
     )

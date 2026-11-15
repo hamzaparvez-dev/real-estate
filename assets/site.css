@@ -2104,6 +2104,8 @@ section#process.dark-bg{
 .home-passion-copy{display:flex;flex-direction:column;gap:clamp(18px,3vw,26px)}
 .home-passion-cta{margin:clamp(28px,4vw,40px) 0 0;text-align:center}
 .home-passion-cta .btn-o{letter-spacing:.14em}
+.home-passion-address{display:flex;align-items:flex-start;justify-content:center;gap:10px;max-width:560px;margin:18px auto 0;padding:14px 18px;border:1px solid #E6E1D8;background:#FAFAF8;color:#4A5563;font:400 13.5px/1.55 var(--sans);text-align:left}
+.home-passion-pin{flex:none;width:18px;height:18px;margin-top:2px;color:var(--bronze)}
 .home-passion-copy p{
   margin:0;font:300 clamp(15px,2.1vw,17px)/1.85 var(--sans);
   color:#5a5a5a;letter-spacing:.01em;
