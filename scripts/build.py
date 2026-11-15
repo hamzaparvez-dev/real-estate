@@ -509,7 +509,6 @@ def build_prestige_gold():
         ('/img/hero-day.jpg', 1920, 1080, 'Prestige Gold residential tower in Kalyan West', 'Tower view'),
         ('/img/amenities/rooftop-garden.webp', 1200, 800, 'Rooftop garden amenity at Prestige Gold', 'Rooftop garden'),
         ('/img/amenities/swimming-pool.webp', 912, 768, 'Swimming pool at Prestige Gold', 'Swimming pool'),
-        ('/img/amenities/fitness-centre.webp', 912, 768, 'Fitness centre at Prestige Gold', 'Fitness centre'),
     ]
     gallery_figures = ''.join(
         f'<figure><img src="{src}" width="{w}" height="{h}" loading="lazy" alt="{esc(alt)}"><figcaption>{esc(cap)}</figcaption></figure>'
