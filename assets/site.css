@@ -2666,29 +2666,10 @@ body.has-video-hero nav#nav.solid{background:rgba(10,21,37,.97)}
 .price-brand-head{max-width:760px;margin-bottom:20px}
 .price-brand-title{margin:10px 0 0;font:400 clamp(28px,3.4vw,40px)/1.12 var(--serif);color:#142B45}
 .price-brand-intro{margin:12px 0 0;color:#5B6B7D;font:400 14.5px/1.7 var(--sans)}
-.price-brand-gold .price-rows{margin-top:8px}
-.price-more-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px;margin-top:18px}
-.price-more-grid-gold{grid-template-columns:minmax(0,1fr);max-width:420px}
-.price-more-grid-one{grid-template-columns:repeat(2,minmax(0,1fr));max-width:860px}
-.price-more-card{display:flex;flex-direction:column;gap:16px;min-height:100%;padding:22px 20px;background:#fff;border:1px solid #DCE4EC;border-top:3px solid #142B45;box-shadow:0 8px 24px rgba(20,43,69,.045)}
-.price-brand-one .price-more-card{border-top-color:var(--gold)}
-.price-more-top{display:flex;align-items:center;gap:14px}
-.price-more-kicker{display:block;margin:0 0 4px;color:#8493A2;font:500 9px/1.3 var(--mono);letter-spacing:.14em;text-transform:uppercase}
-.price-more-top h3{margin:0;color:#142B45;font:400 28px/1 var(--serif)}
-.price-more-area{display:flex;flex-direction:column;gap:4px;margin:0;padding-bottom:12px;border-bottom:1px solid #E3E9EF}
-.price-more-area span{color:#8996A3;font:500 8px/1.4 var(--mono);letter-spacing:.12em;text-transform:uppercase}
-.price-more-area strong{color:#394F65;font:500 13px/1.4 var(--sans)}
-.price-more-card ul{display:grid;gap:8px;margin:0;padding:0;list-style:none;flex:1}
-.price-more-card li{position:relative;padding-left:13px;color:#5B6978;font:400 12px/1.45 var(--sans)}
-.price-more-card li:before{content:"";position:absolute;top:.57em;left:0;width:5px;height:5px;background:#55718D;border-radius:50%}
-.price-more-offer{display:flex;flex-direction:column;gap:10px;margin-top:auto}
-.price-more-offer strong{color:#142B45;font:400 26px/1.1 var(--serif)}
-.price-more-offer .price-row-cta{margin-top:0}
-@media(max-width:900px){
-  .price-more-grid,.price-more-grid-gold,.price-more-grid-one{grid-template-columns:1fr;max-width:none}
-  .price-brand{padding:22px 16px}
-}
-@media(min-width:901px) and (max-width:1100px){.price-more-top h3{font-size:24px}}
+.price-brand .price-rows{margin-top:8px}
+.price-brand-one .price-row{border-left-color:var(--gold)}
+.price-brand-one .price-row:hover{border-left-color:var(--gold)}
+@media(max-width:900px){.price-brand{padding:22px 16px}}
 .home-plans-cta{margin:40px 0 0;text-align:center}
 .home-video-page .plans .plan-img-wrap img{aspect-ratio:1024/575;object-fit:contain;background:#E9E9E9}
 

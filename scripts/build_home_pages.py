@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261115-v47'
+ASSET_VER = 'prestige-home-revamp-20261115-v48'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -669,57 +669,57 @@ def _area_display(t, area):
     return f'{e(area)} {e(t["sqft"])}'
 
 
-def _more_cards(t, items, kicker):
-    cards = []
-    for name, mono, area, price, feats, msg in items:
-        area_block = (
-            f'<p class="price-more-area"><span>{e(t["area_label"])}</span><strong>{_area_display(t, area)}</strong></p>'
+def _price_row(t, index, total, name, mono, area, price, feats, msg, img='', alt=''):
+    if img:
+        visual = (
+            f'<div class="price-row-visual plan-img-wrap" data-full="{img}" data-title="{a(alt)}" role="button" tabindex="0" aria-label="{a(alt)}">'
+            f'<img src="{img}" width="1024" height="575" loading="lazy" decoding="async" alt="{a(alt)}">'
+            f'<span class="plan-zoom-hint">{icon("zoom")}<span>{e(t["tap"])}</span></span></div>'
         )
-        cards.append(
-            f'<article class="price-more-card">'
-            f'<div class="price-more-top"><span class="price-visual-monogram">{e(mono)}</span>'
-            f'<div><span class="price-more-kicker">{e(kicker)}</span><h3>{e(name)}</h3></div></div>'
-            f'{area_block}<ul>{"".join(f"<li>{e(x)}</li>" for x in feats)}</ul>'
-            f'<div class="price-more-offer"><strong>{e(price)}</strong>'
-            f'<a class="price-row-cta" href="{a(wa(msg))}" target="_blank" rel="noopener">{e(t["more_enquire"])}<span aria-hidden="true">↗</span></a></div>'
-            f'</article>'
+    else:
+        visual = (
+            f'<div class="price-row-visual price-visual-request">'
+            f'<span class="price-visual-monogram">{e(mono)}</span><span>{e(t["plan_req"])}</span></div>'
         )
-    return ''.join(cards)
+    return (
+        f'<article class="price-row"><div class="price-row-visual-wrap">{visual}</div>'
+        f'<div class="price-row-identity"><span class="price-row-number">0{index} / 0{total}</span><h3>{e(name)}</h3>'
+        f'<span class="price-row-area-label">{e(t["area_label"])}</span><strong class="price-row-area">{_area_display(t, area)}</strong></div>'
+        f'<div class="price-row-specs"><span class="price-row-spec-heading">{e(t["details"])}</span>'
+        f'<ul>{"".join(f"<li>{e(x)}</li>" for x in feats)}</ul></div>'
+        f'<div class="price-row-offer"><span class="price-row-starting">{e(t["starting"])}</span>'
+        f'<strong class="price-row-price">{e(price)}</strong>'
+        f'<span class="price-row-onwards">{e(t["onwards"])}</span>'
+        f'<a class="price-row-cta" href="{a(wa(msg))}" target="_blank" rel="noopener">{e(t["enquire"])}'
+        f'<span aria-hidden="true">↗</span></a></div></article>'
+    )
 
 
 def pricing(t, l):
-    total = len(t['units'])
+    gold_total = len(t['units']) + len(t['gold_extra'])
     rows = ''
     for i, (name, area, price, img, alt, feats) in enumerate(t['units']):
-        if img:
-            visual = (f'<div class="price-row-visual plan-img-wrap" data-full="{img}" data-title="{a(alt)}" role="button" tabindex="0" aria-label="{a(alt)}">'
-                      f'<img src="{img}" width="1024" height="575" loading="lazy" decoding="async" alt="{a(alt)}">'
-                      f'<span class="plan-zoom-hint">{icon("zoom")}<span>{e(t["tap"])}</span></span></div>')
-        else:
-            visual = f'<div class="price-row-visual price-visual-request"><span class="price-visual-monogram">{name[0]}B</span><span>{e(t["plan_req"])}</span></div>'
+        mono = f'{name[0]}B'
         msg = t['wa_text'] + f' ({name})'
-        rows += (
-            f'<article class="price-row"><div class="price-row-visual-wrap">{visual}</div>'
-            f'<div class="price-row-identity"><span class="price-row-number">0{i + 1} / 0{total}</span><h3>{name}</h3>'
-            f'<span class="price-row-area-label">{e(t["area_label"])}</span><strong class="price-row-area">{_area_display(t, area)}</strong></div>'
-            f'<div class="price-row-specs"><span class="price-row-spec-heading">{e(t["details"])}</span><ul>{"".join(f"<li>{e(x)}</li>" for x in feats)}</ul></div>'
-            f'<div class="price-row-offer"><span class="price-row-starting">{e(t["starting"])}</span><strong class="price-row-price">{price}</strong>'
-            f'<span class="price-row-onwards">{e(t["onwards"])}</span>'
-            f'<a class="price-row-cta" href="{a(wa(msg))}" target="_blank" rel="noopener">{e(t["enquire"])}<span aria-hidden="true">↗</span></a></div></article>'
-        )
-    gold_extra = _more_cards(t, t['gold_extra'], t['gold_eye'])
-    one_cards = _more_cards(t, t['one_units'], t['one_eye'])
+        rows += _price_row(t, i + 1, gold_total, name, mono, area, price, feats, msg, img, alt)
+    for j, (name, mono, area, price, feats, msg) in enumerate(t['gold_extra']):
+        rows += _price_row(t, len(t['units']) + j + 1, gold_total, name, mono, area, price, feats, msg)
+
+    one_total = len(t['one_units'])
+    one_rows = ''
+    for i, (name, mono, area, price, feats, msg) in enumerate(t['one_units']):
+        one_rows += _price_row(t, i + 1, one_total, name, mono, area, price, feats, msg)
+
     return (
         '<section class="sec price-section" id="pricing"><div class="in"><div class="price-section-head"><div>'
         f'{eye(t["price_eye"])}<h2 class="dh price-section-title">{t["price_h"]}</h2><p class="price-section-intro">{e(t["price_p"])}</p></div>'
         f'<div class="price-section-aside"><span class="price-aside-rule"></span><strong>{e(t["gold_aside_k"]).upper()}</strong><span>{e(t["gold_aside_v"])}</span></div></div>'
         f'<div class="price-brand price-brand-gold"><div class="price-brand-head">{eye(t["gold_eye"])}<h3 class="price-brand-title">{t["gold_h"]}</h3>'
         f'<p class="price-brand-intro">{e(t["gold_p"])}</p></div>'
-        f'<div class="price-rows">{rows}</div>'
-        f'<div class="price-more-grid price-more-grid-gold">{gold_extra}</div></div>'
+        f'<div class="price-rows">{rows}</div></div>'
         f'<div class="price-brand price-brand-one"><div class="price-brand-head">{eye(t["one_eye"])}<h3 class="price-brand-title">{t["one_h"]}</h3>'
         f'<p class="price-brand-intro">{e(t["one_p"])}</p></div>'
-        f'<div class="price-more-grid price-more-grid-one">{one_cards}</div></div>'
+        f'<div class="price-rows">{one_rows}</div></div>'
         f'<p class="price-section-note">{e(t["price_note"])}</p></div></section>\n'
     )
 
