@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261115-v53'
+ASSET_VER = 'prestige-home-revamp-20261115-v54'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -162,6 +162,7 @@ T['en'] = dict(
                'Explore Prestige One')],
     amen_eye='Amenities', amen_h='Leisure, wellness and play, <em>right at home</em>',
     amen_lead='Spaces designed for unhurried mornings, active evenings and weekends with family, all within the community.',
+    amen_gallery_h='A full lifestyle, <em>steps from your door</em>',
     amen_names=['Swimming pool', 'Cricket practice pitch', 'Games lounge', 'Reading library', 'Mini theatre', 'Pickleball court', 'Residents\u2019 lounge', 'Fitness centre'],
     feat_p='Prestige Kalyan is crafted for families who expect more from every day at home: elevated leisure, quiet comfort and architecture that feels open and refined.',
     feat_cards=[
@@ -288,6 +289,7 @@ T['hi'] = dict(
                'Prestige One देखें')],
     amen_eye='सुविधाएँ', amen_h='आराम, सेहत और खेल, <em>घर के पास ही</em>',
     amen_lead='सुकून भरी सुबह, सक्रिय शाम और परिवार के साथ वीकेंड के लिए बनाई गई जगहें, सब कुछ सोसाइटी के भीतर।',
+    amen_gallery_h='पूरी जीवनशैली, <em>दरवाज़े से कुछ कदम पर</em>',
     amen_names=['स्विमिंग पूल', 'क्रिकेट प्रैक्टिस पिच', 'गेम्स लाउंज', 'लाइब्रेरी', 'मिनी थिएटर', 'पिकलबॉल कोर्ट', 'रेज़िडेंट्स लाउंज', 'फ़िटनेस सेंटर'],
     feat_p='Prestige Kalyan उन परिवारों के लिए है जो घर में हर दिन से ज़्यादा उम्मीद करते हैं: ऊँचा आराम, शांत सुविधाएँ और खुली, परिष्कृत वास्तुकला।',
     feat_cards=[
@@ -414,6 +416,7 @@ T['mr'] = dict(
                'Prestige One पाहा')],
     amen_eye='सुविधा', amen_h='विश्रांती, आरोग्य आणि खेळ, <em>घराजवळच</em>',
     amen_lead='निवांत सकाळ, उत्साही संध्याकाळ आणि कुटुंबासोबतच्या वीकेंडसाठी तयार केलेल्या जागा, सर्व काही सोसायटीच्या आत.',
+    amen_gallery_h='पूर्ण जीवनशैली, <em>दारापासून काही पावलांवर</em>',
     amen_names=['स्विमिंग पूल', 'क्रिकेट प्रॅक्टिस पिच', 'गेम्स लाउंज', 'वाचनालय', 'मिनी थिएटर', 'पिकलबॉल कोर्ट', 'रेसिडेंट्स लाउंज', 'फिटनेस सेंटर'],
     feat_p='Prestige Kalyan त्या कुटुंबांसाठी आहे जे घरातून दररोज अधिक अपेक्षा करतात: उन्नत विश्रांती, शांत सुविधा आणि खुली, परिष्कृत वास्तुकला.',
     feat_cards=[
@@ -672,6 +675,20 @@ def amenities(t):
     )
 
 
+def amenity_gallery(t):
+    tiles = ''.join(
+        f'<figure class="amen-tile"><img src="/img/amenities/{slug}.webp" width="456" height="384" loading="lazy" alt="{a(name)}">'
+        f'<figcaption>{e(name)}</figcaption></figure>'
+        for slug, name in zip(AMENITY_IMGS, t['amen_names'])
+    )
+    return (
+        '<section class="sec home-amenities home-amenity-gallery" id="amenity-gallery"><div class="in">'
+        f'{eye(t["amen_eye"])}<h2 class="dh">{t["amen_gallery_h"]}</h2>'
+        f'<p class="lead">{e(t["amen_lead"])}</p>'
+        f'<div class="amen-grid">{tiles}</div></div></section>\n'
+    )
+
+
 def _area_display(t, area):
     if not area:
         return e(t['on_request'])
@@ -840,7 +857,7 @@ def footer(l, t):
 def build(l):
     t = T[l]
     page = (head(l, t) + nav(l, t) + hero(t) + intro(t) + about(t) + projects(t)
-            + features_amenities(t) + amenities(t)
+            + features_amenities(t) + amenities(t) + amenity_gallery(t)
             + pricing(t, l) + location(t) + faq(t) + guides(t, l) + contact(t) + footer(l, t))
     out = os.path.join(ROOT, PREFIX[l].lstrip('/'), 'index.html')
     with open(out, 'w', encoding='utf-8') as f:

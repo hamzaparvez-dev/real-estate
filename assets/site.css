@@ -2604,6 +2604,9 @@ body.home-video-page{--bronze:#A8783E;--bronze-soft:rgba(168,120,62,.16);--ink-s
 @media(prefers-reduced-motion:reduce){.feat-card{transition:none}.feat-card:hover{transform:none}}
 
 .home-amenities{background:#FBF9F6}
+.home-amenity-gallery{background:#F5F7FA;border-top:1px solid #E4E9F0}
+.home-amenity-gallery .lead{max-width:720px;margin:14px 0 0}
+.home-amenity-gallery .amen-grid{margin-top:clamp(28px,4vw,40px)}
 .amen-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:clamp(14px,2vw,24px)}
 .amen-tile{margin:0;position:relative;border:3px solid var(--bronze);background:#fff;overflow:hidden}
 .amen-tile img{display:block;width:100%;aspect-ratio:456/384;object-fit:cover;transition:transform .6s ease}
