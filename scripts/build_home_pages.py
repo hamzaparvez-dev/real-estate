@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261115-v51'
+ASSET_VER = 'prestige-home-revamp-20261115-v52'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -26,8 +26,16 @@ FEATURED_GUIDE_IMAGES = {
     'check-rera-registration-before-you-buy': '/img/front-blog-rera.webp',
 }
 POSTS = {'en': posts_en.POSTS, 'hi': posts_hi.POSTS, 'mr': posts_mr.POSTS}
-VIDEO = 'https://8ps1sfxuipndwxps.public.blob.vercel-storage.com/Prestige_Sales_Hero_Video_1080p.mp4'
-VIDEO_HOST = 'https://8ps1sfxuipndwxps.public.blob.vercel-storage.com'
+VIDEO = '/video/Prestige_Sales_Hero_Video_1080p.mp4'
+VIDEO_HOST = ''
+
+
+def video_preconnect():
+    if not VIDEO_HOST:
+        return ''
+    return f'<link rel="preconnect" href="{VIDEO_HOST}" crossorigin>\n'
+
+
 PHONE_TEL = '+919689557788'
 PHONE = '+91 96895 57788'
 WA = 'https://wa.me/919689557788'
@@ -537,7 +545,7 @@ def head(l, t):
         f'<meta property="og:image" content="{SITE}/img/og-default.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">'
         '<meta name="twitter:card" content="summary_large_image">\n'
         '<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png">\n'
-        f'<link rel="preconnect" href="{VIDEO_HOST}" crossorigin>\n'
+        f'{video_preconnect()}'
         '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
         f'<link href="https://fonts.googleapis.com/css2?{fonts}&display=swap" rel="stylesheet">\n'
         f'<link rel="stylesheet" href="/assets/site.css?v={ASSET_VER}">\n'

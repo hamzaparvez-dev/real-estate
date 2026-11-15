@@ -667,6 +667,19 @@
       ]
     },
     {
+      "source": "/video/(.*)",
+      "headers": [
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=2592000"
+        },
+        {
+          "key": "Content-Type",
+          "value": "video/mp4"
+        }
+      ]
+    },
+    {
       "source": "/assets/(.*)",
       "headers": [
         {

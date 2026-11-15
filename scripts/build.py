@@ -322,8 +322,8 @@ def crumbs(items):
     return '<ol class="crumbs">' + ''.join(f'<li>{"<a href=" + chr(34) + u + chr(34) + ">" + esc(n) + "</a>" if u else esc(n)}</li>' for n, u in items) + '</ol>'
 
 
-HERO_VIDEO_BLOB = 'https://8ps1sfxuipndwxps.public.blob.vercel-storage.com/Prestige_Sales_Hero_Video_1080p.mp4'
-HERO_VIDEO_HOST = 'https://8ps1sfxuipndwxps.public.blob.vercel-storage.com'
+HERO_VIDEO_BLOB = '/video/Prestige_Sales_Hero_Video_1080p.mp4'
+HERO_VIDEO_HOST = ''
 
 
 def video_hero(label='Prestige Enterprises residences in Kalyan West'):
@@ -337,6 +337,8 @@ def video_hero(label='Prestige Enterprises residences in Kalyan West'):
 
 
 def video_preconnect():
+    if not HERO_VIDEO_HOST:
+        return ''
     return (f'<link rel="preconnect" href="{HERO_VIDEO_HOST}" crossorigin>\n'
             f'<link rel="dns-prefetch" href="{HERO_VIDEO_HOST}">\n')
 
@@ -731,8 +733,7 @@ def build_home_en_video():
     contact = contact_block('en', H['contact_h'], H['contact_p'])
     ld = [agent_ld('en'), {'@type': 'WebSite', '@id': C.SITE + '/#website', 'url': C.SITE + '/', 'name': C.BRAND, 'inLanguage': ['en-IN', 'hi-IN', 'mr-IN'],
                            'publisher': {'@id': C.SITE + '/#agent'}}]
-    extra = ('<link rel="preconnect" href="https://8ps1sfxuipndwxps.public.blob.vercel-storage.com" crossorigin>\n'
-             '<link rel="dns-prefetch" href="https://8ps1sfxuipndwxps.public.blob.vercel-storage.com">\n')
+    extra = video_preconnect()
     h = head('en', H['title'], H['desc'], alts, '/img/og-default.jpg', C.BRAND, ld, extra=extra)
     h = h.replace(f'/assets/site.css?v={fver("assets/site.css")}', f'/assets/site.css?v={css_ver}')
     body_main = hero + about + projects + plans + assist + contact + '</main>\n'

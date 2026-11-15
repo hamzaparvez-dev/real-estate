@@ -78,7 +78,7 @@
   if (isHomeVideoPlayback) {
     var heroVideo = $('#heroVideo') || $('.hero-video');
     var heroSection = $('#home') || $('.site-video-hero') || $('.hero-video-hero');
-    var HERO_URL = 'https://bjoj2azd7axubq1h.public.blob.vercel-storage.com/Prestige_One_Kalyan_Sales_Video_1080p%20(1).mp4';
+    var HERO_URL = '/video/Prestige_Sales_Hero_Video_1080p.mp4';
 
     if (heroVideo) {
       if (!heroVideo.getAttribute('src')) heroVideo.setAttribute('src', HERO_URL);
