@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261114-v41'
+ASSET_VER = 'prestige-home-revamp-20261115-v42'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -26,8 +26,8 @@ FEATURED_GUIDE_IMAGES = {
     'check-rera-registration-before-you-buy': '/img/front-blog-rera.webp',
 }
 POSTS = {'en': posts_en.POSTS, 'hi': posts_hi.POSTS, 'mr': posts_mr.POSTS}
-VIDEO = 'https://bjoj2azd7axubq1h.public.blob.vercel-storage.com/Prestige_One_Kalyan_Sales_Video_1080p%20%281%29.mp4'
-VIDEO_HOST = 'https://bjoj2azd7axubq1h.public.blob.vercel-storage.com'
+VIDEO = 'https://8ps1sfxuipndwxps.public.blob.vercel-storage.com/Prestige_Sales_Hero_Video_1080p.mp4'
+VIDEO_HOST = 'https://8ps1sfxuipndwxps.public.blob.vercel-storage.com'
 PHONE_TEL = '+919689557788'
 PHONE = '+91 96895 57788'
 WA = 'https://wa.me/919689557788'
