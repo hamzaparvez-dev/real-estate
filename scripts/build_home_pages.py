@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261115-v45'
+ASSET_VER = 'prestige-home-revamp-20261115-v46'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -95,11 +95,27 @@ FEAT_ICONS = {
     'lift': '/img/features/high-speed-elevators.svg',
 }
 
-# Distances are approximate drive times from Khadakpada, Kalyan West.
+# Approximate road distances / drive times from Prestige One, Godrej Hill, Khadakpada.
+# Verified against public map listings; times vary with traffic.
 LOCATIONS = {
-    'health': [('Aayush Hospital', 2, 5), ('Fortis Hospital', 4, 8), ('Shwaas Multispeciality Hospital', 5, 9)],
-    'shop': [('Patel Mart / DMart', 1, 2), ('Metro Junction Mall', 5, 9), ('Mukta A2 Cinemas', 5, 9), ('Xperia Mall', 10, 13), ('Viviana Mall', 20, 25)],
-    'school': [('Podar International School', 1, 2), ('Agrawal College', 1, 2), ('Vibgyor Roots & Rise', 2, 3), ('Birla College', 2, 5)],
+    'health': [
+        ('Aayush Hospital', 1, 3),
+        ('Shwaas Multispeciality Hospital', 1, 4),
+        ('Fortis Hospital, Kalyan', 4, 10),
+    ],
+    'shop': [
+        ('DMart, Godrej Hill', 1, 3),
+        ('Metro Junction Mall', 6, 16),
+        ('Mukta A2 Cinemas', 6, 16),
+        ('Xperia Mall, Dombivli', 14, 28),
+        ('Viviana Mall, Thane', 22, 40),
+    ],
+    'school': [
+        ('Podar International School', 1, 3),
+        ('Vibgyor Roots & Rise', 1, 3),
+        ('K. M. Agrawal College', 1, 4),
+        ('Birla College', 2, 5),
+    ],
 }
 
 T = {}
@@ -200,7 +216,7 @@ T['en'] = dict(
     loc_eye='Prime location', loc_h='Everything you need, <em>minutes away</em>',
     loc_p='Khadakpada is among Kalyan West\u2019s most established residential neighbourhoods: tree-lined, well connected and surrounded by trusted schools, hospitals and shopping.',
     loc_titles={'health': 'Hospitals & Healthcare', 'shop': 'Malls & Entertainment', 'school': 'Schools & Colleges'},
-    km='km', mins='min', loc_note='Distances and drive times are approximate and vary with traffic.',
+    km='km', mins='min', loc_note='Distances and drive times are approximate from Prestige One, Godrej Hill, Khadakpada, and vary with traffic.',
     faq_eye='FAQ', faq_h='Common <em>questions</em>',
     faq=[('Where are the residences located?', 'In Kalyan West, around Khadakpada and Godrej Hill. Our office is at Prestige One, Godrej Hill, Khadakpada, Kalyan 421301.'),
          ('Which configurations are available?', 'Prestige Gold offers 1, 2 and 3 BHK residences from ₹55 Lakh, plus commercial space. Prestige One offers only 3 BHK and 5 BHK residences, shared privately on request.'),
@@ -322,7 +338,7 @@ T['hi'] = dict(
     loc_eye='प्राइम लोकेशन', loc_h='ज़रूरत की हर चीज़, <em>कुछ ही मिनटों में</em>',
     loc_p='खड़कपाड़ा कल्याण वेस्ट के सबसे स्थापित आवासीय इलाकों में से एक है: हरा-भरा, अच्छी कनेक्टिविटी वाला और भरोसेमंद स्कूलों, अस्पतालों व शॉपिंग से घिरा हुआ।',
     loc_titles={'health': 'अस्पताल और स्वास्थ्य सेवा', 'shop': 'मॉल और मनोरंजन', 'school': 'स्कूल और कॉलेज'},
-    km='किमी', mins='मिनट', loc_note='दूरी और समय अनुमानित हैं और ट्रैफ़िक के अनुसार बदल सकते हैं।',
+    km='किमी', mins='मिनट', loc_note='दूरी और समय Prestige One, गोदरेज हिल, खड़कपाड़ा से अनुमानित हैं और ट्रैफ़िक के अनुसार बदल सकते हैं।',
     faq_eye='सवाल-जवाब', faq_h='आम <em>सवाल</em>',
     guides_eye='गाइड',
     guides_h='<em>कल्याण में प्रॉपर्टी खरीदने</em> पर सीधे जवाब',
@@ -444,7 +460,7 @@ T['mr'] = dict(
     loc_eye='प्राइम लोकेशन', loc_h='गरजेचे सर्व काही, <em>काही मिनिटांवर</em>',
     loc_p='खडकपाडा हा कल्याण वेस्टमधील सर्वात प्रस्थापित निवासी परिसरांपैकी एक आहे: हिरवागार, उत्तम कनेक्टिव्हिटी असलेला आणि विश्वासार्ह शाळा, रुग्णालये व शॉपिंगने वेढलेला.',
     loc_titles={'health': 'रुग्णालये आणि आरोग्यसेवा', 'shop': 'मॉल आणि मनोरंजन', 'school': 'शाळा आणि महाविद्यालये'},
-    km='किमी', mins='मिनिटे', loc_note='अंतर आणि वेळ अंदाजे आहेत आणि ट्रॅफिकनुसार बदलू शकतात.',
+    km='किमी', mins='मिनिटे', loc_note='अंतर आणि वेळ Prestige One, गोदरेज हिल, खडकपाडा येथून अंदाजे आहेत आणि ट्रॅफिकनुसार बदलू शकतात.',
     faq_eye='प्रश्नोत्तरे', faq_h='नेहमीचे <em>प्रश्न</em>',
     guides_eye='मार्गदर्शक',
     guides_h='<em>कल्याणमधील मालमत्ता खरेदी</em>वर थेट उत्तरे',
