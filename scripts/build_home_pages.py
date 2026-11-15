@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261115-v52'
+ASSET_VER = 'prestige-home-revamp-20261115-v53'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -137,7 +137,6 @@ T['en'] = dict(
     intro=['Sunlit rooms. Branded finishes. Amenities that feel like a private club. Prestige Enterprises creates residences for families who expect more than another flat on the market.',
            'Homes are limited and pricing is clear. The fastest way to know if this one is yours is a private viewing with our team.'],
     intro_cta='Book a private viewing',
-    intro_address='Visit the site office — Prestige One, Godrej Hill, Khadakpada, Kalyan West 421301. Walk the home, review the cost sheet, and decide with confidence.',
     pillars=[('check', 'Clear pricing', 'Published starting prices from ₹55 Lakh. A written cost sheet before you book — no guesswork, no last-minute surprises.'),
              ('crown', 'Luxury living', 'Designer lobbies, branded fittings, vitrified flooring and aluminium French windows.'),
              ('leaf', 'Modern amenities', 'A landscaped rooftop garden, open gym, pool, mini theatre and courts for every age.'),
@@ -150,7 +149,7 @@ T['en'] = dict(
     quote='A home is the biggest decision most families make. Our role is to make it a confident one.',
     one_view_alt='Prestige One living room opening onto a balcony with riverside sunset views',
     one_poster_alt='Prestige One: One Life. One Home.',
-    projects_eye='Our residences', projects_h='Two addresses, <em>one standard</em>',
+    projects_eye='Our residences', projects_h='Two residences, <em>one standard</em>',
     projects=[('/projects/prestige-gold/', '/img/prestige-tower-day.jpg', 1920, 1080, 'Prestige Gold residential tower in Kalyan West',
                'Prestige Gold', 'Premium living · <em>elevated in every detail</em>',
                'Where Kalyan West comes home',
@@ -264,7 +263,6 @@ T['hi'] = dict(
     intro=['रोशनी से भरे कमरे। ब्रांडेड फ़िनिश। ऐसी सुविधाएँ जो निजी क्लब जैसी लगें। Prestige Enterprises उन परिवारों के लिए घर बनाता है जो बाज़ार में सिर्फ़ एक और फ़्लैट नहीं चाहते।',
            'घर सीमित हैं और कीमतें साफ़ हैं। यह घर आपका है या नहीं, यह जानने का सबसे तेज़ तरीका है हमारी टीम के साथ निजी विज़िट।'],
     intro_cta='निजी विज़िट बुक करें',
-    intro_address='साइट ऑफिस पर आएँ — Prestige One, गोदरेज हिल, खड़कपाड़ा, कल्याण वेस्ट 421301। घर देखें, लागत विवरण समझें, और भरोसे के साथ फ़ैसला करें।',
     pillars=[('check', 'स्पष्ट कीमतें', 'प्रकाशित शुरुआती कीमतें ₹55 लाख से। बुकिंग से पहले लिखित लागत विवरण — अनुमान नहीं, सरप्राइज़ नहीं।'),
              ('crown', 'लग्ज़री लिविंग', 'डिज़ाइनर लॉबी, ब्रांडेड फिटिंग्स, विट्रिफाइड फ़्लोरिंग और एल्युमिनियम फ्रेंच विंडो।'),
              ('leaf', 'आधुनिक सुविधाएँ', 'लैंडस्केप्ड रूफटॉप गार्डन, ओपन जिम, पूल, मिनी थिएटर और हर उम्र के लिए कोर्ट।'),
@@ -277,7 +275,7 @@ T['hi'] = dict(
     quote='घर ज़्यादातर परिवारों का सबसे बड़ा फ़ैसला होता है। हमारा काम इसे भरोसेमंद बनाना है।',
     one_view_alt='Prestige One का लिविंग रूम, बालकनी से नदी किनारे सूर्यास्त का नज़ारा',
     one_poster_alt='Prestige One: One Life. One Home.',
-    projects_eye='हमारे प्रोजेक्ट्स', projects_h='दो पते, <em>एक ही मानक</em>',
+    projects_eye='हमारे प्रोजेक्ट्स', projects_h='दो घर, <em>एक ही मानक</em>',
     projects=[('/projects/prestige-gold/', '/img/prestige-tower-day.jpg', 1920, 1080, 'कल्याण वेस्ट में Prestige Gold आवासीय टावर',
                'Prestige Gold', 'प्रीमियम जीवन · <em>हर डिटेल में ऊँचा</em>',
                'जहाँ कल्याण वेस्ट घर बन जाता है',
@@ -391,7 +389,6 @@ T['mr'] = dict(
     intro=['प्रकाशमान खोल्या. ब्रँडेड फिनिश. अशा सुविधा ज्या खासगी क्लबसारख्या वाटतात. Prestige Enterprises अशा कुटुंबांसाठी घरे उभारते, ज्यांना बाजारातील आणखी एक फ्लॅट नको असतो.',
            'घरे मर्यादित आहेत आणि किंमती स्पष्ट आहेत. हे घर तुमचे आहे का, हे जाणून घेण्याचा सर्वात जलद मार्ग म्हणजे आमच्या टीमसोबत खासगी व्हिजिट.'],
     intro_cta='खासगी व्हिजिट बुक करा',
-    intro_address='साइट ऑफिसला भेट द्या — Prestige One, गोदरेज हिल, खडकपाडा, कल्याण वेस्ट 421301. घर पाहा, खर्चपत्रक समजून घ्या आणि आत्मविश्वासाने निर्णय घ्या.',
     pillars=[('check', 'स्पष्ट किंमती', 'प्रकाशित सुरुवातीच्या किंमती ₹55 लाखांपासून. बुकिंगपूर्वी लेखी खर्चपत्रक — अंदाज नाही, सरप्राइझ नाही.'),
              ('crown', 'लक्झरी लिव्हिंग', 'डिझायनर लॉबी, ब्रँडेड फिटिंग्ज, व्हिट्रिफाइड फ्लोअरिंग आणि ॲल्युमिनियम फ्रेंच विंडो.'),
              ('leaf', 'आधुनिक सुविधा', 'लँडस्केप केलेले रूफटॉप गार्डन, ओपन जिम, पूल, मिनी थिएटर आणि सर्व वयोगटांसाठी कोर्ट.'),
@@ -404,7 +401,7 @@ T['mr'] = dict(
     quote='घर हा बहुतेक कुटुंबांचा सर्वात मोठा निर्णय असतो. तो आत्मविश्वासाने घेता यावा, हे आमचे काम आहे.',
     one_view_alt='Prestige One ची लिव्हिंग रूम, बाल्कनीतून नदीकाठचा सूर्यास्त',
     one_poster_alt='Prestige One: One Life. One Home.',
-    projects_eye='आमचे प्रकल्प', projects_h='दोन पत्ते, <em>एकच दर्जा</em>',
+    projects_eye='आमचे प्रकल्प', projects_h='दोन घरे, <em>एकच दर्जा</em>',
     projects=[('/projects/prestige-gold/', '/img/prestige-tower-day.jpg', 1920, 1080, 'कल्याण वेस्टमधील Prestige Gold निवासी टॉवर',
                'Prestige Gold', 'प्रीमियम जीवन · <em>प्रत्येक डिटेलमध्ये उन्नत</em>',
                'जिथे कल्याण वेस्ट घर बनते',
@@ -588,7 +585,6 @@ def intro(t):
         f'<h1 class="home-passion-title" id="home-seo-title">{e(t["intro_h"])}</h1>'
         f'<div class="home-passion-copy">{paras}</div>'
         f'<p class="home-passion-cta"><button class="btn-o dark enquire-trigger" type="button" data-enquiry-intent="site-visit"><span>{e(t["intro_cta"])}</span>{icon("arrow")}</button></p>'
-        f'<p class="home-passion-address">{icon("pin", "home-passion-pin")}<span>{e(t["intro_address"])}</span></p>'
         '</div>'
         f'<div class="in home-pillars">{pillars}</div></section>\n'
     )
