@@ -211,7 +211,7 @@
         [homeHref, 0, true],
         [homeHref + '#about', 1, true],
         [homeHref + '#projects', 2, true],
-        [homeHref + '#amenities', 3, true],
+        ['/projects/prestige-gold/#amenities', 3, true],
         [homeHref + '#location', 4, false],
         [homeHref + '#contact', 5, false]
       ];
@@ -258,8 +258,8 @@
       'https://wa.me/919689557788?text=Hello%20Prestige%20Enterprises%2C%20I%20would%20like%20more%20information%20about%20properties%20for%20sale%20in%20Kalyan.';
     var prefix = lang === 'en' ? '' : '/' + lang;
     var paths = {
-      home:prefix+'/#home',about:prefix+'/#about',pricing:prefix+'/#pricing',
-      services:prefix+'/#services',guides:prefix+'/blog/',contact:prefix+'/#contact',
+      home:prefix+'/#home',about:prefix+'/#about',pricing:'/projects/prestige-gold/#pricing',
+      services:'/projects/prestige-gold/#amenities',guides:prefix+'/blog/',contact:prefix+'/#contact',
       kalyan:prefix+'/areas/kalyan/'
     };
     var glyphs = {
@@ -334,7 +334,7 @@
         : ['Home','About','Projects','Pricing','Services','Guides','Contact','Kalyan'];
     var links = [
       prefix + '/#home', prefix + '/#about', '/projects/prestige-gold/',
-      prefix + '/#pricing', prefix + '/#services', prefix + '/blog/',
+      '/projects/prestige-gold/#pricing', '/projects/prestige-gold/#amenities', prefix + '/blog/',
       prefix + '/#contact', prefix + '/areas/kalyan/'
     ];
     panel.innerHTML = '<div class="mnav-content mnav-fallback">' +

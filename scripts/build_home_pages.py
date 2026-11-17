@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261115-v56'
+ASSET_VER = 'prestige-home-revamp-20261115-v57'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -249,7 +249,7 @@ T['en'] = dict(
     wa_text='Hello Prestige Enterprises, I would like to arrange a site visit and receive current availability in Kalyan West.',
     foot_tag='Thoughtfully planned residences in Kalyan West, Maharashtra.',
     foot_explore='Explore', foot_projects='Projects', foot_contact='Contact',
-    foot_links=[('#about', 'About'), ('#amenities', 'Amenities'), ('#location', 'Location'), ('/blog/', 'Guides'), ('#contact', 'Contact')],
+    foot_links=[('#about', 'About'), ('/projects/prestige-gold/#amenities', 'Amenities'), ('#location', 'Location'), ('/blog/', 'Guides'), ('#contact', 'Contact')],
     privacy='Privacy Policy', rera_verified='Verified & Registered',
     disclaimer='Images are artistic impressions for representation only. Amenities, specifications, prices and distances are indicative and may change; confirm current details in writing before booking.',
     rights='© 2026 Prestige Enterprises. All rights reserved.',
@@ -376,7 +376,7 @@ T['hi'] = dict(
     wa_text='नमस्ते Prestige Enterprises, मैं कल्याण वेस्ट में साइट विज़िट बुक करना और मौजूदा उपलब्धता जानना चाहता/चाहती हूँ।',
     foot_tag='कल्याण वेस्ट, महाराष्ट्र में सोच-समझकर बनाए गए घर।',
     foot_explore='देखें', foot_projects='प्रोजेक्ट्स', foot_contact='संपर्क',
-    foot_links=[('#about', 'हमारे बारे में'), ('#amenities', 'सुविधाएँ'), ('#location', 'लोकेशन'), ('/blog/', 'गाइड'), ('#contact', 'संपर्क')],
+    foot_links=[('#about', 'हमारे बारे में'), ('/projects/prestige-gold/#amenities', 'सुविधाएँ'), ('#location', 'लोकेशन'), ('/blog/', 'गाइड'), ('#contact', 'संपर्क')],
     privacy='गोपनीयता नीति', rera_verified='सत्यापित और पंजीकृत',
     disclaimer='तस्वीरें केवल प्रस्तुति के लिए कलात्मक चित्रण हैं। सुविधाएँ, स्पेसिफ़िकेशन, कीमतें और दूरियाँ सांकेतिक हैं और बदल सकती हैं; बुकिंग से पहले लिखित में पुष्टि करें।',
     rights='© 2026 Prestige Enterprises. सर्वाधिकार सुरक्षित।',
@@ -503,7 +503,7 @@ T['mr'] = dict(
     wa_text='नमस्कार Prestige Enterprises, मला कल्याण वेस्टमध्ये साइट व्हिजिट बुक करायची आहे आणि सध्याची उपलब्धता जाणून घ्यायची आहे.',
     foot_tag='कल्याण वेस्ट, महाराष्ट्रातील विचारपूर्वक नियोजित घरे.',
     foot_explore='पाहा', foot_projects='प्रकल्प', foot_contact='संपर्क',
-    foot_links=[('#about', 'आमच्याबद्दल'), ('#amenities', 'सुविधा'), ('#location', 'लोकेशन'), ('/blog/', 'मार्गदर्शक'), ('#contact', 'संपर्क')],
+    foot_links=[('#about', 'आमच्याबद्दल'), ('/projects/prestige-gold/#amenities', 'सुविधा'), ('#location', 'लोकेशन'), ('/blog/', 'मार्गदर्शक'), ('#contact', 'संपर्क')],
     privacy='गोपनीयता धोरण', rera_verified='सत्यापित आणि नोंदणीकृत',
     disclaimer='चित्रे केवळ सादरीकरणासाठी कलात्मक प्रतिमा आहेत. सुविधा, स्पेसिफिकेशन, किंमती आणि अंतरे सूचक असून बदलू शकतात; बुकिंगपूर्वी लेखी खात्री करा.',
     rights='© 2026 Prestige Enterprises. सर्व हक्क राखीव.',
@@ -721,7 +721,7 @@ def _price_row(t, index, total, name, mono, area, price, feats, msg, img='', alt
     )
 
 
-def pricing(t, l):
+def pricing_gold(t):
     gold_total = len(t['units']) + len(t['gold_extra'])
     rows = ''
     for i, (name, area, price, img, alt, feats) in enumerate(t['units']):
@@ -730,20 +730,33 @@ def pricing(t, l):
         rows += _price_row(t, i + 1, gold_total, name, mono, area, price, feats, msg, img, alt)
     for j, (name, mono, area, price, feats, msg) in enumerate(t['gold_extra']):
         rows += _price_row(t, len(t['units']) + j + 1, gold_total, name, mono, area, price, feats, msg)
+    return (
+        '<section class="sec price-section" id="pricing"><div class="in"><div class="price-section-head"><div>'
+        f'{eye(t["price_eye"])}<h2 class="dh price-section-title">{t["price_h"]}</h2>'
+        f'<p class="price-section-intro">{e(t["gold_p"])}</p></div>'
+        f'<div class="price-section-aside"><span class="price-aside-rule"></span><strong>{e(t["gold_aside_k"]).upper()}</strong>'
+        f'<span>{e(t["gold_aside_v"])}</span></div></div>'
+        f'<div class="price-brand price-brand-gold"><div class="price-brand-head">{eye(t["gold_eye"])}'
+        f'<h3 class="price-brand-title">{t["gold_h"]}</h3>'
+        f'<p class="price-brand-intro">{e(t["gold_p"])}</p></div>'
+        f'<div class="price-rows">{rows}</div></div>'
+        f'<p class="price-section-note">{e(t["price_note"])}</p></div></section>\n'
+    )
 
+
+def pricing_one(t):
     one_total = len(t['one_units'])
     one_rows = ''
     for i, (name, mono, area, price, feats, msg) in enumerate(t['one_units']):
         one_rows += _price_row(t, i + 1, one_total, name, mono, area, price, feats, msg)
-
     return (
         '<section class="sec price-section" id="pricing"><div class="in"><div class="price-section-head"><div>'
-        f'{eye(t["price_eye"])}<h2 class="dh price-section-title">{t["price_h"]}</h2><p class="price-section-intro">{e(t["price_p"])}</p></div>'
-        f'<div class="price-section-aside"><span class="price-aside-rule"></span><strong>{e(t["gold_aside_k"]).upper()}</strong><span>{e(t["gold_aside_v"])}</span></div></div>'
-        f'<div class="price-brand price-brand-gold"><div class="price-brand-head">{eye(t["gold_eye"])}<h3 class="price-brand-title">{t["gold_h"]}</h3>'
-        f'<p class="price-brand-intro">{e(t["gold_p"])}</p></div>'
-        f'<div class="price-rows">{rows}</div></div>'
-        f'<div class="price-brand price-brand-one"><div class="price-brand-head">{eye(t["one_eye"])}<h3 class="price-brand-title">{t["one_h"]}</h3>'
+        f'{eye(t["price_eye"])}<h2 class="dh price-section-title">{t["one_h"]}</h2>'
+        f'<p class="price-section-intro">{e(t["one_p"])}</p></div>'
+        f'<div class="price-section-aside"><span class="price-aside-rule"></span><strong>{e(t["one_eye"]).upper()}</strong>'
+        f'<span>3 &amp; 5 BHK · on request</span></div></div>'
+        f'<div class="price-brand price-brand-one"><div class="price-brand-head">{eye(t["one_eye"])}'
+        f'<h3 class="price-brand-title">{t["one_h"]}</h3>'
         f'<p class="price-brand-intro">{e(t["one_p"])}</p></div>'
         f'<div class="price-rows">{one_rows}</div></div>'
         f'<p class="price-section-note">{e(t["price_note"])}</p></div></section>\n'
@@ -857,8 +870,7 @@ def footer(l, t):
 def build(l):
     t = T[l]
     page = (head(l, t) + nav(l, t) + hero(t) + intro(t) + about(t) + projects(t)
-            + features_amenities(t) + amenities(t) + amenity_gallery(t)
-            + pricing(t, l) + location(t) + faq(t) + guides(t, l) + contact(t) + footer(l, t))
+            + location(t) + faq(t) + guides(t, l) + contact(t) + footer(l, t))
     out = os.path.join(ROOT, PREFIX[l].lstrip('/'), 'index.html')
     with open(out, 'w', encoding='utf-8') as f:
         f.write(page)
