@@ -200,33 +200,30 @@
       var hl = (document.documentElement.lang || 'en').slice(0, 2).toLowerCase();
       var hp = hl === 'hi' || hl === 'mr' ? '/' + hl : '';
       var ht = {
-        en: ['HOME', 'WHO WE ARE', 'PROJECTS', 'AMENITIES', 'LOCATION', 'CONTACT US', 'REAL ESTATE LIBRARY', 'CHAT ON WHATSAPP'],
-        hi: ['होम', 'हमारे बारे में', 'प्रोजेक्ट्स', 'सुविधाएँ', 'लोकेशन', 'संपर्क करें', 'गाइड', 'WhatsApp पर बात करें'],
-        mr: ['मुख्यपृष्ठ', 'आमच्याबद्दल', 'प्रकल्प', 'सुविधा', 'लोकेशन', 'संपर्क साधा', 'मार्गदर्शक', 'WhatsApp वर बोला']
-      }[hl] || null;
-      if (!ht) ht = ['HOME', 'WHO WE ARE', 'PROJECTS', 'AMENITIES', 'LOCATION', 'CONTACT US', 'REAL ESTATE LIBRARY', 'CHAT ON WHATSAPP'];
+        en: ['HOME', 'PROJECTS', 'LOCATION', 'CONTACT', 'CHAT ON WHATSAPP'],
+        hi: ['होम', 'प्रोजेक्ट्स', 'लोकेशन', 'संपर्क', 'WhatsApp पर बात करें'],
+        mr: ['मुख्यपृष्ठ', 'प्रकल्प', 'लोकेशन', 'संपर्क', 'WhatsApp वर बोला']
+      }[hl] || ['HOME', 'PROJECTS', 'LOCATION', 'CONTACT', 'CHAT ON WHATSAPP'];
       var arrow = '<span class="mnav-home-arrow" aria-hidden="true">→</span>';
       var homeHref = hp ? hp + '/' : '/';
-      var primary = [
-        [homeHref, 0, true],
-        [homeHref + '#about', 1, true],
-        [homeHref + '#projects', 2, true],
-        ['/projects/prestige-gold/#amenities', 3, true],
-        [homeHref + '#location', 4, false],
-        [homeHref + '#contact', 5, false]
-      ];
       var langLinks = [['/', 'en', 'EN'], ['/hi/', 'hi', 'हिन्दी'], ['/mr/', 'mr', 'मराठी']];
       panel.innerHTML =
         '<div class="mnav-home-primary" aria-label="Main navigation">' +
-          primary.map(function (p) {
-            return '<a class="mnav-home-link" href="' + p[0] + '"><span>' + ht[p[1]] + '</span>' + (p[2] ? arrow : '') + '</a>';
-          }).join('') +
+          '<a class="mnav-home-link" href="' + homeHref + '"><span>' + ht[0] + '</span>' + arrow + '</a>' +
+          '<div class="mnav-home-projects open" id="mnav-home-projects">' +
+            '<button class="mnav-home-link mnav-home-projects-toggle" type="button" id="mnav-home-projects-btn" aria-expanded="true" aria-controls="mnav-home-project-list">' +
+              '<span>' + ht[1] + '</span>' + arrow +
+            '</button>' +
+            '<div class="mnav-home-project-list" id="mnav-home-project-list">' +
+              '<a class="mnav-home-project-link" href="/projects/prestige-gold/">PRESTIGE GOLD</a>' +
+              '<a class="mnav-home-project-link" href="/projects/prestige-gold/#shri-durga">SHRI DURGA · GOLD</a>' +
+              '<a class="mnav-home-project-link" href="/projects/prestige-one/">PRESTIGE ONE</a>' +
+            '</div>' +
+          '</div>' +
+          '<a class="mnav-home-link" href="' + homeHref + '#location"><span>' + ht[2] + '</span></a>' +
+          '<a class="mnav-home-link" href="' + homeHref + '#contact"><span>' + ht[3] + '</span></a>' +
         '</div>' +
-        '<div class="mnav-home-secondary" aria-label="Explore projects">' +
-          '<a class="mnav-home-secondary-link" href="/projects/prestige-gold/">PRESTIGE GOLD</a>' +
-          '<a class="mnav-home-secondary-link" href="/projects/prestige-gold/#shri-durga">SHRI DURGA · GOLD</a>' +
-          '<a class="mnav-home-secondary-link" href="/projects/prestige-one/">PRESTIGE ONE</a>' +
-          '<a class="mnav-home-secondary-link" href="' + (hp || '') + '/blog/">' + ht[6] + '</a>' +
+        '<div class="mnav-home-secondary" aria-label="Language">' +
           '<div class="mnav-home-languages" aria-label="Choose language">' +
             langLinks.map(function (x) {
               return '<a href="' + x[0] + '" hreflang="' + x[1] + '" lang="' + x[1] + '"' + (x[1] === hl ? ' aria-current="true"' : '') + '>' + x[2] + '</a>';
@@ -234,8 +231,16 @@
           '</div>' +
         '</div>' +
         '<div class="mnav-home-footer">' +
-          '<a href="https://wa.me/919689557788?text=Hello%20Prestige%20Enterprises%2C%20I%20would%20like%20to%20arrange%20a%20site%20visit%20in%20Kalyan%20West." target="_blank" rel="noopener">' + ht[7] + ' <span aria-hidden="true">↗</span></a>' +
+          '<a href="https://wa.me/919689557788?text=Hello%20Prestige%20Enterprises%2C%20I%20would%20like%20to%20arrange%20a%20site%20visit%20in%20Kalyan%20West." target="_blank" rel="noopener">' + ht[4] + ' <span aria-hidden="true">↗</span></a>' +
         '</div>';
+      var projectsGroup = panel.querySelector('#mnav-home-projects');
+      var projectsBtn = panel.querySelector('#mnav-home-projects-btn');
+      if (projectsGroup && projectsBtn) {
+        projectsBtn.addEventListener('click', function () {
+          var open = projectsGroup.classList.toggle('open');
+          projectsBtn.setAttribute('aria-expanded', open ? 'true' : 'false');
+        });
+      }
       $$('.mnav-home-languages a', panel).forEach(function (link) {
         link.addEventListener('click', function () {
           try { localStorage.setItem('pe_lang', link.getAttribute('hreflang')); } catch (ignore) {}
@@ -245,30 +250,20 @@
     }
     var lang = (document.documentElement.lang || 'en').slice(0,2).toLowerCase();
     var t = {
-      en:{home:'Home',about:'About',projects:'Projects',plans:'Plans',gold:'Prestige Gold',pricing:'Pricing',services:'Services',guides:'Guides',contact:'Contact',areas:'Areas',kalyan:'Kalyan',whatsapp:'Chat on WhatsApp'},
-      hi:{home:'होम',about:'हमारे बारे में',projects:'प्रोजेक्ट्स',plans:'प्लान्स',gold:'प्रेस्टीज गोल्ड',pricing:'कीमत',services:'सेवाएँ',guides:'गाइड',contact:'संपर्क',areas:'क्षेत्र',kalyan:'कल्याण',whatsapp:'व्हाट्सऐप पर चैट करें'},
-      mr:{home:'मुख्यपृष्ठ',about:'आमच्याबद्दल',projects:'प्रकल्प',plans:'योजना',gold:'प्रेस्टीज गोल्ड',pricing:'किंमत',services:'सेवा',guides:'मार्गदर्शक',contact:'संपर्क',areas:'परिसर',kalyan:'कल्याण',whatsapp:'व्हॉट्सअ‍ॅपवर चॅट करा'}
+      en:{home:'Home',projects:'Projects',gold:'Prestige Gold',one:'Prestige One',shri:'Shri Durga · Gold',location:'Location',contact:'Contact',whatsapp:'Chat on WhatsApp'},
+      hi:{home:'होम',projects:'प्रोजेक्ट्स',gold:'प्रेस्टीज गोल्ड',one:'प्रेस्टीज वन',shri:'श्री दुर्गा · गोल्ड',location:'लोकेशन',contact:'संपर्क',whatsapp:'व्हाट्सऐप पर चैट करें'},
+      mr:{home:'मुख्यपृष्ठ',projects:'प्रकल्प',gold:'प्रेस्टीज गोल्ड',one:'प्रेस्टीज वन',shri:'श्री दुर्गा · गोल्ड',location:'लोकेशन',contact:'संपर्क',whatsapp:'व्हॉट्सअ‍ॅपवर चॅट करा'}
     }[lang] || {
-      home:'Home',about:'About',projects:'Projects',plans:'Plans',gold:'Prestige Gold',
-      pricing:'Pricing',services:'Services',guides:'Guides',contact:'Contact',
-      areas:'Areas',kalyan:'Kalyan',whatsapp:'Chat on WhatsApp'
+      home:'Home',projects:'Projects',gold:'Prestige Gold',one:'Prestige One',shri:'Shri Durga · Gold',
+      location:'Location',contact:'Contact',whatsapp:'Chat on WhatsApp'
     };
     var oldWhatsApp = panel.querySelector('a[href*="wa.me"]');
     var waHref = oldWhatsApp ? oldWhatsApp.getAttribute('href') :
       'https://wa.me/919689557788?text=Hello%20Prestige%20Enterprises%2C%20I%20would%20like%20more%20information%20about%20properties%20for%20sale%20in%20Kalyan.';
     var prefix = lang === 'en' ? '' : '/' + lang;
-    var paths = {
-      home:prefix+'/#home',about:prefix+'/#about',pricing:'/projects/prestige-gold/#pricing',
-      services:'/projects/prestige-gold/#amenities',guides:prefix+'/blog/',contact:prefix+'/#contact',
-      kalyan:prefix+'/areas/kalyan/'
-    };
     var glyphs = {
       home:'<path d="M3 11 12 3l9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/>',
-      about:'<circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-7 8-7s8 2.6 8 7z"/>',
       project:'<path d="M4 21V9l6-3v15"/><path d="M10 21V4l8 3v14"/><path d="M2 21h20M13 10h2M13 14h2M7 12h0M7 16h0"/>',
-      pricing:'<path d="M3 12V4h8l10 10-8 8z"/><circle cx="7.5" cy="8.5" r="1.2"/>',
-      services:'<path d="M12 3l9 5-9 5-9-5z"/><path d="M3 12.5l9 5 9-5"/><path d="M3 17l9 5 9-5"/>',
-      guides:'<path d="M12 6c-2-1.5-5-2-9-2v14c4 0 7 .5 9 2 2-1.5 5-2 9-2V4c-4 0-7 .5-9 2z"/><path d="M12 6v14"/>',
       contact:'<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 7 9-7"/>',
       location:'<path d="M12 22s7-6.5 7-12a7 7 0 1 0-14 0c0 5.5 7 12 7 12z"/><circle cx="12" cy="10" r="2.6"/>',
       whatsapp:'<path d="M3 21l1.6-4.8A9 9 0 1 1 12 21a9 9 0 0 1-4.3-1.1z"/><path d="M9 8.5c0 3.5 3 6.5 6.5 6.5l1-1.8-2-1-1 .8c-1-.4-2-1.4-2.4-2.4l.8-1-1-2z"/>',
@@ -277,33 +272,25 @@
     function icon(name, cls) {
       return '<svg class="'+(cls||'')+'" viewBox="0 0 24 24" aria-hidden="true">'+glyphs[name]+'</svg>';
     }
-    function item(name, href, iconName, extra) {
-      return '<a class="mnav-item mnav-full-item '+(extra||'')+'" href="'+href+'">'+icon(iconName)+
-        '<span class="mnav-label">'+t[name]+'</span>'+icon('chevron','mnav-chevron')+'</a>';
+    function item(label, href, iconName) {
+      return '<a class="mnav-item mnav-full-item" href="'+href+'">'+icon(iconName)+
+        '<span class="mnav-label">'+label+'</span>'+icon('chevron','mnav-chevron')+'</a>';
     }
     panel.innerHTML =
       '<div class="mnav-content">'+
-        '<div class="mnav-top">'+
-          '<a class="mnav-item mnav-item-top mnav-item-active" href="'+paths.home+'">'+icon('home')+'<span class="mnav-label">'+t.home+'</span></a>'+
-          '<a class="mnav-item mnav-item-top" href="'+paths.about+'">'+icon('about')+'<span class="mnav-label">'+t.about+'</span></a>'+
-        '</div>'+
-        '<div class="mnav-section">'+t.projects+'</div>'+
+        item(t.home, prefix + '/', 'home')+
         '<div class="mnav-group open" id="mnav-plans">'+
           '<button class="mnav-item mnav-plan-button" type="button" id="mnav-plans-button" aria-expanded="true">'+icon('project')+
-            '<span class="mnav-label">'+t.plans+'</span>'+icon('chevron','mnav-chevron')+
+            '<span class="mnav-label">'+t.projects+'</span>'+icon('chevron','mnav-chevron')+
           '</button>'+
           '<div class="mnav-plan-sub"><div>'+
             '<a class="mnav-plan-link" href="/projects/prestige-gold/"><span>'+t.gold+'</span>'+icon('chevron')+'</a>'+
-            '<a class="mnav-plan-link" href="/projects/prestige-gold/#shri-durga"><span>Shri Durga · Prestige Gold</span>'+icon('chevron')+'</a>'+
-            '<a class="mnav-plan-link" href="/projects/prestige-one/"><span>Prestige One</span>'+icon('chevron')+'</a>'+
+            '<a class="mnav-plan-link" href="/projects/prestige-gold/#shri-durga"><span>'+t.shri+'</span>'+icon('chevron')+'</a>'+
+            '<a class="mnav-plan-link" href="/projects/prestige-one/"><span>'+t.one+'</span>'+icon('chevron')+'</a>'+
           '</div></div>'+
         '</div>'+
-        item('pricing',paths.pricing,'pricing','')+
-        item('services',paths.services,'services','')+
-        item('guides',paths.guides,'guides','')+
-        item('contact',paths.contact,'contact','')+
-        '<div class="mnav-section">'+t.areas+'</div>'+
-        item('kalyan',paths.kalyan,'location','mnav-area-item')+
+        item(t.location, prefix + '/#location', 'location')+
+        item(t.contact, prefix + '/#contact', 'contact')+
       '</div>'+
       '<div class="mnav-footer">'+
         '<a class="mnav-whatsapp" href="'+waHref+'" target="_blank" rel="noopener">'+icon('whatsapp')+
@@ -328,14 +315,17 @@
     var lang = (document.documentElement.lang || 'en').slice(0, 2).toLowerCase();
     var prefix = lang === 'en' ? '' : '/' + lang;
     var labels = lang === 'hi'
-      ? ['होम','हमारे बारे में','प्रोजेक्ट्स','कीमत','सेवाएँ','गाइड','संपर्क','कल्याण']
+      ? ['होम', 'प्रेस्टीज गोल्ड', 'श्री दुर्गा · गोल्ड', 'प्रेस्टीज वन', 'लोकेशन', 'संपर्क']
       : lang === 'mr'
-        ? ['मुख्यपृष्ठ','आमच्याबद्दल','प्रकल्प','किंमत','सेवा','मार्गदर्शक','संपर्क','कल्याण']
-        : ['Home','About','Projects','Pricing','Services','Guides','Contact','Kalyan'];
+        ? ['मुख्यपृष्ठ', 'प्रेस्टीज गोल्ड', 'श्री दुर्गा · गोल्ड', 'प्रेस्टीज वन', 'लोकेशन', 'संपर्क']
+        : ['Home', 'Prestige Gold', 'Shri Durga · Gold', 'Prestige One', 'Location', 'Contact'];
     var links = [
-      prefix + '/#home', prefix + '/#about', '/projects/prestige-gold/',
-      '/projects/prestige-gold/#pricing', '/projects/prestige-gold/#amenities', prefix + '/blog/',
-      prefix + '/#contact', prefix + '/areas/kalyan/'
+      prefix + '/',
+      '/projects/prestige-gold/',
+      '/projects/prestige-gold/#shri-durga',
+      '/projects/prestige-one/',
+      prefix + '/#location',
+      prefix + '/#contact'
     ];
     panel.innerHTML = '<div class="mnav-content mnav-fallback">' +
       labels.map(function (label, index) {
