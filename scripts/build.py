@@ -582,7 +582,6 @@ def build_prestige_gold():
         '<section class="sec pg-overview" id="shri-durga"><div class="in pg-overview-grid"><div>'
         + eye('PART OF PRESTIGE GOLD') + '<h2 class="dh">Shri Durga <em>Enterprises</em></h2>'
         '<p class="lead">Shri Durga Enterprises is offered as part of Prestige Gold — the same Kalyan West address, sales team and enquiry flow for verified layouts, pricing and site visits.</p>'
-        '<p>Request the latest approved floor plans, unit configurations, RERA area details and a dated cost sheet. Confirm MahaRERA registration and project documents independently before booking or payment.</p>'
         '<div class="cards pg-units" style="margin-top:28px;grid-template-columns:1fr">'
         '<article class="pg-unit"><span class="pg-unit-k">SHRI DURGA · PRESTIGE GOLD</span><h3>Enquire here</h3>'
         '<p>Floor plans, cost sheet and visit coordination for Shri Durga are handled with Prestige Gold.</p>'
