@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261115-v66'
+ASSET_VER = 'prestige-home-revamp-20261115-v67'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -151,7 +151,7 @@ T['en'] = dict(
     quote='A home is the biggest decision most families make. Our job is to make that decision as confident.',
     one_view_alt='Prestige One living room opening onto a balcony with riverside sunset views',
     one_poster_alt='Prestige One: One Life. One Home.',
-    projects_eye='Our residences', projects_h='Two residences, <em>one standard</em>',
+    projects_eye='Our projects', projects_h='Our projects are among Kalyan’s <em>most established residential properties</em>',
     projects=[('/projects/prestige-gold/', '/img/prestige-tower-day.jpg', 1920, 1080, 'Prestige Gold residential tower in Kalyan West',
                'Prestige Gold', 'Premium living · <em>elevated in every detail</em>',
                'Prestige reserved for those who deserve more',
@@ -276,7 +276,7 @@ T['hi'] = dict(
     quote='घर ज़्यादातर परिवारों का सबसे बड़ा फ़ैसला होता है। हमारा काम है उसे भरोसेमंद बनाना।',
     one_view_alt='Prestige One का लिविंग रूम, बालकनी से नदी किनारे सूर्यास्त का नज़ारा',
     one_poster_alt='Prestige One: One Life. One Home.',
-    projects_eye='हमारे प्रोजेक्ट्स', projects_h='दो घर, <em>एक ही मानक</em>',
+    projects_eye='हमारे प्रोजेक्ट्स', projects_h='हमारे प्रोजेक्ट्स कल्याण के <em>सबसे स्थापित आवासीय प्रॉपर्टीज़</em> में हैं',
     projects=[('/projects/prestige-gold/', '/img/prestige-tower-day.jpg', 1920, 1080, 'कल्याण वेस्ट में Prestige Gold आवासीय टावर',
                'Prestige Gold', 'प्रीमियम जीवन · <em>हर डिटेल में ऊँचा</em>',
                'Prestige उन लोगों के लिए जो अधिक के हक़दार हैं',
@@ -401,7 +401,7 @@ T['mr'] = dict(
     quote='घर हा बहुतेक कुटुंबांचा सर्वात मोठा निर्णय असतो. आमचे काम आहे तो आत्मविश्वासाने घेता येईल असा करणे.',
     one_view_alt='Prestige One ची लिव्हिंग रूम, बाल्कनीतून नदीकाठचा सूर्यास्त',
     one_poster_alt='Prestige One: One Life. One Home.',
-    projects_eye='आमचे प्रकल्प', projects_h='दोन घरे, <em>एकच दर्जा</em>',
+    projects_eye='आमचे प्रकल्प', projects_h='आमचे प्रकल्प कल्याणमधील <em>सर्वात प्रस्थापित निवासी प्रॉपर्टीज</em>पैकी आहेत',
     projects=[('/projects/prestige-gold/', '/img/prestige-tower-day.jpg', 1920, 1080, 'कल्याण वेस्टमधील Prestige Gold निवासी टॉवर',
                'Prestige Gold', 'प्रीमियम जीवन · <em>प्रत्येक डिटेलमध्ये उन्नत</em>',
                'Prestige ज्यांना अधिक हवे आहे त्यांच्यासाठी',
