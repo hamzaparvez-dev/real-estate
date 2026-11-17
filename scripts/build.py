@@ -630,6 +630,22 @@ def build_prestige_one():
         '<section class="sec price-section" id="pricing"><span id="pg-configurations" class="home-anchor" aria-hidden="true"></span>',
         1,
     )
+    gallery_items = [
+        ('/img/prestige-one/gallery/tower-daylight.webp', 910, 1400, 'Prestige One tower in daylight, Kalyan', 'Tower view'),
+        ('/img/prestige-one/gallery/riverside-interior.webp', 1774, 887, 'Prestige One living room with riverside sunset views', 'Riverside interior'),
+        ('/img/prestige-one/gallery/one-life-one-home.webp', 1774, 887, 'Prestige One: One Life. One Home.', 'One Life · One Home'),
+    ]
+    gallery_figures = ''.join(
+        f'<figure><img src="{src}" width="{w}" height="{h}" loading="lazy" alt="{esc(alt)}"><figcaption>{esc(cap)}</figcaption></figure>'
+        for src, w, h, alt, cap in gallery_items
+    )
+    gallery = (
+        '<section class="sec pg-gallery" id="gallery"><div class="in">'
+        + eye('GALLERY') + '<h2 class="dh">Visual preview <em>before you visit</em></h2>'
+        '<p class="lead">Tower, interiors and lifestyle stills from Prestige One at Godrej Hill, Khadakpada.</p>'
+        f'<div class="pg-gallery-grid pg-gallery-grid-rich">{gallery_figures}</div>'
+        '</div></section>'
+    )
     contact = (
         '<section class="sec pg-contact" id="contact"><div class="in pg-contact-inner">'
         + eye('CONTACT') + '<h2 class="dh light">Our team is <em>ready to assist</em></h2>'
@@ -639,7 +655,7 @@ def build_prestige_one():
         '<p class="pg-contact-note">Our team is ready to assist.</p>'
         '</div></section></main>'
     )
-    body = hero + overview + pricing + contact
+    body = hero + overview + pricing + gallery + contact
     ld = [{'@type': 'WebPage', 'name': 'Prestige One', 'url': C.SITE + path, 'description': desc, 'inLanguage': 'en-IN'}]
     html = head('en', title, desc, seo_alts, '/img/Prestige%20One%20Tower%20in%20Daylight.png', 'Prestige One Kalyan', ld, extra=video_preconnect())
     write(path.lstrip('/') + 'index.html', html + '<body class="home-video-page has-video-hero">\n' + nav('en', nav_alts) + body + footer('en', nav_alts))
