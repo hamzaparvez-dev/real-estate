@@ -500,7 +500,6 @@ def build_prestige_gold():
         '<p class="pg-note"><strong>Why choose Prestige Gold?</strong> Dual-growth potential · Vastu-compliant homes · Security-focused design · Limited units for stronger exclusivity · MahaRERA P51700052362</p>'
         '</div><figure class="pg-overview-image"><img src="/img/prestige-tower-night.jpg" width="1200" height="900" loading="lazy" alt="Prestige Gold elevation in Kalyan West"><figcaption>Prestige Gold · Kalyan West</figcaption></figure></div></section>'
     )
-    features = home_pages.features_amenities(ht)
     amen_details = home_pages.amenities(ht)
     pricing = home_pages.pricing_gold(ht).replace(
         '<section class="sec price-section" id="pricing">',
@@ -602,7 +601,7 @@ def build_prestige_gold():
         '<p class="pg-contact-note">Mon–Sun, 10am–7pm · Sample flat ready</p>'
         '</div></section></main>'
     )
-    body = (hero + overview + features + amen_details + pricing
+    body = (hero + overview + amen_details + pricing
             + floorplans + gallery + progress + location + shri_durga + contact)
     ld = [agent_ld('en'), breadcrumb_ld('en', [(UI['en']['home'], url('en', '/')), ('Prestige Gold', path)])]
     html = head('en', title, desc, seo_alts, '/img/prestige-tower-day.jpg', 'Prestige Gold project in Kalyan West', ld, extra=video_preconnect())
