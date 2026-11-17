@@ -631,9 +631,15 @@ def build_prestige_one():
         1,
     )
     gallery_items = [
-        ('/img/prestige-one/gallery/tower-daylight.webp', 910, 1400, 'Prestige One tower in daylight, Kalyan', 'Tower view'),
-        ('/img/prestige-one/gallery/riverside-interior.webp', 1774, 887, 'Prestige One living room with riverside sunset views', 'Riverside interior'),
-        ('/img/prestige-one/gallery/one-life-one-home.webp', 1774, 887, 'Prestige One: One Life. One Home.', 'One Life · One Home'),
+        ('/img/prestige-gold/gallery/entrance-gate.webp', 512, 288, 'Prestige One entrance gate', 'Entrance gate'),
+        ('/img/prestige-gold/gallery/elevator-lobby.webp', 512, 288, 'Prestige One elevator lobby', 'Elevator lobby'),
+        ('/img/prestige-gold/gallery/parking.webp', 512, 288, 'Prestige One parking', 'Parking'),
+        ('/img/prestige-gold/gallery/main-lobby.webp', 512, 288, 'Prestige One main lobby', 'Main lobby'),
+        ('/img/prestige-gold/gallery/apartment-entrance.webp', 512, 288, 'Prestige One apartment entrance', 'Apartment entrance'),
+        ('/img/prestige-gold/gallery/bathroom.webp', 512, 288, 'Prestige One bathroom', 'Bathroom'),
+        ('/img/prestige-gold/gallery/cctv-security.webp', 512, 288, 'Prestige One CCTV security', 'CCTV security'),
+        ('/img/prestige-gold/gallery/bedroom.webp', 512, 288, 'Prestige One bedroom', 'Bedroom'),
+        ('/img/prestige-gold/gallery/kitchen.webp', 1024, 682, 'Prestige One modular kitchen', 'Kitchen'),
     ]
     gallery_figures = ''.join(
         f'<figure><img src="{src}" width="{w}" height="{h}" loading="lazy" alt="{esc(alt)}"><figcaption>{esc(cap)}</figcaption></figure>'
@@ -641,8 +647,8 @@ def build_prestige_one():
     )
     gallery = (
         '<section class="sec pg-gallery" id="gallery"><div class="in">'
-        + eye('GALLERY') + '<h2 class="dh">Visual preview <em>before you visit</em></h2>'
-        '<p class="lead">Tower, interiors and lifestyle stills from Prestige One at Godrej Hill, Khadakpada.</p>'
+        + eye('GALLERY') + '<h2 class="dh">Visual preview · <em>3 (Jodi) &amp; 5 (Jodi) BHK</em></h2>'
+        '<p class="lead">Nine facility stills for Prestige One — offered only as 3 (Jodi) BHK and 5 (Jodi) BHK at Godrej Hill, Khadakpada.</p>'
         f'<div class="pg-gallery-grid pg-gallery-grid-rich">{gallery_figures}</div>'
         '</div></section>'
     )
