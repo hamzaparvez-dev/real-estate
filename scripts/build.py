@@ -473,11 +473,14 @@ def build_prestige_gold():
     wa_link = 'https://wa.me/' + GOLD_WA + '?text=' + urllib.parse.quote(wa_text)
     ht = home_pages.T['en']
     gallery_items = [
-        ('/img/prestige-tower-day.jpg', 1400, 900, 'Prestige Gold Kalyan West – front elevation render', 'Day view'),
-        ('/img/prestige-tower-night.jpg', 1400, 900, 'Prestige Gold Kalyan West – night view render', 'Night view'),
-        ('/img/hero-day.jpg', 1920, 1080, 'Prestige Gold – new flats and residential property in Kalyan West, elevation view', 'Tower view'),
-        ('/img/amenities/rooftop-garden.webp', 1200, 800, 'Rooftop garden amenity at Prestige Gold', 'Rooftop garden'),
-        ('/img/amenities/swimming-pool.webp', 912, 768, 'Swimming pool at Prestige Gold', 'Swimming pool'),
+        ('/img/prestige-gold/gallery/entrance-gate.webp', 512, 288, 'Prestige Gold entrance gate in Kalyan West', 'Entrance gate'),
+        ('/img/prestige-gold/gallery/elevator-lobby.webp', 512, 288, 'Prestige Gold elevator lobby', 'Elevator lobby'),
+        ('/img/prestige-gold/gallery/parking.webp', 512, 288, 'Prestige Gold parking', 'Parking'),
+        ('/img/prestige-gold/gallery/main-lobby.webp', 512, 288, 'Prestige Gold main lobby', 'Main lobby'),
+        ('/img/prestige-gold/gallery/apartment-entrance.webp', 512, 288, 'Prestige Gold apartment entrance', 'Apartment entrance'),
+        ('/img/prestige-gold/gallery/bathroom.webp', 512, 288, 'Prestige Gold bathroom', 'Bathroom'),
+        ('/img/prestige-gold/gallery/cctv-security.webp', 512, 288, 'Prestige Gold CCTV security', 'CCTV security'),
+        ('/img/prestige-gold/gallery/bedroom.webp', 512, 288, 'Prestige Gold bedroom', 'Bedroom'),
     ]
     gallery_figures = ''.join(
         f'<figure><img src="{src}" width="{w}" height="{h}" loading="lazy" alt="{esc(alt)}"><figcaption>{esc(cap)}</figcaption></figure>'
@@ -498,7 +501,6 @@ def build_prestige_gold():
     )
     features = home_pages.features_amenities(ht)
     amen_details = home_pages.amenities(ht)
-    amen_gallery = home_pages.amenity_gallery(ht)
     pricing = home_pages.pricing_gold(ht).replace(
         '<section class="sec price-section" id="pricing">',
         '<section class="sec price-section" id="pricing"><span id="pg-configurations" class="home-anchor" aria-hidden="true"></span><span id="commercial" class="home-anchor" aria-hidden="true"></span>',
@@ -599,7 +601,7 @@ def build_prestige_gold():
         '<p class="pg-contact-note">Mon–Sun, 10am–7pm · Sample flat ready</p>'
         '</div></section></main>'
     )
-    body = (hero + overview + features + amen_details + amen_gallery + pricing
+    body = (hero + overview + features + amen_details + pricing
             + floorplans + gallery + progress + location + shri_durga + contact)
     ld = [agent_ld('en'), breadcrumb_ld('en', [(UI['en']['home'], url('en', '/')), ('Prestige Gold', path)])]
     html = head('en', title, desc, seo_alts, '/img/prestige-tower-day.jpg', 'Prestige Gold project in Kalyan West', ld, extra=video_preconnect())
