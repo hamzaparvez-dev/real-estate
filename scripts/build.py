@@ -481,6 +481,7 @@ def build_prestige_gold():
         ('/img/prestige-gold/gallery/bathroom.webp', 512, 288, 'Prestige Gold bathroom', 'Bathroom'),
         ('/img/prestige-gold/gallery/cctv-security.webp', 512, 288, 'Prestige Gold CCTV security', 'CCTV security'),
         ('/img/prestige-gold/gallery/bedroom.webp', 512, 288, 'Prestige Gold bedroom', 'Bedroom'),
+        ('/img/prestige-gold/gallery/kitchen.webp', 1024, 682, 'Prestige Gold modular kitchen', 'Kitchen'),
     ]
     gallery_figures = ''.join(
         f'<figure><img src="{src}" width="{w}" height="{h}" loading="lazy" alt="{esc(alt)}"><figcaption>{esc(cap)}</figcaption></figure>'
