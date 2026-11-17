@@ -495,9 +495,8 @@ def build_prestige_gold():
         '<p>Smart planning, vastu-compliant layouts, robust utilities and modern infrastructure make it ideal for self-use, rental returns and portfolio appreciation. Sample flat is ready for a real on-site experience.</p>'
         '<dl class="pg-facts"><div><dt>Project type</dt><dd>Commercial + Residential</dd></div><div><dt>Configurations</dt><dd>1, 2 &amp; 3 BHK</dd></div>'
         '<div><dt>Building</dt><dd>G + 5 floors</dd></div><div><dt>Availability</dt><dd>Limited units available</dd></div>'
-        '<div><dt>Possession</dt><dd>June 2027*</dd></div><div><dt>Starting price</dt><dd>₹55 Lakhs*</dd></div>'
-        '<div><dt>Status</dt><dd>70% completed</dd></div><div><dt>Special highlight</dt><dd>Sample flat ready</dd></div></dl>'
-        '<p class="pg-note"><strong>Why choose Prestige Gold?</strong> Dual-growth potential · Vastu-compliant homes · Security-focused design · Limited units for stronger exclusivity · MahaRERA P51700052362</p>'
+        '<div><dt>Possession</dt><dd>June 2027*</dd></div><div><dt>Status</dt><dd>70% completed</dd></div>'
+        '<div><dt>Special highlight</dt><dd>Sample flat ready</dd></div></dl>'
         '</div><figure class="pg-overview-image"><img src="/img/prestige-tower-night.jpg" width="1200" height="900" loading="lazy" alt="Prestige Gold elevation in Kalyan West"><figcaption>Prestige Gold · Kalyan West</figcaption></figure></div></section>'
     )
     amen_details = home_pages.amenities(ht)
