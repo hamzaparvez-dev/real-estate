@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261115-v69'
+ASSET_VER = 'prestige-home-revamp-20261115-v70'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -616,11 +616,23 @@ def projects(t):
         flip = ' is-flipped' if i % 2 else ''
         alt_band = ' is-alt' if i % 2 else ''
         is_one = href == '/projects/prestige-one/'
+        is_gold = href == '/projects/prestige-gold/'
         inline = zoom_img('/img/prestige-one/riverside-interior.webp', 1774, 887, t['one_view_alt'], t, 'project-inline-media') if is_one else ''
+        if is_gold:
+            media = (
+                f'<div class="project-showcase-media{landscape} project-media-rotator" data-project-rotator data-interval="4500">'
+                f'<img class="is-active" src="{img}" width="{w}" height="{h}" loading="lazy" alt="{a(alt)}">'
+                f'<img src="/img/prestige-gold-night.webp" width="1024" height="576" loading="lazy" alt="{a(alt)} — night view">'
+                '</div>'
+            )
+        else:
+            media = (
+                f'<div class="project-showcase-media{landscape}">'
+                f'<img src="{img}" width="{w}" height="{h}" loading="lazy" alt="{a(alt)}"></div>'
+            )
         rows += (
             f'<div class="home-project-band{alt_band}">'
-            f'<div class="in project-showcase-grid home-project{flip}"><div class="project-showcase-media{landscape}">'
-            f'<img src="{img}" width="{w}" height="{h}" loading="lazy" alt="{a(alt)}"></div>'
+            f'<div class="in project-showcase-grid home-project{flip}">{media}'
             f'<div class="project-showcase-copy">{eye(name)}<h3 class="dh">{title}</h3>'
             f'<p class="project-sell">{e(sell)}</p><p class="lead">{e(lead)}</p>{inline}'
             f'<a class="btn-o dark" href="{href}"><span>{e(btn)}</span>{icon("arrow")}</a></div></div>'

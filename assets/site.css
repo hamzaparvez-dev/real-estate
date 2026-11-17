@@ -2560,6 +2560,14 @@ body.home-video-page{--bronze:#A8783E;--bronze-soft:rgba(168,120,62,.16);--ink-s
 }
 .home-project.is-flipped .project-showcase-media{order:2}
 .project-showcase-media.is-landscape img{aspect-ratio:4/3;object-fit:cover}
+.project-media-rotator{position:relative;overflow:hidden}
+.project-media-rotator img{
+  position:absolute;inset:0;width:100%;height:100%;
+  opacity:0;transition:opacity .9s ease;
+}
+.project-media-rotator img.is-active{opacity:1;position:relative;z-index:1}
+.project-media-rotator.is-landscape{min-height:0}
+.project-media-rotator.is-landscape img.is-active{aspect-ratio:4/3;object-fit:cover}
 .home-project .project-showcase-media::before{border-color:var(--bronze-soft);border-width:1px}
 .home-project h3.dh{font-size:clamp(28px,3.4vw,48px)}
 .project-sell{

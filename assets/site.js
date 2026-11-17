@@ -16,6 +16,19 @@
     }
   } catch (e) {}
 
+  /* Project showcase image rotator (day / night, one at a time). */
+  $$('[data-project-rotator]').forEach(function (wrap) {
+    var slides = $$('img', wrap);
+    if (slides.length < 2) return;
+    var i = 0;
+    var ms = parseInt(wrap.getAttribute('data-interval'), 10) || 4500;
+    setInterval(function () {
+      slides[i].classList.remove('is-active');
+      i = (i + 1) % slides.length;
+      slides[i].classList.add('is-active');
+    }, ms);
+  });
+
   /* Nav background and progress bar */
   var nav = $('#nav'), prog = $('#prog');
   var isHomeVideo = document.body.classList.contains('home-video-page');
