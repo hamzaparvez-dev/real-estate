@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261115-v58'
+ASSET_VER = 'prestige-home-revamp-20261115-v59'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -133,27 +133,25 @@ T['en'] = dict(
     title='Luxury Homes in Kalyan West | Prestige Enterprises',
     desc='Residences in Khadakpada, Kalyan West: prime location, luxury living, modern amenities and round-the-clock security. 1, 2 & 3 BHK from ₹55 Lakh. Book a private site visit.',
     nav_label='Main menu', menu_open='Open menu', hero_label='Prestige Enterprises residences in Kalyan West',
-    intro_h='A home that feels worth the wait',
-    intro=['Sunlit rooms. Branded finishes. Amenities that feel like a private club. Prestige Enterprises creates residences for families who expect more than another flat on the market.',
-           'Homes are limited and pricing is clear. The fastest way to know if this one is yours is a private viewing with our team.'],
+    intro_h='Finally, a home that you deserve',
+    intro=['Spacious rooms with balconies. Branded finishes. Amenities that feel like a private club. Prestige Enterprises creates residences for families who expect more than another flat on the market.',
+           'Homes are limited. The fastest way to know if this one is yours is a private viewing with our team.'],
     intro_cta='Book a private viewing',
-    pillars=[('check', 'Clear pricing', 'Published starting prices from ₹55 Lakh. A written cost sheet before you book — no guesswork, no last-minute surprises.'),
-             ('crown', 'Luxury living', 'Designer lobbies, branded fittings, vitrified flooring and aluminium French windows.'),
-             ('leaf', 'Modern amenities', 'A landscaped rooftop garden, open gym, pool, mini theatre and courts for every age.'),
+    pillars=[('crown', 'Luxury living', 'Designer lobbies, branded fittings, vitrified flooring and aluminium French windows.'),
+             ('leaf', 'For families who deserve more', 'Thoughtfully designed homes catering to entire family needs — gym, indoor games and more.'),
              ('shield', 'Security systems', 'CCTV across common areas, a secured entrance gate and lifts with power backup.')],
     about_eye='Who we are', about_h='Homes built around <em>how you live</em>',
     about=['Prestige Enterprises creates and represents residences in Kalyan West for families who expect more from the place they call home: better light, better planning and better neighbours.',
-           'Our office sits within Prestige One at Godrej Hill, Khadakpada. We know these streets, these buildings and these documents first-hand, so every visit is guided by someone who has walked the site.',
-           'Every home is offered with transparent pricing, MahaRERA-registered paperwork and a written cost sheet, so the only surprise is how quickly it feels like yours.'],
+           'Our office sits within Prestige One at Godrej Hill, Khadakpada. We know these streets, these buildings and these documents first-hand, so every visit is guided by someone who has walked the site.'],
     about_alt='Prestige Gold residential tower in Kalyan West',
-    quote='A home is the biggest decision most families make. Our role is to make it a confident one.',
+    quote='',
     one_view_alt='Prestige One living room opening onto a balcony with riverside sunset views',
     one_poster_alt='Prestige One: One Life. One Home.',
     projects_eye='Our residences', projects_h='Two residences, <em>one standard</em>',
     projects=[('/projects/prestige-gold/', '/img/prestige-tower-day.jpg', 1920, 1080, 'Prestige Gold residential tower in Kalyan West',
                'Prestige Gold', 'Premium living · <em>elevated in every detail</em>',
                'Where Kalyan West comes home',
-               'Not basic. Not bare. Sunlit rooms, city-view balconies and premium finishes built for families who expect more — 1, 2 & 3 BHK plus retail and office space in the heart of Kalyan West, from ₹55 Lakh.',
+               'Not basic. Not bare. Spacious rooms with balconies and premium finishes built for families who expect more — 1, 2 & 3 BHK plus retail and office space in the heart of Kalyan West, from ₹55 Lakh.',
                'Explore Prestige Gold'),
               ('/projects/prestige-one/', '/img/Prestige%20One%20Tower%20in%20Daylight.png', 1011, 1555, 'Prestige One residential tower in daylight, Kalyan',
                'Prestige One', 'Elite <em>3 &amp; 5 BHK</em> residences',
@@ -260,27 +258,25 @@ T['hi'] = dict(
     title='कल्याण वेस्ट में लग्ज़री घर | Prestige Enterprises',
     desc='खड़कपाड़ा, कल्याण वेस्ट में घर: प्राइम लोकेशन, लग्ज़री लिविंग, आधुनिक सुविधाएँ और चौबीसों घंटे सुरक्षा। 1, 2 और 3 BHK ₹55 लाख से। निजी साइट विज़िट बुक करें।',
     nav_label='मुख्य मेन्यू', menu_open='मेन्यू खोलें', hero_label='कल्याण वेस्ट में Prestige Enterprises के घर',
-    intro_h='एक घर, जिसका इंतज़ार सही लगता है',
-    intro=['रोशनी से भरे कमरे। ब्रांडेड फ़िनिश। ऐसी सुविधाएँ जो निजी क्लब जैसी लगें। Prestige Enterprises उन परिवारों के लिए घर बनाता है जो बाज़ार में सिर्फ़ एक और फ़्लैट नहीं चाहते।',
-           'घर सीमित हैं और कीमतें साफ़ हैं। यह घर आपका है या नहीं, यह जानने का सबसे तेज़ तरीका है हमारी टीम के साथ निजी विज़िट।'],
+    intro_h='आख़िरकार, वह घर जिसके आप हक़दार हैं',
+    intro=['बालकनी वाले विशाल कमरे। ब्रांडेड फ़िनिश। ऐसी सुविधाएँ जो निजी क्लब जैसी लगें। Prestige Enterprises उन परिवारों के लिए घर बनाता है जो बाज़ार में सिर्फ़ एक और फ़्लैट नहीं चाहते।',
+           'घर सीमित हैं। यह घर आपका है या नहीं, यह जानने का सबसे तेज़ तरीका है हमारी टीम के साथ निजी विज़िट।'],
     intro_cta='निजी विज़िट बुक करें',
-    pillars=[('check', 'स्पष्ट कीमतें', 'प्रकाशित शुरुआती कीमतें ₹55 लाख से। बुकिंग से पहले लिखित लागत विवरण — अनुमान नहीं, सरप्राइज़ नहीं।'),
-             ('crown', 'लग्ज़री लिविंग', 'डिज़ाइनर लॉबी, ब्रांडेड फिटिंग्स, विट्रिफाइड फ़्लोरिंग और एल्युमिनियम फ्रेंच विंडो।'),
-             ('leaf', 'आधुनिक सुविधाएँ', 'लैंडस्केप्ड रूफटॉप गार्डन, ओपन जिम, पूल, मिनी थिएटर और हर उम्र के लिए कोर्ट।'),
+    pillars=[('crown', 'लग्ज़री लिविंग', 'डिज़ाइनर लॉबी, ब्रांडेड फिटिंग्स, विट्रिफाइड फ़्लोरिंग और एल्युमिनियम फ्रेंच विंडो।'),
+             ('leaf', 'उन परिवारों के लिए जो अधिक के हक़दार हैं', 'पूरे परिवार की ज़रूरतों के लिए सोच-समझकर डिज़ाइन किए घर — जिम, इंडोर गेम्स और बहुत कुछ।'),
              ('shield', 'सुरक्षा व्यवस्था', 'कॉमन एरिया में CCTV, सुरक्षित प्रवेश द्वार और पावर बैकअप वाली लिफ़्ट।')],
     about_eye='हमारे बारे में', about_h='आपकी जीवनशैली के <em>अनुरूप घर</em>',
     about=['Prestige Enterprises कल्याण वेस्ट में उन परिवारों के लिए घर बनाता और प्रस्तुत करता है जो अपने घर से अधिक की उम्मीद रखते हैं: बेहतर रोशनी, बेहतर प्लानिंग और बेहतर पड़ोस।',
-           'हमारा ऑफिस Prestige One, गोदरेज हिल, खड़कपाड़ा में है। हम इन गलियों, इन इमारतों और इनके दस्तावेज़ों को नज़दीक से जानते हैं, इसलिए हर विज़िट में आपके साथ वह व्यक्ति होता है जिसने साइट को खुद देखा है।',
-           'हर घर पारदर्शी कीमत, MahaRERA पंजीकृत दस्तावेज़ों और लिखित लागत विवरण के साथ दिया जाता है।'],
+           'हमारा ऑफिस Prestige One, गोदरेज हिल, खड़कपाड़ा में है। हम इन गलियों, इन इमारतों और इनके दस्तावेज़ों को नज़दीक से जानते हैं, इसलिए हर विज़िट में आपके साथ वह व्यक्ति होता है जिसने साइट को खुद देखा है।'],
     about_alt='कल्याण वेस्ट में Prestige Gold आवासीय टावर',
-    quote='घर ज़्यादातर परिवारों का सबसे बड़ा फ़ैसला होता है। हमारा काम इसे भरोसेमंद बनाना है।',
+    quote='',
     one_view_alt='Prestige One का लिविंग रूम, बालकनी से नदी किनारे सूर्यास्त का नज़ारा',
     one_poster_alt='Prestige One: One Life. One Home.',
     projects_eye='हमारे प्रोजेक्ट्स', projects_h='दो घर, <em>एक ही मानक</em>',
     projects=[('/projects/prestige-gold/', '/img/prestige-tower-day.jpg', 1920, 1080, 'कल्याण वेस्ट में Prestige Gold आवासीय टावर',
                'Prestige Gold', 'प्रीमियम जीवन · <em>हर डिटेल में ऊँचा</em>',
                'जहाँ कल्याण वेस्ट घर बन जाता है',
-               'सामान्य नहीं। अधूरा नहीं। रोशन कमरे, शहर का नज़ारा वाली बालकनी और प्रीमियम फ़िनिश — उन परिवारों के लिए जो अधिक की उम्मीद रखते हैं। 1, 2 और 3 BHK साथ रिटेल व ऑफिस, कल्याण वेस्ट के दिल में, ₹55 लाख से।',
+               'सामान्य नहीं। अधूरा नहीं। बालकनी वाले विशाल कमरे और प्रीमियम फ़िनिश — उन परिवारों के लिए जो अधिक की उम्मीद रखते हैं। 1, 2 और 3 BHK साथ रिटेल व ऑफिस, कल्याण वेस्ट के दिल में, ₹55 लाख से।',
                'Prestige Gold देखें'),
               ('/projects/prestige-one/', '/img/Prestige%20One%20Tower%20in%20Daylight.png', 1011, 1555, 'कल्याण में Prestige One आवासीय टावर',
                'Prestige One', 'एलीट <em>3 और 5 BHK</em> घर',
@@ -387,27 +383,25 @@ T['mr'] = dict(
     title='कल्याण वेस्टमध्ये लक्झरी घरे | Prestige Enterprises',
     desc='खडकपाडा, कल्याण वेस्टमधील घरे: प्राइम लोकेशन, लक्झरी लिव्हिंग, आधुनिक सुविधा आणि चोवीस तास सुरक्षा. 1, 2 आणि 3 BHK ₹55 लाखांपासून. खासगी साइट व्हिजिट बुक करा.',
     nav_label='मुख्य मेनू', menu_open='मेनू उघडा', hero_label='कल्याण वेस्टमधील Prestige Enterprises ची घरे',
-    intro_h='एक घर, ज्याची वाट बघणे योग्य वाटते',
-    intro=['प्रकाशमान खोल्या. ब्रँडेड फिनिश. अशा सुविधा ज्या खासगी क्लबसारख्या वाटतात. Prestige Enterprises अशा कुटुंबांसाठी घरे उभारते, ज्यांना बाजारातील आणखी एक फ्लॅट नको असतो.',
-           'घरे मर्यादित आहेत आणि किंमती स्पष्ट आहेत. हे घर तुमचे आहे का, हे जाणून घेण्याचा सर्वात जलद मार्ग म्हणजे आमच्या टीमसोबत खासगी व्हिजिट.'],
+    intro_h='शेवटी, ते घर ज्याचे तुम्ही पात्र आहात',
+    intro=['बाल्कनी असलेल्या प्रशस्त खोल्या. ब्रँडेड फिनिश. अशा सुविधा ज्या खासगी क्लबसारख्या वाटतात. Prestige Enterprises अशा कुटुंबांसाठी घरे उभारते, ज्यांना बाजारातील आणखी एक फ्लॅट नको असतो.',
+           'घरे मर्यादित आहेत. हे घर तुमचे आहे का, हे जाणून घेण्याचा सर्वात जलद मार्ग म्हणजे आमच्या टीमसोबत खासगी व्हिजिट.'],
     intro_cta='खासगी व्हिजिट बुक करा',
-    pillars=[('check', 'स्पष्ट किंमती', 'प्रकाशित सुरुवातीच्या किंमती ₹55 लाखांपासून. बुकिंगपूर्वी लेखी खर्चपत्रक — अंदाज नाही, सरप्राइझ नाही.'),
-             ('crown', 'लक्झरी लिव्हिंग', 'डिझायनर लॉबी, ब्रँडेड फिटिंग्ज, व्हिट्रिफाइड फ्लोअरिंग आणि ॲल्युमिनियम फ्रेंच विंडो.'),
-             ('leaf', 'आधुनिक सुविधा', 'लँडस्केप केलेले रूफटॉप गार्डन, ओपन जिम, पूल, मिनी थिएटर आणि सर्व वयोगटांसाठी कोर्ट.'),
+    pillars=[('crown', 'लक्झरी लिव्हिंग', 'डिझायनर लॉबी, ब्रँडेड फिटिंग्ज, व्हिट्रिफाइड फ्लोअरिंग आणि ॲल्युमिनियम फ्रेंच विंडो.'),
+             ('leaf', 'ज्या कुटुंबांना अधिक हवे आहे त्यांच्यासाठी', 'संपूर्ण कुटुंबाच्या गरजांसाठी विचारपूर्वक डिझाइन केलेली घरे — जिम, इंडोर गेम्स आणि आणखी बरेच काही.'),
              ('shield', 'सुरक्षा व्यवस्था', 'कॉमन एरियात CCTV, सुरक्षित प्रवेशद्वार आणि पॉवर बॅकअप असलेल्या लिफ्ट.')],
     about_eye='आमच्याबद्दल', about_h='तुमच्या जीवनशैलीला <em>साजेशी घरे</em>',
     about=['Prestige Enterprises कल्याण वेस्टमध्ये अशा कुटुंबांसाठी घरे उभारते आणि सादर करते, ज्यांना आपल्या घराकडून अधिक अपेक्षा आहेत: अधिक प्रकाश, अधिक चांगले नियोजन आणि अधिक चांगले शेजार.',
-           'आमचे कार्यालय Prestige One, गोदरेज हिल, खडकपाडा येथे आहे. आम्ही हे रस्ते, या इमारती आणि त्यांची कागदपत्रे जवळून ओळखतो, त्यामुळे प्रत्येक व्हिजिटमध्ये साइट स्वतः पाहिलेली व्यक्ती तुमच्यासोबत असते.',
-           'प्रत्येक घर पारदर्शक किंमत, MahaRERA नोंदणीकृत कागदपत्रे आणि लेखी खर्चपत्रकासह दिले जाते.'],
+           'आमचे कार्यालय Prestige One, गोदरेज हिल, खडकपाडा येथे आहे. आम्ही हे रस्ते, या इमारती आणि त्यांची कागदपत्रे जवळून ओळखतो, त्यामुळे प्रत्येक व्हिजिटमध्ये साइट स्वतः पाहिलेली व्यक्ती तुमच्यासोबत असते.'],
     about_alt='कल्याण वेस्टमधील Prestige Gold निवासी टॉवर',
-    quote='घर हा बहुतेक कुटुंबांचा सर्वात मोठा निर्णय असतो. तो आत्मविश्वासाने घेता यावा, हे आमचे काम आहे.',
+    quote='',
     one_view_alt='Prestige One ची लिव्हिंग रूम, बाल्कनीतून नदीकाठचा सूर्यास्त',
     one_poster_alt='Prestige One: One Life. One Home.',
     projects_eye='आमचे प्रकल्प', projects_h='दोन घरे, <em>एकच दर्जा</em>',
     projects=[('/projects/prestige-gold/', '/img/prestige-tower-day.jpg', 1920, 1080, 'कल्याण वेस्टमधील Prestige Gold निवासी टॉवर',
                'Prestige Gold', 'प्रीमियम जीवन · <em>प्रत्येक डिटेलमध्ये उन्नत</em>',
                'जिथे कल्याण वेस्ट घर बनते',
-               'सामान्य नाही. अपूर्ण नाही. प्रकाशमान खोल्या, शहराचे दृश्य असलेल्या बाल्कनी आणि प्रीमियम फिनिश — ज्या कुटुंबांना अधिक हवे आहे त्यांच्यासाठी. 1, 2 आणि 3 BHK सोबत रिटेल व ऑफिस, कल्याण वेस्टच्या हृदयात, ₹55 लाखांपासून.',
+               'सामान्य नाही. अपूर्ण नाही. बाल्कनी असलेल्या प्रशस्त खोल्या आणि प्रीमियम फिनिश — ज्या कुटुंबांना अधिक हवे आहे त्यांच्यासाठी. 1, 2 आणि 3 BHK सोबत रिटेल व ऑफिस, कल्याण वेस्टच्या हृदयात, ₹55 लाखांपासून.',
                'Prestige Gold पाहा'),
               ('/projects/prestige-one/', '/img/Prestige%20One%20Tower%20in%20Daylight.png', 1011, 1555, 'कल्याणमधील Prestige One निवासी टॉवर',
                'Prestige One', 'एलीट <em>3 आणि 5 BHK</em> घरे',
@@ -595,11 +589,16 @@ def intro(t):
 
 def about(t):
     body = ''.join(f'<p>{e(x)}</p>' for x in t['about'])
+    quote = t.get('quote') or ''
+    quote_html = (
+        f'<div class="about-quote"><p>{e(quote)}</p><cite>Prestige Enterprises</cite></div>'
+        if quote else ''
+    )
     return (
         '<section class="sec home-about" id="about"><div class="in about-grid"><div>'
         f'{eye(t["about_eye"])}<h2 class="dh">{t["about_h"]}</h2><div class="about-body" style="margin-top:30px">{body}</div></div>'
         f'<div><div class="about-photo"><img src="/img/about.jpg" width="900" height="1125" loading="lazy" alt="{a(t["about_alt"])}"></div>'
-        f'<div class="about-quote"><p>{e(t["quote"])}</p><cite>Prestige Enterprises</cite></div></div></div></section>\n'
+        f'{quote_html}</div></div></section>\n'
     )
 
 
