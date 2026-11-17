@@ -14,8 +14,8 @@ REGION = 'Maharashtra'
 POSTAL = '421301'
 COUNTRY = 'IN'
 ADDRESS_LINE = f'{STREET}, {LOCALITY}, {REGION} {POSTAL}'
-MAPS_URL = 'https://maps.app.goo.gl/eeYrM93VwrmVuY5d6'
-MAPS_EMBED = 'https://www.google.com/maps?q=Prestige+One,+Godrej+Hill,+Khadakpada,+Kalyan,+Maharashtra+421301&output=embed'
+MAPS_URL = 'https://www.google.com/maps/place/PRESTIGE+ONE/@19.262936,73.1425496,17z/data=!3m1!4b1!4m6!3m5!1s0x3be7968ee12f5ffd:0x3b8bf633a3480b65!8m2!3d19.262936!4d73.1425496!16s%2Fg%2F11yjshmnqv'
+MAPS_EMBED = 'https://www.google.com/maps?q=19.262936,73.1425496&z=17&output=embed'
 
 # Fill these in when you have them. Empty = not shown anywhere on the site.
 RERA_NO = 'P51700052362'

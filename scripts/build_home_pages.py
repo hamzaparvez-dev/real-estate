@@ -41,8 +41,8 @@ PHONE = '+91 96895 57788'
 WA = 'https://wa.me/919689557788'
 EMAIL = 'prestigeprojects1956@gmail.com'
 ADDRESS = 'Prestige One, Godrej Hill, Khadakpada, Kalyan, Maharashtra 421301'
-MAPS_EMBED = 'https://www.google.com/maps?q=Prestige+One,+Godrej+Hill,+Khadakpada,+Kalyan,+Maharashtra+421301&output=embed'
-MAPS_URL = 'https://maps.app.goo.gl/eeYrM93VwrmVuY5d6'
+MAPS_EMBED = 'https://www.google.com/maps?q=19.262936,73.1425496&z=17&output=embed'
+MAPS_URL = 'https://www.google.com/maps/place/PRESTIGE+ONE/@19.262936,73.1425496,17z/data=!3m1!4b1!4m6!3m5!1s0x3be7968ee12f5ffd:0x3b8bf633a3480b65!8m2!3d19.262936!4d73.1425496!16s%2Fg%2F11yjshmnqv'
 RERA = 'P51700052362'
 LANGS = ('en', 'hi', 'mr')
 PREFIX = {'en': '', 'hi': '/hi', 'mr': '/mr'}
@@ -860,8 +860,7 @@ def contact(t):
         f'<li><b>{e(t["email"])}</b><a href="mailto:{EMAIL}">{EMAIL}</a></li></ul>'
         f'<div class="cta-row"><a class="btn-wa" href="{link}" target="_blank" rel="noopener">{icon("chat")}<span>{e(t["wa_btn"])}</span></a>'
         f'<a class="btn-o" href="tel:{PHONE_TEL}">{icon("phone")}<span>{e(t["call"])}</span></a></div></div>'
-        f'<div><iframe class="map" src="{MAPS_EMBED}" title="{a(ADDRESS)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>'
-        f'<p style="margin:12px 0 0"><a class="btn-o" href="{MAPS_URL}" target="_blank" rel="noopener">{e(t["maps"])} {icon("arrow")}</a></p></div></div></section>\n</main>\n'
+        f'<div><iframe class="map" src="{MAPS_EMBED}" title="{a(ADDRESS)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div></div></section>\n</main>\n'
     )
 
 

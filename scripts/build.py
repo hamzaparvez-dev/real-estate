@@ -370,8 +370,7 @@ def contact_block(l, h2, p_txt, dark_eye=True, wa_text=None):
             f'<div class="cta-row"><a class="btn-g" href="{waurl(brochure_wa)}" target="_blank" rel="noopener"><span>{esc(U["brochure_btn"])}</span></a>'
             f'<a class="btn-wa" href="{waurl(wa_text or U["wa_default"])}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(U["wa_btn"])}</span></a>'
             f'<a class="btn-o" href="tel:{C.PHONE_TEL}">{I["phone"]}<span>{esc(U["call_btn"])}</span></a></div></div>'
-            f'<div><iframe class="map" src="{C.MAPS_EMBED}" title="{attr(C.ADDRESS_LINE)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>'
-            f'<p style="margin:12px 0 0"><a class="btn-o" href="{C.MAPS_URL}" target="_blank" rel="noopener">{esc(U["open_maps"])} {I["arrow"]}</a></p></div></div></section>\n')
+            f'<div><iframe class="map" src="{C.MAPS_EMBED}" title="{attr(C.ADDRESS_LINE)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div></div></section>\n')
 
 
 def build_home(l):
@@ -572,7 +571,6 @@ def build_prestige_gold():
         + eye('LOCATION ADVANTAGE') + '<h2 class="dh">Everything you need, <em>minutes away</em></h2>'
         '<p class="lead">Site office in Kalyan West, near key residential and commercial corridors, Thane – 421301.</p>'
         '<p class="pg-address"><b>Site address</b><br>Site Office<br>Kalyan West, Thane<br>Maharashtra – 421301</p>'
-        f'<a class="btn-o" href="{C.MAPS_URL}" target="_blank" rel="noopener">Open in Google Maps →</a>'
         '</div><div class="pg-map-card"><span>HIGH-INTENT OPPORTUNITY</span><h3>Experience the sample flat today.</h3><p>75% completed and ready for guided walkthroughs. Evaluate quality, planning and investment upside in person.</p>'
         f'<a class="btn-g" href="{wa_link}" target="_blank" rel="noopener">Book site visit</a></div></div></section>'
     )
