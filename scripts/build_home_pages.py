@@ -202,7 +202,7 @@ T['en'] = dict(
             ['Living + dining room', '1 bedroom + attached bath', 'Modular kitchen provision', 'Balcony with city view', 'Utility / dry balcony', 'Premium vitrified flooring']),
            ('2 BHK', '577–721', '₹75,00,000', '/img/plans/2bhk-layout.webp', '2 BHK apartment in Kalyan West',
             ['Spacious living + dining', 'Master bedroom + attached bath', '2nd bedroom + common bath', 'Modular kitchen + dry balcony', 'Main balcony — panoramic view', 'UPVC sliding windows', 'ISI marked electrical fittings']),
-           ('3 BHK', '873–1040', '₹1,20,00,000', '', '3 BHK images available on request',
+           ('3 BHK', '', '₹1,40,00,000', '', '3 BHK images available on request',
             ['Grand living + dining space', 'Master BR + walk-in wardrobe', '2 additional bedrooms', '3 bathrooms (2 attached)', '2 full-sized balconies', 'Dedicated pooja room', 'Premium marble-look flooring'])],
     plan_req='Layout shared on request',
     gold_extra=[
@@ -326,7 +326,7 @@ T['hi'] = dict(
             ['लिविंग और डाइनिंग रूम', 'अटैच्ड बाथ के साथ बेडरूम', 'मॉड्यूलर किचन की सुविधा', 'शहर के दृश्य वाली बालकनी', 'यूटिलिटी / ड्राई बालकनी', 'प्रीमियम विट्रिफाइड फ़्लोरिंग']),
            ('2 BHK', '577–721', '₹75,00,000', '/img/plans/2bhk-layout.webp', '2 BHK फ़्लोर प्लान',
             ['विशाल लिविंग और डाइनिंग', 'अटैच्ड बाथ के साथ मास्टर बेडरूम', 'कॉमन बाथ के साथ दूसरा बेडरूम', 'मॉड्यूलर किचन और ड्राई बालकनी', 'दो बालकनी', 'UPVC स्लाइडिंग विंडो']),
-           ('3 BHK', '873–1040', '₹1,20,00,000', '', '3 BHK फ़्लोर प्लान',
+           ('3 BHK', '', '₹1,40,00,000', '', '3 BHK फ़्लोर प्लान',
             ['पूरे साइट पर उपलब्ध', 'बड़ा लिविंग और डाइनिंग', 'वॉक-इन वार्डरोब के साथ मास्टर बेडरूम', 'दो अतिरिक्त बेडरूम', 'तीन बाथरूम (दो अटैच्ड)', 'दो फुल-साइज़ बालकनी', 'अलग पूजा कक्ष'])],
     plan_req='लेआउट अनुरोध पर',
     gold_extra=[
@@ -450,7 +450,7 @@ T['mr'] = dict(
             ['लिव्हिंग आणि डायनिंग रूम', 'अटॅच्ड बाथसह बेडरूम', 'मॉड्युलर किचनची सुविधा', 'शहराचे दृश्य असलेली बाल्कनी', 'युटिलिटी / ड्राय बाल्कनी', 'प्रीमियम व्हिट्रिफाइड फ्लोअरिंग']),
            ('2 BHK', '577–721', '₹75,00,000', '/img/plans/2bhk-layout.webp', '2 BHK फ्लोअर प्लॅन',
             ['प्रशस्त लिव्हिंग आणि डायनिंग', 'अटॅच्ड बाथसह मास्टर बेडरूम', 'कॉमन बाथसह दुसरी बेडरूम', 'मॉड्युलर किचन आणि ड्राय बाल्कनी', 'दोन बाल्कनी', 'UPVC स्लायडिंग विंडो']),
-           ('3 BHK', '873–1040', '₹1,20,00,000', '', '3 BHK फ्लोअर प्लॅन',
+           ('3 BHK', '', '₹1,40,00,000', '', '3 BHK फ्लोअर प्लॅन',
             ['संपूर्ण साइटवर उपलब्ध', 'मोठे लिव्हिंग आणि डायनिंग', 'वॉक-इन वॉर्डरोबसह मास्टर बेडरूम', 'दोन अतिरिक्त बेडरूम', 'तीन बाथरूम (दोन अटॅच्ड)', 'दोन पूर्ण आकाराच्या बाल्कनी', 'स्वतंत्र पूजा कक्ष'])],
     plan_req='लेआउट विनंतीवर',
     gold_extra=[
