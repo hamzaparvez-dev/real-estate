@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261115-v64'
+ASSET_VER = 'prestige-home-revamp-20261115-v65'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -158,9 +158,9 @@ T['en'] = dict(
                'Not basic. Not bare. Spacious rooms with balconies and premium finishes built for families who expect more — 1, 2 & 3 BHK plus retail and office space in the heart of Kalyan West.',
                'Explore Prestige Gold'),
               ('/projects/prestige-one/', '/img/Prestige%20One%20Tower%20in%20Daylight.png', 1011, 1555, 'Prestige One residential tower in daylight, Kalyan',
-               'Prestige One', 'Elite <em>3 (Jodi) &amp; 5 (Jodi) BHK</em> residences',
+               'Prestige One', 'Elite <em>3 &amp; 5 BHK (Jodi)</em> residences',
                'Reserved for those who want more',
-               'More space. More presence. A landmark on Godrej Hill for families who will not settle for less. Prestige One is offered only as 3 (Jodi) & 5 (Jodi) BHK — layouts and pricing shared privately with serious buyers.',
+               'More space. More presence. A landmark on Godrej Hill for families who will not settle for less. Prestige One is offered only as 3 & 5 BHK (Jodi) — layouts and pricing shared privately with serious buyers.',
                'Explore Prestige One')],
     amen_eye='Key selling points', amen_h='Limited units. <em>Elevated lifestyle.</em>',
     amen_lead='A premium mixed-use proposition built for lifestyle convenience and long-term investment growth.',
@@ -211,8 +211,8 @@ T['en'] = dict(
          ['Retail and office opportunity', 'High-footfall Kalyan West corridor', 'Sizes and brochure on request', 'Dual-growth mixed-use address'],
          'Hello Prestige Enterprises, I would like the Prestige Gold commercial brochure for retail and office space in Kalyan West.'),
     ],
-    one_eye='Prestige One', one_h='Elite <em>3 (Jodi) &amp; 5 (Jodi) BHK</em> only',
-    one_p='A separate address at Godrej Hill, Khadakpada — offered only as 3 (Jodi) BHK and 5 (Jodi) BHK. Layouts, carpet areas and pricing are shared privately with serious buyers.',
+    one_eye='Prestige One', one_h='Elite <em>3 &amp; 5 BHK (Jodi)</em> only',
+    one_p='A separate address at Godrej Hill, Khadakpada — offered only as 3 & 5 BHK (Jodi). Layouts, carpet areas and pricing are shared privately with serious buyers.',
     one_units=[
         ('3 BHK (Jodi)', '3B', '', 'On request',
          ['Prestige One only', 'Jodi configuration', 'Spacious family layout', 'Shared privately with serious buyers', 'Site visit on request'],
@@ -235,7 +235,7 @@ T['en'] = dict(
     km='km', mins='min', loc_note='Distances and drive times are approximate from Prestige One, Godrej Hill, Khadakpada, and vary with traffic.',
     faq_eye='FAQ', faq_h='Common <em>questions</em>',
     faq=[('Where are the residences located?', 'In Kalyan West, around Khadakpada and Godrej Hill. Our office is at Prestige One, Godrej Hill, Khadakpada, Kalyan 421301.'),
-         ('Which configurations are available?', 'Prestige Gold offers 1, 2 and 3 BHK residences from ₹55 Lakh, plus commercial space. Prestige One offers only 3 (Jodi) BHK and 5 (Jodi) BHK residences, shared privately on request.'),
+         ('Which configurations are available?', 'Prestige Gold offers 1, 2 and 3 BHK residences from ₹55 Lakh, plus commercial space. Prestige One offers only 3 & 5 BHK (Jodi) residences, shared privately on request.'),
          ('What amenities do residents enjoy?', 'A 298 sq. m. landscaped rooftop garden with a water body, gazebos and open gym, along with a swimming pool, fitness centre, mini theatre, games lounge, library and sports courts.'),
          ('What security systems are in place?', 'CCTV surveillance across common areas, a secured gated entrance, well-lit common spaces and branded lifts with power backup.'),
          ('Is the project RERA registered?', f'Yes. MahaRERA registration number {RERA}. We share the registration details and documents before you book.'),
@@ -283,9 +283,9 @@ T['hi'] = dict(
                'सामान्य नहीं। अधूरा नहीं। बालकनी वाले विशाल कमरे और प्रीमियम फ़िनिश — उन परिवारों के लिए जो अधिक की उम्मीद रखते हैं। 1, 2 और 3 BHK साथ रिटेल व ऑफिस, कल्याण वेस्ट के दिल में।',
                'Prestige Gold देखें'),
               ('/projects/prestige-one/', '/img/Prestige%20One%20Tower%20in%20Daylight.png', 1011, 1555, 'कल्याण में Prestige One आवासीय टावर',
-               'Prestige One', 'एलीट <em>3 (Jodi) और 5 (Jodi) BHK</em> घर',
+               'Prestige One', 'एलीट <em>3 और 5 BHK (Jodi)</em> घर',
                'उनके लिए जो और चाहते हैं',
-               'ज़्यादा जगह। ज़्यादा पहचान। गोदरेज हिल पर उन परिवारों के लिए टावर जो कम पर राज़ी नहीं होते। Prestige One केवल 3 (Jodi) और 5 (Jodi) BHK में — लेआउट और कीमत गंभीर खरीदारों के साथ निजी तौर पर।',
+               'ज़्यादा जगह। ज़्यादा पहचान। गोदरेज हिल पर उन परिवारों के लिए टावर जो कम पर राज़ी नहीं होते। Prestige One केवल 3 और 5 BHK (Jodi) में — लेआउट और कीमत गंभीर खरीदारों के साथ निजी तौर पर।',
                'Prestige One देखें')],
     amen_eye='सुविधाएँ', amen_h='आराम, सेहत और खेल, <em>घर के पास ही</em>',
     amen_lead='सुकून भरी सुबह, सक्रिय शाम और परिवार के साथ वीकेंड के लिए बनाई गई जगहें, सब कुछ सोसाइटी के भीतर।',
@@ -336,8 +336,8 @@ T['hi'] = dict(
          ['Prestige Gold रिटेल और ऑफिस', 'कल्याण वेस्ट का व्यस्त कॉरिडोर', 'साइज़ और ब्रोशर अनुरोध पर', 'कीमत लिखित में साझा'],
          'नमस्ते Prestige Enterprises, मुझे कल्याण वेस्ट में Prestige Gold की कमर्शियल (रिटेल/ऑफिस) जानकारी चाहिए।'),
     ],
-    one_eye='Prestige One', one_h='एलीट <em>3 (Jodi) और 5 (Jodi) BHK</em> ही',
-    one_p='गोदरेज हिल, खड़कपाड़ा पर अलग पता — केवल 3 (Jodi) BHK और 5 (Jodi) BHK। लेआउट, कारपेट एरिया और कीमत गंभीर खरीदारों के साथ निजी तौर पर।',
+    one_eye='Prestige One', one_h='एलीट <em>3 और 5 BHK (Jodi)</em> ही',
+    one_p='गोदरेज हिल, खड़कपाड़ा पर अलग पता — केवल 3 और 5 BHK (Jodi)। लेआउट, कारपेट एरिया और कीमत गंभीर खरीदारों के साथ निजी तौर पर।',
     one_units=[
         ('3 BHK (Jodi)', '3B', '', 'अनुरोध पर',
          ['केवल Prestige One', 'Jodi कॉन्फ़िगरेशन', 'विशाल पारिवारिक लेआउट', 'गंभीर खरीदारों के साथ निजी', 'साइट विज़िट अनुरोध पर'],
@@ -408,9 +408,9 @@ T['mr'] = dict(
                'सामान्य नाही. अपूर्ण नाही. बाल्कनी असलेल्या प्रशस्त खोल्या आणि प्रीमियम फिनिश — ज्या कुटुंबांना अधिक हवे आहे त्यांच्यासाठी. 1, 2 आणि 3 BHK सोबत रिटेल व ऑफिस, कल्याण वेस्टच्या हृदयात.',
                'Prestige Gold पाहा'),
               ('/projects/prestige-one/', '/img/Prestige%20One%20Tower%20in%20Daylight.png', 1011, 1555, 'कल्याणमधील Prestige One निवासी टॉवर',
-               'Prestige One', 'एलीट <em>3 (Jodi) आणि 5 (Jodi) BHK</em> घरे',
+               'Prestige One', 'एलीट <em>3 आणि 5 BHK (Jodi)</em> घरे',
                'ज्यांना अधिक हवे आहे त्यांच्यासाठी',
-               'अधिक जागा. अधिक ओळख. गोदरेज हिलवरील तो टॉवर जे कुटुंबे कमीत राजी होत नाहीत. Prestige One फक्त 3 (Jodi) आणि 5 (Jodi) BHK मध्ये — लेआउट आणि किंमत गंभीर खरेदीदारांसोबत खासगीरीत्या.',
+               'अधिक जागा. अधिक ओळख. गोदरेज हिलवरील तो टॉवर जे कुटुंबे कमीत राजी होत नाहीत. Prestige One फक्त 3 आणि 5 BHK (Jodi) मध्ये — लेआउट आणि किंमत गंभीर खरेदीदारांसोबत खासगीरीत्या.',
                'Prestige One पाहा')],
     amen_eye='सुविधा', amen_h='विश्रांती, आरोग्य आणि खेळ, <em>घराजवळच</em>',
     amen_lead='निवांत सकाळ, उत्साही संध्याकाळ आणि कुटुंबासोबतच्या वीकेंडसाठी तयार केलेल्या जागा, सर्व काही सोसायटीच्या आत.',
@@ -461,8 +461,8 @@ T['mr'] = dict(
          ['Prestige Gold रिटेल आणि ऑफिस', 'कल्याण वेस्टचा व्यस्त कॉरिडॉर', 'आकार आणि ब्रोशर विनंतीवर', 'किंमत लेखी दिली जाते'],
          'नमस्कार Prestige Enterprises, मला कल्याण वेस्टमधील Prestige Gold कमर्शियल (रिटेल/ऑफिस) माहिती हवी आहे.'),
     ],
-    one_eye='Prestige One', one_h='एलीट <em>3 (Jodi) आणि 5 (Jodi) BHK</em>च',
-    one_p='गोदरेज हिल, खडकपाडा येथील वेगळा पत्ता — फक्त 3 (Jodi) BHK आणि 5 (Jodi) BHK. लेआउट, कार्पेट एरिया आणि किंमत गंभीर खरेदीदारांसोबत खासगीरीत्या.',
+    one_eye='Prestige One', one_h='एलीट <em>3 आणि 5 BHK (Jodi)</em>च',
+    one_p='गोदरेज हिल, खडकपाडा येथील वेगळा पत्ता — फक्त 3 आणि 5 BHK (Jodi). लेआउट, कार्पेट एरिया आणि किंमत गंभीर खरेदीदारांसोबत खासगीरीत्या.',
     one_units=[
         ('3 BHK (Jodi)', '3B', '', 'विनंतीवर',
          ['फक्त Prestige One', 'Jodi कॉन्फिगरेशन', 'प्रशस्त कौटुंबिक लेआउट', 'गंभीर खरेदीदारांसोबत खासगी', 'साइट भेट विनंतीवर'],
@@ -757,7 +757,7 @@ def pricing_one(t):
         f'{eye(t["price_eye"])}<h2 class="dh price-section-title">{t["one_h"]}</h2>'
         f'<p class="price-section-intro">{e(t["one_p"])}</p></div>'
         f'<div class="price-section-aside"><span class="price-aside-rule"></span><strong>{e(t["one_eye"]).upper()}</strong>'
-        f'<span>3 (Jodi) &amp; 5 (Jodi) BHK · on request</span></div></div>'
+        f'<span>3 &amp; 5 BHK (Jodi) · on request</span></div></div>'
         f'<div class="price-brand price-brand-one"><div class="price-brand-head">{eye(t["one_eye"])}'
         f'<h3 class="price-brand-title">{t["one_h"]}</h3>'
         f'<p class="price-brand-intro">{e(t["one_p"])}</p></div>'

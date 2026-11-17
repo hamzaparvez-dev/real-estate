@@ -412,8 +412,8 @@ def build_home(l):
         '<div class="in project-showcase-grid" style="margin-top:48px"><div class="project-showcase-media">'
         '<img src="/img/Prestige%20One%20Tower%20in%20Daylight.png" width="991" height="1536" loading="lazy" alt="Prestige One tower"></div>'
         '<div class="project-showcase-copy"><div class="eye"><span class="eye-line"></span><span class="eye-txt">Prestige One</span></div>'
-        '<h2 class="dh">Elite <em>3 (Jodi) &amp; 5 (Jodi) BHK</em> residences</h2>'
-        '<p class="lead">Offered only as 3 (Jodi) BHK and 5 (Jodi) BHK. Spacious layouts — pricing shared privately with serious buyers.</p>'
+        '<h2 class="dh">Elite <em>3 &amp; 5 BHK (Jodi)</em> residences</h2>'
+        '<p class="lead">Offered only as 3 & 5 BHK (Jodi). Spacious layouts — pricing shared privately with serious buyers.</p>'
         '<a class="btn-o dark" href="/projects/prestige-one/">Prestige One</a></div></div></section>\n'
     )
     def plan_card(p):
@@ -611,17 +611,17 @@ def build_prestige_one():
     path = '/projects/prestige-one/'
     nav_alts = {k: url(k, '/') for k in LANGS}
     seo_alts = {'en': path}
-    title = 'Prestige One | 3 (Jodi) & 5 (Jodi) BHK | Kalyan'
-    desc = 'Prestige One — 3 (Jodi) & 5 (Jodi) BHK luxury homes in Kalyan at Godrej Hill, Khadakpada. Spacious layouts; pricing and floor plans shared on request. Book a site visit.'
-    wa_text = 'Hello, I am interested in Prestige One 3 (Jodi) & 5 (Jodi) BHK in Kalyan. Please share the brochure, floor plans and availability.'
+    title = 'Prestige One | 3 & 5 BHK (Jodi) | Kalyan'
+    desc = 'Prestige One — 3 & 5 BHK (Jodi) luxury homes in Kalyan at Godrej Hill, Khadakpada. Spacious layouts; pricing and floor plans shared on request. Book a site visit.'
+    wa_text = 'Hello, I am interested in Prestige One 3 & 5 BHK (Jodi) in Kalyan. Please share the brochure, floor plans and availability.'
     wa_link = waurl(wa_text)
     ht = home_pages.T['en']
     hero = video_hero('Prestige One tower')
     overview = (
         '<section class="sec pg-overview"><div class="in pg-overview-grid"><div>'
-        + eye('PRESTIGE ONE') + '<h1 class="dh">Full residential · <em>3 (Jodi) &amp; 5 (Jodi) BHK</em></h1>'
-        '<p class="lead">A striking tower for families who want space, privacy and a prime Kalyan address — offered only as 3 (Jodi) BHK and 5 (Jodi) BHK residences.</p>'
-        '<dl class="pg-facts"><div><dt>Configurations</dt><dd>3 (Jodi) BHK &amp; 5 (Jodi) BHK only</dd></div><div><dt>Carpet areas</dt><dd>On request</dd></div>'
+        + eye('PRESTIGE ONE') + '<h1 class="dh">Full residential · <em>3 &amp; 5 BHK (Jodi)</em></h1>'
+        '<p class="lead">A striking tower for families who want space, privacy and a prime Kalyan address — offered only as 3 & 5 BHK (Jodi) residences.</p>'
+        '<dl class="pg-facts"><div><dt>Configurations</dt><dd>3 &amp; 5 BHK (Jodi) only</dd></div><div><dt>Carpet areas</dt><dd>On request</dd></div>'
         '<div><dt>Starting price</dt><dd>Shared on request</dd></div><div><dt>Office</dt><dd>Prestige One, Godrej Hill, Khadakpada</dd></div></dl>'
         '</div><figure class="pg-overview-image pg-image-full"><img src="/img/Prestige%20One%20Tower%20in%20Daylight.png" loading="lazy" alt="Prestige One tower"><figcaption>Prestige One</figcaption></figure></div></section>'
     )
@@ -647,8 +647,8 @@ def build_prestige_one():
     )
     gallery = (
         '<section class="sec pg-gallery" id="gallery"><div class="in">'
-        + eye('GALLERY') + '<h2 class="dh">Visual preview · <em>3 (Jodi) &amp; 5 (Jodi) BHK</em></h2>'
-        '<p class="lead">Nine facility stills for Prestige One — offered only as 3 (Jodi) BHK and 5 (Jodi) BHK at Godrej Hill, Khadakpada.</p>'
+        + eye('GALLERY') + '<h2 class="dh">Visual preview · <em>3 &amp; 5 BHK (Jodi)</em></h2>'
+        '<p class="lead">Nine facility stills for Prestige One — offered only as 3 & 5 BHK (Jodi) at Godrej Hill, Khadakpada.</p>'
         f'<div class="pg-gallery-grid pg-gallery-grid-rich">{gallery_figures}</div>'
         '</div></section>'
     )
@@ -685,7 +685,7 @@ def build_home_en_video():
         f'<a class="btn-o" href="{waurl(U["wa_default"])}" target="_blank" rel="noopener"><span>{esc(H["btn1"])}</span></a></div></div></section>\n'
         '<section class="home-seo-intro home-passion"><div class="in home-passion-in">'
         '<p class="home-passion-title">Prime location · Luxury · Security</p>'
-        '<div class="home-passion-copy"><p>Prestige Gold — 1, 2 &amp; 3 BHK and commercial. Prestige One — 3 (Jodi) &amp; 5 (Jodi) BHK only.</p>'
+        '<div class="home-passion-copy"><p>Prestige Gold — 1, 2 &amp; 3 BHK and commercial. Prestige One — 3 &amp; 5 BHK (Jodi) only.</p>'
         f'<p>{esc(U["team_ready"])}</p></div></div></section>\n'
     )
     about = ('<section class="sec" id="about"><div class="in about-grid"><div>' + eye(esc(H['about_eye'])) + f'<h2 class="dh">{H["about_h"]}</h2>'
