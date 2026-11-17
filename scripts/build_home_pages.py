@@ -881,7 +881,7 @@ def footer(l, t):
 
 def build(l):
     t = T[l]
-    page = (head(l, t) + nav(l, t) + hero(t) + intro(t) + about(t) + projects(t)
+    page = (head(l, t) + nav(l, t) + hero(t) + intro(t) + projects(t) + about(t)
             + location(t) + faq(t) + guides(t, l) + contact(t) + footer(l, t))
     out = os.path.join(ROOT, PREFIX[l].lstrip('/'), 'index.html')
     with open(out, 'w', encoding='utf-8') as f:
