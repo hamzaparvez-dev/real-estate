@@ -467,15 +467,15 @@ def build_prestige_gold():
     path = '/projects/prestige-gold/'
     nav_alts = {k: url(k, '/') for k in LANGS}
     seo_alts = {'en': path}
-    title = 'Prestige Gold | 1, 2 & 3 BHK + Commercial | Kalyan West'
-    desc = 'Prestige Gold — prime Kalyan West address. 1, 2 & 3 BHK from ₹55 Lakh; 3 BHK from ₹1.40 Cr (140 L). Commercial retail and office space on request. Site visits open.'
-    wa_text = 'Hello, I would like the Prestige Gold brochure, floor plans and current 3 BHK availability in Kalyan West.'
+    title = 'Prestige Gold | Commercial + Residential | Kalyan West'
+    desc = 'Premium mixed-use project in Kalyan West. 1, 2 & 3 BHK from ₹55 Lakh; limited units; 70% completed with sample flat ready. Book a site visit.'
+    wa_text = 'Hello, I would like to book a Prestige Gold site visit and experience the sample flat in Kalyan West.'
     wa_link = 'https://wa.me/' + GOLD_WA + '?text=' + urllib.parse.quote(wa_text)
     ht = home_pages.T['en']
     gallery_items = [
-        ('/img/prestige-tower-day.jpg', 1400, 900, 'Prestige Gold exterior, day view', 'Day view'),
-        ('/img/prestige-tower-night.jpg', 1400, 900, 'Prestige Gold exterior, night view', 'Night view'),
-        ('/img/hero-day.jpg', 1920, 1080, 'Prestige Gold residential tower in Kalyan West', 'Tower view'),
+        ('/img/prestige-tower-day.jpg', 1400, 900, 'Prestige Gold Kalyan West – front elevation render', 'Day view'),
+        ('/img/prestige-tower-night.jpg', 1400, 900, 'Prestige Gold Kalyan West – night view render', 'Night view'),
+        ('/img/hero-day.jpg', 1920, 1080, 'Prestige Gold – new flats and residential property in Kalyan West, elevation view', 'Tower view'),
         ('/img/amenities/rooftop-garden.webp', 1200, 800, 'Rooftop garden amenity at Prestige Gold', 'Rooftop garden'),
         ('/img/amenities/swimming-pool.webp', 912, 768, 'Swimming pool at Prestige Gold', 'Swimming pool'),
     ]
@@ -483,16 +483,18 @@ def build_prestige_gold():
         f'<figure><img src="{src}" width="{w}" height="{h}" loading="lazy" alt="{esc(alt)}"><figcaption>{esc(cap)}</figcaption></figure>'
         for src, w, h, alt, cap in gallery_items
     )
-    hero = video_hero('Prestige Gold — prime Kalyan West')
+    hero = video_hero('Limited units. Elevated lifestyle.')
     overview = (
         '<section class="sec pg-overview"><div class="in pg-overview-grid"><div>'
-        + eye('THE PROJECT') + '<h1 class="dh">Full residential · <em>prime location</em></h1>'
-        '<p class="lead">A landmark mixed-use address: vastu-friendly homes, rooftop leisure, power backup and smart security — built for elite everyday living.</p>'
-        '<dl class="pg-facts"><div><dt>Project type</dt><dd>Residential + Commercial</dd></div><div><dt>Configurations</dt><dd>1, 2 &amp; 3 BHK + Commercial</dd></div>'
-        '<div><dt>Expected possession</dt><dd>June 2027</dd></div><div><dt>Construction</dt><dd>Brickwork &amp; internal works complete</dd></div>'
-        '<div><dt>Sample flat</dt><dd>Ready for visits</dd></div></dl>'
-        '<p class="pg-note"><strong>Nearby:</strong> Khadakpada, Godrej Hill, KDMC services, Kalyan West station, schools and daily retail.</p>'
-        '</div><figure class="pg-overview-image"><img src="/img/prestige-tower-night.jpg" width="1200" height="900" loading="lazy" alt="Prestige Gold tower at night"><figcaption>Prestige Gold · Kalyan West</figcaption></figure></div></section>'
+        + eye('PROJECT OVERVIEW') + '<h1 class="dh">A premium · <em>commercial + residential landmark</em></h1>'
+        '<p class="lead">Prestige Gold is designed for buyers and investors who seek long-term value with daily lifestyle comfort. This mixed-use destination combines premium residences with commercial opportunity in one future-ready address at Kalyan West.</p>'
+        '<p>Smart planning, vastu-compliant layouts, robust utilities and modern infrastructure make it ideal for self-use, rental returns and portfolio appreciation. Sample flat is ready for a real on-site experience.</p>'
+        '<dl class="pg-facts"><div><dt>Project type</dt><dd>Commercial + Residential</dd></div><div><dt>Configurations</dt><dd>1, 2 &amp; 3 BHK</dd></div>'
+        '<div><dt>Building</dt><dd>G + 5 floors</dd></div><div><dt>Availability</dt><dd>Limited units available</dd></div>'
+        '<div><dt>Possession</dt><dd>June 2027*</dd></div><div><dt>Starting price</dt><dd>₹55 Lakhs*</dd></div>'
+        '<div><dt>Status</dt><dd>70% completed</dd></div><div><dt>Special highlight</dt><dd>Sample flat ready</dd></div></dl>'
+        '<p class="pg-note"><strong>Why choose Prestige Gold?</strong> Dual-growth potential · Vastu-compliant homes · Security-focused design · Limited units for stronger exclusivity · MahaRERA P51700052362</p>'
+        '</div><figure class="pg-overview-image"><img src="/img/prestige-tower-night.jpg" width="1200" height="900" loading="lazy" alt="Prestige Gold elevation in Kalyan West"><figcaption>Prestige Gold · Kalyan West</figcaption></figure></div></section>'
     )
     features = home_pages.features_amenities(ht)
     amen_details = home_pages.amenities(ht)
@@ -504,18 +506,18 @@ def build_prestige_gold():
     )
     floorplans = (
         '<section class="sec pg-floorplans"><div class="in">'
-        + eye('LAYOUT PREVIEW') + '<h2 class="dh">Explore the <em>floor plans</em></h2>'
-        '<p class="lead">Indicative visual references. Request the latest approved, unit-specific floor plan and RERA carpet-area statement before booking.</p>'
-        '<div class="pg-plan-grid"><figure><img src="/img/prestige-plan-1bhk.png" width="1000" height="760" loading="lazy" alt="Prestige Gold 1 BHK floor plan"><figcaption><b>1 BHK</b><span>Indicative layout</span></figcaption></figure>'
-        '<figure><img src="/img/prestige-iso-2bhk.png" width="1000" height="760" loading="lazy" alt="Prestige Gold 2 BHK isometric layout"><figcaption><b>2 BHK</b><span>Isometric layout reference</span></figcaption></figure>'
+        + eye('FLOOR PLANS &amp; UNIT SIZES') + '<h2 class="dh">Compare RERA-compliant <em>unit configurations</em></h2>'
+        '<p class="lead">Indicative layouts for quick comparison. Request the latest approved, unit-specific floor plan and RERA area statement before booking.</p>'
+        '<div class="pg-plan-grid"><figure><img src="/img/prestige-plan-1bhk.png" width="1000" height="760" loading="lazy" alt="1BHK flat in Kalyan West"><figcaption><b>1 BHK</b><span>Indicative layout</span></figcaption></figure>'
+        '<figure><img src="/img/prestige-iso-2bhk.png" width="1000" height="760" loading="lazy" alt="2BHK apartment in Kalyan West"><figcaption><b>2 BHK</b><span>Isometric layout reference</span></figcaption></figure>'
         '<figure><img src="/img/prestige-iso-1bhk.png" width="1000" height="760" loading="lazy" alt="Prestige Gold 1 BHK isometric layout"><figcaption><b>1 BHK</b><span>Isometric layout reference</span></figcaption></figure></div>'
         '<p class="pg-note">Additional unit-specific 1, 2 &amp; 3 BHK drawings and commercial layouts can be requested from the project sales team.</p>'
         '</div></section>'
     )
     gallery = (
         '<section class="sec pg-gallery" id="gallery"><div class="in">'
-        + eye('PROJECT GALLERY') + '<h2 class="dh">A closer look at <em>Prestige Gold</em></h2>'
-        '<p class="lead">Tower views, leisure spaces and everyday amenities from the Prestige Gold community.</p>'
+        + eye('GALLERY') + '<h2 class="dh">Visual preview <em>before you visit</em></h2>'
+        '<p class="lead">Renders of Prestige Gold in Kalyan West. Visit the sample flat for a live walkthrough of quality, planning and finishes.</p>'
         f'<div class="pg-gallery-grid pg-gallery-grid-rich">{gallery_figures}</div>'
         '</div></section>'
     )
@@ -530,7 +532,7 @@ def build_prestige_gold():
         '</article>'
         '<article class="pg-status-card pg-status-meter-card">'
         '<div class="pg-status-meter-top"><div><p class="pg-status-kicker">Project completion</p>'
-        '<p class="pg-status-sub">Brickwork complete · finishes underway</p></div>'
+        '<p class="pg-status-sub">Based on current onsite execution milestones and active interior progress.</p></div>'
         '<div class="pg-ring" role="img" aria-label="70 percent complete" style="--pct:70">'
         '<svg viewBox="0 0 36 36" aria-hidden="true"><path class="pg-ring-bg" d="M18 2.5a15.5 15.5 0 1 1 0 31 15.5 15.5 0 1 1 0-31"/><path class="pg-ring-fg" pathLength="100" d="M18 2.5a15.5 15.5 0 1 1 0 31 15.5 15.5 0 1 1 0-31"/></svg>'
         '<span>70%</span></div></div>'
@@ -540,38 +542,38 @@ def build_prestige_gold():
         '<div class="pg-progress-right" role="list">'
         '<details class="pg-stage is-done" open><summary><span class="pg-stage-mark" aria-hidden="true">✓</span>'
         '<span class="pg-stage-body"><b>01</b><strong>Land, legal &amp; RERA registration</strong></span>'
-        '<span class="pg-stage-tag done">Completed</span></summary>'
-        '<p>Approvals and registration formalities for Prestige Gold are complete.</p></details>'
+        '<span class="pg-stage-tag done">Completed · Q3 2023</span></summary>'
+        '<p>Title clear, MahaRERA registered, layout approved by KDMC.</p></details>'
         '<details class="pg-stage is-done" open><summary><span class="pg-stage-mark" aria-hidden="true">✓</span>'
         '<span class="pg-stage-body"><b>02</b><strong>Foundation &amp; excavation</strong></span>'
-        '<span class="pg-stage-tag done">Completed</span></summary>'
-        '<p>Foundation and excavation works are finished on site.</p></details>'
+        '<span class="pg-stage-tag done">Completed · Q1 2024</span></summary>'
+        '<p>Deep pile foundation completed. Raft slab and plinth beam concreting done.</p></details>'
         '<details class="pg-stage is-done" open><summary><span class="pg-stage-mark" aria-hidden="true">✓</span>'
         '<span class="pg-stage-body"><b>03</b><strong>RCC structure progress</strong></span>'
-        '<span class="pg-stage-tag done">Completed</span></summary>'
-        '<p>Structural RCC for the G + 5 development is complete.</p></details>'
-        '<details class="pg-stage is-done" open><summary><span class="pg-stage-mark" aria-hidden="true">✓</span>'
-        '<span class="pg-stage-body"><b>04</b><strong>Brickwork &amp; internal works</strong></span>'
-        '<span class="pg-stage-tag done">Completed</span></summary>'
-        '<p>Walls, ducts and internal masonry are done across the towers.</p></details>'
+        '<span class="pg-stage-tag done">Completed · Q4 2024</span></summary>'
+        '<p>6th slab completed. RCC structure work done as per approved plans.</p></details>'
         '<details class="pg-stage is-live" open><summary><span class="pg-stage-mark" aria-hidden="true"></span>'
-        '<span class="pg-stage-body"><b>05</b><strong>Finishes &amp; fittings</strong></span>'
-        '<span class="pg-stage-tag live">In progress</span></summary>'
-        '<p>Plaster, tiling, MEP and fittings are underway toward handover.</p></details>'
+        '<span class="pg-stage-body"><b>04</b><strong>Brickwork &amp; internal works</strong></span>'
+        '<span class="pg-stage-tag live">In progress · 2025</span></summary>'
+        '<p>Brickwork and internal work in progress on lower floors; structure continues.</p></details>'
+        '<details class="pg-stage is-next"><summary><span class="pg-stage-mark" aria-hidden="true"></span>'
+        '<span class="pg-stage-body"><b>05</b><strong>Plastering, tiling &amp; fittings</strong></span>'
+        '<span class="pg-stage-tag">Expected Q1–Q2 2026</span></summary>'
+        '<p>Internal plaster, vitrified tiles, bathroom fittings, modular kitchen provisions and painting.</p></details>'
         '<details class="pg-stage is-next"><summary><span class="pg-stage-mark" aria-hidden="true"></span>'
         '<span class="pg-stage-body"><b>06</b><strong>OC, possession &amp; handover</strong></span>'
-        '<span class="pg-stage-tag">Expected June 2027</span></summary>'
-        '<p>Possession targeted for June 2027, subject to final approvals.</p></details>'
+        '<span class="pg-stage-tag">Expected June 2027*</span></summary>'
+        '<p>Occupancy Certificate, society registration and flat possession to buyers.</p></details>'
         '</div></div></section>'
     )
     location = (
         '<section class="sec pg-location"><div class="in pg-location-grid"><div>'
-        + eye('LOCATION ADVANTAGE') + '<h2 class="dh">Connected to <em>Kalyan West</em></h2>'
-        '<p class="lead">The project is located in Kalyan West, Thane, Maharashtra – 421301. Contact the sales team for the exact site pin, route guidance and a scheduled walkthrough.</p>'
-        '<p class="pg-address"><b>Prestige Gold</b><br>Kalyan West, Thane<br>Maharashtra – 421301</p>'
-        f'<a class="btn-o" href="{C.MAPS_URL}" target="_blank" rel="noopener">Open location in Google Maps ↗</a>'
-        '</div><div class="pg-map-card"><span>VISIT THE PROJECT</span><h3>See the location and experience the sample flat.</h3><p>Site visits are arranged through the project sales team.</p>'
-        f'<a class="btn-g" href="{wa_link}" target="_blank" rel="noopener">Arrange a site visit</a></div></div></section>'
+        + eye('LOCATION ADVANTAGE') + '<h2 class="dh">Everything you need, <em>minutes away</em></h2>'
+        '<p class="lead">Site office in Kalyan West, near key residential and commercial corridors, Thane – 421301.</p>'
+        '<p class="pg-address"><b>Site address</b><br>Site Office<br>Kalyan West, Thane<br>Maharashtra – 421301</p>'
+        f'<a class="btn-o" href="{C.MAPS_URL}" target="_blank" rel="noopener">Open in Google Maps →</a>'
+        '</div><div class="pg-map-card"><span>HIGH-INTENT OPPORTUNITY</span><h3>Experience the sample flat today.</h3><p>70% completed and ready for guided walkthroughs. Evaluate quality, planning and investment upside in person.</p>'
+        f'<a class="btn-g" href="{wa_link}" target="_blank" rel="noopener">Book site visit</a></div></div></section>'
     )
     shri_wa = ('https://wa.me/' + GOLD_WA + '?text=' +
                urllib.parse.quote('Hello, I am interested in Shri Durga Enterprises at Prestige Gold. Please share project details, floor plans, availability and cost sheet.'))
@@ -579,7 +581,7 @@ def build_prestige_gold():
         '<section class="sec pg-overview" id="shri-durga"><div class="in pg-overview-grid"><div>'
         + eye('PART OF PRESTIGE GOLD') + '<h2 class="dh">Shri Durga <em>Enterprises</em></h2>'
         '<p class="lead">Shri Durga Enterprises is offered as part of Prestige Gold — the same Kalyan West address, sales team and enquiry flow for verified layouts, pricing and site visits.</p>'
-        '<p>Request the latest approved floor plans, unit configurations, carpet-area details and a dated cost sheet. Confirm MahaRERA registration and project documents independently before booking or payment.</p>'
+        '<p>Request the latest approved floor plans, unit configurations, RERA area details and a dated cost sheet. Confirm MahaRERA registration and project documents independently before booking or payment.</p>'
         '<div class="cards pg-units" style="margin-top:28px;grid-template-columns:1fr">'
         '<article class="pg-unit"><span class="pg-unit-k">SHRI DURGA · PRESTIGE GOLD</span><h3>Enquire here</h3>'
         '<p>Floor plans, cost sheet and visit coordination for Shri Durga are handled with Prestige Gold.</p>'
@@ -589,12 +591,12 @@ def build_prestige_gold():
     )
     contact = (
         '<section class="sec pg-contact" id="pg-enquire"><div class="in pg-contact-inner">'
-        + eye('NEXT STEP') + '<h2 class="dh light">Experience Prestige <em>Gold</em></h2>'
-        '<p class="lead light">Ask for current availability, unit-wise pricing, approved floor plans and a guided site visit — including Shri Durga Enterprises.</p>'
+        + eye('GET IN TOUCH') + '<h2 class="dh light">Limited units. <em>Elevated lifestyle.</em></h2>'
+        '<p class="lead light">Book a guided site visit or experience the sample flat today. Our team supports buyers and investors from first enquiry to final closure.</p>'
         '<div class="pg-contact-actions">'
-        f'<a class="btn-g" href="{wa_link}" target="_blank" rel="noopener"><span>Request brochure</span></a>'
+        f'<a class="btn-g" href="{wa_link}" target="_blank" rel="noopener"><span>Book site visit</span></a>'
         '<a class="btn-o" href="tel:+' + GOLD_WA + '"><span>Call +91 84466 52600</span></a></div>'
-        '<p class="pg-contact-note">Our team is ready to assist.</p>'
+        '<p class="pg-contact-note">Mon–Sun, 10am–7pm · Sample flat ready</p>'
         '</div></section></main>'
     )
     body = (hero + overview + features + amen_details + amen_gallery + pricing
