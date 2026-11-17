@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261115-v59'
+ASSET_VER = 'prestige-home-revamp-20261115-v60'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -144,7 +144,7 @@ T['en'] = dict(
     about=['Prestige Enterprises creates and represents residences in Kalyan West for families who expect more from the place they call home: better light, better planning and better neighbours.',
            'Our office sits within Prestige One at Godrej Hill, Khadakpada. We know these streets, these buildings and these documents first-hand, so every visit is guided by someone who has walked the site.'],
     about_alt='Prestige Gold residential tower in Kalyan West',
-    quote='',
+    quote='A home is the biggest decision most families make. Our job is to make that decision as confident as possible.',
     one_view_alt='Prestige One living room opening onto a balcony with riverside sunset views',
     one_poster_alt='Prestige One: One Life. One Home.',
     projects_eye='Our residences', projects_h='Two residences, <em>one standard</em>',
@@ -269,7 +269,7 @@ T['hi'] = dict(
     about=['Prestige Enterprises कल्याण वेस्ट में उन परिवारों के लिए घर बनाता और प्रस्तुत करता है जो अपने घर से अधिक की उम्मीद रखते हैं: बेहतर रोशनी, बेहतर प्लानिंग और बेहतर पड़ोस।',
            'हमारा ऑफिस Prestige One, गोदरेज हिल, खड़कपाड़ा में है। हम इन गलियों, इन इमारतों और इनके दस्तावेज़ों को नज़दीक से जानते हैं, इसलिए हर विज़िट में आपके साथ वह व्यक्ति होता है जिसने साइट को खुद देखा है।'],
     about_alt='कल्याण वेस्ट में Prestige Gold आवासीय टावर',
-    quote='',
+    quote='घर ज़्यादातर परिवारों का सबसे बड़ा फ़ैसला होता है। हमारा काम है उसे यथासंभव भरोसेमंद बनाना।',
     one_view_alt='Prestige One का लिविंग रूम, बालकनी से नदी किनारे सूर्यास्त का नज़ारा',
     one_poster_alt='Prestige One: One Life. One Home.',
     projects_eye='हमारे प्रोजेक्ट्स', projects_h='दो घर, <em>एक ही मानक</em>',
@@ -394,7 +394,7 @@ T['mr'] = dict(
     about=['Prestige Enterprises कल्याण वेस्टमध्ये अशा कुटुंबांसाठी घरे उभारते आणि सादर करते, ज्यांना आपल्या घराकडून अधिक अपेक्षा आहेत: अधिक प्रकाश, अधिक चांगले नियोजन आणि अधिक चांगले शेजार.',
            'आमचे कार्यालय Prestige One, गोदरेज हिल, खडकपाडा येथे आहे. आम्ही हे रस्ते, या इमारती आणि त्यांची कागदपत्रे जवळून ओळखतो, त्यामुळे प्रत्येक व्हिजिटमध्ये साइट स्वतः पाहिलेली व्यक्ती तुमच्यासोबत असते.'],
     about_alt='कल्याण वेस्टमधील Prestige Gold निवासी टॉवर',
-    quote='',
+    quote='घर हा बहुतेक कुटुंबांचा सर्वात मोठा निर्णय असतो. आमचे काम आहे तो शक्य तितका आत्मविश्वासाने घेता येईल असा करणे.',
     one_view_alt='Prestige One ची लिव्हिंग रूम, बाल्कनीतून नदीकाठचा सूर्यास्त',
     one_poster_alt='Prestige One: One Life. One Home.',
     projects_eye='आमचे प्रकल्प', projects_h='दोन घरे, <em>एकच दर्जा</em>',
