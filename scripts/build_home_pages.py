@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261115-v61'
+ASSET_VER = 'prestige-home-revamp-20261115-v62'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -151,7 +151,7 @@ T['en'] = dict(
     projects=[('/projects/prestige-gold/', '/img/prestige-tower-day.jpg', 1920, 1080, 'Prestige Gold residential tower in Kalyan West',
                'Prestige Gold', 'Premium living · <em>elevated in every detail</em>',
                'Where Kalyan West comes home',
-               'Not basic. Not bare. Spacious rooms with balconies and premium finishes built for families who expect more — 1, 2 & 3 BHK plus retail and office space in the heart of Kalyan West, from ₹55 Lakh.',
+               'Not basic. Not bare. Spacious rooms with balconies and premium finishes built for families who expect more — 1, 2 & 3 BHK plus retail and office space in the heart of Kalyan West.',
                'Explore Prestige Gold'),
               ('/projects/prestige-one/', '/img/Prestige%20One%20Tower%20in%20Daylight.png', 1011, 1555, 'Prestige One residential tower in daylight, Kalyan',
                'Prestige One', 'Elite <em>3 &amp; 5 BHK</em> residences',
@@ -276,7 +276,7 @@ T['hi'] = dict(
     projects=[('/projects/prestige-gold/', '/img/prestige-tower-day.jpg', 1920, 1080, 'कल्याण वेस्ट में Prestige Gold आवासीय टावर',
                'Prestige Gold', 'प्रीमियम जीवन · <em>हर डिटेल में ऊँचा</em>',
                'जहाँ कल्याण वेस्ट घर बन जाता है',
-               'सामान्य नहीं। अधूरा नहीं। बालकनी वाले विशाल कमरे और प्रीमियम फ़िनिश — उन परिवारों के लिए जो अधिक की उम्मीद रखते हैं। 1, 2 और 3 BHK साथ रिटेल व ऑफिस, कल्याण वेस्ट के दिल में, ₹55 लाख से।',
+               'सामान्य नहीं। अधूरा नहीं। बालकनी वाले विशाल कमरे और प्रीमियम फ़िनिश — उन परिवारों के लिए जो अधिक की उम्मीद रखते हैं। 1, 2 और 3 BHK साथ रिटेल व ऑफिस, कल्याण वेस्ट के दिल में।',
                'Prestige Gold देखें'),
               ('/projects/prestige-one/', '/img/Prestige%20One%20Tower%20in%20Daylight.png', 1011, 1555, 'कल्याण में Prestige One आवासीय टावर',
                'Prestige One', 'एलीट <em>3 और 5 BHK</em> घर',
@@ -401,7 +401,7 @@ T['mr'] = dict(
     projects=[('/projects/prestige-gold/', '/img/prestige-tower-day.jpg', 1920, 1080, 'कल्याण वेस्टमधील Prestige Gold निवासी टॉवर',
                'Prestige Gold', 'प्रीमियम जीवन · <em>प्रत्येक डिटेलमध्ये उन्नत</em>',
                'जिथे कल्याण वेस्ट घर बनते',
-               'सामान्य नाही. अपूर्ण नाही. बाल्कनी असलेल्या प्रशस्त खोल्या आणि प्रीमियम फिनिश — ज्या कुटुंबांना अधिक हवे आहे त्यांच्यासाठी. 1, 2 आणि 3 BHK सोबत रिटेल व ऑफिस, कल्याण वेस्टच्या हृदयात, ₹55 लाखांपासून.',
+               'सामान्य नाही. अपूर्ण नाही. बाल्कनी असलेल्या प्रशस्त खोल्या आणि प्रीमियम फिनिश — ज्या कुटुंबांना अधिक हवे आहे त्यांच्यासाठी. 1, 2 आणि 3 BHK सोबत रिटेल व ऑफिस, कल्याण वेस्टच्या हृदयात.',
                'Prestige Gold पाहा'),
               ('/projects/prestige-one/', '/img/Prestige%20One%20Tower%20in%20Daylight.png', 1011, 1555, 'कल्याणमधील Prestige One निवासी टॉवर',
                'Prestige One', 'एलीट <em>3 आणि 5 BHK</em> घरे',
