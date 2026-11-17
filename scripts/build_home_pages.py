@@ -610,7 +610,8 @@ def zoom_img(src, w, h, alt, t, cls):
 
 
 def projects(t):
-    rows = ''
+    one_rows = ''
+    gold_rows = ''
     for i, (href, img, w, h, alt, name, title, sell, lead, btn) in enumerate(t['projects']):
         landscape = ' is-landscape' if w > h else ''
         flip = ' is-flipped' if i % 2 else ''
@@ -630,7 +631,7 @@ def projects(t):
                 f'<div class="project-showcase-media{landscape}">'
                 f'<img src="{img}" width="{w}" height="{h}" loading="lazy" alt="{a(alt)}"></div>'
             )
-        rows += (
+        band = (
             f'<div class="home-project-band{alt_band}">'
             f'<div class="in project-showcase-grid home-project{flip}">{media}'
             f'<div class="project-showcase-copy">{eye(name)}<h3 class="dh">{title}</h3>'
@@ -638,12 +639,18 @@ def projects(t):
             f'<a class="btn-o dark" href="{href}"><span>{e(btn)}</span>{icon("arrow")}</a></div></div>'
         )
         if is_one:
-            rows += f'<div class="in project-banner">{zoom_img("/img/prestige-one/one-life-one-home.webp", 1774, 887, t["one_poster_alt"], t, "project-banner-media")}</div>'
-        rows += '</div>'
+            band += f'<div class="in project-banner">{zoom_img("/img/prestige-one/one-life-one-home.webp", 1774, 887, t["one_poster_alt"], t, "project-banner-media")}</div>'
+        band += '</div>'
+        if is_one:
+            one_rows += band
+        else:
+            gold_rows += band
     return (
         '<section class="sec project-showcase home-projects" id="projects"><span id="types" class="home-anchor" aria-hidden="true"></span>'
         f'<div class="in home-sec-head">{eye(t["projects_eye"], "eye-center")}<h2 class="dh">{t["projects_h"]}</h2></div>'
-        f'{rows}</section>\n'
+        f'{one_rows}</section>\n'
+        f'{about(t)}'
+        f'<section class="sec project-showcase home-projects">{gold_rows}</section>\n'
     )
 
 
@@ -881,7 +888,7 @@ def footer(l, t):
 
 def build(l):
     t = T[l]
-    page = (head(l, t) + nav(l, t) + hero(t) + intro(t) + projects(t) + about(t)
+    page = (head(l, t) + nav(l, t) + hero(t) + intro(t) + projects(t)
             + location(t) + faq(t) + guides(t, l) + contact(t) + footer(l, t))
     out = os.path.join(ROOT, PREFIX[l].lstrip('/'), 'index.html')
     with open(out, 'w', encoding='utf-8') as f:
