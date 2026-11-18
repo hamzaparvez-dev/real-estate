@@ -532,9 +532,25 @@ def build_prestige_one():
         '<section class="sec price-section" id="pricing"><span id="pg-configurations" class="home-anchor" aria-hidden="true"></span>',
         1,
     )
-    amen_details = home_pages.amenity_cards(
-        ht['one_amen_eye'], ht['one_amen_h'], '', ht['one_amen'], sec_id='amenity-details')
-    amen_gallery = home_pages.amenity_gallery(ht)
+    one_gallery_items = [
+        ('high-speed-lifts', 726, 552, 'High-speed lifts', 'Prestige One high-speed lift lobby'),
+        ('rooftop-garden', 799, 552, 'Rooftop garden', 'Prestige One rooftop garden'),
+        ('gym', 508, 461, 'Gym', 'Prestige One gym'),
+        ('indoor-games-room', 518, 461, 'Indoor games room', 'Prestige One indoor games room'),
+        ('multipurpose-hall', 496, 461, 'Multipurpose hall', 'Prestige One multipurpose hall'),
+    ]
+    one_gallery_figures = ''.join(
+        f'<figure class="po-amen-tile"><img src="/img/prestige-one/gallery/{slug}.webp" width="{w}" height="{h}" '
+        f'loading="lazy" alt="{esc(alt)}"><figcaption class="visually-hidden">{esc(cap)}</figcaption></figure>'
+        for slug, w, h, cap, alt in one_gallery_items
+    )
+    amen_gallery = (
+        '<section class="sec home-amenities home-amenity-gallery po-amen-gallery" id="amenity-gallery"><div class="in">'
+        + eye(ht['amen_eye']) + f'<h2 class="dh">{ht["amen_gallery_h"]}</h2>'
+        f'<p class="lead">{esc(ht["amen_lead"])}</p>'
+        f'<div class="po-amen-grid">{one_gallery_figures}</div>'
+        '</div></section>'
+    )
     contact = (
         '<section class="sec pg-contact" id="contact"><div class="in pg-contact-inner">'
         + eye('CONTACT') + '<h2 class="dh light">A luxury address. <em>Ready when you are.</em></h2>'
@@ -544,7 +560,7 @@ def build_prestige_one():
         f'<p class="pg-contact-note">{esc(C.ADDRESS_LINE)}</p>'
         '</div></section></main>'
     )
-    body = hero + overview + amen_details + amen_gallery + pricing + contact
+    body = hero + overview + amen_gallery + pricing + contact
     ld = [{'@type': 'WebPage', 'name': 'Prestige One', 'url': C.SITE + path, 'description': desc, 'inLanguage': 'en-IN'}]
     html = head('en', title, desc, seo_alts, '/img/Prestige%20One%20Tower%20in%20Daylight.png', 'Prestige One Kalyan', ld, extra=video_preconnect())
     write(path.lstrip('/') + 'index.html', html + '<body class="home-video-page has-video-hero">\n' + nav('en', nav_alts) + body + footer('en', nav_alts))
