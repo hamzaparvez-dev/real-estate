@@ -852,11 +852,23 @@ def build_vercel():
         red += [{'source': f'/areas/{s}', 'destination': '/areas/', 'permanent': True}, {'source': f'/areas/{s}/', 'destination': '/areas/', 'permanent': True},
                 {'source': f'/en/areas/{s}/', 'destination': '/areas/', 'permanent': True}]
     red += [{'source': '/en/areas/', 'destination': '/areas/', 'permanent': True}, {'source': '/img/prestige_enterprises.in.png', 'destination': '/img/logo.png', 'permanent': False}]
-    cfg = {'trailingSlash': True, 'redirects': red, 'headers': [
-        {'source': '/(.*)', 'headers': [{'key': 'X-Content-Type-Options', 'value': 'nosniff'}, {'key': 'X-Frame-Options', 'value': 'SAMEORIGIN'},
-                                         {'key': 'Referrer-Policy', 'value': 'strict-origin-when-cross-origin'}, {'key': 'Permissions-Policy', 'value': 'camera=(), microphone=(), geolocation=()'}]},
-        {'source': '/img/(.*)', 'headers': [{'key': 'Cache-Control', 'value': 'public, max-age=2592000'}]},
-        {'source': '/assets/(.*)', 'headers': [{'key': 'Cache-Control', 'value': 'public, max-age=31536000, immutable'}]}]}
+    cfg = {
+        'framework': None,
+        'buildCommand': "echo 'Static site: pages are prebuilt and committed'",
+        'outputDirectory': '.',
+        'trailingSlash': True,
+        'redirects': red,
+        'headers': [
+            {'source': '/(.*)', 'headers': [
+                {'key': 'X-Content-Type-Options', 'value': 'nosniff'},
+                {'key': 'X-Frame-Options', 'value': 'SAMEORIGIN'},
+                {'key': 'Referrer-Policy', 'value': 'strict-origin-when-cross-origin'},
+                {'key': 'Permissions-Policy', 'value': 'camera=(), microphone=(), geolocation=()'},
+            ]},
+            {'source': '/img/(.*)', 'headers': [{'key': 'Cache-Control', 'value': 'public, max-age=2592000'}]},
+            {'source': '/assets/(.*)', 'headers': [{'key': 'Cache-Control', 'value': 'public, max-age=31536000, immutable'}]},
+        ],
+    }
     write('vercel.json', json.dumps(cfg, indent=2) + '\n')
 
 
