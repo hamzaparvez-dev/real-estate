@@ -623,6 +623,16 @@
       "source": "/img/prestige_enterprises.in.png",
       "destination": "/img/logo.png",
       "permanent": false
+    },
+    {
+      "source": "/projects/shri-durga-enterprises",
+      "destination": "/projects/prestige-gold/",
+      "permanent": true
+    },
+    {
+      "source": "/projects/shri-durga-enterprises/",
+      "destination": "/projects/prestige-gold/",
+      "permanent": true
     }
   ],
   "headers": [

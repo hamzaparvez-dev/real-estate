@@ -851,7 +851,12 @@ def build_vercel():
     for s in OLD_AREAS:
         red += [{'source': f'/areas/{s}', 'destination': '/areas/', 'permanent': True}, {'source': f'/areas/{s}/', 'destination': '/areas/', 'permanent': True},
                 {'source': f'/en/areas/{s}/', 'destination': '/areas/', 'permanent': True}]
-    red += [{'source': '/en/areas/', 'destination': '/areas/', 'permanent': True}, {'source': '/img/prestige_enterprises.in.png', 'destination': '/img/logo.png', 'permanent': False}]
+    red += [
+        {'source': '/en/areas/', 'destination': '/areas/', 'permanent': True},
+        {'source': '/img/prestige_enterprises.in.png', 'destination': '/img/logo.png', 'permanent': False},
+        {'source': '/projects/shri-durga-enterprises', 'destination': '/projects/prestige-gold/', 'permanent': True},
+        {'source': '/projects/shri-durga-enterprises/', 'destination': '/projects/prestige-gold/', 'permanent': True},
+    ]
     cfg = {
         'framework': None,
         'buildCommand': "echo 'Static site: pages are prebuilt and committed'",
