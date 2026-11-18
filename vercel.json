@@ -6,12 +6,12 @@
   "redirects": [
     {
       "source": "/projects/shri-durga-enterprises",
-      "destination": "/projects/prestige-gold/#shri-durga",
+      "destination": "/projects/prestige-gold/",
       "permanent": true
     },
     {
       "source": "/projects/shri-durga-enterprises/",
-      "destination": "/projects/prestige-gold/#shri-durga",
+      "destination": "/projects/prestige-gold/",
       "permanent": true
     },
     {

@@ -229,7 +229,6 @@
             '</button>' +
             '<div class="mnav-home-project-list" id="mnav-home-project-list">' +
               '<a class="mnav-home-project-link" href="/projects/prestige-gold/">PRESTIGE GOLD</a>' +
-              '<a class="mnav-home-project-link" href="/projects/prestige-gold/#shri-durga">SHRI DURGA · GOLD</a>' +
               '<a class="mnav-home-project-link" href="/projects/prestige-one/">PRESTIGE ONE</a>' +
             '</div>' +
           '</div>' +
@@ -263,11 +262,11 @@
     }
     var lang = (document.documentElement.lang || 'en').slice(0,2).toLowerCase();
     var t = {
-      en:{home:'Home',projects:'Projects',gold:'Prestige Gold',one:'Prestige One',shri:'Shri Durga · Gold',location:'Location',contact:'Contact',whatsapp:'Chat on WhatsApp'},
-      hi:{home:'होम',projects:'प्रोजेक्ट्स',gold:'प्रेस्टीज गोल्ड',one:'प्रेस्टीज वन',shri:'श्री दुर्गा · गोल्ड',location:'लोकेशन',contact:'संपर्क',whatsapp:'व्हाट्सऐप पर चैट करें'},
-      mr:{home:'मुख्यपृष्ठ',projects:'प्रकल्प',gold:'प्रेस्टीज गोल्ड',one:'प्रेस्टीज वन',shri:'श्री दुर्गा · गोल्ड',location:'लोकेशन',contact:'संपर्क',whatsapp:'व्हॉट्सअ‍ॅपवर चॅट करा'}
+      en:{home:'Home',projects:'Projects',gold:'Prestige Gold',one:'Prestige One',location:'Location',contact:'Contact',whatsapp:'Chat on WhatsApp'},
+      hi:{home:'होम',projects:'प्रोजेक्ट्स',gold:'प्रेस्टीज गोल्ड',one:'प्रेस्टीज वन',location:'लोकेशन',contact:'संपर्क',whatsapp:'व्हाट्सऐप पर चैट करें'},
+      mr:{home:'मुख्यपृष्ठ',projects:'प्रकल्प',gold:'प्रेस्टीज गोल्ड',one:'प्रेस्टीज वन',location:'लोकेशन',contact:'संपर्क',whatsapp:'व्हॉट्सअ‍ॅपवर चॅट करा'}
     }[lang] || {
-      home:'Home',projects:'Projects',gold:'Prestige Gold',one:'Prestige One',shri:'Shri Durga · Gold',
+      home:'Home',projects:'Projects',gold:'Prestige Gold',one:'Prestige One',
       location:'Location',contact:'Contact',whatsapp:'Chat on WhatsApp'
     };
     var oldWhatsApp = panel.querySelector('a[href*="wa.me"]');
@@ -298,7 +297,6 @@
           '</button>'+
           '<div class="mnav-plan-sub"><div>'+
             '<a class="mnav-plan-link" href="/projects/prestige-gold/"><span>'+t.gold+'</span>'+icon('chevron')+'</a>'+
-            '<a class="mnav-plan-link" href="/projects/prestige-gold/#shri-durga"><span>'+t.shri+'</span>'+icon('chevron')+'</a>'+
             '<a class="mnav-plan-link" href="/projects/prestige-one/"><span>'+t.one+'</span>'+icon('chevron')+'</a>'+
           '</div></div>'+
         '</div>'+
@@ -328,14 +326,13 @@
     var lang = (document.documentElement.lang || 'en').slice(0, 2).toLowerCase();
     var prefix = lang === 'en' ? '' : '/' + lang;
     var labels = lang === 'hi'
-      ? ['होम', 'प्रेस्टीज गोल्ड', 'श्री दुर्गा · गोल्ड', 'प्रेस्टीज वन', 'लोकेशन', 'संपर्क']
+      ? ['होम', 'प्रेस्टीज गोल्ड', 'प्रेस्टीज वन', 'लोकेशन', 'संपर्क']
       : lang === 'mr'
-        ? ['मुख्यपृष्ठ', 'प्रेस्टीज गोल्ड', 'श्री दुर्गा · गोल्ड', 'प्रेस्टीज वन', 'लोकेशन', 'संपर्क']
-        : ['Home', 'Prestige Gold', 'Shri Durga · Gold', 'Prestige One', 'Location', 'Contact'];
+        ? ['मुख्यपृष्ठ', 'प्रेस्टीज गोल्ड', 'प्रेस्टीज वन', 'लोकेशन', 'संपर्क']
+        : ['Home', 'Prestige Gold', 'Prestige One', 'Location', 'Contact'];
     var links = [
       prefix + '/',
       '/projects/prestige-gold/',
-      '/projects/prestige-gold/#shri-durga',
       '/projects/prestige-one/',
       prefix + '/#location',
       prefix + '/#contact'

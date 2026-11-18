@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261115-v73'
+ASSET_VER = 'prestige-home-revamp-20261115-v74'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -203,7 +203,7 @@ T['en'] = dict(
            ('2 BHK', '577–721', '₹75,00,000', '/img/plans/2bhk-layout.webp', '2 BHK apartment in Kalyan West',
             ['Spacious living + dining', 'Master bedroom + attached bath', '2nd bedroom + common bath', 'Modular kitchen + dry balcony', 'Main balcony — panoramic view', 'UPVC sliding windows', 'ISI marked electrical fittings']),
            ('3 BHK', '', '₹1,40,00,000', '', '3 BHK images available on request',
-            ['Grand living + dining space', 'Master BR + walk-in wardrobe', '2 additional bedrooms', '3 bathrooms (2 attached)', '2 full-sized balconies', 'Dedicated pooja room', 'Premium marble-look flooring'])],
+            ['Available across the complete site', 'Grand living + dining space', 'Master BR + walk-in wardrobe', '2 additional bedrooms', '3 bathrooms (2 attached)', '2 full-sized balconies', 'Dedicated pooja room', 'Premium marble-look flooring'])],
     plan_req='Layout shared on request',
     gold_extra=[
         ('Commercial', 'CO', '', 'On request',
@@ -875,7 +875,6 @@ def footer(l, t):
         f'<p>{e(t["foot_tag"])}</p><div class="foot-langs">{langs}</div></div>'
         f'<div><h4>{e(t["foot_explore"])}</h4><ul>{links}</ul></div>'
         f'<div><h4>{e(t["foot_projects"])}</h4><ul><li><a href="/projects/prestige-gold/">Prestige Gold</a></li>'
-        '<li><a href="/projects/prestige-gold/#shri-durga">Shri Durga Enterprises</a></li>'
         '<li><a href="/projects/prestige-one/">Prestige One</a></li></ul></div>'
         f'<div><h4>{e(t["foot_contact"])}</h4><p><a href="{MAPS_URL}" target="_blank" rel="noopener">{ADDRESS}</a></p>'
         f'<p><a href="tel:{PHONE_TEL}">{PHONE}</a><br><a href="mailto:{EMAIL}">{EMAIL}</a></p></div></div>'

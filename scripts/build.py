@@ -282,7 +282,6 @@ def footer(l, alts):
         f'<li><a href="{h}#contact">{esc(U["nav_contact"])}</a></li></ul></div>'
             f'<div><h4>{esc(U["foot_projects"])}</h4><ul>'
             f'<li><a href="/projects/prestige-gold/">Prestige Gold</a></li>'
-        f'<li><a href="/projects/prestige-gold/#shri-durga">Shri Durga Enterprises</a></li>'
             f'<li><a href="/projects/prestige-one/">Prestige One</a></li></ul></div>'
         f'<div><h4>{esc(U["foot_contact"])}</h4><p><a href="{C.MAPS_URL}" target="_blank" rel="noopener">{esc(C.ADDRESS_LINE)}</a></p>'
         f'<p><a href="tel:{C.PHONE_TEL}">{C.PHONE_DISPLAY}</a><br>'
@@ -574,19 +573,6 @@ def build_prestige_gold():
         '</div><div class="pg-map-card"><span>HIGH-INTENT OPPORTUNITY</span><h3>Experience the sample flat today.</h3><p>75% completed and ready for guided walkthroughs. Evaluate quality, planning and investment upside in person.</p>'
         f'<a class="btn-g" href="{wa_link}" target="_blank" rel="noopener">Book site visit</a></div></div></section>'
     )
-    shri_wa = ('https://wa.me/' + GOLD_WA + '?text=' +
-               urllib.parse.quote('Hello, I am interested in Shri Durga Enterprises at Prestige Gold. Please share project details, floor plans, availability and cost sheet.'))
-    shri_durga = (
-        '<section class="sec pg-overview" id="shri-durga"><div class="in pg-overview-grid"><div>'
-        + eye('PART OF PRESTIGE GOLD') + '<h2 class="dh">Shri Durga <em>Enterprises</em></h2>'
-        '<p class="lead">Shri Durga Enterprises is offered as part of Prestige Gold — the same Kalyan West address, sales team and enquiry flow for verified layouts, pricing and site visits.</p>'
-        '<div class="cards pg-units" style="margin-top:28px;grid-template-columns:1fr">'
-        '<article class="pg-unit"><span class="pg-unit-k">SHRI DURGA · PRESTIGE GOLD</span><h3>Enquire here</h3>'
-        '<p>Floor plans, cost sheet and visit coordination for Shri Durga are handled with Prestige Gold.</p>'
-        f'<a class="btn-g" href="{shri_wa}" target="_blank" rel="noopener">Enquire about Shri Durga</a></article></div>'
-        '</div><figure class="pg-overview-image pg-image-full"><img src="/img/shri%20durga.png" width="992" height="1536" loading="lazy" alt="Shri Durga Enterprises tower, part of Prestige Gold">'
-        '<figcaption>Shri Durga Enterprises · Prestige Gold</figcaption></figure></div></section>'
-    )
     contact = (
         '<section class="sec pg-contact" id="pg-enquire"><div class="in pg-contact-inner">'
         + eye('GET IN TOUCH') + '<h2 class="dh light">Limited units. <em>Elevated lifestyle.</em></h2>'
@@ -598,7 +584,7 @@ def build_prestige_gold():
         '</div></section></main>'
     )
     body = (hero + overview + amen_details + pricing
-            + floorplans + gallery + progress + location + shri_durga + contact)
+            + floorplans + gallery + progress + location + contact)
     ld = [agent_ld('en'), breadcrumb_ld('en', [(UI['en']['home'], url('en', '/')), ('Prestige Gold', path)])]
     html = head('en', title, desc, seo_alts, '/img/prestige-tower-day.jpg', 'Prestige Gold project in Kalyan West', ld, extra=video_preconnect())
     write(path.lstrip('/') + 'index.html', html + '<body class="home-video-page has-video-hero">\n' + nav('en', nav_alts) + body + footer('en', nav_alts))
