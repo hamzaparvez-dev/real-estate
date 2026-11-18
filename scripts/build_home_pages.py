@@ -650,7 +650,6 @@ def projects(t):
         '<section class="sec project-showcase home-projects" id="projects"><span id="types" class="home-anchor" aria-hidden="true"></span>'
         f'<div class="in home-sec-head">{eye(t["projects_eye"], "eye-center")}<h2 class="dh">{t["projects_h"]}</h2></div>'
         f'{one_rows}</section>\n'
-        f'{about(t)}'
         f'<section class="sec project-showcase home-projects">{gold_rows}</section>\n'
     )
 
@@ -887,7 +886,7 @@ def footer(l, t):
 
 def build(l):
     t = T[l]
-    page = (head(l, t) + nav(l, t) + hero(t) + intro(t) + projects(t)
+    page = (head(l, t) + nav(l, t) + hero(t) + intro(t) + about(t) + projects(t)
             + location(t) + faq(t) + guides(t, l) + contact(t) + footer(l, t))
     out = os.path.join(ROOT, PREFIX[l].lstrip('/'), 'index.html')
     with open(out, 'w', encoding='utf-8') as f:
