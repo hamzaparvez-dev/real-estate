@@ -21,7 +21,7 @@ IMG = {s: f'/img/areas/{s}.jpg' for s in NEAR}
 CITIES = {
     'kalyan': {
         'name': 'Kalyan',
-        'desc': 'Property in Kalyan, Maharashtra: flats, plots and rentals in Khadakpada, Kalyan West, Kalyan East and Titwala. Talk to Prestige Enterprises on WhatsApp.',
+        'desc': 'Property in Kalyan, Maharashtra: flats, plots and rentals in Khadakpada, Kalyan West, Kalyan East and Titwala. Talk to Prestige Projects on WhatsApp.',
         'alt': 'Illustration of Kalyan with a hill fort, towers and a suburban train at sunrise',
         'lead': 'Buy, sell or rent in Kalyan with a local team based at Godrej Hill, Khadakpada. We help you compare localities, check RERA and close the deal with clean paperwork.',
         'card': 'Khadakpada, Kalyan West, Kalyan East and Titwala. Our home base.',
@@ -53,7 +53,7 @@ CITIES = {
     },
     'dombivli': {
         'name': 'Dombivli',
-        'desc': 'Property in Dombivli East and West: flats, resale homes and rentals near the station, Manpada Road and Palava. Talk to Prestige Enterprises on WhatsApp.',
+        'desc': 'Property in Dombivli East and West: flats, resale homes and rentals near the station, Manpada Road and Palava. Talk to Prestige Projects on WhatsApp.',
         'alt': 'Illustration of Dombivli with residential towers, a small temple and a local train at dusk',
         'lead': 'Dombivli sits right next to Kalyan and has long been a favourite for salaried families. We help you choose between East and West, new and resale, and check the paperwork.',
         'card': 'Dombivli East and West, Manpada Road, Thakurli and Palava.',
@@ -85,7 +85,7 @@ CITIES = {
     },
     'thane': {
         'name': 'Thane',
-        'desc': 'Property in Thane: apartments in Majiwada, Ghodbunder Road, Naupada and Kolshet. Buy, sell or rent with Prestige Enterprises. Message us on WhatsApp.',
+        'desc': 'Property in Thane: apartments in Majiwada, Ghodbunder Road, Naupada and Kolshet. Buy, sell or rent with Prestige Projects. Message us on WhatsApp.',
         'alt': 'Illustration of Thane with a lake, hills and residential towers',
         'lead': 'Thane combines city amenities with lakes and hills nearby. We help buyers and investors compare Thane micro-markets, from older Thane West to the Ghodbunder Road towers.',
         'card': 'Naupada, Majiwada, Ghodbunder Road and Kolshet.',
@@ -117,7 +117,7 @@ CITIES = {
     },
     'ulhasnagar': {
         'name': 'Ulhasnagar',
-        'desc': 'Property in Ulhasnagar: flats, resale homes and shops across Camps 1 to 5. Buy, sell or rent with Prestige Enterprises. Message us on WhatsApp.',
+        'desc': 'Property in Ulhasnagar: flats, resale homes and shops across Camps 1 to 5. Buy, sell or rent with Prestige Projects. Message us on WhatsApp.',
         'alt': 'Illustration of Ulhasnagar with colourful buildings, market awnings and festive bunting',
         'lead': 'Ulhasnagar is a dense, lively market city between Kalyan and Ambernath. We help you buy, sell or rent homes and shops here, including redevelopment projects.',
         'card': 'Camps 1 to 5, Vitthalwadi and the Shahad edge.',
@@ -149,7 +149,7 @@ CITIES = {
     },
     'ambernath': {
         'name': 'Ambernath',
-        'desc': 'Property in Ambernath East and West: affordable flats, plots and rentals near the station and Anand Nagar MIDC. Talk to Prestige Enterprises on WhatsApp.',
+        'desc': 'Property in Ambernath East and West: affordable flats, plots and rentals near the station and Anand Nagar MIDC. Talk to Prestige Projects on WhatsApp.',
         'alt': 'Illustration of the ancient Ambernath temple against hills at sunrise',
         'lead': 'Ambernath offers affordable homes on the Kalyan–Karjat line, with an industrial belt nearby. We help you find a home, a plot or a rental that fits your budget.',
         'card': 'Ambernath East and West, Anand Nagar and the Badlapur road belt.',
@@ -181,7 +181,7 @@ CITIES = {
     },
     'badlapur': {
         'name': 'Badlapur',
-        'desc': 'Property in Badlapur: flats, row houses and plots in Katrap, Belvali, Kulgaon and near Barvi Dam. Buy, sell or rent with Prestige Enterprises.',
+        'desc': 'Property in Badlapur: flats, row houses and plots in Katrap, Belvali, Kulgaon and near Barvi Dam. Buy, sell or rent with Prestige Projects.',
         'alt': 'Illustration of Badlapur with green hills, mist, a river and small houses',
         'lead': 'Badlapur is green, quieter and more affordable than most of MMR. We help you pick the right locality and verify the project before you commit.',
         'card': 'Katrap, Belvali, Kulgaon and the Barvi Dam side.',
@@ -213,7 +213,7 @@ CITIES = {
     },
     'bhiwandi': {
         'name': 'Bhiwandi',
-        'desc': 'Property in Bhiwandi: flats, rentals, shops and warehouse space near Kalyan Road and Dhamankar Naka. Talk to Prestige Enterprises on WhatsApp.',
+        'desc': 'Property in Bhiwandi: flats, rentals, shops and warehouse space near Kalyan Road and Dhamankar Naka. Talk to Prestige Projects on WhatsApp.',
         'alt': 'Illustration of Bhiwandi with warehouses, trucks and a highway at sunset',
         'lead': 'Bhiwandi is a major logistics and powerloom centre. We help you with flats, rentals, shops and commercial space, and with the checks they need.',
         'card': 'Dhamankar Naka, Kalyan Road, Anjurphata and Kasheli.',
@@ -245,7 +245,7 @@ CITIES = {
     },
     'mumbai': {
         'name': 'Mumbai',
-        'desc': 'Property in Mumbai: resale flats, redevelopment and new projects across the central, eastern and western suburbs. Talk to Prestige Enterprises on WhatsApp.',
+        'desc': 'Property in Mumbai: resale flats, redevelopment and new projects across the central, eastern and western suburbs. Talk to Prestige Projects on WhatsApp.',
         'alt': 'Illustration of the Mumbai skyline with a cable-stayed sea link at dusk',
         'lead': 'Looking at Mumbai from our Kalyan base? We help buyers, sellers and investors with flats in the central and eastern suburbs and beyond, with clear numbers on every cost.',
         'card': 'Central and eastern suburbs, Western suburbs, island city and the harbour belt.',
@@ -277,7 +277,7 @@ CITIES = {
     },
     'navi-mumbai': {
         'name': 'Navi Mumbai',
-        'desc': 'Property in Navi Mumbai: flats in Kharghar, Ulwe, Vashi, Nerul and Airoli. Buy, sell or rent with Prestige Enterprises. Message us on WhatsApp.',
+        'desc': 'Property in Navi Mumbai: flats in Kharghar, Ulwe, Vashi, Nerul and Airoli. Buy, sell or rent with Prestige Projects. Message us on WhatsApp.',
         'alt': 'Illustration of Navi Mumbai towers beside the creek and an arched bridge at night',
         'lead': 'Navi Mumbai is a planned city with wide roads and good open space. We help you compare nodes from Airoli to Ulwe and check each project carefully.',
         'card': 'Kharghar, Ulwe, Vashi, Nerul and Airoli.',
@@ -309,7 +309,7 @@ CITIES = {
     },
     'panvel': {
         'name': 'Panvel',
-        'desc': 'Property in Panvel: flats, plots and rentals in New Panvel, Kalamboli, Khanda Colony and Kamothe. Talk to Prestige Enterprises on WhatsApp.',
+        'desc': 'Property in Panvel: flats, plots and rentals in New Panvel, Kalamboli, Khanda Colony and Kamothe. Talk to Prestige Projects on WhatsApp.',
         'alt': 'Illustration of Panvel with a creek, rail viaduct, hills and towers at dusk',
         'lead': 'Panvel is the gateway to Raigad and the Mumbai–Pune and Konkan routes, with the airport nearby. We help buyers and investors compare the nodes around it.',
         'card': 'New Panvel, Old Panvel, Kalamboli and Khanda Colony.',

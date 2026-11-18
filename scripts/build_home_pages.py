@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261115-v74'
+ASSET_VER = 'prestige-home-revamp-20261115-v75'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -134,17 +134,17 @@ LOCATIONS = {
 T = {}
 
 T['en'] = dict(
-    title='Luxury Homes in Kalyan West | Prestige Enterprises',
+    title='Luxury Homes in Kalyan West | Prestige Projects',
     desc='Residences in Khadakpada, Kalyan West: prime location, luxury living, modern amenities and round-the-clock security. 1, 2 & 3 BHK from ₹55 Lakh. Book a private site visit.',
-    nav_label='Main menu', menu_open='Open menu', hero_label='Prestige Enterprises residences in Kalyan West',
+    nav_label='Main menu', menu_open='Open menu', hero_label='Prestige Projects residences in Kalyan West',
     intro_h='Finally, a home that you deserve',
-    intro=['Luxury rooms with balconies. Branded finishes that feel like a private club. Prestige Enterprises creates projects for families who expect more than another flat on the market.'],
+    intro=['Luxury rooms with balconies. Branded finishes that feel like a private club. Prestige Projects creates projects for families who expect more than another flat on the market.'],
     intro_cta='Book a private viewing',
     pillars=[('crown', 'Luxury living', 'Designer lobbies, branded fittings, vitrified flooring and aluminium French windows.'),
              ('leaf', 'For families who deserve more', 'Thoughtfully designed homes catering to entire family needs — gym, indoor games and more.'),
              ('shield', 'Security systems', 'CCTV across common areas, a secured entrance gate and lifts with power backup.')],
     about_eye='Who we are', about_h='Homes built around <em>how you live</em>',
-    about=['Prestige Enterprises creates and represents Prestige Gold and Prestige One in Kalyan West for families who deserve more from the place they call home: better light, better planning and better neighbours.',
+    about=['Prestige Projects creates and represents Prestige Gold and Prestige One in Kalyan West for families who deserve more from the place they call home: better light, better planning and better neighbours.',
            'Walk the flats, feel the light and leave with clarity. Every viewing is led by someone who knows these buildings, these papers and this market first-hand.'],
     about_alt='Prestige Gold residential tower in Kalyan West',
     quote='A home is the biggest decision most families make. Our job is to make that decision as confident.',
@@ -208,17 +208,17 @@ T['en'] = dict(
     gold_extra=[
         ('Commercial', 'CO', '', 'On request',
          ['Retail and office opportunity', 'High-footfall Kalyan West corridor', 'Sizes and brochure on request', 'Dual-growth mixed-use address'],
-         'Hello Prestige Enterprises, I would like the Prestige Gold commercial brochure for retail and office space in Kalyan West.'),
+         'Hello Prestige Projects, I would like the Prestige Gold commercial brochure for retail and office space in Kalyan West.'),
     ],
     one_eye='Prestige One', one_h='Elite <em>3 &amp; 5 BHK (Jodi)</em> only',
     one_p='A separate address at Godrej Hill, Khadakpada — offered only as 3 & 5 BHK (Jodi). Layouts, carpet areas and pricing are shared privately with serious buyers.',
     one_units=[
         ('3 BHK (Jodi)', '3B', '', 'On request',
          ['Prestige One only', 'Jodi configuration', 'Spacious family layout', 'Shared privately with serious buyers', 'Site visit on request'],
-         'Hello Prestige Enterprises, I would like details for Prestige One 3 BHK (Jodi) residences. Please share layouts, carpet areas and pricing.'),
+         'Hello Prestige Projects, I would like details for Prestige One 3 BHK (Jodi) residences. Please share layouts, carpet areas and pricing.'),
         ('5 BHK (Jodi)', '5B', '', 'On request',
          ['Prestige One only', 'Jodi configuration', 'Elite private layouts', 'Shared privately with serious buyers', 'Site visit on request'],
-         'Hello Prestige Enterprises, I would like details for Prestige One 5 BHK (Jodi) residences. Please share layouts, carpet areas and pricing.'),
+         'Hello Prestige Projects, I would like details for Prestige One 5 BHK (Jodi) residences. Please share layouts, carpet areas and pricing.'),
     ],
     more_enquire='Request details',
     price_note='Limited units available. 70% completed and sample flat ready for immediate walkthrough. Prices and areas are indicative; final values are confirmed in writing before booking.',
@@ -247,28 +247,28 @@ T['en'] = dict(
     contact_eye='Contact', contact_h='Arrange a <em>private site visit</em>',
     contact_p='Tell us the home you have in mind. Our Khadakpada team will share live availability, floor plans and a written cost sheet, and arrange a visit at your convenience.',
     addr='Office', phone='Phone', email='Email', wa_btn='Chat on WhatsApp', call='Call us', maps='Open in Google Maps',
-    wa_text='Hello Prestige Enterprises, I would like to arrange a site visit and receive current availability in Kalyan West.',
+    wa_text='Hello Prestige Projects, I would like to arrange a site visit and receive current availability in Kalyan West.',
     foot_tag='Thoughtfully planned residences in Kalyan West, Maharashtra.',
     foot_explore='Explore', foot_projects='Projects', foot_contact='Contact',
     foot_links=[('#about', 'About'), ('/projects/prestige-gold/#amenities', 'Amenities'), ('#location', 'Location'), ('/blog/', 'Guides'), ('#contact', 'Contact')],
     privacy='Privacy Policy', rera_verified='Verified & Registered',
     disclaimer='Images are artistic impressions for representation only. Amenities, specifications, prices and distances are indicative and may change; confirm current details in writing before booking.',
-    rights='© 2026 Prestige Enterprises. All rights reserved.',
+    rights='© 2026 Prestige Projects. All rights reserved.',
     float_wa='WhatsApp',
 )
 
 T['hi'] = dict(
-    title='कल्याण वेस्ट में लग्ज़री घर | Prestige Enterprises',
+    title='कल्याण वेस्ट में लग्ज़री घर | Prestige Projects',
     desc='खड़कपाड़ा, कल्याण वेस्ट में घर: प्राइम लोकेशन, लग्ज़री लिविंग, आधुनिक सुविधाएँ और चौबीसों घंटे सुरक्षा। 1, 2 और 3 BHK ₹55 लाख से। निजी साइट विज़िट बुक करें।',
-    nav_label='मुख्य मेन्यू', menu_open='मेन्यू खोलें', hero_label='कल्याण वेस्ट में Prestige Enterprises के घर',
+    nav_label='मुख्य मेन्यू', menu_open='मेन्यू खोलें', hero_label='कल्याण वेस्ट में Prestige Projects के घर',
     intro_h='आख़िरकार, वह घर जिसके आप हक़दार हैं',
-    intro=['बालकनी वाले लग्ज़री कमरे। ब्रांडेड फ़िनिश जो निजी क्लब जैसी लगें। Prestige Enterprises उन परिवारों के लिए प्रोजेक्ट्स बनाता है जो बाज़ार में सिर्फ़ एक और फ़्लैट नहीं चाहते।'],
+    intro=['बालकनी वाले लग्ज़री कमरे। ब्रांडेड फ़िनिश जो निजी क्लब जैसी लगें। Prestige Projects उन परिवारों के लिए प्रोजेक्ट्स बनाता है जो बाज़ार में सिर्फ़ एक और फ़्लैट नहीं चाहते।'],
     intro_cta='निजी विज़िट बुक करें',
     pillars=[('crown', 'लग्ज़री लिविंग', 'डिज़ाइनर लॉबी, ब्रांडेड फिटिंग्स, विट्रिफाइड फ़्लोरिंग और एल्युमिनियम फ्रेंच विंडो।'),
              ('leaf', 'उन परिवारों के लिए जो अधिक के हक़दार हैं', 'पूरे परिवार की ज़रूरतों के लिए सोच-समझकर डिज़ाइन किए घर — जिम, इंडोर गेम्स और बहुत कुछ।'),
              ('shield', 'सुरक्षा व्यवस्था', 'कॉमन एरिया में CCTV, सुरक्षित प्रवेश द्वार और पावर बैकअप वाली लिफ़्ट।')],
     about_eye='हमारे बारे में', about_h='आपकी जीवनशैली के <em>अनुरूप घर</em>',
-    about=['Prestige Enterprises कल्याण वेस्ट में Prestige Gold और Prestige One बनाता और प्रस्तुत करता है — उन परिवारों के लिए जो अपने घर से अधिक के हक़दार हैं: बेहतर रोशनी, बेहतर प्लानिंग और बेहतर पड़ोस।',
+    about=['Prestige Projects कल्याण वेस्ट में Prestige Gold और Prestige One बनाता और प्रस्तुत करता है — उन परिवारों के लिए जो अपने घर से अधिक के हक़दार हैं: बेहतर रोशनी, बेहतर प्लानिंग और बेहतर पड़ोस।',
            'फ़्लैट देखें, रोशनी महसूस करें और स्पष्टता के साथ लौटें। हर विज़िट में आपके साथ वह व्यक्ति होता है जो इन इमारतों, दस्तावेज़ों और इस बाज़ार को नज़दीक से जानता है।'],
     about_alt='कल्याण वेस्ट में Prestige Gold आवासीय टावर',
     quote='घर ज़्यादातर परिवारों का सबसे बड़ा फ़ैसला होता है। हमारा काम है उसे भरोसेमंद बनाना।',
@@ -332,17 +332,17 @@ T['hi'] = dict(
     gold_extra=[
         ('कमर्शियल', 'CO', '', 'अनुरोध पर',
          ['Prestige Gold रिटेल और ऑफिस', 'कल्याण वेस्ट का व्यस्त कॉरिडोर', 'साइज़ और ब्रोशर अनुरोध पर', 'कीमत लिखित में साझा'],
-         'नमस्ते Prestige Enterprises, मुझे कल्याण वेस्ट में Prestige Gold की कमर्शियल (रिटेल/ऑफिस) जानकारी चाहिए।'),
+         'नमस्ते Prestige Projects, मुझे कल्याण वेस्ट में Prestige Gold की कमर्शियल (रिटेल/ऑफिस) जानकारी चाहिए।'),
     ],
     one_eye='Prestige One', one_h='एलीट <em>3 और 5 BHK (Jodi)</em> ही',
     one_p='गोदरेज हिल, खड़कपाड़ा पर अलग पता — केवल 3 और 5 BHK (Jodi)। लेआउट, कारपेट एरिया और कीमत गंभीर खरीदारों के साथ निजी तौर पर।',
     one_units=[
         ('3 BHK (Jodi)', '3B', '', 'अनुरोध पर',
          ['केवल Prestige One', 'Jodi कॉन्फ़िगरेशन', 'विशाल पारिवारिक लेआउट', 'गंभीर खरीदारों के साथ निजी', 'साइट विज़िट अनुरोध पर'],
-         'नमस्ते Prestige Enterprises, मुझे Prestige One 3 BHK (Jodi) घरों की जानकारी चाहिए।'),
+         'नमस्ते Prestige Projects, मुझे Prestige One 3 BHK (Jodi) घरों की जानकारी चाहिए।'),
         ('5 BHK (Jodi)', '5B', '', 'अनुरोध पर',
          ['केवल Prestige One', 'Jodi कॉन्फ़िगरेशन', 'एलीट निजी लेआउट', 'गंभीर खरीदारों के साथ निजी', 'साइट विज़िट अनुरोध पर'],
-         'नमस्ते Prestige Enterprises, मुझे Prestige One 5 BHK (Jodi) घरों की जानकारी चाहिए।'),
+         'नमस्ते Prestige Projects, मुझे Prestige One 5 BHK (Jodi) घरों की जानकारी चाहिए।'),
     ],
     more_enquire='जानकारी माँगें',
     price_note='कीमतें और क्षेत्रफल सांकेतिक हैं। बुकिंग से पहले अंतिम कीमत, उपलब्धता, टैक्स, वैधानिक शुल्क और पार्किंग की पुष्टि नवीनतम लिखित लागत विवरण से करें।',
@@ -371,28 +371,28 @@ T['hi'] = dict(
     contact_eye='संपर्क', contact_h='<em>निजी साइट विज़िट</em> बुक करें',
     contact_p='हमें बताएँ कि आप कैसा घर चाहते हैं। हमारी खड़कपाड़ा टीम मौजूदा उपलब्धता, फ़्लोर प्लान और लिखित लागत विवरण साझा करेगी और आपकी सुविधा से विज़िट तय करेगी।',
     addr='ऑफिस', phone='फ़ोन', email='ईमेल', wa_btn='WhatsApp पर बात करें', call='कॉल करें', maps='Google Maps में खोलें',
-    wa_text='नमस्ते Prestige Enterprises, मैं कल्याण वेस्ट में साइट विज़िट बुक करना और मौजूदा उपलब्धता जानना चाहता/चाहती हूँ।',
+    wa_text='नमस्ते Prestige Projects, मैं कल्याण वेस्ट में साइट विज़िट बुक करना और मौजूदा उपलब्धता जानना चाहता/चाहती हूँ।',
     foot_tag='कल्याण वेस्ट, महाराष्ट्र में सोच-समझकर बनाए गए घर।',
     foot_explore='देखें', foot_projects='प्रोजेक्ट्स', foot_contact='संपर्क',
     foot_links=[('#about', 'हमारे बारे में'), ('/projects/prestige-gold/#amenities', 'सुविधाएँ'), ('#location', 'लोकेशन'), ('/blog/', 'गाइड'), ('#contact', 'संपर्क')],
     privacy='गोपनीयता नीति', rera_verified='सत्यापित और पंजीकृत',
     disclaimer='तस्वीरें केवल प्रस्तुति के लिए कलात्मक चित्रण हैं। सुविधाएँ, स्पेसिफ़िकेशन, कीमतें और दूरियाँ सांकेतिक हैं और बदल सकती हैं; बुकिंग से पहले लिखित में पुष्टि करें।',
-    rights='© 2026 Prestige Enterprises. सर्वाधिकार सुरक्षित।',
+    rights='© 2026 Prestige Projects. सर्वाधिकार सुरक्षित।',
     float_wa='WhatsApp',
 )
 
 T['mr'] = dict(
-    title='कल्याण वेस्टमध्ये लक्झरी घरे | Prestige Enterprises',
+    title='कल्याण वेस्टमध्ये लक्झरी घरे | Prestige Projects',
     desc='खडकपाडा, कल्याण वेस्टमधील घरे: प्राइम लोकेशन, लक्झरी लिव्हिंग, आधुनिक सुविधा आणि चोवीस तास सुरक्षा. 1, 2 आणि 3 BHK ₹55 लाखांपासून. खासगी साइट व्हिजिट बुक करा.',
-    nav_label='मुख्य मेनू', menu_open='मेनू उघडा', hero_label='कल्याण वेस्टमधील Prestige Enterprises ची घरे',
+    nav_label='मुख्य मेनू', menu_open='मेनू उघडा', hero_label='कल्याण वेस्टमधील Prestige Projects ची घरे',
     intro_h='शेवटी, ते घर ज्याचे तुम्ही पात्र आहात',
-    intro=['बाल्कनी असलेल्या लक्झरी खोल्या. ब्रँडेड फिनिश ज्या खासगी क्लबसारख्या वाटतात. Prestige Enterprises अशा कुटुंबांसाठी प्रकल्प उभारते, ज्यांना बाजारातील आणखी एक फ्लॅट नको असतो.'],
+    intro=['बाल्कनी असलेल्या लक्झरी खोल्या. ब्रँडेड फिनिश ज्या खासगी क्लबसारख्या वाटतात. Prestige Projects अशा कुटुंबांसाठी प्रकल्प उभारते, ज्यांना बाजारातील आणखी एक फ्लॅट नको असतो.'],
     intro_cta='खासगी व्हिजिट बुक करा',
     pillars=[('crown', 'लक्झरी लिव्हिंग', 'डिझायनर लॉबी, ब्रँडेड फिटिंग्ज, व्हिट्रिफाइड फ्लोअरिंग आणि ॲल्युमिनियम फ्रेंच विंडो.'),
              ('leaf', 'ज्या कुटुंबांना अधिक हवे आहे त्यांच्यासाठी', 'संपूर्ण कुटुंबाच्या गरजांसाठी विचारपूर्वक डिझाइन केलेली घरे — जिम, इंडोर गेम्स आणि आणखी बरेच काही.'),
              ('shield', 'सुरक्षा व्यवस्था', 'कॉमन एरियात CCTV, सुरक्षित प्रवेशद्वार आणि पॉवर बॅकअप असलेल्या लिफ्ट.')],
     about_eye='आमच्याबद्दल', about_h='तुमच्या जीवनशैलीला <em>साजेशी घरे</em>',
-    about=['Prestige Enterprises कल्याण वेस्टमध्ये Prestige Gold आणि Prestige One उभारते आणि सादर करते — ज्या कुटुंबांना आपल्या घराकडून अधिक हवे आहे त्यांच्यासाठी: अधिक प्रकाश, अधिक चांगले नियोजन आणि अधिक चांगले शेजार.',
+    about=['Prestige Projects कल्याण वेस्टमध्ये Prestige Gold आणि Prestige One उभारते आणि सादर करते — ज्या कुटुंबांना आपल्या घराकडून अधिक हवे आहे त्यांच्यासाठी: अधिक प्रकाश, अधिक चांगले नियोजन आणि अधिक चांगले शेजार.',
            'फ्लॅट पाहा, प्रकाश अनुभव आणि स्पष्टतेने परत जा. प्रत्येक भेटीत तुमच्यासोबत ती व्यक्ती असते जी या इमारती, कागदपत्रे आणि हा बाजार जवळून ओळखते.'],
     about_alt='कल्याण वेस्टमधील Prestige Gold निवासी टॉवर',
     quote='घर हा बहुतेक कुटुंबांचा सर्वात मोठा निर्णय असतो. आमचे काम आहे तो आत्मविश्वासाने घेता येईल असा करणे.',
@@ -456,17 +456,17 @@ T['mr'] = dict(
     gold_extra=[
         ('कमर्शियल', 'CO', '', 'विनंतीवर',
          ['Prestige Gold रिटेल आणि ऑफिस', 'कल्याण वेस्टचा व्यस्त कॉरिडॉर', 'आकार आणि ब्रोशर विनंतीवर', 'किंमत लेखी दिली जाते'],
-         'नमस्कार Prestige Enterprises, मला कल्याण वेस्टमधील Prestige Gold कमर्शियल (रिटेल/ऑफिस) माहिती हवी आहे.'),
+         'नमस्कार Prestige Projects, मला कल्याण वेस्टमधील Prestige Gold कमर्शियल (रिटेल/ऑफिस) माहिती हवी आहे.'),
     ],
     one_eye='Prestige One', one_h='एलीट <em>3 आणि 5 BHK (Jodi)</em>च',
     one_p='गोदरेज हिल, खडकपाडा येथील वेगळा पत्ता — फक्त 3 आणि 5 BHK (Jodi). लेआउट, कार्पेट एरिया आणि किंमत गंभीर खरेदीदारांसोबत खासगीरीत्या.',
     one_units=[
         ('3 BHK (Jodi)', '3B', '', 'विनंतीवर',
          ['फक्त Prestige One', 'Jodi कॉन्फिगरेशन', 'प्रशस्त कौटुंबिक लेआउट', 'गंभीर खरेदीदारांसोबत खासगी', 'साइट भेट विनंतीवर'],
-         'नमस्कार Prestige Enterprises, मला Prestige One 3 BHK (Jodi) घरांची माहिती हवी आहे.'),
+         'नमस्कार Prestige Projects, मला Prestige One 3 BHK (Jodi) घरांची माहिती हवी आहे.'),
         ('5 BHK (Jodi)', '5B', '', 'विनंतीवर',
          ['फक्त Prestige One', 'Jodi कॉन्फिगरेशन', 'एलीट खासगी लेआउट', 'गंभीर खरेदीदारांसोबत खासगी', 'साइट भेट विनंतीवर'],
-         'नमस्कार Prestige Enterprises, मला Prestige One 5 BHK (Jodi) घरांची माहिती हवी आहे.'),
+         'नमस्कार Prestige Projects, मला Prestige One 5 BHK (Jodi) घरांची माहिती हवी आहे.'),
     ],
     more_enquire='माहिती मागवा',
     price_note='किंमती आणि क्षेत्रफळ सूचक आहेत. बुकिंगपूर्वी अंतिम किंमत, उपलब्धता, कर, वैधानिक शुल्क आणि पार्किंगची खात्री अद्ययावत लेखी खर्चपत्रकातून करा.',
@@ -495,13 +495,13 @@ T['mr'] = dict(
     contact_eye='संपर्क', contact_h='<em>खासगी साइट व्हिजिट</em> बुक करा',
     contact_p='तुम्हाला कसे घर हवे आहे ते सांगा. आमची खडकपाडा टीम सध्याची उपलब्धता, फ्लोअर प्लॅन आणि लेखी खर्चपत्रक देईल आणि तुमच्या सोयीनुसार व्हिजिट ठरवेल.',
     addr='कार्यालय', phone='फोन', email='ईमेल', wa_btn='WhatsApp वर बोला', call='कॉल करा', maps='Google Maps मध्ये उघडा',
-    wa_text='नमस्कार Prestige Enterprises, मला कल्याण वेस्टमध्ये साइट व्हिजिट बुक करायची आहे आणि सध्याची उपलब्धता जाणून घ्यायची आहे.',
+    wa_text='नमस्कार Prestige Projects, मला कल्याण वेस्टमध्ये साइट व्हिजिट बुक करायची आहे आणि सध्याची उपलब्धता जाणून घ्यायची आहे.',
     foot_tag='कल्याण वेस्ट, महाराष्ट्रातील विचारपूर्वक नियोजित घरे.',
     foot_explore='पाहा', foot_projects='प्रकल्प', foot_contact='संपर्क',
     foot_links=[('#about', 'आमच्याबद्दल'), ('/projects/prestige-gold/#amenities', 'सुविधा'), ('#location', 'लोकेशन'), ('/blog/', 'मार्गदर्शक'), ('#contact', 'संपर्क')],
     privacy='गोपनीयता धोरण', rera_verified='सत्यापित आणि नोंदणीकृत',
     disclaimer='चित्रे केवळ सादरीकरणासाठी कलात्मक प्रतिमा आहेत. सुविधा, स्पेसिफिकेशन, किंमती आणि अंतरे सूचक असून बदलू शकतात; बुकिंगपूर्वी लेखी खात्री करा.',
-    rights='© 2026 Prestige Enterprises. सर्व हक्क राखीव.',
+    rights='© 2026 Prestige Projects. सर्व हक्क राखीव.',
     float_wa='WhatsApp',
 )
 
@@ -518,12 +518,12 @@ def head(l, t):
     fonts = 'family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700'
     if l != 'en':
         fonts += '&family=Noto+Sans+Devanagari:wght@300;400;500;600&family=Noto+Serif+Devanagari:wght@300;400;500'
-    agent = {'@type': 'RealEstateAgent', '@id': SITE + '/#agent', 'name': 'Prestige Enterprises', 'url': SITE + '/',
+    agent = {'@type': 'RealEstateAgent', '@id': SITE + '/#agent', 'name': 'Prestige Projects', 'url': SITE + '/',
              'image': SITE + '/img/logo.png', 'logo': SITE + '/img/logo.png', 'telephone': PHONE_TEL, 'email': EMAIL,
              'address': {'@type': 'PostalAddress', 'streetAddress': 'Prestige One, Godrej Hill, Khadakpada', 'addressLocality': 'Kalyan',
                          'addressRegion': 'Maharashtra', 'postalCode': '421301', 'addressCountry': 'IN'},
              'hasMap': MAPS_URL, 'areaServed': {'@type': 'City', 'name': 'Kalyan'}, 'knowsLanguage': ['en', 'hi', 'mr']}
-    website = {'@type': 'WebSite', '@id': SITE + '/#website', 'url': SITE + '/', 'name': 'Prestige Enterprises',
+    website = {'@type': 'WebSite', '@id': SITE + '/#website', 'url': SITE + '/', 'name': 'Prestige Projects',
                'inLanguage': ['en-IN', 'hi-IN', 'mr-IN'], 'publisher': {'@id': SITE + '/#agent'}}
     webpage = {'@type': 'WebPage', '@id': canonical + '#webpage', 'url': canonical, 'name': t['title'], 'description': t['desc'],
                'inLanguage': HTML_LANG[l], 'isPartOf': {'@id': SITE + '/#website'}}
@@ -535,7 +535,7 @@ def head(l, t):
         f'<title>{e(t["title"])}</title>\n<meta name="description" content="{a(t["desc"])}">\n'
         '<meta name="author" content="Munit Lulla">\n<meta name="robots" content="index, follow, max-image-preview:large">\n'
         f'<link rel="canonical" href="{canonical}">\n{alts}\n<meta name="theme-color" content="#0B1220">\n'
-        f'<meta property="og:type" content="website"><meta property="og:site_name" content="Prestige Enterprises"><meta property="og:locale" content="{LOCALE[l]}">'
+        f'<meta property="og:type" content="website"><meta property="og:site_name" content="Prestige Projects"><meta property="og:locale" content="{LOCALE[l]}">'
         f'<meta property="og:url" content="{canonical}"><meta property="og:title" content="{a(t["title"])}"><meta property="og:description" content="{a(t["desc"])}">'
         f'<meta property="og:image" content="{SITE}/img/og-default.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">'
         '<meta name="twitter:card" content="summary_large_image">\n'
@@ -557,8 +557,8 @@ def nav(l, t):
         f'<body class="home-video-page">\n<div id="prog"></div>\n'
         f'<nav id="nav" class="home-hero-nav" aria-label="{a(t["nav_label"])}">'
         f'<button class="nav-ham" id="navHam" type="button" aria-label="{a(t["menu_open"])}" aria-expanded="false" aria-controls="mnav"><span></span><span></span><span></span></button>'
-        f'<a class="nav-logo home-wordmark" href="{p}/" aria-label="Prestige Enterprises">'
-        '<img class="home-logo-dark" src="/img/logo-on-dark.png" width="248" height="83" alt="Prestige Enterprises" decoding="async">'
+        f'<a class="nav-logo home-wordmark" href="{p}/" aria-label="Prestige Projects">'
+        '<img class="home-logo-dark" src="/img/logo-on-dark.png" width="248" height="83" alt="Prestige Projects" decoding="async">'
         '<img class="home-logo-light" src="/img/logo.png" width="248" height="83" alt="" aria-hidden="true" decoding="async"></a>'
         f'<div class="nav-r nav-r-home-fallback" hidden aria-hidden="true"><div class="lang" role="group">{langs}</div></div></nav>\n'
         '<div class="mnav" id="mnav" hidden aria-hidden="true"></div>\n'
@@ -592,7 +592,7 @@ def about(t):
     body = ''.join(f'<p>{e(x)}</p>' for x in t['about'])
     quote = t.get('quote') or ''
     quote_html = (
-        f'<div class="about-quote"><p>{e(quote)}</p><cite>Prestige Enterprises</cite></div>'
+        f'<div class="about-quote"><p>{e(quote)}</p><cite>Prestige Projects</cite></div>'
         if quote else ''
     )
     return (
@@ -871,7 +871,7 @@ def footer(l, t):
                     for k, n in (('en', 'English'), ('hi', 'हिन्दी'), ('mr', 'मराठी')))
     return (
         '<footer class="home-footer"><div class="foot-grid">'
-        f'<div><a class="foot-logo-link" href="{p}/" aria-label="Prestige Enterprises"><img src="/img/logo-on-dark.png" width="210" height="70" alt="Prestige Enterprises" class="foot-logo"></a>'
+        f'<div><a class="foot-logo-link" href="{p}/" aria-label="Prestige Projects"><img src="/img/logo-on-dark.png" width="210" height="70" alt="Prestige Projects" class="foot-logo"></a>'
         f'<p>{e(t["foot_tag"])}</p><div class="foot-langs">{langs}</div></div>'
         f'<div><h4>{e(t["foot_explore"])}</h4><ul>{links}</ul></div>'
         f'<div><h4>{e(t["foot_projects"])}</h4><ul><li><a href="/projects/prestige-gold/">Prestige Gold</a></li>'

@@ -2,7 +2,7 @@
 <html lang="en"><head>
 <meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <meta name="robots" content="noindex, nofollow, noarchive"><meta name="theme-color" content="#142B45">
-<title>Private Enquiry Dashboard | Prestige Enterprises</title>
+<title>Private Enquiry Dashboard | Prestige Projects</title>
 <link rel="icon" href="/favicon.ico" sizes="any"><link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
 <style>
@@ -198,7 +198,7 @@ body{background:var(--canvas);color:var(--ink)}
 
 </style></head>
 <body>
-<header class="admin-topbar"><a class="admin-brand" href="/" aria-label="Prestige Enterprises home"><img src="/img/new-logo.png" width="168" height="52" alt="Prestige Enterprises"><span>PRIVATE PORTAL</span></a><button class="admin-logout" id="logout" type="button" hidden>Sign out</button></header>
+<header class="admin-topbar"><a class="admin-brand" href="/" aria-label="Prestige Projects home"><img src="/img/new-logo.png" width="168" height="52" alt="Prestige Projects"><span>PRIVATE PORTAL</span></a><button class="admin-logout" id="logout" type="button" hidden>Sign out</button></header>
 <main class="admin-main">
 <section class="admin-login-card" id="login-view"><p class="admin-eyebrow">PRESTIGE ENTERPRISES · KALYAN</p><h1>Enquiry <em>dashboard</em></h1><p class="admin-intro">Sign in to manage property enquiries, follow-ups and marketing permissions.</p>
 <form id="login-form" novalidate><label for="password">Dashboard password</label><input id="password" name="password" type="password" autocomplete="current-password" required placeholder="Enter your password"><p class="admin-error" id="login-error" role="alert" aria-live="polite"></p><button class="admin-primary" type="submit">SIGN IN SECURELY</button></form><p class="admin-secure">Private access · Session expires automatically</p></section>
@@ -259,7 +259,7 @@ body{background:var(--canvas);color:var(--ink)}
 <section class="workspace visitor-workspace"><div class="list-heading"><div><h2>Website visitors</h2><p id="visitor-summary">Anonymous visit analytics · Only visitors who allow analytics are counted</p></div><div class="admin-head-actions"><button class="admin-button" id="visitor-refresh" type="button">Refresh visitors</button><button class="admin-export" id="visitor-export" type="button">Export visitors CSV</button></div></div><div class="visitor-stats"><article class="kpi"><span>Recorded page views</span><strong id="visitor-total">0</strong><small>Consent-based analytics</small></article><article class="kpi"><span>Unique sessions</span><strong id="visitor-sessions">0</strong><small>Browser session IDs</small></article><article class="kpi"><span>Top page</span><strong class="visitor-top" id="visitor-top">—</strong><small>Most viewed path</small></article></div><div class="visitor-table-wrap"><table class="visitor-table"><thead><tr><th>Visited at</th><th>Page</th><th>Referrer</th><th>Device</th><th>Browser</th></tr></thead><tbody id="visitor-list"><tr><td colspan="5">No consented visitor activity yet.</td></tr></tbody></table></div><p class="privacy-note">Visitor records do not contain names, phone numbers, email addresses or raw IP addresses. Contact details are available only when a visitor submits an enquiry form.</p></section>
 
 <p class="privacy-note">Marketing export contains only contacts who explicitly opted in to receive property updates. Website cookies are not used to identify visitors or collect contact details.</p></section>
-<div class="admin-toast" id="admin-toast" role="status" aria-live="polite"></div><p class="admin-bottom">Prestige Enterprises · Internal use only</p></main>
+<div class="admin-toast" id="admin-toast" role="status" aria-live="polite"></div><p class="admin-bottom">Prestige Projects · Internal use only</p></main>
 <script>
 (function(){
 'use strict';
@@ -301,7 +301,7 @@ function render(){
     list.innerHTML=items.map(function(x){
       var phone=String(x.phone||'').replace(/\D/g,'');
       var yes=x.marketingConsent===true;
-      var wa=encodeURIComponent('Hello '+(x.name||'')+', this is Prestige Enterprises following up on your enquiry.');
+      var wa=encodeURIComponent('Hello '+(x.name||'')+', this is Prestige Projects following up on your enquiry.');
       var statusValue=x.status||'new';
       var statusLabel={new:'New',contacted:'Contacted',qualified:'Qualified',closed:'Closed'}[statusValue]||'New';
       var name=esc(x.name||'Unnamed enquiry');

@@ -1,4 +1,4 @@
-/* Prestige Enterprises: small, dependency-free behaviour for every page. */
+/* Prestige Projects: small, dependency-free behaviour for every page. */
 (function () {
   var $ = function (s, r) { return (r || document).querySelector(s); };
   var $$ = function (s, r) { return Array.prototype.slice.call((r || document).querySelectorAll(s)); };
@@ -243,7 +243,7 @@
           '</div>' +
         '</div>' +
         '<div class="mnav-home-footer">' +
-          '<a href="https://wa.me/919689557788?text=Hello%20Prestige%20Enterprises%2C%20I%20would%20like%20to%20arrange%20a%20site%20visit%20in%20Kalyan%20West." target="_blank" rel="noopener">' + ht[4] + ' <span aria-hidden="true">↗</span></a>' +
+          '<a href="https://wa.me/919689557788?text=Hello%20Prestige%20Projects%2C%20I%20would%20like%20to%20arrange%20a%20site%20visit%20in%20Kalyan%20West." target="_blank" rel="noopener">' + ht[4] + ' <span aria-hidden="true">↗</span></a>' +
         '</div>';
       var projectsGroup = panel.querySelector('#mnav-home-projects');
       var projectsBtn = panel.querySelector('#mnav-home-projects-btn');
@@ -271,7 +271,7 @@
     };
     var oldWhatsApp = panel.querySelector('a[href*="wa.me"]');
     var waHref = oldWhatsApp ? oldWhatsApp.getAttribute('href') :
-      'https://wa.me/919689557788?text=Hello%20Prestige%20Enterprises%2C%20I%20would%20like%20more%20information%20about%20properties%20for%20sale%20in%20Kalyan.';
+      'https://wa.me/919689557788?text=Hello%20Prestige%20Projects%2C%20I%20would%20like%20more%20information%20about%20properties%20for%20sale%20in%20Kalyan.';
     var prefix = lang === 'en' ? '' : '/' + lang;
     var glyphs = {
       home:'<path d="M3 11 12 3l9 8"/><path d="M5 10v10h5v-6h4v6h5V10"/>',
@@ -618,7 +618,7 @@
       }
       var copy = intentCopy(enquiryIntent);
       var lines = [
-        'Hello Prestige Enterprises, I would like to ' + copy.line,
+        'Hello Prestige Projects, I would like to ' + copy.line,
         '',
         'Name: ' + data.get('name'),
         'Mobile: ' + phone,
@@ -678,7 +678,7 @@
     var float = document.createElement('div');
     float.className = 'floating-cta';
     float.setAttribute('aria-label', 'Quick contact actions');
-    float.innerHTML = '<a class="f-book" href="tel:+919689557788" aria-label="Call to book a site visit">BOOK VISIT</a><a class="f-wa" href="' + WA + '?text=' + encodeURIComponent('Hello Prestige Enterprises, I would like more information about homes in Kalyan.') + '" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20l1.2-4.3A8.4 8.4 0 1 1 20 11.5Z"/><path d="M8.5 8.2c.3-.6.6-.6.9-.6h.4c.2 0 .4.1.5.4l.7 1.7c.1.2.1.4-.1.6l-.5.6c-.2.2-.2.4 0 .7.6 1 1.4 1.7 2.4 2.2.3.1.5.1.7-.1l.7-.8c.2-.2.4-.3.7-.2l1.6.8c.3.1.4.3.4.5 0 .3-.2 1-.7 1.4-.5.4-1.1.6-1.8.5-1-.1-2.2-.6-3.6-1.8-1.6-1.4-2.6-3.1-2.8-4.1-.2-.9.1-1.5.5-1.8Z"/></svg><span>WHATSAPP</span></a><button class="f-enq" type="button" data-enquiry-intent="brochure" aria-label="Get the brochure">BROCHURE</button>';
+    float.innerHTML = '<a class="f-book" href="tel:+919689557788" aria-label="Call to book a site visit">BOOK VISIT</a><a class="f-wa" href="' + WA + '?text=' + encodeURIComponent('Hello Prestige Projects, I would like more information about homes in Kalyan.') + '" target="_blank" rel="noopener" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11.5a8.4 8.4 0 0 1-12.4 7.4L3 20l1.2-4.3A8.4 8.4 0 1 1 20 11.5Z"/><path d="M8.5 8.2c.3-.6.6-.6.9-.6h.4c.2 0 .4.1.5.4l.7 1.7c.1.2.1.4-.1.6l-.5.6c-.2.2-.2.4 0 .7.6 1 1.4 1.7 2.4 2.2.3.1.5.1.7-.1l.7-.8c.2-.2.4-.3.7-.2l1.6.8c.3.1.4.3.4.5 0 .3-.2 1-.7 1.4-.5.4-1.1.6-1.8.5-1-.1-2.2-.6-3.6-1.8-1.6-1.4-2.6-3.1-2.8-4.1-.2-.9.1-1.5.5-1.8Z"/></svg><span>WHATSAPP</span></a><button class="f-enq" type="button" data-enquiry-intent="brochure" aria-label="Get the brochure">BROCHURE</button>';
     document.body.appendChild(float);
     float.querySelector('.f-enq').addEventListener('click', function () { openModal(this); });
 

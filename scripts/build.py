@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-"""Build the whole Prestige Enterprises site (English at /, Hindi at /hi/, Marathi at /mr/).
+"""Build the whole Prestige Projects site (English at /, Hindi at /hi/, Marathi at /mr/).
 
     python3 scripts/make_images.py     # only when you want to regenerate the artwork
     python3 scripts/build.py
@@ -248,7 +248,7 @@ def nav(l, alts, solid=True):
         f'<button class="nav-ham" id="navHam" type="button" aria-label="{attr(open_menu)}" aria-expanded="false" aria-controls="mnav">'
         '<span></span><span></span><span></span></button>'
         f'<a class="nav-logo home-wordmark" href="{h}" aria-label="{attr(C.BRAND)}">'
-        '<img class="home-logo-dark" src="/img/logo-on-dark.png" width="248" height="83" alt="Prestige Enterprises" decoding="async">'
+        '<img class="home-logo-dark" src="/img/logo-on-dark.png" width="248" height="83" alt="Prestige Projects" decoding="async">'
         '<img class="home-logo-light" src="/img/logo.png" width="248" height="83" alt="" aria-hidden="true" decoding="async"></a>'
         f'<div class="nav-r nav-r-home-fallback" hidden aria-hidden="true">'
         f'<div class="lang" role="group" aria-label="{attr(U["lang_label"])}">{langs}</div></div></nav>\n'
@@ -326,7 +326,7 @@ HERO_VIDEO_BLOB = '/video/Prestige_Sales_Hero_Video_1080p.mp4'
 HERO_VIDEO_HOST = ''
 
 
-def video_hero(label='Prestige Enterprises residences in Kalyan West'):
+def video_hero(label='Prestige Projects residences in Kalyan West'):
     """Same homepage video hero used on every public page."""
     return (
         f'<main id="main"><section id="home" class="hero hero-video-hero site-video-hero" aria-label="{attr(label)}">'
@@ -388,7 +388,7 @@ def build_home(l):
     dots = ''.join(f'<button class="hc-dot{" on" if i == 0 else ""}" type="button" aria-label="{i + 1}"></button>' for i in range(len(hero_imgs)))
     hero = ('<main id="main"><section id="home" class="hero"><div class="hero-slides">' + slides + '</div><div class="hero-veil"></div><div class="hero-c">'
             f'<div class="hero-tag"><span class="hero-dot"></span>{esc(H["tag"])}</div>'
-            '<h1 class="hero-name">Prestige<b>Enterprises</b></h1>'
+            '<h1 class="hero-name">Prestige<b>Projects</b></h1>'
             f'<div class="hero-tagline-wrap"><div class="hero-tagline">{"".join(f"<span>{esc(t)}</span>" for t in H["taglines"])}</div></div>'
             f'<div class="hero-pills">{"".join(f"<span class=hero-pill>{esc(p)}</span>" for p in H["pills"])}</div>'
             f'<div class="hero-btns"><a class="btn-g" href="{waurl(U["wa_default"])}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(H["btn1"])}</span></a>'

@@ -1,7 +1,7 @@
 """Business details used across the whole site. Edit here, then run: python3 scripts/build.py"""
 
 SITE = 'https://www.prestigeenterprises.in'
-BRAND = 'Prestige Enterprises'
+BRAND = 'Prestige Projects'
 
 PHONE_DISPLAY = '+91 96895 57788'
 PHONE_TEL = '+919689557788'
