@@ -147,7 +147,7 @@ T['en'] = dict(
     pillars=[('crown', 'Luxury living', 'Designer lobbies, high-speed lifts and French windows and more.'),
              ('leaf', 'For families who deserve more', 'Rooftop garden, gym, indoor games room and multipurpose hall — amenities for everyday family life.'),
              ('shield', 'Security systems', 'CCTV across common areas, a secured entrance gate and lifts with power backup.'),
-             ('compass', 'Vastu compliant', 'Homes planned with an eight-point Vastu compass for light, airflow and balanced living.')],
+             ('compass', 'Vastu compliant', 'Homes designed with Vastu principles, natural light, good airflow and balanced living.')],
     about_eye='Who we are', about_h='Homes built around <em>how you live</em>',
     about=['Our projects are situated in the most established locations in Kalyan West, offering a friendly and convenient neighbourhood. Surrounded by tree-lined surroundings and well-connected roads, with hospitals and shopping destinations nearby, our homes make everyday living comfortable and hassle-free.'],
     about_alt='Prestige Gold residential tower in Kalyan West',
