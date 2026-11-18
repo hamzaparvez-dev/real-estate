@@ -473,6 +473,7 @@ def build_prestige_gold():
         '<div><dt>Possession</dt><dd>June 2027*</dd></div><div><dt>Special highlight</dt><dd>Sample flat ready</dd></div></dl>'
         '</div><figure class="pg-overview-image"><img src="/img/prestige-tower-night.jpg" width="1200" height="900" loading="lazy" alt="Prestige Gold elevation in Kalyan West"><figcaption>Prestige Gold · Kalyan West</figcaption></figure></div></section>'
     )
+    amen_details = home_pages.amenities(ht)
     amen_gallery = home_pages.amenity_gallery(ht)
     specs = home_pages.specifications(ht)
     pricing = home_pages.pricing_gold(ht).replace(
@@ -500,7 +501,7 @@ def build_prestige_gold():
         f'<p class="pg-contact-note">{esc(gold_address)} · Mon–Sun, 10am–7pm</p>'
         '</div></section></main>'
     )
-    body = (hero + overview + amen_gallery + specs + pricing
+    body = (hero + overview + amen_details + amen_gallery + specs + pricing
             + location + contact)
     ld = [agent_ld('en'), breadcrumb_ld('en', [(UI['en']['home'], url('en', '/')), ('Prestige Gold', path)])]
     html = head('en', title, desc, seo_alts, '/img/prestige-tower-day.jpg', 'Prestige Gold project in Kalyan West', ld, extra=video_preconnect())
