@@ -522,7 +522,7 @@ def build_prestige_one():
     overview = (
         '<section class="sec pg-overview"><div class="in pg-overview-grid"><div>'
         + eye('PRESTIGE ONE') + '<h1 class="dh">Full residential · <em>3 &amp; 5 BHK (Jodi)</em></h1>'
-        '<p class="lead">A striking tower for families who want space, privacy and a prime Kalyan address — offered only as 3 & 5 BHK (Jodi) residences.</p>'
+        '<p class="lead">A premium address for families seeking spacious homes, privacy and comfortable living on Godrej Hill, Kalyan.</p>'
         '<dl class="pg-facts"><div><dt>Configurations</dt><dd>3 &amp; 5 BHK (Jodi) only</dd></div><div><dt>Carpet areas</dt><dd>On request</dd></div>'
         '<div><dt>Starting price</dt><dd>Shared on request</dd></div><div><dt>Office</dt><dd>Prestige One, Godrej Hill, Khadakpada</dd></div></dl>'
         '</div><figure class="pg-overview-image pg-image-full"><img src="/img/Prestige%20One%20Tower%20in%20Daylight.png" loading="lazy" alt="Prestige One tower"><figcaption>Prestige One</figcaption></figure></div></section>'
