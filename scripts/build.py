@@ -481,11 +481,12 @@ def build_prestige_gold():
         '<section class="sec price-section" id="pricing"><span id="pg-configurations" class="home-anchor" aria-hidden="true"></span><span id="commercial" class="home-anchor" aria-hidden="true"></span>',
         1,
     )
+    gold_address = 'Near Mahavir Jain School, Kala Talao, Kalyan West, Kalyan, Maharashtra 421301'
     location = (
         '<section class="sec pg-location"><div class="in pg-location-grid"><div>'
         + eye('LOCATION ADVANTAGE') + '<h2 class="dh">Everything you need, <em>minutes away</em></h2>'
-        '<p class="lead">Visit us at our Kalyan office — a short drive from Prestige Gold and the surrounding residential corridors.</p>'
-        f'<p class="pg-address"><b>Office address</b><br>{esc(C.ADDRESS_LINE)}</p>'
+        '<p class="lead">Prestige Gold sits in Kalyan West near Mahavir Jain School and Kala Talao — close to everyday needs and key corridors.</p>'
+        f'<p class="pg-address"><b>Site address</b><br>{esc(gold_address)}</p>'
         f'<p class="pg-address"><b>Mobile</b><br><a href="tel:{C.PHONE_TEL}">{C.PHONE_DISPLAY}</a></p>'
         '</div><div class="pg-map-card"><span>SITE VISIT</span><h3>Experience the sample flat today.</h3><p>Walk through quality, planning and finishes in person — then decide with clarity.</p>'
         f'<a class="btn-g" href="{wa_link}" target="_blank" rel="noopener">Book site visit</a></div></div></section>'
@@ -497,7 +498,7 @@ def build_prestige_gold():
         '<div class="pg-contact-actions">'
         f'<a class="btn-g" href="{wa_link}" target="_blank" rel="noopener"><span>Book site visit</span></a>'
         f'<a class="btn-o" href="tel:{C.PHONE_TEL}"><span>Call {C.PHONE_DISPLAY}</span></a></div>'
-        f'<p class="pg-contact-note">{esc(C.ADDRESS_LINE)} · Mon–Sun, 10am–7pm</p>'
+        f'<p class="pg-contact-note">{esc(gold_address)} · Mon–Sun, 10am–7pm</p>'
         '</div></section></main>'
     )
     body = (hero + overview + amen_details + amen_gallery + specs + pricing
