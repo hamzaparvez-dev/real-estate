@@ -1,4 +1,4 @@
-/* Prestige Enterprises private enquiry dashboard */
+/* Prestige Projects private enquiry dashboard */
 (function () {
   var $ = function (selector) { return document.querySelector(selector); };
   var loginView = $('#admin-login'), dashboard = $('#admin-dashboard');
@@ -36,7 +36,7 @@
         var phone = String(x.phone || '').replace(/\D/g, '');
         var extra = x.message ? '<p class="admin-enquiry-message">' + esc(x.message) + '</p>' : '';
         var intent = x.intent === 'site-visit' ? 'SITE VISIT' : 'PROPERTY ENQUIRY';
-        var wa = encodeURIComponent('Hello ' + (x.name || '') + ', this is Prestige Enterprises following up on your enquiry.');
+        var wa = encodeURIComponent('Hello ' + (x.name || '') + ', this is Prestige Projects following up on your enquiry.');
         return '<article class="admin-enquiry-card"><div class="admin-enquiry-main">' +
           '<h2 class="admin-enquiry-name">' + esc(x.name || 'Unnamed enquiry') + '</h2>' +
           '<div class="admin-enquiry-meta"><span>' + esc(date(x.submittedAt)) + '</span>' +
