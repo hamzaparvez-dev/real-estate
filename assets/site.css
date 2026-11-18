@@ -1,4 +1,4 @@
-/* Prestige Enterprises: one stylesheet for every page and every language. */
+/* Prestige Projects: one stylesheet for every page and every language. */
 :root{
   --bg:#F5F7FA;--white:#fff;--ink:#0B1220;--navy:#0B1220;--navy2:#111A2E;
   --gold:#CD2F2A;--gold2:#CD2F2A;--coral:#0B1220;--muted:#1E293B;--faint:#334155;--border:#DCE3EA;
@@ -1241,7 +1241,7 @@ body>footer,body>footer:last-of-type{
 
 
 
-/* Prestige Enterprises residential pricing — editorial comparison layout. */
+/* Prestige Projects residential pricing — editorial comparison layout. */
 .price-section{--pe-blue:#142B45;--pe-blue-mid:#274766;--pe-blue-line:#D5DFE9;--pe-copy:#5B6B7D;background:#F5F7FA;color:var(--pe-blue);border-top:1px solid var(--pe-blue-line);border-bottom:1px solid var(--pe-blue-line)}
 .price-section-head{display:grid;grid-template-columns:minmax(0,1fr) 180px;gap:35px;align-items:end;margin-bottom:38px}
 .price-section .eye-line{background:var(--pe-blue)}

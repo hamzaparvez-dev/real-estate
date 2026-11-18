@@ -1,4 +1,4 @@
-# Prestige Enterprises website
+# Prestige Projects website
 
 Static site (no framework). English at `/`, Hindi at `/hi/`, Marathi at `/mr/`. Hosted on Vercel.
 
