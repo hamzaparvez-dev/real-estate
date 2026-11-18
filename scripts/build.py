@@ -476,6 +476,20 @@ def build_prestige_gold():
     amen_details = home_pages.amenities(ht)
     amen_gallery = home_pages.amenity_gallery(ht)
     specs = home_pages.specifications(ht)
+    rooftop = (
+        '<section class="sec pg-rooftop" id="rooftop-garden"><div class="in">'
+        + eye('ROOFTOP GARDEN') + '<h2 class="dh">Open space for <em>relaxation &amp; fitness</em></h2>'
+        '<p class="lead">A landscaped terrace with gazebos, water feature, open gym, planting beds and direct lift access — designed for everyday leisure above the city.</p>'
+        '<figure class="pg-rooftop-figure plan-img-wrap" data-full="/img/prestige-gold/rooftop-garden.webp" '
+        'data-title="Prestige Gold rooftop garden" role="button" tabindex="0" '
+        'aria-label="Prestige Gold rooftop garden — tap to enlarge">'
+        '<img src="/img/prestige-gold/rooftop-garden.webp" width="1024" height="512" loading="lazy" '
+        'alt="Prestige Gold rooftop garden with water feature, gazebos, open gym, landscaping and lift access">'
+        '<span class="plan-zoom-hint"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" '
+        'stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="11" cy="11" r="8"/>'
+        '<path d="M21 21l-4.35-4.35M11 8v6M8 11h6"/></svg><span>Tap to view</span></span></figure>'
+        '</div></section>'
+    )
     pricing = home_pages.pricing_gold(ht).replace(
         '<section class="sec price-section" id="pricing">',
         '<section class="sec price-section" id="pricing"><span id="pg-configurations" class="home-anchor" aria-hidden="true"></span><span id="commercial" class="home-anchor" aria-hidden="true"></span>',
@@ -501,7 +515,7 @@ def build_prestige_gold():
         f'<p class="pg-contact-note">{esc(gold_address)} · Mon–Sun, 10am–7pm</p>'
         '</div></section></main>'
     )
-    body = (hero + overview + amen_details + amen_gallery + specs + pricing
+    body = (hero + overview + amen_details + amen_gallery + specs + rooftop + pricing
             + location + contact)
     ld = [agent_ld('en'), breadcrumb_ld('en', [(UI['en']['home'], url('en', '/')), ('Prestige Gold', path)])]
     html = head('en', title, desc, seo_alts, '/img/prestige-tower-day.jpg', 'Prestige Gold project in Kalyan West', ld, extra=video_preconnect())
