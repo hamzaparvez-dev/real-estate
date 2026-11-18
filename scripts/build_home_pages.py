@@ -163,7 +163,7 @@ T['en'] = dict(
               ('/projects/prestige-gold/', '/img/prestige-tower-day.jpg', 1920, 1080, 'Prestige Gold residential tower in Kalyan West',
                'Prestige Gold', 'Premium living · <em>elevated in every detail</em>',
                'Reserved for those who deserve more',
-               'Special rooms with balconies and premium finishes built for families who deserve more — 1, 2 & 3 BHK plus retail and office space in the heart of Kalyan West.',
+               'Spacious rooms with balconies and premium finishes built for families who deserve more — 1, 2 & 3 BHK plus retail and office space in the heart of Kalyan West.',
                'Explore Prestige Gold')],
     amen_eye='Key selling points', amen_h='Limited units. <em>Elevated lifestyle.</em>',
     amen_lead='A premium mixed-use proposition built for lifestyle convenience and long-term investment growth.',
