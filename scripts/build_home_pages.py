@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261115-v79'
+ASSET_VER = 'prestige-home-revamp-20261115-v80'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -145,7 +145,7 @@ T['en'] = dict(
     intro=['Prestige Projects create spacious living for families who deserve more.'],
     intro_cta='Book a private viewing',
     pillars=[('crown', 'Luxury living', 'Designer lobbies, high-speed lifts and French windows and more.'),
-             ('leaf', 'For families who deserve more', 'Rooftop garden, gym, indoor games room and multipurpose hall — amenities for everyday family life.'),
+             ('leaf', 'For families who deserve more', 'Rooftop garden, outdoor gym, indoor games room and multipurpose hall — amenities for everyday family life.'),
              ('shield', 'Security systems', 'CCTV across common areas, a secured entrance gate and lifts with power backup.'),
              ('compass', 'Vastu compliant', 'Homes designed with Vastu principles, natural light, good airflow and balanced living.')],
     about_eye='Who we are', about_h='Homes built around <em>how you live</em>',
@@ -173,15 +173,15 @@ T['en'] = dict(
     feat_cards=[
         ('lift', 'High-speed lifts', 'Branded high-speed elevators with power backup for smooth vertical transit.'),
         ('star', 'Rooftop garden', 'A landscaped terrace retreat above the city for fresh air and quiet evenings.'),
-        ('club', 'Gym', 'An on-site fitness space for everyday workouts without leaving home.'),
+        ('club', 'Outdoor gym', 'An outdoor fitness space for everyday workouts without leaving home.'),
         ('cinema', 'Indoor games room', 'A dedicated indoor games room for family leisure and weekend play.'),
         ('vip', 'Multipurpose hall', 'A flexible hall for gatherings, celebrations and community events.'),
     ],
     roof_eye='Amenities', roof_h='Everyday comforts, <em>elevated living</em>',
     roof_p='Amenities redesigned around how families actually live — from high-speed lifts to rooftop leisure.',
-    roof_feats=['High-speed lifts', 'Rooftop garden', 'Gym', 'Indoor games room', 'Multipurpose hall'],
+    roof_feats=['High-speed lifts', 'Rooftop garden', 'Outdoor gym', 'Indoor games room', 'Multipurpose hall'],
     one_amen_eye='Amenities', one_amen_h='Everyday comforts, <em>a floor away</em>',
-    one_amen=['High-speed lifts', 'Rooftop garden', 'Gym', 'Indoor games room', 'Multipurpose hall'],
+    one_amen=['High-speed lifts', 'Rooftop garden', 'Outdoor gym', 'Indoor games room', 'Multipurpose hall'],
     spec_eye='Specifications & security', spec_h='Finished with care, <em>protected around the clock</em>',
     spec_h1='Specifications',
     specs=['Decorative entrance gate and designer lobby', 'Branded vitrified flooring throughout',
@@ -235,7 +235,7 @@ T['en'] = dict(
     faq_eye='FAQ', faq_h='Common <em>questions</em>',
     faq=[('Where are the residences located?', 'In Kalyan West, around Khadakpada and Godrej Hill. Our office is at Prestige One, Godrej Hill, Khadakpada, Kalyan 421301.'),
          ('Which configurations are available?', 'Prestige Gold offers 1, 2 and 3 BHK residences from ₹55 Lakh, plus commercial space. Prestige One offers only 3 & 5 BHK (Jodi) residences, shared privately on request.'),
-         ('What amenities do residents enjoy?', 'High-speed lifts, a rooftop garden, gym, indoor games room and multipurpose hall — with security and well-kept common areas throughout.'),
+         ('What amenities do residents enjoy?', 'High-speed lifts, a rooftop garden, outdoor gym, indoor games room and multipurpose hall — with security and well-kept common areas throughout.'),
          ('What security systems are in place?', 'CCTV surveillance across common areas, a secured gated entrance, well-lit common spaces and branded lifts with power backup.'),
          ('Is the project RERA registered?', f'Yes. MahaRERA registration number {RERA}. We share the registration details and documents before you book.'),
          ('How do I book a site visit?', 'Message us on WhatsApp or call +91 96895 57788. We will confirm a time that suits you and share the latest availability.')],

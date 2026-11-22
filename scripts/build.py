@@ -256,9 +256,12 @@ def nav(l, alts, solid=True):
     )
 
 
-def footer(l, alts):
+def footer(l, alts, phone_display=None, phone_tel=None, wa_href=None):
     """Sitewide footer — same structure/copy as the homepage home-footer."""
     U, h = UI[l], url(l, '/')
+    phone_display = phone_display or C.PHONE_DISPLAY
+    phone_tel = phone_tel or C.PHONE_TEL
+    wa_href = wa_href or waurl(U['wa_default'])
     lang_keys = [k for k in ('en', 'hi', 'mr') if k in alts] or list(alts)
     langs = ''.join(
         f'<a href="{alts[k]}" hreflang="{k}" lang="{k}"'
@@ -279,12 +282,12 @@ def footer(l, alts):
         f'<li><a href="/projects/prestige-gold/">Prestige Gold</a></li>'
         f'<li><a href="{h}#contact">{esc(U["nav_contact"])}</a></li></ul></div>'
         f'<div><h4>{esc(U["foot_contact"])}</h4><p><a href="{C.MAPS_URL}" target="_blank" rel="noopener">{esc(C.ADDRESS_LINE)}</a></p>'
-        f'<p><a href="tel:{C.PHONE_TEL}">{C.PHONE_DISPLAY}</a><br>'
+        f'<p><a href="tel:{phone_tel}">{phone_display}</a><br>'
         f'<a href="mailto:{C.EMAIL}">{C.EMAIL}</a></p></div></div>'
         f'<div class="foot-legal">{rera}'
         f'<p><a href="/privacy/">{esc(U["privacy"])}</a></p>'
         f'<p>{esc(U["disclaimer"])}</p><p>{esc(U["rights"])}</p></div></footer>\n'
-            f'<a class="wa" href="{waurl(U["wa_default"])}" target="_blank" rel="noopener" aria-label="{attr(U["wa_btn"])}">{I["chat"]}<span>{esc(U["float_wa"])}</span></a>\n'
+            f'<a class="wa" href="{wa_href}" target="_blank" rel="noopener" aria-label="{attr(U["wa_btn"])}">{I["chat"]}<span>{esc(U["float_wa"])}</span></a>\n'
         f'<script src="/assets/site.js?v={js_ver}" defer></script>\n</body>\n</html>\n'
     )
 
@@ -453,6 +456,11 @@ def build_home(l):
 
 # ------------------------------------------------------------------ Prestige Gold project page
 
+GOLD_PHONE_DISPLAY = '+91 84466 52600'
+GOLD_PHONE_TEL = '+918446652600'
+GOLD_WA = 'https://wa.me/918446652600'
+
+
 def build_prestige_gold():
     path = '/projects/prestige-gold/'
     nav_alts = {k: url(k, '/') for k in LANGS}
@@ -460,7 +468,7 @@ def build_prestige_gold():
     title = 'Prestige Gold | Commercial + Residential | Kalyan West'
     desc = 'Premium mixed-use project in Kalyan West. 1, 2 & 3 BHK from ₹55 Lakh; limited units; sample flat ready. Book a site visit.'
     wa_text = 'Hello, I would like to book a Prestige Gold site visit and experience the sample flat in Kalyan West.'
-    wa_link = waurl(wa_text)
+    wa_link = GOLD_WA + '?text=' + urllib.parse.quote(wa_text)
     ht = home_pages.T['en']
     hero = video_hero('Limited units. Elevated lifestyle.')
     overview = (
@@ -494,14 +502,14 @@ def build_prestige_gold():
         '<section class="sec price-section" id="pricing">',
         '<section class="sec price-section" id="pricing"><span id="pg-configurations" class="home-anchor" aria-hidden="true"></span><span id="commercial" class="home-anchor" aria-hidden="true"></span>',
         1,
-    )
+    ).replace('https://wa.me/919689557788', GOLD_WA)
     gold_address = 'Near Mahavir Jain School, Kala Talao, Kalyan West, Kalyan, Maharashtra 421301'
     location = (
         '<section class="sec pg-location"><div class="in pg-location-grid"><div>'
         + eye('LOCATION ADVANTAGE') + '<h2 class="dh">Everything you need, <em>minutes away</em></h2>'
         '<p class="lead">Prestige Gold sits in Kalyan West near Mahavir Jain School and Kala Talao — close to everyday needs and key corridors.</p>'
         f'<p class="pg-address"><b>Site address</b><br>{esc(gold_address)}</p>'
-        f'<p class="pg-address"><b>Mobile</b><br><a href="tel:{C.PHONE_TEL}">{C.PHONE_DISPLAY}</a></p>'
+        f'<p class="pg-address"><b>Mobile</b><br><a href="tel:{GOLD_PHONE_TEL}">{GOLD_PHONE_DISPLAY}</a></p>'
         '</div><div class="pg-map-card"><span>SITE VISIT</span><h3>Experience the sample flat today.</h3><p>Walk through quality, planning and finishes in person — then decide with clarity.</p>'
         f'<a class="btn-g" href="{wa_link}" target="_blank" rel="noopener">Book site visit</a></div></div></section>'
     )
@@ -511,7 +519,7 @@ def build_prestige_gold():
         '<p class="lead light">Book a guided site visit or experience the sample flat today. Our team supports buyers and investors from first enquiry to final closure.</p>'
         '<div class="pg-contact-actions">'
         f'<a class="btn-g" href="{wa_link}" target="_blank" rel="noopener"><span>Book site visit</span></a>'
-        f'<a class="btn-o" href="tel:{C.PHONE_TEL}"><span>Call {C.PHONE_DISPLAY}</span></a></div>'
+        f'<a class="btn-o" href="tel:{GOLD_PHONE_TEL}"><span>Call {GOLD_PHONE_DISPLAY}</span></a></div>'
         f'<p class="pg-contact-note">{esc(gold_address)} · Mon–Sun, 10am–7pm</p>'
         '</div></section></main>'
     )
@@ -519,7 +527,8 @@ def build_prestige_gold():
             + location + contact)
     ld = [agent_ld('en'), breadcrumb_ld('en', [(UI['en']['home'], url('en', '/')), ('Prestige Gold', path)])]
     html = head('en', title, desc, seo_alts, '/img/prestige-tower-day.jpg', 'Prestige Gold project in Kalyan West', ld, extra=video_preconnect())
-    write(path.lstrip('/') + 'index.html', html + '<body class="home-video-page has-video-hero">\n' + nav('en', nav_alts) + body + footer('en', nav_alts))
+    write(path.lstrip('/') + 'index.html', html + '<body class="home-video-page has-video-hero">\n' + nav('en', nav_alts) + body + footer(
+        'en', nav_alts, phone_display=GOLD_PHONE_DISPLAY, phone_tel=GOLD_PHONE_TEL, wa_href=wa_link))
     PAGES.append(seo_alts)
 
 
@@ -549,7 +558,8 @@ def build_prestige_one():
     one_gallery_items = [
         ('high-speed-lifts', 726, 552, 'High-speed lifts', 'Prestige One high-speed lift lobby'),
         ('rooftop-garden', 799, 552, 'Rooftop garden', 'Prestige One rooftop garden'),
-        ('gym', 508, 461, 'Gym', 'Prestige One gym'),
+        ('cctv-security', 1024, 1024, 'CCTV security system', 'Prestige One CCTV security system'),
+        ('gym', 508, 461, 'Outdoor gym', 'Prestige One outdoor gym'),
         ('indoor-games-room', 518, 461, 'Indoor games room', 'Prestige One indoor games room'),
         ('multipurpose-hall', 496, 461, 'Multipurpose hall', 'Prestige One multipurpose hall'),
     ]
@@ -567,7 +577,7 @@ def build_prestige_one():
     )
     contact = (
         '<section class="sec pg-contact" id="contact"><div class="in pg-contact-inner">'
-        + eye('CONTACT') + '<h2 class="dh light">A luxury address. <em>Ready when you are.</em></h2>'
+        + eye('CONTACT') + '<h2 class="dh light">A luxury address <em>for select few</em></h2>'
         '<p class="lead light">Book a visit or request Prestige One details privately.</p>'
         f'<div class="pg-contact-actions"><a class="btn-g" href="{wa_link}" target="_blank" rel="noopener"><span>Request details</span></a>'
         f'<a class="btn-o" href="tel:{C.PHONE_TEL}"><span>Call {C.PHONE_DISPLAY}</span></a></div>'

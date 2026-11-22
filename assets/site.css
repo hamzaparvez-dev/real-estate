@@ -2640,11 +2640,9 @@ body.home-video-page{--bronze:#A8783E;--bronze-soft:rgba(168,120,62,.16);--ink-s
 .amen-cards li{display:flex;align-items:flex-start;gap:12px;margin:0;padding:18px 16px;background:#fff;border:1px solid #E6E1D8;font:500 15px/1.45 var(--sans);color:#1C2330}
 .amen-card-icon{width:22px;height:22px;flex:none;color:var(--bronze);margin-top:1px}
 .amen-tile{margin:0;position:relative;border:3px solid var(--bronze);background:#fff;overflow:hidden}
-.po-amen-gallery .po-amen-grid{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:clamp(12px,1.8vw,20px);margin-top:clamp(28px,4vw,40px)}
-.po-amen-tile{margin:0;position:relative;border:3px solid var(--bronze);background:#0b0f14;overflow:hidden;grid-column:span 2}
-.po-amen-tile:nth-child(1),.po-amen-tile:nth-child(2){grid-column:span 3}
+.po-amen-gallery .po-amen-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.8vw,20px);margin-top:clamp(28px,4vw,40px)}
+.po-amen-tile{margin:0;position:relative;border:3px solid var(--bronze);background:#0b0f14;overflow:hidden}
 .po-amen-tile img{display:block;width:100%;height:100%;aspect-ratio:16/11;object-fit:cover}
-.po-amen-tile:nth-child(n+3) img{aspect-ratio:5/4}
 .visually-hidden{position:absolute!important;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .amen-tile img{display:block;width:100%;aspect-ratio:456/384;object-fit:cover;transition:transform .6s ease}
 .amen-tile:hover img{transform:scale(1.05)}
@@ -2749,8 +2747,6 @@ body.has-video-hero nav#nav.solid{background:rgba(10,21,37,.97)}
   .amen-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
   .amen-cards{grid-template-columns:repeat(2,minmax(0,1fr))}
   .po-amen-gallery .po-amen-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
-  .po-amen-tile,.po-amen-tile:nth-child(1),.po-amen-tile:nth-child(2),.po-amen-tile:nth-child(n+3){grid-column:span 1}
-  .po-amen-tile:nth-child(5){grid-column:1 / -1}
   .amen-feature{grid-template-columns:1fr}
   .amen-feature.is-flipped .amen-feature-media{order:0}
   .loc-grid{grid-template-columns:1fr 1fr}
@@ -2777,8 +2773,7 @@ body.has-video-hero nav#nav.solid{background:rgba(10,21,37,.97)}
   .amen-grid{gap:12px}
   .amen-cards{grid-template-columns:1fr;gap:10px}
   .po-amen-gallery .po-amen-grid{grid-template-columns:1fr;gap:12px}
-  .po-amen-tile:nth-child(5){grid-column:auto}
-  .po-amen-tile,.po-amen-tile:nth-child(1),.po-amen-tile:nth-child(2){border-width:2px}
+  .po-amen-tile{border-width:2px}
   .amen-tile{border-width:2px}
   .amen-tile figcaption{font-size:10px;letter-spacing:.12em;padding:22px 10px 10px}
   .amen-lists{grid-template-columns:1fr}
