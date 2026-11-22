@@ -256,12 +256,15 @@ def nav(l, alts, solid=True):
     )
 
 
-def footer(l, alts, phone_display=None, phone_tel=None, wa_href=None, contact_href='#contact'):
+def footer(l, alts, phone_display=None, phone_tel=None, wa_href=None, contact_href='#contact',
+           address_line=None, maps_url=None):
     """Sitewide footer — same structure/copy as the homepage home-footer."""
     U, h = UI[l], url(l, '/')
     phone_display = phone_display or C.PHONE_DISPLAY
     phone_tel = phone_tel or C.PHONE_TEL
     wa_href = wa_href or waurl(U['wa_default'])
+    address_line = address_line or C.ADDRESS_LINE
+    maps_url = maps_url or C.MAPS_URL
     lang_keys = [k for k in ('en', 'hi', 'mr') if k in alts] or list(alts)
     langs = ''.join(
         f'<a href="{alts[k]}" hreflang="{k}" lang="{k}"'
@@ -281,7 +284,7 @@ def footer(l, alts, phone_display=None, phone_tel=None, wa_href=None, contact_hr
         f'<li><a href="/projects/prestige-one/">Prestige One</a></li>'
         f'<li><a href="/projects/prestige-gold/">Prestige Gold</a></li>'
         f'<li><a href="{attr(contact_href)}">{esc(U["nav_contact"])}</a></li></ul></div>'
-        f'<div><h4>{esc(U["foot_contact"])}</h4><p><a href="{C.MAPS_URL}" target="_blank" rel="noopener">{esc(C.ADDRESS_LINE)}</a></p>'
+        f'<div><h4>{esc(U["foot_contact"])}</h4><p><a href="{attr(maps_url)}" target="_blank" rel="noopener">{esc(address_line)}</a></p>'
         f'<p><a href="tel:{phone_tel}">{phone_display}</a><br>'
         f'<a href="mailto:{C.EMAIL}">{C.EMAIL}</a></p></div></div>'
         f'<div class="foot-legal">{rera}'
@@ -504,6 +507,7 @@ def build_prestige_gold():
         1,
     ).replace('https://wa.me/919689557788', GOLD_WA)
     gold_address = 'Near Mahavir Jain School, Kala Talao, Kalyan West, Kalyan, Maharashtra 421301'
+    gold_maps = 'https://www.google.com/maps/search/?api=1&query=' + urllib.parse.quote(gold_address)
     location = (
         '<section class="sec pg-location"><div class="in pg-location-grid"><div>'
         + eye('LOCATION ADVANTAGE') + '<h2 class="dh">Everything you need, <em>minutes away</em></h2>'
@@ -529,7 +533,8 @@ def build_prestige_gold():
     ld = [agent_ld('en'), breadcrumb_ld('en', [(UI['en']['home'], url('en', '/')), ('Prestige Gold', path)])]
     html = head('en', title, desc, seo_alts, '/img/prestige-tower-day.jpg', 'Prestige Gold project in Kalyan West', ld, extra=video_preconnect())
     write(path.lstrip('/') + 'index.html', html + '<body class="home-video-page has-video-hero">\n' + nav('en', nav_alts) + body + footer(
-        'en', nav_alts, phone_display=GOLD_PHONE_DISPLAY, phone_tel=GOLD_PHONE_TEL, wa_href=wa_link, contact_href='#contact'))
+        'en', nav_alts, phone_display=GOLD_PHONE_DISPLAY, phone_tel=GOLD_PHONE_TEL, wa_href=wa_link,
+        contact_href='#contact', address_line=gold_address, maps_url=gold_maps))
     PAGES.append(seo_alts)
 
 
