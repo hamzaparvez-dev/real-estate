@@ -556,12 +556,12 @@ def build_prestige_one():
         1,
     )
     one_gallery_items = [
-        ('high-speed-lifts', 726, 552, 'High-speed lifts', 'Prestige One high-speed lift lobby'),
+        ('high-speed-lifts', 1024, 707, 'High-speed lifts', 'Prestige One high-speed lift lobby'),
         ('rooftop-garden', 799, 552, 'Rooftop garden', 'Prestige One rooftop garden'),
-        ('cctv-security', 1024, 1024, 'CCTV security system', 'Prestige One CCTV security system'),
-        ('gym', 508, 461, 'Outdoor gym', 'Prestige One outdoor gym'),
-        ('indoor-games-room', 518, 461, 'Indoor games room', 'Prestige One indoor games room'),
-        ('multipurpose-hall', 496, 461, 'Multipurpose hall', 'Prestige One multipurpose hall'),
+        ('cctv-security', 1024, 707, 'CCTV security system', 'Prestige One CCTV security system'),
+        ('gym', 1024, 707, 'Gym', 'Prestige One gym'),
+        ('indoor-games-room', 1024, 707, 'Indoor games room', 'Prestige One indoor games room'),
+        ('multipurpose-hall', 1024, 682, 'Multipurpose hall', 'Prestige One multipurpose hall'),
     ]
     one_gallery_figures = ''.join(
         f'<figure class="po-amen-tile"><img src="/img/prestige-one/gallery/{slug}.webp" width="{w}" height="{h}" '
