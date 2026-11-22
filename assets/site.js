@@ -228,8 +228,8 @@
               '<span>' + ht[1] + '</span>' + arrow +
             '</button>' +
             '<div class="mnav-home-project-list" id="mnav-home-project-list">' +
-              '<a class="mnav-home-project-link" href="/projects/prestige-gold/">PRESTIGE GOLD</a>' +
               '<a class="mnav-home-project-link" href="/projects/prestige-one/">PRESTIGE ONE</a>' +
+              '<a class="mnav-home-project-link" href="/projects/prestige-gold/">PRESTIGE GOLD</a>' +
             '</div>' +
           '</div>' +
           '<a class="mnav-home-link" href="' + homeHref + '#location"><span>' + ht[2] + '</span></a>' +
@@ -296,8 +296,8 @@
             '<span class="mnav-label">'+t.projects+'</span>'+icon('chevron','mnav-chevron')+
           '</button>'+
           '<div class="mnav-plan-sub"><div>'+
-            '<a class="mnav-plan-link" href="/projects/prestige-gold/"><span>'+t.gold+'</span>'+icon('chevron')+'</a>'+
             '<a class="mnav-plan-link" href="/projects/prestige-one/"><span>'+t.one+'</span>'+icon('chevron')+'</a>'+
+            '<a class="mnav-plan-link" href="/projects/prestige-gold/"><span>'+t.gold+'</span>'+icon('chevron')+'</a>'+
           '</div></div>'+
         '</div>'+
         item(t.location, prefix + '/#location', 'location')+
@@ -326,14 +326,14 @@
     var lang = (document.documentElement.lang || 'en').slice(0, 2).toLowerCase();
     var prefix = lang === 'en' ? '' : '/' + lang;
     var labels = lang === 'hi'
-      ? ['होम', 'प्रेस्टीज गोल्ड', 'प्रेस्टीज वन', 'लोकेशन', 'संपर्क']
+      ? ['होम', 'प्रेस्टीज वन', 'प्रेस्टीज गोल्ड', 'लोकेशन', 'संपर्क']
       : lang === 'mr'
-        ? ['मुख्यपृष्ठ', 'प्रेस्टीज गोल्ड', 'प्रेस्टीज वन', 'लोकेशन', 'संपर्क']
-        : ['Home', 'Prestige Gold', 'Prestige One', 'Location', 'Contact'];
+        ? ['मुख्यपृष्ठ', 'प्रेस्टीज वन', 'प्रेस्टीज गोल्ड', 'लोकेशन', 'संपर्क']
+        : ['Home', 'Prestige One', 'Prestige Gold', 'Location', 'Contact'];
     var links = [
       prefix + '/',
-      '/projects/prestige-gold/',
       '/projects/prestige-one/',
+      '/projects/prestige-gold/',
       prefix + '/#location',
       prefix + '/#contact'
     ];

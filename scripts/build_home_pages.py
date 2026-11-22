@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261115-v80'
+ASSET_VER = 'prestige-home-revamp-20261115-v81'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -864,8 +864,18 @@ def contact(t):
 
 def footer(l, t):
     p = PREFIX[l]
+
+    def foot_href(href):
+        if href.startswith('/projects/') or href.startswith('http'):
+            return href
+        if href.startswith('#'):
+            return (p + '/' if p else '') + href
+        if href.startswith('/'):
+            return (p + href) if p and not href.startswith(p + '/') and href != p + '/' else href
+        return p + '/' + href
+
     links = ''.join(
-        f'<li><a href="{href if href.startswith("/projects/") else p + (href if href.startswith("/") else "/" + href)}">{e(lbl)}</a></li>'
+        f'<li><a href="{foot_href(href)}">{e(lbl)}</a></li>'
         for href, lbl in t['foot_links'])
     langs = ''.join(f'<a href="{PREFIX[k]}/" hreflang="{k}" lang="{k}"' + (' aria-current="true"' if k == l else '') + f'>{n}</a>'
                     for k, n in (('en', 'English'), ('hi', 'हिन्दी'), ('mr', 'मराठी')))

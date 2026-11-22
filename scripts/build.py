@@ -256,7 +256,7 @@ def nav(l, alts, solid=True):
     )
 
 
-def footer(l, alts, phone_display=None, phone_tel=None, wa_href=None):
+def footer(l, alts, phone_display=None, phone_tel=None, wa_href=None, contact_href='#contact'):
     """Sitewide footer — same structure/copy as the homepage home-footer."""
     U, h = UI[l], url(l, '/')
     phone_display = phone_display or C.PHONE_DISPLAY
@@ -280,7 +280,7 @@ def footer(l, alts, phone_display=None, phone_tel=None, wa_href=None):
         f'<li><a href="{h}">{esc(U["home"])}</a></li>'
         f'<li><a href="/projects/prestige-one/">Prestige One</a></li>'
         f'<li><a href="/projects/prestige-gold/">Prestige Gold</a></li>'
-        f'<li><a href="{h}#contact">{esc(U["nav_contact"])}</a></li></ul></div>'
+        f'<li><a href="{attr(contact_href)}">{esc(U["nav_contact"])}</a></li></ul></div>'
         f'<div><h4>{esc(U["foot_contact"])}</h4><p><a href="{C.MAPS_URL}" target="_blank" rel="noopener">{esc(C.ADDRESS_LINE)}</a></p>'
         f'<p><a href="tel:{phone_tel}">{phone_display}</a><br>'
         f'<a href="mailto:{C.EMAIL}">{C.EMAIL}</a></p></div></div>'
@@ -523,12 +523,13 @@ def build_prestige_gold():
         f'<p class="pg-contact-note">{esc(gold_address)} · Mon–Sun, 10am–7pm</p>'
         '</div></section></main>'
     )
+    contact = contact.replace('id="pg-enquire"', 'id="contact"', 1)
     body = (hero + overview + amen_details + amen_gallery + specs + rooftop + pricing
             + location + contact)
     ld = [agent_ld('en'), breadcrumb_ld('en', [(UI['en']['home'], url('en', '/')), ('Prestige Gold', path)])]
     html = head('en', title, desc, seo_alts, '/img/prestige-tower-day.jpg', 'Prestige Gold project in Kalyan West', ld, extra=video_preconnect())
     write(path.lstrip('/') + 'index.html', html + '<body class="home-video-page has-video-hero">\n' + nav('en', nav_alts) + body + footer(
-        'en', nav_alts, phone_display=GOLD_PHONE_DISPLAY, phone_tel=GOLD_PHONE_TEL, wa_href=wa_link))
+        'en', nav_alts, phone_display=GOLD_PHONE_DISPLAY, phone_tel=GOLD_PHONE_TEL, wa_href=wa_link, contact_href='#contact'))
     PAGES.append(seo_alts)
 
 
@@ -587,7 +588,8 @@ def build_prestige_one():
     body = hero + overview + amen_gallery + pricing + contact
     ld = [{'@type': 'WebPage', 'name': 'Prestige One', 'url': C.SITE + path, 'description': desc, 'inLanguage': 'en-IN'}]
     html = head('en', title, desc, seo_alts, '/img/Prestige%20One%20Tower%20in%20Daylight.png', 'Prestige One Kalyan', ld, extra=video_preconnect())
-    write(path.lstrip('/') + 'index.html', html + '<body class="home-video-page has-video-hero">\n' + nav('en', nav_alts) + body + footer('en', nav_alts))
+    write(path.lstrip('/') + 'index.html', html + '<body class="home-video-page has-video-hero">\n' + nav('en', nav_alts) + body + footer(
+        'en', nav_alts, contact_href='#contact'))
     PAGES.append(seo_alts)
 
 
