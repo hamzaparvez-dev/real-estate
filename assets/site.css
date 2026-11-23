@@ -2117,24 +2117,6 @@ section#process.dark-bg{
 .home-passion-copy{display:flex;flex-direction:column;gap:clamp(18px,3vw,26px)}
 .home-passion-cta{margin:clamp(28px,4vw,40px) 0 0;text-align:center}
 .home-passion-cta .btn-o{letter-spacing:.14em}
-/* Inline enquiry = same centred card as the old mid-page popup (not a page section) */
-.home-enq-slot{
-  display:flex;justify-content:center;align-items:center;
-  padding:clamp(28px,5vw,48px) var(--pad);
-  background:transparent;
-}
-.home-enq-card.enq-box{
-  position:relative;width:min(100%,520px);margin:0 auto;
-  transform:none;max-height:none;overflow:visible;
-  box-shadow:0 24px 80px rgba(0,0,0,.18);
-}
-.home-enq-card .enq-eyebrow{margin-right:0}
-.home-enq-card h3{margin-right:0}
-.home-enq-form .enq-submit{margin-top:8px}
-@media(max-width:600px){
-  .home-enq-slot{padding:22px 16px 28px}
-  .home-enq-card.enq-box{width:min(92vw,420px);padding:24px 18px 18px;border-radius:14px}
-}
 .home-project-cta-wrap{margin:28px 0 0}
 .home-project-cta{
   display:inline-flex!important;min-height:54px;padding:18px 36px!important;

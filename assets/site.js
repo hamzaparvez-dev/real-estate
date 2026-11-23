@@ -573,9 +573,8 @@
     };
     modal.querySelector('.enq-close').addEventListener('click', close);
     modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
-    /* Homepage mid-page popup skipped when the inline enquiry form is already on the page. */
+    /* Homepage: show the centred enquiry popup a little earlier while scrolling (before Who we are). */
     (function () {
-      if (document.getElementById('homeEnquiryForm')) return;
       if (!document.body.classList.contains('home-video-page')) return;
       var path = (location.pathname || '/').replace(/\/+$/, '') || '/';
       if (path !== '/' && path !== '/hi' && path !== '/mr') return;
@@ -583,17 +582,21 @@
       var opened = false;
       var onScroll = function () {
         if (opened || modal.classList.contains('open')) return;
+        var y = window.scrollY || window.pageYOffset || 0;
         var max = Math.max(document.documentElement.scrollHeight - window.innerHeight, 1);
-        if ((window.scrollY || window.pageYOffset || 0) / max < 0.45) return;
+        var about = document.getElementById('about');
+        var nearAbout = about ? y + window.innerHeight * 0.55 >= about.offsetTop : false;
+        /* Earlier than before (was ~45%): ~22% of page or when approaching Who we are */
+        if (y / max < 0.22 && !nearAbout) return;
         opened = true;
         midAutoShown = true;
         window.removeEventListener('scroll', onScroll);
         var trigger = document.createElement('button');
-        trigger.setAttribute('data-enquiry-intent', 'property');
+        trigger.setAttribute('data-enquiry-intent', 'site-visit');
         openModal(trigger);
       };
       window.addEventListener('scroll', onScroll, { passive: true });
-      window.setTimeout(onScroll, 800);
+      window.setTimeout(onScroll, 600);
     })();
     document.addEventListener('keydown', function (e) {
       if (e.key === 'Escape' && modal.classList.contains('open')) close();
@@ -691,21 +694,6 @@
       e.preventDefault();
       submitEnquiryForm(form, enquiryIntent, close);
     });
-    var homeForm = document.getElementById('homeEnquiryForm');
-    if (homeForm) {
-      var homePhone = homeForm.querySelector('[name="phone"]');
-      if (homePhone) {
-        homePhone.addEventListener('input', function () {
-          this.value = this.value.replace(/\D/g, '').slice(0, 10);
-        });
-      }
-      homeForm.addEventListener('submit', function (e) {
-        e.preventDefault();
-        var intent = homeForm.getAttribute('data-enquiry-intent') || 'site-visit';
-        submitEnquiryForm(homeForm, intent);
-      });
-    }
-
     var float = document.createElement('div');
     float.className = 'floating-cta';
     float.setAttribute('aria-label', 'Quick contact actions');
