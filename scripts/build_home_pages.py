@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261123-v82'
+ASSET_VER = 'prestige-home-revamp-20261123-v83'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -154,9 +154,9 @@ T['en'] = dict(
     quote='A home is more than just a place to live. It\'s about finding the right neighbourhood, everyday convenience and a lifestyle that feels truly yours.',
     one_view_alt='Prestige One living room opening onto a balcony with riverside sunset views',
     one_poster_alt='Prestige One: One Life. One Home.',
-    enq_eye='Enquire', enq_h='Book a site visit <em>today</em>',
-    enq_lead='Share your details and our team will connect with you on WhatsApp.',
-    enq_submit='Enquire now',
+    enq_h_card='Book Site Visit. Enquire Now.',
+    enq_intro_card='Limited units available',
+    enq_submit='ENQUIRE NOW',
     projects_eye='Our projects', projects_h='Our projects are located in Kalyan West’s <em>most established neighbourhoods</em>',
     projects=[('/projects/prestige-one/', '/img/Prestige%20One%20Tower%20in%20Daylight.png', 1011, 1555, 'Prestige One residential tower in daylight, Kalyan',
                'Prestige One', 'Elite <em>3 &amp; 5 BHK (Jodi)</em> residences',
@@ -277,9 +277,9 @@ T['hi'] = dict(
     quote='घर सिर्फ़ रहने की जगह नहीं है। सही पड़ोस, रोज़मर्रा की सुविधा और ऐसी जीवनशैली जो सच में आपकी लगे — यही मायने रखता है।',
     one_view_alt='Prestige One का लिविंग रूम, बालकनी से नदी किनारे सूर्यास्त का नज़ारा',
     one_poster_alt='Prestige One: One Life. One Home.',
-    enq_eye='पूछताछ', enq_h='आज ही <em>साइट विज़िट बुक करें</em>',
-    enq_lead='अपना विवरण साझा करें — हमारी टीम WhatsApp पर आपसे जुड़ जाएगी।',
-    enq_submit='पूछताछ करें',
+    enq_h_card='Book Site Visit. Enquire Now.',
+    enq_intro_card='Limited units available',
+    enq_submit='ENQUIRE NOW',
     projects_eye='हमारे प्रोजेक्ट्स', projects_h='हमारे प्रोजेक्ट्स कल्याण वेस्ट के <em>सबसे स्थापित पड़ोस</em> में हैं',
     projects=[('/projects/prestige-one/', '/img/Prestige%20One%20Tower%20in%20Daylight.png', 1011, 1555, 'कल्याण में Prestige One आवासीय टावर',
                'Prestige One', 'एलीट <em>3 और 5 BHK (Jodi)</em> घर',
@@ -403,9 +403,9 @@ T['mr'] = dict(
     quote='घर हे फक्त राहण्याचे ठिकाण नाही. योग्य शेजार, रोजची सोय आणि तुमचीच वाटणारी जीवनशैली — यातच खरी किंमत आहे.',
     one_view_alt='Prestige One ची लिव्हिंग रूम, बाल्कनीतून नदीकाठचा सूर्यास्त',
     one_poster_alt='Prestige One: One Life. One Home.',
-    enq_eye='चौकशी', enq_h='आजच <em>साइट व्हिजिट बुक करा</em>',
-    enq_lead='तुमचे तपशील शेअर करा — आमची टीम WhatsApp वर तुमच्याशी संपर्क साधेल.',
-    enq_submit='चौकशी करा',
+    enq_h_card='Book Site Visit. Enquire Now.',
+    enq_intro_card='Limited units available',
+    enq_submit='ENQUIRE NOW',
     projects_eye='आमचे प्रकल्प', projects_h='आमचे प्रकल्प कल्याण वेस्टमधील <em>सर्वात प्रस्थापित परिसरात</em> आहेत',
     projects=[('/projects/prestige-one/', '/img/Prestige%20One%20Tower%20in%20Daylight.png', 1011, 1555, 'कल्याणमधील Prestige One निवासी टॉवर',
                'Prestige One', 'एलीट <em>3 आणि 5 BHK (Jodi)</em> घरे',
@@ -596,12 +596,13 @@ def intro(t):
 
 
 def enquiry(t):
+    """Inline centre card (same look as the previous mid-page popup) — not a page section."""
     return (
-        '<section class="sec home-enquiry" id="enquiry" aria-labelledby="home-enq-title">'
-        '<div class="in home-enquiry-in">'
-        f'{eye(t["enq_eye"])}'
-        f'<h2 class="dh" id="home-enq-title">{t["enq_h"]}</h2>'
-        f'<p class="lead home-enquiry-lead">{e(t["enq_lead"])}</p>'
+        '<div class="home-enq-slot" id="enquiry">'
+        '<div class="enq-box home-enq-card" role="region" aria-labelledby="home-enq-title" aria-describedby="home-enq-intro">'
+        '<div class="enq-eyebrow">EXPERIENCE THE SAMPLE FLAT TODAY</div>'
+        f'<h3 id="home-enq-title">{e(t["enq_h_card"])}</h3>'
+        f'<p id="home-enq-intro">{e(t["enq_intro_card"])}</p>'
         '<form class="enq-form home-enq-form" id="homeEnquiryForm" data-enquiry-intent="site-visit" novalidate>'
         '<div class="enq-fields">'
         '<label class="enq-field">Full Name <span>*</span><input name="name" autocomplete="name" placeholder="Enter your name" required minlength="2"></label>'
@@ -611,8 +612,8 @@ def enquiry(t):
         '</div>'
         '<div class="enq-honeypot" aria-hidden="true"><label>Leave this field empty<input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>'
         '<p class="enq-error" role="alert" aria-live="polite"></p>'
-        f'<button class="enq-submit" type="submit">{e(t["enq_submit"])}</button>'
-        '</form></div></section>\n'
+        '<button class="enq-submit" type="submit">ENQUIRE NOW</button>'
+        '</form></div></div>\n'
     )
 
 
