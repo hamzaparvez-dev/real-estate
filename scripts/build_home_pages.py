@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261123-v85'
+ASSET_VER = 'prestige-home-revamp-20261123-v86'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -635,9 +635,6 @@ def projects(t):
             f'<p class="project-sell">{e(sell)}</p><p class="lead">{e(lead)}</p>'
             f'<p class="home-project-cta-wrap"><a class="btn-g home-project-cta" href="{href}"><span>{e(btn)}</span>{icon("arrow")}</a></p></div></div>'
         )
-        if is_one:
-            poster = f'/img/prestige-one/one-life-one-home.webp?v={ASSET_VER}'
-            band += f'<div class="in project-banner">{zoom_img(poster, 1024, 512, t["one_poster_alt"], t, "project-banner-media")}</div>'
         band += '</div>'
         if is_one:
             one_rows += band
