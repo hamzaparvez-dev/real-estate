@@ -108,10 +108,13 @@
       heroVideo.setAttribute('webkit-playsinline', '');
       heroVideo.setAttribute('autoplay', '');
       heroVideo.setAttribute('preload', 'auto');
+      heroVideo.setAttribute('controlsList', 'nodownload nofullscreen noremoteplayback');
       heroVideo.setAttribute('disablepictureinpicture', '');
       heroVideo.setAttribute('disableremoteplayback', '');
       heroVideo.setAttribute('x-webkit-airplay', 'deny');
       if (heroVideo.disableRemotePlayback !== undefined) heroVideo.disableRemotePlayback = true;
+      /* Never show native media UI / center play on iPhone */
+      try { heroVideo.setAttribute('controlslist', 'nodownload nofullscreen noremoteplayback'); } catch (ignore) {}
 
       var markPlaying = function () {
         heroVideo.classList.add('is-playing');
@@ -570,8 +573,9 @@
     };
     modal.querySelector('.enq-close').addEventListener('click', close);
     modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
-    /* Homepage only: open enquiry once when the visitor reaches mid-page; X dismisses for this session. */
+    /* Homepage mid-page popup skipped when the inline enquiry form is already on the page. */
     (function () {
+      if (document.getElementById('homeEnquiryForm')) return;
       if (!document.body.classList.contains('home-video-page')) return;
       var path = (location.pathname || '/').replace(/\/+$/, '') || '/';
       if (path !== '/' && path !== '/hi' && path !== '/mr') return;
@@ -604,19 +608,33 @@
     form.querySelector('[name="phone"]').addEventListener('input', function () {
       this.value = this.value.replace(/\D/g, '').slice(0, 10);
     });
-    form.addEventListener('submit', function (e) {
-      e.preventDefault();
-      var error = form.querySelector('.enq-error');
-      error.textContent = '';
-      if (!form.reportValidity()) return;
-      var data = new FormData(form);
-      var phone = String(data.get('phone') || '').replace(/\D/g, '');
-      if (!/^[6-9][0-9]{9}$/.test(phone)) {
-        error.textContent = 'Please enter a valid 10-digit Indian mobile number.';
-        form.querySelector('[name="phone"]').focus();
+    var isTouchIOS = function () {
+      return /iP(hone|od|ad)/.test(navigator.userAgent || '') ||
+        (navigator.platform === 'MacIntel' && (navigator.maxTouchPoints || 0) > 1);
+    };
+    var openWhatsApp = function (url) {
+      /* iOS Safari often blocks or errors on window.open → about:blank handoff */
+      if (isTouchIOS()) {
+        window.location.assign(url);
         return;
       }
-      var copy = intentCopy(enquiryIntent);
+      var waWindow = window.open(url, '_blank', 'noopener,noreferrer');
+      if (!waWindow) window.location.assign(url);
+      else try { waWindow.opener = null; } catch (ignore) {}
+    };
+    var submitEnquiryForm = function (activeForm, intent, onSuccess) {
+      var error = activeForm.querySelector('.enq-error');
+      if (error) error.textContent = '';
+      if (!activeForm.reportValidity()) return;
+      var data = new FormData(activeForm);
+      var phone = String(data.get('phone') || '').replace(/\D/g, '');
+      if (!/^[6-9][0-9]{9}$/.test(phone)) {
+        if (error) error.textContent = 'Please enter a valid 10-digit Indian mobile number.';
+        var phoneField = activeForm.querySelector('[name="phone"]');
+        if (phoneField) phoneField.focus();
+        return;
+      }
+      var copy = intentCopy(intent);
       var lines = [
         'Hello Prestige Projects, I would like to ' + copy.line,
         '',
@@ -625,27 +643,24 @@
         'Configuration: ' + data.get('configuration'),
         'Purpose: ' + (data.get('purpose') || 'Not specified')
       ];
-      var url = WA + '?text=' + encodeURIComponent(lines.join('\\n'));
+      var url = WA + '?text=' + encodeURIComponent(lines.join('\n'));
       var payload = {
         name: String(data.get('name') || '').trim(),
         phone: phone,
         configuration: String(data.get('configuration') || ''),
         purpose: String(data.get('purpose') || ''),
-        intent: enquiryIntent,
+        intent: intent,
         message: '',
         source: location.pathname,
         marketingConsent: false,
         website: String(data.get('website') || '')
       };
-      var submitButton = form.querySelector('.enq-submit');
-      var originalLabel = submitButton.textContent;
-      var isDownload = !!DOWNLOADS[enquiryIntent];
-      submitButton.disabled = true;
-      submitButton.textContent = isDownload ? 'PREPARING DOWNLOAD…' : 'SAVING ENQUIRY…';
-      var waWindow = null;
-      if (!isDownload) {
-        waWindow = window.open('about:blank', '_blank');
-        if (waWindow) waWindow.opener = null;
+      var submitButton = activeForm.querySelector('.enq-submit');
+      var originalLabel = submitButton ? submitButton.textContent : '';
+      var isDownload = !!DOWNLOADS[intent];
+      if (submitButton) {
+        submitButton.disabled = true;
+        submitButton.textContent = isDownload ? 'PREPARING DOWNLOAD…' : 'SAVING ENQUIRY…';
       }
       fetch('/api/enquiries', {
         method: 'POST',
@@ -658,22 +673,38 @@
           return body;
         });
       }).then(function () {
-        if (isDownload) downloadFile(DOWNLOADS[enquiryIntent]);
+        if (isDownload) downloadFile(DOWNLOADS[intent]);
         rememberMidDismiss();
-        close();
-        form.reset();
-        if (!isDownload) {
-          if (waWindow) waWindow.location.href = url;
-          else window.location.href = url;
-        }
+        if (typeof onSuccess === 'function') onSuccess();
+        activeForm.reset();
+        if (!isDownload) openWhatsApp(url);
       }).catch(function (err) {
-        if (waWindow) waWindow.close();
-        error.textContent = err.message || 'We could not save your enquiry. Please try again.';
+        if (error) error.textContent = err.message || 'We could not save your enquiry. Please try again.';
       }).finally(function () {
-        submitButton.disabled = false;
-        submitButton.textContent = originalLabel;
+        if (submitButton) {
+          submitButton.disabled = false;
+          submitButton.textContent = originalLabel;
+        }
       });
+    };
+    form.addEventListener('submit', function (e) {
+      e.preventDefault();
+      submitEnquiryForm(form, enquiryIntent, close);
     });
+    var homeForm = document.getElementById('homeEnquiryForm');
+    if (homeForm) {
+      var homePhone = homeForm.querySelector('[name="phone"]');
+      if (homePhone) {
+        homePhone.addEventListener('input', function () {
+          this.value = this.value.replace(/\D/g, '').slice(0, 10);
+        });
+      }
+      homeForm.addEventListener('submit', function (e) {
+        e.preventDefault();
+        var intent = homeForm.getAttribute('data-enquiry-intent') || 'site-visit';
+        submitEnquiryForm(homeForm, intent);
+      });
+    }
 
     var float = document.createElement('div');
     float.className = 'floating-cta';
@@ -698,6 +729,18 @@
     document.addEventListener('click', function (e) {
       var el = e.target && e.target.closest ? e.target.closest('a,button') : null;
       if (!el || modal.contains(el) || el.classList.contains('f-enq') || el.classList.contains('enquire-trigger')) return;
+      if (el.closest && el.closest('#homeEnquiryForm')) return;
+      if (el.classList.contains('home-project-cta') || el.classList.contains('nav-item') || el.classList.contains('mnav-item')) return;
+      var href = (el.getAttribute && el.getAttribute('href')) || '';
+      if (href && href !== '#' && href.indexOf('wa.me') === -1 && href.indexOf('javascript:') !== 0) {
+        /* Let real page/nav links navigate — do not intercept Visit Prestige / footer links */
+        var labelCheck = (el.textContent || el.getAttribute('aria-label') || '').trim().toLowerCase();
+        if (labelCheck.indexOf('visit prestige') !== -1) return;
+        if (href.charAt(0) === '/' || href.indexOf('http') === 0 || href.indexOf('tel:') === 0 || href.indexOf('mailto:') === 0) {
+          if (labelCheck.indexOf('enquire') === -1 && labelCheck.indexOf('enquiry') === -1 && labelCheck.indexOf('request details') === -1) return;
+          /* Anchored enquiry CTAs that also have href: open modal instead of navigating away */
+        }
+      }
       var label = (el.textContent || el.getAttribute('aria-label') || '').trim().toLowerCase();
       if (label.indexOf('enquire') === -1 && label.indexOf('enquiry') === -1 && label.indexOf('request details') === -1) return;
       e.preventDefault();
@@ -709,6 +752,32 @@
       if (context && details && !details.value) details.value = 'I am enquiring about: ' + context;
       openModal(el);
     });
+  })();
+
+  /* Reliable mobile taps for iPhone/Android — avoid 300ms delay ghosts and iOS popup errors. */
+  (function () {
+    var isIOS = /iP(hone|od|ad)/.test(navigator.userAgent || '') ||
+      (navigator.platform === 'MacIntel' && (navigator.maxTouchPoints || 0) > 1);
+    document.querySelectorAll('a[href],button,.nav-ham,.nav-dd-btn,.home-project-cta').forEach(function (el) {
+      el.style.touchAction = 'manipulation';
+      el.style.webkitTapHighlightColor = 'rgba(205,47,42,0.12)';
+      el.style.cursor = 'pointer';
+    });
+    /* WhatsApp / external: on iOS use same-tab assign to avoid “cannot open page” popup errors */
+    document.addEventListener('click', function (e) {
+      var el = e.target && e.target.closest ? e.target.closest('a[href]') : null;
+      if (!el || e.defaultPrevented) return;
+      if (el.closest && (el.closest('.enq-modal') || el.closest('#homeEnquiryForm'))) return;
+      var href = el.getAttribute('href') || '';
+      if (!href || href === '#' || href.charAt(0) === '#') return;
+      var isWa = href.indexOf('wa.me') !== -1 || href.indexOf('api.whatsapp.com') !== -1;
+      var isExternal = /^https?:\/\//i.test(href) && href.indexOf(location.host) === -1;
+      if (!(isWa || (isExternal && el.getAttribute('target') === '_blank'))) return;
+      if (!isIOS && !isWa) return;
+      e.preventDefault();
+      e.stopPropagation();
+      window.location.assign(href);
+    }, true);
   })();
   /* Topic-specific editorial photography for every guide card and article hero. */
   (function () {

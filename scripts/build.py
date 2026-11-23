@@ -830,10 +830,8 @@ def main():
     for d in ('en', 'hi', 'mr', 'areas', 'blog'):  # generated trees (old Spanish site included)
         shutil.rmtree(os.path.join(ROOT, d), ignore_errors=True)
     for l in LANGS:
-        if l == 'en':
-            build_home_en_video()
-        else:
-            build_home(l)
+        # Canonical homepage generator (EN/HI/MR) — do not use legacy build_home / build_home_en_video
+        home_pages.build(l)
         build_hub(l)
         for s in CITY_SLUGS:
             build_city(l, s)

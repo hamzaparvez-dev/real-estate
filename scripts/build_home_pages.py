@@ -16,7 +16,7 @@ import posts_hi
 import posts_mr
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261115-v81'
+ASSET_VER = 'prestige-home-revamp-20261123-v82'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -150,21 +150,24 @@ T['en'] = dict(
              ('compass', 'Vastu compliant', 'Homes designed with Vastu principles, natural light, good airflow and balanced living.')],
     about_eye='Who we are', about_h='Homes built around <em>how you live</em>',
     about=['Our projects are situated in the most established locations in Kalyan West, offering a friendly and convenient neighbourhood. Surrounded by tree-lined surroundings and well-connected roads, with hospitals and shopping destinations nearby, our homes make everyday living comfortable and hassle-free.'],
-    about_alt='Prestige Gold residential tower in Kalyan West',
+    about_alt='Prestige One living room opening onto a balcony with riverside sunset views',
     quote='A home is more than just a place to live. It\'s about finding the right neighbourhood, everyday convenience and a lifestyle that feels truly yours.',
     one_view_alt='Prestige One living room opening onto a balcony with riverside sunset views',
     one_poster_alt='Prestige One: One Life. One Home.',
+    enq_eye='Enquire', enq_h='Book a site visit <em>today</em>',
+    enq_lead='Share your details and our team will connect with you on WhatsApp.',
+    enq_submit='Enquire now',
     projects_eye='Our projects', projects_h='Our projects are located in Kalyan West’s <em>most established neighbourhoods</em>',
     projects=[('/projects/prestige-one/', '/img/Prestige%20One%20Tower%20in%20Daylight.png', 1011, 1555, 'Prestige One residential tower in daylight, Kalyan',
                'Prestige One', 'Elite <em>3 &amp; 5 BHK (Jodi)</em> residences',
                'Reserved for those who deserve more',
                'Spacious rooms with balconies and premium finishes built for families who deserve more — Elite 3 & 5 BHK (Jodi).',
-               'Explore Prestige One'),
+               'Visit Prestige One'),
               ('/projects/prestige-gold/', '/img/prestige-tower-day.jpg', 1920, 1080, 'Prestige Gold residential tower in Kalyan West',
                'Prestige Gold', 'Premium living · <em>elevated in every detail</em>',
                'Reserved for those who deserve more',
                'Spacious rooms with balconies and premium finishes built for families who deserve more — 1, 2 & 3 BHK plus retail and office space.',
-               'Explore Prestige Gold')],
+               'Visit Prestige Gold')],
     amen_eye='Key selling points', amen_h='Limited units. <em>Elevated lifestyle.</em>',
     amen_lead='A premium mixed-use proposition built for lifestyle convenience and long-term investment growth.',
     amen_gallery_h='Premium amenities, <em>everyday leisure</em>',
@@ -252,7 +255,7 @@ T['en'] = dict(
     foot_explore='Explore', foot_projects='Projects', foot_contact='Contact',
     foot_links=[('/', 'Home'), ('/projects/prestige-one/', 'Prestige One'), ('/projects/prestige-gold/', 'Prestige Gold'), ('#contact', 'Contact')],
     privacy='Privacy Policy', rera_verified='Verified & Registered',
-    disclaimer='Images are artistic impressions for representation only. Amenities, specifications, prices and distances are indicative and may change; confirm current details in writing before booking.',
+    disclaimer='Images are artistic impressions for representation only. Amenities, specifications, prices and distances are indicative and may change.',
     rights='© 2026 Prestige Projects. All rights reserved.',
     float_wa='WhatsApp',
 )
@@ -270,21 +273,24 @@ T['hi'] = dict(
              ('compass', 'वास्तु अनुरूप', 'आठ-दिशा वास्तु कम्पास के साथ रोशनी, हवा और संतुलित जीवन के लिए बने घर।')],
     about_eye='हमारे बारे में', about_h='आपकी जीवनशैली के <em>अनुरूप घर</em>',
     about=['हमारे प्रोजेक्ट्स कल्याण वेस्ट की सबसे स्थापित लोकेशन पर हैं — दोस्ताना और सुविधाजनक पड़ोस में। पेड़ों से घिरी सड़कें, अच्छी कनेक्टिविटी, और पास में अस्पताल व शॉपिंग डेस्टिनेशन — ताकि रोज़मर्रा की ज़िंदगी आरामदायक और बिना झंझट के रहे।'],
-    about_alt='कल्याण वेस्ट में Prestige Gold आवासीय टावर',
+    about_alt='Prestige One का लिविंग रूम, बालकनी से नदी किनारे सूर्यास्त का नज़ारा',
     quote='घर सिर्फ़ रहने की जगह नहीं है। सही पड़ोस, रोज़मर्रा की सुविधा और ऐसी जीवनशैली जो सच में आपकी लगे — यही मायने रखता है।',
     one_view_alt='Prestige One का लिविंग रूम, बालकनी से नदी किनारे सूर्यास्त का नज़ारा',
     one_poster_alt='Prestige One: One Life. One Home.',
+    enq_eye='पूछताछ', enq_h='आज ही <em>साइट विज़िट बुक करें</em>',
+    enq_lead='अपना विवरण साझा करें — हमारी टीम WhatsApp पर आपसे जुड़ जाएगी।',
+    enq_submit='पूछताछ करें',
     projects_eye='हमारे प्रोजेक्ट्स', projects_h='हमारे प्रोजेक्ट्स कल्याण वेस्ट के <em>सबसे स्थापित पड़ोस</em> में हैं',
     projects=[('/projects/prestige-one/', '/img/Prestige%20One%20Tower%20in%20Daylight.png', 1011, 1555, 'कल्याण में Prestige One आवासीय टावर',
                'Prestige One', 'एलीट <em>3 और 5 BHK (Jodi)</em> घर',
                'Reserved for those who deserve more',
                'बालकनी वाले विशाल कमरे और प्रीमियम फ़िनिश — उन परिवारों के लिए जो अधिक के हक़दार हैं। एलीट 3 और 5 BHK (Jodi) गोदरेज हिल पर, लेआउट और कीमत गंभीर खरीदारों के साथ निजी तौर पर।',
-               'Prestige One देखें'),
+               'Visit Prestige One'),
               ('/projects/prestige-gold/', '/img/prestige-tower-day.jpg', 1920, 1080, 'कल्याण वेस्ट में Prestige Gold आवासीय टावर',
                'Prestige Gold', 'प्रीमियम जीवन · <em>हर डिटेल में ऊँचा</em>',
                'Reserved for those who deserve more',
                'बालकनी वाले विशेष कमरे और प्रीमियम फ़िनिश — उन परिवारों के लिए जो अधिक के हक़दार हैं। 1, 2 और 3 BHK साथ रिटेल व ऑफिस, कल्याण वेस्ट के दिल में।',
-               'Prestige Gold देखें')],
+               'Visit Prestige Gold')],
     amen_eye='सुविधाएँ', amen_h='आराम, सेहत और खेल, <em>घर के पास ही</em>',
     amen_lead='सुकून भरी सुबह, सक्रिय शाम और परिवार के साथ वीकेंड के लिए बनाई गई जगहें, सब कुछ सोसाइटी के भीतर।',
     amen_gallery_h='पूरी जीवनशैली, <em>दरवाज़े से कुछ कदम पर</em>',
@@ -375,7 +381,7 @@ T['hi'] = dict(
     foot_explore='देखें', foot_projects='प्रोजेक्ट्स', foot_contact='संपर्क',
     foot_links=[('/', 'होम'), ('/projects/prestige-one/', 'Prestige One'), ('/projects/prestige-gold/', 'Prestige Gold'), ('#contact', 'संपर्क')],
     privacy='गोपनीयता नीति', rera_verified='सत्यापित और पंजीकृत',
-    disclaimer='तस्वीरें केवल प्रस्तुति के लिए कलात्मक चित्रण हैं। सुविधाएँ, स्पेसिफ़िकेशन, कीमतें और दूरियाँ सांकेतिक हैं और बदल सकती हैं; बुकिंग से पहले लिखित में पुष्टि करें।',
+    disclaimer='तस्वीरें केवल प्रस्तुति के लिए कलात्मक चित्रण हैं। सुविधाएँ, स्पेसिफ़िकेशन, कीमतें और दूरियाँ सांकेतिक हैं और बदल सकती हैं।',
     rights='© 2026 Prestige Projects. सर्वाधिकार सुरक्षित।',
     float_wa='WhatsApp',
 )
@@ -393,21 +399,24 @@ T['mr'] = dict(
              ('compass', 'वास्तु अनुरूप', 'आठ-दिशा वास्तु कंपाससह प्रकाश, हवा आणि संतुलित जीवनासाठी घरे.')],
     about_eye='आमच्याबद्दल', about_h='तुमच्या जीवनशैलीला <em>साजेशी घरे</em>',
     about=['आमचे प्रकल्प कल्याण वेस्टमधील सर्वात प्रस्थापित ठिकाणी आहेत — मैत्रीपूर्ण आणि सोयीस्कर परिसरात. झाडांनी वेढलेल्या रस्त्यांभोवती, चांगल्या कनेक्टिव्हिटीसह, जवळच रुग्णालये आणि शॉपिंग डेस्टिनेशन्स — जेणेकरून रोजचे जीवन आरामदायी आणि त्रासमुक्त राहील.'],
-    about_alt='कल्याण वेस्टमधील Prestige Gold निवासी टॉवर',
+    about_alt='Prestige One ची लिव्हिंग रूम, बाल्कनीतून नदीकाठचा सूर्यास्त',
     quote='घर हे फक्त राहण्याचे ठिकाण नाही. योग्य शेजार, रोजची सोय आणि तुमचीच वाटणारी जीवनशैली — यातच खरी किंमत आहे.',
     one_view_alt='Prestige One ची लिव्हिंग रूम, बाल्कनीतून नदीकाठचा सूर्यास्त',
     one_poster_alt='Prestige One: One Life. One Home.',
+    enq_eye='चौकशी', enq_h='आजच <em>साइट व्हिजिट बुक करा</em>',
+    enq_lead='तुमचे तपशील शेअर करा — आमची टीम WhatsApp वर तुमच्याशी संपर्क साधेल.',
+    enq_submit='चौकशी करा',
     projects_eye='आमचे प्रकल्प', projects_h='आमचे प्रकल्प कल्याण वेस्टमधील <em>सर्वात प्रस्थापित परिसरात</em> आहेत',
     projects=[('/projects/prestige-one/', '/img/Prestige%20One%20Tower%20in%20Daylight.png', 1011, 1555, 'कल्याणमधील Prestige One निवासी टॉवर',
                'Prestige One', 'एलीट <em>3 आणि 5 BHK (Jodi)</em> घरे',
                'Reserved for those who deserve more',
                'बाल्कनी असलेल्या प्रशस्त खोल्या आणि प्रीमियम फिनिश — ज्या कुटुंबांना अधिक हवे आहे त्यांच्यासाठी. एलीट 3 आणि 5 BHK (Jodi) गोदरेज हिलवर, लेआउट आणि किंमत गंभीर खरेदीदारांसोबत खासगीरीत्या.',
-               'Prestige One पाहा'),
+               'Visit Prestige One'),
               ('/projects/prestige-gold/', '/img/prestige-tower-day.jpg', 1920, 1080, 'कल्याण वेस्टमधील Prestige Gold निवासी टॉवर',
                'Prestige Gold', 'प्रीमियम जीवन · <em>प्रत्येक डिटेलमध्ये उन्नत</em>',
                'Reserved for those who deserve more',
                'बाल्कनी असलेल्या विशेष खोल्या आणि प्रीमियम फिनिश — ज्या कुटुंबांना अधिक हवे आहे त्यांच्यासाठी. 1, 2 आणि 3 BHK सोबत रिटेल व ऑफिस, कल्याण वेस्टच्या हृदयात.',
-               'Prestige Gold पाहा')],
+               'Visit Prestige Gold')],
     amen_eye='सुविधा', amen_h='विश्रांती, आरोग्य आणि खेळ, <em>घराजवळच</em>',
     amen_lead='निवांत सकाळ, उत्साही संध्याकाळ आणि कुटुंबासोबतच्या वीकेंडसाठी तयार केलेल्या जागा, सर्व काही सोसायटीच्या आत.',
     amen_gallery_h='पूर्ण जीवनशैली, <em>दारापासून काही पावलांवर</em>',
@@ -498,7 +507,7 @@ T['mr'] = dict(
     foot_explore='पाहा', foot_projects='प्रकल्प', foot_contact='संपर्क',
     foot_links=[('/', 'होम'), ('/projects/prestige-one/', 'Prestige One'), ('/projects/prestige-gold/', 'Prestige Gold'), ('#contact', 'संपर्क')],
     privacy='गोपनीयता धोरण', rera_verified='सत्यापित आणि नोंदणीकृत',
-    disclaimer='चित्रे केवळ सादरीकरणासाठी कलात्मक प्रतिमा आहेत. सुविधा, स्पेसिफिकेशन, किंमती आणि अंतरे सूचक असून बदलू शकतात; बुकिंगपूर्वी लेखी खात्री करा.',
+    disclaimer='चित्रे केवळ सादरीकरणासाठी कलात्मक प्रतिमा आहेत. सुविधा, स्पेसिफिकेशन, किंमती आणि अंतरे सूचक असून बदलू शकतात.',
     rights='© 2026 Prestige Projects. सर्व हक्क राखीव.',
     float_wa='WhatsApp',
 )
@@ -566,7 +575,7 @@ def nav(l, t):
 def hero(t):
     return (
         f'<main id="main"><section id="home" class="hero hero-video-hero site-video-hero" aria-label="{a(t["hero_label"])}">\n'
-        f'  <video class="hero-video" id="heroVideo" src="{VIDEO}" autoplay muted loop playsinline webkit-playsinline preload="auto" disablepictureinpicture disableremoteplayback x-webkit-airplay="deny" aria-hidden="true" tabindex="-1"></video>\n'
+        f'  <video class="hero-video" id="heroVideo" src="{VIDEO}" autoplay muted loop playsinline webkit-playsinline preload="auto" controlsList="nodownload nofullscreen noremoteplayback" disablepictureinpicture disableremoteplayback x-webkit-airplay="deny" aria-hidden="true" tabindex="-1"></video>\n'
         '  <div class="hero-video-shade" aria-hidden="true"></div>\n</section>\n'
     )
 
@@ -586,6 +595,27 @@ def intro(t):
     )
 
 
+def enquiry(t):
+    return (
+        '<section class="sec home-enquiry" id="enquiry" aria-labelledby="home-enq-title">'
+        '<div class="in home-enquiry-in">'
+        f'{eye(t["enq_eye"])}'
+        f'<h2 class="dh" id="home-enq-title">{t["enq_h"]}</h2>'
+        f'<p class="lead home-enquiry-lead">{e(t["enq_lead"])}</p>'
+        '<form class="enq-form home-enq-form" id="homeEnquiryForm" data-enquiry-intent="site-visit" novalidate>'
+        '<div class="enq-fields">'
+        '<label class="enq-field">Full Name <span>*</span><input name="name" autocomplete="name" placeholder="Enter your name" required minlength="2"></label>'
+        '<label class="enq-field">Phone Number <span>*</span><input name="phone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="Enter your phone number" required pattern="[6-9][0-9]{9}" maxlength="10"></label>'
+        '<label class="enq-field">Select Configuration <span>*</span><select name="configuration" required><option value="">Select</option><option>1BHK</option><option>2BHK</option><option>3BHK</option><option>4BHK</option><option>5BHK</option><option>Commercial</option></select></label>'
+        '<label class="enq-field">Purpose <select name="purpose"><option value="">Select</option><option>Self Use / End-Use</option><option>Investment / Rental</option><option>First Home</option><option>Upgrade</option></select></label>'
+        '</div>'
+        '<div class="enq-honeypot" aria-hidden="true"><label>Leave this field empty<input name="website" type="text" tabindex="-1" autocomplete="off"></label></div>'
+        '<p class="enq-error" role="alert" aria-live="polite"></p>'
+        f'<button class="enq-submit" type="submit">{e(t["enq_submit"])}</button>'
+        '</form></div></section>\n'
+    )
+
+
 def about(t):
     body = ''.join(f'<p>{e(x)}</p>' for x in t['about'])
     quote = t.get('quote') or ''
@@ -596,7 +626,7 @@ def about(t):
     return (
         '<section class="sec home-about" id="about"><div class="in about-grid"><div>'
         f'{eye(t["about_eye"])}<h2 class="dh">{t["about_h"]}</h2><div class="about-body" style="margin-top:30px">{body}</div></div>'
-        f'<div><div class="about-photo"><img src="/img/about.jpg" width="900" height="1125" loading="lazy" alt="{a(t["about_alt"])}"></div>'
+        f'<div><div class="about-photo about-photo-wide"><img src="/img/about.jpg?v={ASSET_VER}" width="1024" height="512" loading="lazy" alt="{a(t["about_alt"])}"></div>'
         f'{quote_html}</div></div></section>\n'
     )
 
@@ -634,7 +664,7 @@ def projects(t):
             f'<div class="in project-showcase-grid home-project{flip}">{media}'
             f'<div class="project-showcase-copy">{eye(name)}<h3 class="dh">{title}</h3>'
             f'<p class="project-sell">{e(sell)}</p><p class="lead">{e(lead)}</p>{inline}'
-            f'<a class="btn-o dark" href="{href}"><span>{e(btn)}</span>{icon("arrow")}</a></div></div>'
+            f'<p class="home-project-cta-wrap"><a class="btn-g home-project-cta" href="{href}"><span>{e(btn)}</span>{icon("arrow")}</a></p></div></div>'
         )
         if is_one:
             poster = f'/img/prestige-one/one-life-one-home.webp?v={ASSET_VER}'
@@ -895,9 +925,11 @@ def footer(l, t):
 
 def build(l):
     t = T[l]
-    page = (head(l, t) + nav(l, t) + hero(t) + intro(t) + about(t) + projects(t)
+    page = (head(l, t) + nav(l, t) + hero(t) + intro(t) + enquiry(t) + about(t) + projects(t)
             + location(t) + faq(t) + guides(t, l) + contact(t) + footer(l, t))
-    out = os.path.join(ROOT, PREFIX[l].lstrip('/'), 'index.html')
+    out_dir = os.path.join(ROOT, PREFIX[l].lstrip('/')) if PREFIX[l] else ROOT
+    os.makedirs(out_dir, exist_ok=True)
+    out = os.path.join(out_dir, 'index.html')
     with open(out, 'w', encoding='utf-8') as f:
         f.write(page)
     print('wrote', os.path.relpath(out, ROOT), len(page))
