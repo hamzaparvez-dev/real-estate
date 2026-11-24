@@ -14,9 +14,10 @@ sys.path.insert(0, os.path.join(ROOT, 'scripts'))
 import posts_en
 import posts_hi
 import posts_mr
+import config as C
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261123-v86'
+ASSET_VER = 'prestige-home-revamp-20261124-v87'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -528,7 +529,7 @@ def head(l, t):
     faq = {'@type': 'FAQPage', 'mainEntity': [{'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': ans}} for q, ans in t['faq']]}
     ld = json.dumps({'@context': 'https://schema.org', '@graph': [agent, website, webpage, faq]}, ensure_ascii=False, separators=(',', ':'))
     return (
-        f'<!doctype html>\n<html lang="{HTML_LANG[l]}">\n<head>\n<meta charset="utf-8">\n'
+        f'<!doctype html>\n<html lang="{HTML_LANG[l]}">\n<head>\n{C.gtm_head()}<meta charset="utf-8">\n'
         '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
         f'<title>{e(t["title"])}</title>\n<meta name="description" content="{a(t["desc"])}">\n'
         '<meta name="author" content="Munit Lulla">\n<meta name="robots" content="index, follow, max-image-preview:large">\n'

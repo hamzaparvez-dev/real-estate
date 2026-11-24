@@ -215,7 +215,7 @@ def head(l, title, desc, alts, img, img_alt, ld, preload=None, og_type='website'
         pix = ("<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};"
                "if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];"
                f"s.parentNode.insertBefore(t,s)}}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','{C.META_PIXEL_ID}');fbq('track','PageView');</script>")
-    return (f'<!doctype html>\n<html lang="{C.HTML_LANG[l]}">\n<head>\n<meta charset="utf-8">\n'
+    return (f'<!doctype html>\n<html lang="{C.HTML_LANG[l]}">\n<head>\n{C.gtm_head()}<meta charset="utf-8">\n'
             '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
             f'<title>{esc(title)}</title>\n<meta name="description" content="{attr(desc)}">\n'
             '<meta name="robots" content="index, follow, max-image-preview:large">\n'

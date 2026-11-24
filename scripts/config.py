@@ -20,7 +20,22 @@ MAPS_EMBED = 'https://www.google.com/maps?q=19.262936,73.1425496&z=17&output=emb
 # Fill these in when you have them. Empty = not shown anywhere on the site.
 RERA_NO = 'P51700052362'
 META_PIXEL_ID = ''      # Meta (Facebook) Pixel ID for YOUR ad account. The old client's pixel was removed.
+GTM_ID = 'GTM-KH9KRC8Z'  # Google tag / Tag Manager container
 SAME_AS = []            # profile URLs, e.g. your Facebook Page and Instagram
+
+
+def gtm_head():
+    """Google tag snippet — place immediately after <head> on every page."""
+    if not GTM_ID:
+        return ''
+    return (
+        f'<script async src="https://www.googletagmanager.com/gtm.js?id={GTM_ID}"></script>\n'
+        '<script>\n'
+        '  window.dataLayer = window.dataLayer || [];\n'
+        '  function gtag(){dataLayer.push(arguments);}\n'
+        "  gtag('js', new Date());\n"
+        '</script>\n'
+    )
 
 BUILD_DATE = '2026-10-29'
 LANGS = ['en', 'hi', 'mr']
