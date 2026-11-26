@@ -318,3 +318,9 @@ POSTS = {
         ],
     },
 }
+
+# ---- November 2026 local-keyword guides (scripts/local_guides/) ----
+LEGACY_ORDER = list(ORDER)
+import local_guides as _lg  # noqa: E402
+POSTS.update(_lg.posts('en'))
+ORDER += _lg.ORDER

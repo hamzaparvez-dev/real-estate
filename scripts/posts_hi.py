@@ -283,3 +283,7 @@ POSTS = {
         ],
     },
 }
+
+# ---- November 2026 local-keyword guides (scripts/local_guides/) ----
+import local_guides as _lg  # noqa: E402
+POSTS.update(_lg.posts('hi'))

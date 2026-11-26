@@ -15,6 +15,8 @@ import posts_en
 import posts_hi
 import posts_mr
 import config as C
+import seo_meta
+import seo_schema
 
 SITE = 'https://www.prestigeenterprises.in'
 ASSET_VER = 'prestige-home-revamp-20261124-v87'
@@ -511,6 +513,8 @@ def eye(txt, cls=''):
 
 def head(l, t):
     p = PREFIX[l]
+    t = dict(t)
+    t['title'], t['desc'] = seo_meta.get(l, 'home', t['title'], t['desc'])  # head tags only
     canonical = SITE + p + '/'
     alts = ''.join(f'<link rel="alternate" hreflang="{k}" href="{SITE}{PREFIX[k]}/">' for k in LANGS)
     alts += f'<link rel="alternate" hreflang="x-default" href="{SITE}/">'
@@ -521,23 +525,26 @@ def head(l, t):
              'image': SITE + '/img/logo.png', 'logo': SITE + '/img/logo.png', 'telephone': PHONE_TEL, 'email': EMAIL,
              'address': {'@type': 'PostalAddress', 'streetAddress': 'Prestige One, Godrej Hill, Khadakpada', 'addressLocality': 'Kalyan',
                          'addressRegion': 'Maharashtra', 'postalCode': '421301', 'addressCountry': 'IN'},
-             'hasMap': MAPS_URL, 'areaServed': {'@type': 'City', 'name': 'Kalyan'}, 'knowsLanguage': ['en', 'hi', 'mr']}
+             'hasMap': MAPS_URL, 'areaServed': {'@type': 'City', 'name': 'Kalyan'}, 'knowsLanguage': ['en', 'hi', 'mr'],
+             **seo_schema.agent_extra(), **({'sameAs': C.SAME_AS} if C.SAME_AS else {})}
     website = {'@type': 'WebSite', '@id': SITE + '/#website', 'url': SITE + '/', 'name': 'Prestige Projects',
                'inLanguage': ['en-IN', 'hi-IN', 'mr-IN'], 'publisher': {'@id': SITE + '/#agent'}}
     webpage = {'@type': 'WebPage', '@id': canonical + '#webpage', 'url': canonical, 'name': t['title'], 'description': t['desc'],
                'inLanguage': HTML_LANG[l], 'isPartOf': {'@id': SITE + '/#website'}}
     faq = {'@type': 'FAQPage', 'mainEntity': [{'@type': 'Question', 'name': q, 'acceptedAnswer': {'@type': 'Answer', 'text': ans}} for q, ans in t['faq']]}
-    ld = json.dumps({'@context': 'https://schema.org', '@graph': [agent, website, webpage, faq]}, ensure_ascii=False, separators=(',', ':'))
+    ld = json.dumps({'@context': 'https://schema.org', '@graph': [agent, website, webpage, faq] + seo_schema.project_graph()}, ensure_ascii=False, separators=(',', ':'))
     return (
         f'<!doctype html>\n<html lang="{HTML_LANG[l]}">\n<head>\n{C.gtm_head()}<meta charset="utf-8">\n'
         '<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">\n'
         f'<title>{e(t["title"])}</title>\n<meta name="description" content="{a(t["desc"])}">\n'
-        '<meta name="author" content="Munit Lulla">\n<meta name="robots" content="index, follow, max-image-preview:large">\n'
+        '<meta name="robots" content="index, follow, max-image-preview:large">\n'
         f'<link rel="canonical" href="{canonical}">\n{alts}\n<meta name="theme-color" content="#0B1220">\n'
         f'<meta property="og:type" content="website"><meta property="og:site_name" content="Prestige Projects"><meta property="og:locale" content="{LOCALE[l]}">'
         f'<meta property="og:url" content="{canonical}"><meta property="og:title" content="{a(t["title"])}"><meta property="og:description" content="{a(t["desc"])}">'
         f'<meta property="og:image" content="{SITE}/img/og-default.jpg"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">'
-        '<meta name="twitter:card" content="summary_large_image">\n'
+        '<meta name="twitter:card" content="summary_large_image">'
+        f'<meta name="twitter:title" content="{a(t["title"])}"><meta name="twitter:description" content="{a(t["desc"])}">'
+        f'<meta name="twitter:image" content="{SITE}/img/og-default.jpg">\n'
         '<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png">\n'
         f'{video_preconnect()}'
         '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
