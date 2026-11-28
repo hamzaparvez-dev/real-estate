@@ -207,9 +207,9 @@ def head(l, title, desc, alts, img, img_alt, ld, preload=None, og_type='website'
     hl = ''.join(f'<link rel="alternate" hreflang="{k}" href="{C.SITE}{alts[k]}">' for k in alts)
     hl += f'<link rel="alternate" hreflang="x-default" href="{C.SITE}{alts["en"]}">'
     og_alt = ''.join(f'<meta property="og:locale:alternate" content="{C.LOCALE[k]}">' for k in alts if k != l)
-    fonts = 'family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700'
+    fonts = 'family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&display=swap'
     if l != 'en':
-        fonts += '&family=DM+Mono:wght@400;500&family=Noto+Sans+Devanagari:wght@300;400;500;600;700&family=Noto+Serif+Devanagari:wght@300;400;500;600'
+        fonts += '&family=Noto+Sans+Devanagari:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600'
     pix = ''
     if C.META_PIXEL_ID:
         pix = ("<script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};"
@@ -228,8 +228,9 @@ def head(l, title, desc, alts, img, img_alt, ld, preload=None, og_type='website'
             '<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">'
             '<link rel="apple-touch-icon" href="/apple-touch-icon.png">\n'
             + (f'<link rel="preload" as="image" href="{preload}" fetchpriority="high">\n' if preload else '')
-            + '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
-            f'<link href="https://fonts.googleapis.com/css2?{fonts}&display=swap" rel="stylesheet">\n'
+            + '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
+            f'<link href="https://fonts.googleapis.com/css2?{fonts}" rel="stylesheet" media="print" onload="this.media=\'all\'">\n'
+            '<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&amp;display=swap"></noscript>\n'
             f'<link rel="stylesheet" href="/assets/site.css?v={fver("assets/site.css")}">\n{extra}'
             f'<script type="application/ld+json">{jd({"@context": "https://schema.org", "@graph": ld})}</script>\n{pix}</head>\n')
 
@@ -248,8 +249,8 @@ def nav(l, alts, solid=True):
         f'<button class="nav-ham" id="navHam" type="button" aria-label="{attr(open_menu)}" aria-expanded="false" aria-controls="mnav">'
         '<span></span><span></span><span></span></button>'
         f'<a class="nav-logo home-wordmark" href="{h}" aria-label="{attr(C.BRAND)}">'
-        '<img class="home-logo-dark" src="/img/logo-on-dark.png" width="248" height="83" alt="Prestige Projects" decoding="async">'
-        '<img class="home-logo-light" src="/img/logo.png" width="248" height="83" alt="" aria-hidden="true" decoding="async"></a>'
+        '<img class="home-logo-dark" src="/img/logo-on-dark.webp" width="248" height="83" alt="Prestige Projects" decoding="async" fetchpriority="high">'
+        '<img class="home-logo-light" src="/img/logo.webp" width="248" height="83" alt="" aria-hidden="true" decoding="async"></a>'
         f'<div class="nav-r nav-r-home-fallback" hidden aria-hidden="true">'
         f'<div class="lang" role="group" aria-label="{attr(U["lang_label"])}">{langs}</div></div></nav>\n'
         '<div class="mnav" id="mnav" hidden aria-hidden="true"></div>\n'
@@ -277,15 +278,15 @@ def footer(l, alts, phone_display=None, phone_tel=None, wa_href=None, contact_hr
     return (
         f'<footer class="home-footer"><div class="foot-grid"><div>'
         f'<a class="foot-logo-link" href="{h}" aria-label="{attr(C.BRAND)}">'
-        f'<img src="/img/logo-on-dark.png" width="210" height="70" alt="{attr(C.BRAND)}" class="foot-logo"></a>'
+        f'<img src="/img/logo-on-dark.webp" width="210" height="70" alt="{attr(C.BRAND)}" class="foot-logo" decoding="async" loading="lazy"></a>'
         f'<p>{esc(U["foot_tag"])}</p><div class="foot-langs">{langs}</div></div>'
-        f'<div><h4>{esc(U["foot_links"])}</h4><ul>'
+        f'<div><h3 class="foot-heading">{esc(U["foot_links"])}</h3><ul>'
         f'<li><a href="{h}">{esc(U["home"])}</a></li>'
         f'<li><a href="/projects/prestige-one/">Prestige One</a></li>'
         f'<li><a href="/projects/prestige-gold/">Prestige Gold</a></li>'
         f'<li><a href="{attr(contact_href)}">{esc(U["nav_contact"])}</a></li></ul></div>'
-        f'<div><h4>{esc(U["foot_contact"])}</h4><p><a href="{attr(maps_url)}" target="_blank" rel="noopener">{esc(address_line)}</a></p>'
-        f'<p><a href="tel:{phone_tel}">{phone_display}</a><br>'
+        f'<div><h3 class="foot-heading">{esc(U["foot_contact"])}</h3><p><a href="{attr(maps_url)}" target="_blank" rel="noopener">{esc(address_line)}</a></p>'
+        f'<p><a href="tel:{phone_tel}" aria-label="Call {attr(phone_display)}">{esc(phone_display)}</a><br>'
         f'<a href="mailto:{C.EMAIL}">{C.EMAIL}</a></p></div></div>'
         f'<div class="foot-legal">{rera}'
         f'<p><a href="/privacy/">{esc(U["privacy"])}</a></p>'
@@ -815,8 +816,11 @@ def build_vercel():
                 {'key': 'X-Frame-Options', 'value': 'SAMEORIGIN'},
                 {'key': 'Referrer-Policy', 'value': 'strict-origin-when-cross-origin'},
                 {'key': 'Permissions-Policy', 'value': 'camera=(), microphone=(), geolocation=()'},
+                {'key': 'Strict-Transport-Security', 'value': 'max-age=63072000; includeSubDomains; preload'},
+                {'key': 'Cross-Origin-Opener-Policy', 'value': 'same-origin-allow-popups'},
             ]},
-            {'source': '/img/(.*)', 'headers': [{'key': 'Cache-Control', 'value': 'public, max-age=2592000'}]},
+            {'source': '/img/(.*)', 'headers': [{'key': 'Cache-Control', 'value': 'public, max-age=31536000, immutable'}]},
+            {'source': '/video/(.*)', 'headers': [{'key': 'Cache-Control', 'value': 'public, max-age=31536000, immutable'}]},
             {'source': '/assets/(.*)', 'headers': [{'key': 'Cache-Control', 'value': 'public, max-age=31536000, immutable'}]},
         ],
     }

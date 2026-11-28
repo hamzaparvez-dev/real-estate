@@ -17,7 +17,7 @@ import posts_mr
 import config as C
 
 SITE = 'https://www.prestigeenterprises.in'
-ASSET_VER = 'prestige-home-revamp-20261124-v87'
+ASSET_VER = 'prestige-home-perf-20261128-v90'
 BLOG_PHOTO_VERSION = '20261114-blog-insight-photos-2'
 FEATURED_GUIDES = posts_en.FEATURED
 # Homepage cards use the three uploaded blog artworks (1st / 2nd / 3rd blog PNGs).
@@ -156,12 +156,12 @@ T['en'] = dict(
     one_view_alt='Prestige One living room opening onto a balcony with riverside sunset views',
     one_poster_alt='Prestige One: One Life. One Home.',
     projects_eye='Our projects', projects_h='Our projects are located in Kalyan West’s <em>most established neighbourhoods</em>',
-    projects=[('/projects/prestige-one/', '/img/Prestige%20One%20Tower%20in%20Daylight.png', 1011, 1555, 'Prestige One residential tower in daylight, Kalyan',
+    projects=[('/projects/prestige-one/', '/img/prestige-one/tower-day-720.webp', 720, 1107, 'Prestige One residential tower in daylight, Kalyan',
                'Prestige One', 'Elite <em>3 &amp; 5 BHK (Jodi)</em> residences',
                'Reserved for those who deserve more',
                'Spacious rooms with balconies and premium finishes built for families who deserve more — Elite 3 & 5 BHK (Jodi).',
                'Visit Prestige One'),
-              ('/projects/prestige-gold/', '/img/prestige-tower-day.jpg', 1920, 1080, 'Prestige Gold residential tower in Kalyan West',
+              ('/projects/prestige-gold/', '/img/prestige-gold/tower-day-900.webp', 900, 506, 'Prestige Gold residential tower in Kalyan West',
                'Prestige Gold', 'Premium living · <em>elevated in every detail</em>',
                'Reserved for those who deserve more',
                'Spacious rooms with balconies and premium finishes built for families who deserve more — 1, 2 & 3 BHK plus retail and office space.',
@@ -276,12 +276,12 @@ T['hi'] = dict(
     one_view_alt='Prestige One का लिविंग रूम, बालकनी से नदी किनारे सूर्यास्त का नज़ारा',
     one_poster_alt='Prestige One: One Life. One Home.',
     projects_eye='हमारे प्रोजेक्ट्स', projects_h='हमारे प्रोजेक्ट्स कल्याण वेस्ट के <em>सबसे स्थापित पड़ोस</em> में हैं',
-    projects=[('/projects/prestige-one/', '/img/Prestige%20One%20Tower%20in%20Daylight.png', 1011, 1555, 'कल्याण में Prestige One आवासीय टावर',
+    projects=[('/projects/prestige-one/', '/img/prestige-one/tower-day-720.webp', 720, 1107, 'कल्याण में Prestige One आवासीय टावर',
                'Prestige One', 'एलीट <em>3 और 5 BHK (Jodi)</em> घर',
                'Reserved for those who deserve more',
                'बालकनी वाले विशाल कमरे और प्रीमियम फ़िनिश — उन परिवारों के लिए जो अधिक के हक़दार हैं। एलीट 3 और 5 BHK (Jodi) गोदरेज हिल पर, लेआउट और कीमत गंभीर खरीदारों के साथ निजी तौर पर।',
                'Visit Prestige One'),
-              ('/projects/prestige-gold/', '/img/prestige-tower-day.jpg', 1920, 1080, 'कल्याण वेस्ट में Prestige Gold आवासीय टावर',
+              ('/projects/prestige-gold/', '/img/prestige-gold/tower-day-900.webp', 900, 506, 'कल्याण वेस्ट में Prestige Gold आवासीय टावर',
                'Prestige Gold', 'प्रीमियम जीवन · <em>हर डिटेल में ऊँचा</em>',
                'Reserved for those who deserve more',
                'बालकनी वाले विशेष कमरे और प्रीमियम फ़िनिश — उन परिवारों के लिए जो अधिक के हक़दार हैं। 1, 2 और 3 BHK साथ रिटेल व ऑफिस, कल्याण वेस्ट के दिल में।',
@@ -399,12 +399,12 @@ T['mr'] = dict(
     one_view_alt='Prestige One ची लिव्हिंग रूम, बाल्कनीतून नदीकाठचा सूर्यास्त',
     one_poster_alt='Prestige One: One Life. One Home.',
     projects_eye='आमचे प्रकल्प', projects_h='आमचे प्रकल्प कल्याण वेस्टमधील <em>सर्वात प्रस्थापित परिसरात</em> आहेत',
-    projects=[('/projects/prestige-one/', '/img/Prestige%20One%20Tower%20in%20Daylight.png', 1011, 1555, 'कल्याणमधील Prestige One निवासी टॉवर',
+    projects=[('/projects/prestige-one/', '/img/prestige-one/tower-day-720.webp', 720, 1107, 'कल्याणमधील Prestige One निवासी टॉवर',
                'Prestige One', 'एलीट <em>3 आणि 5 BHK (Jodi)</em> घरे',
                'Reserved for those who deserve more',
                'बाल्कनी असलेल्या प्रशस्त खोल्या आणि प्रीमियम फिनिश — ज्या कुटुंबांना अधिक हवे आहे त्यांच्यासाठी. एलीट 3 आणि 5 BHK (Jodi) गोदरेज हिलवर, लेआउट आणि किंमत गंभीर खरेदीदारांसोबत खासगीरीत्या.',
                'Visit Prestige One'),
-              ('/projects/prestige-gold/', '/img/prestige-tower-day.jpg', 1920, 1080, 'कल्याण वेस्टमधील Prestige Gold निवासी टॉवर',
+              ('/projects/prestige-gold/', '/img/prestige-gold/tower-day-900.webp', 900, 506, 'कल्याण वेस्टमधील Prestige Gold निवासी टॉवर',
                'Prestige Gold', 'प्रीमियम जीवन · <em>प्रत्येक डिटेलमध्ये उन्नत</em>',
                'Reserved for those who deserve more',
                'बाल्कनी असलेल्या विशेष खोल्या आणि प्रीमियम फिनिश — ज्या कुटुंबांना अधिक हवे आहे त्यांच्यासाठी. 1, 2 आणि 3 BHK सोबत रिटेल व ऑफिस, कल्याण वेस्टच्या हृदयात.',
@@ -514,9 +514,9 @@ def head(l, t):
     canonical = SITE + p + '/'
     alts = ''.join(f'<link rel="alternate" hreflang="{k}" href="{SITE}{PREFIX[k]}/">' for k in LANGS)
     alts += f'<link rel="alternate" hreflang="x-default" href="{SITE}/">'
-    fonts = 'family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400;1,600&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600;9..40,700'
+    fonts = 'family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&display=swap'
     if l != 'en':
-        fonts += '&family=Noto+Sans+Devanagari:wght@300;400;500;600&family=Noto+Serif+Devanagari:wght@300;400;500'
+        fonts += '&family=Noto+Sans+Devanagari:wght@400;600&family=Noto+Serif+Devanagari:wght@400;600'
     agent = {'@type': 'RealEstateAgent', '@id': SITE + '/#agent', 'name': 'Prestige Projects', 'url': SITE + '/',
              'image': SITE + '/img/logo.png', 'logo': SITE + '/img/logo.png', 'telephone': PHONE_TEL, 'email': EMAIL,
              'address': {'@type': 'PostalAddress', 'streetAddress': 'Prestige One, Godrej Hill, Khadakpada', 'addressLocality': 'Kalyan',
@@ -540,8 +540,10 @@ def head(l, t):
         '<meta name="twitter:card" content="summary_large_image">\n'
         '<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png"><link rel="apple-touch-icon" href="/apple-touch-icon.png">\n'
         f'{video_preconnect()}'
-        '<link rel="preconnect" href="https://fonts.googleapis.com"><link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
-        f'<link href="https://fonts.googleapis.com/css2?{fonts}&display=swap" rel="stylesheet">\n'
+        '<link rel="preload" as="image" href="/img/hero-day-800.webp" imagesrcset="/img/hero-day-800.webp 800w, /img/hero-day-1400.webp 1400w" imagesizes="100vw" fetchpriority="high">\n'
+        '<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>\n'
+        f'<link href="https://fonts.googleapis.com/css2?{fonts}" rel="stylesheet" media="print" onload="this.media=\'all\'">\n'
+        '<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,600;1,400&amp;family=DM+Sans:opsz,wght@9..40,400;9..40,600;9..40,700&amp;display=swap"></noscript>\n'
         f'<link rel="stylesheet" href="/assets/site.css?v={ASSET_VER}">\n'
         f'<script type="application/ld+json">{ld}</script>\n</head>\n'
     )
@@ -557,17 +559,23 @@ def nav(l, t):
         f'<nav id="nav" class="home-hero-nav" aria-label="{a(t["nav_label"])}">'
         f'<button class="nav-ham" id="navHam" type="button" aria-label="{a(t["menu_open"])}" aria-expanded="false" aria-controls="mnav"><span></span><span></span><span></span></button>'
         f'<a class="nav-logo home-wordmark" href="{p}/" aria-label="Prestige Projects">'
-        '<img class="home-logo-dark" src="/img/logo-on-dark.png" width="248" height="83" alt="Prestige Projects" decoding="async">'
-        '<img class="home-logo-light" src="/img/logo.png" width="248" height="83" alt="" aria-hidden="true" decoding="async"></a>'
+        '<img class="home-logo-dark" src="/img/logo-on-dark.webp" width="248" height="83" alt="Prestige Projects" decoding="async" fetchpriority="high">'
+        '<img class="home-logo-light" src="/img/logo.webp" width="248" height="83" alt="" aria-hidden="true" decoding="async"></a>'
         f'<div class="nav-r nav-r-home-fallback" hidden aria-hidden="true"><div class="lang" role="group">{langs}</div></div></nav>\n'
         '<div class="mnav" id="mnav" hidden aria-hidden="true"></div>\n'
     )
 
 
 def hero(t):
+    """Poster is the LCP element; video src is injected after idle so PSI is not blocked by a 59MB mp4."""
+    poster = (
+        f'<img class="hero-poster" src="/img/hero-day-800.webp" srcset="/img/hero-day-800.webp 800w, /img/hero-day-1400.webp 1400w, /img/hero-day.webp 1600w" '
+        f'sizes="100vw" width="1600" height="900" alt="" decoding="async" fetchpriority="high">'
+    )
     return (
         f'<main id="main"><section id="home" class="hero hero-video-hero site-video-hero" aria-label="{a(t["hero_label"])}">\n'
-        f'  <video class="hero-video" id="heroVideo" src="{VIDEO}" autoplay muted loop playsinline webkit-playsinline preload="auto" controlsList="nodownload nofullscreen noremoteplayback" disablepictureinpicture disableremoteplayback x-webkit-airplay="deny" aria-hidden="true" tabindex="-1"></video>\n'
+        f'  {poster}\n'
+        f'  <video class="hero-video" id="heroVideo" data-src="{VIDEO}" muted loop playsinline webkit-playsinline preload="none" controlsList="nodownload nofullscreen noremoteplayback" disablepictureinpicture disableremoteplayback x-webkit-airplay="deny" aria-hidden="true" tabindex="-1"></video>\n'
         '  <div class="hero-video-shade" aria-hidden="true"></div>\n</section>\n'
     )
 
@@ -575,7 +583,7 @@ def hero(t):
 def intro(t):
     paras = ''.join(f'<p>{e(x)}</p>' for x in t['intro'])
     pillars = ''.join(
-        f'<article class="home-pillar">{icon(ic, "home-pillar-icon")}<h3>{e(h)}</h3><p>{e(x)}</p></article>'
+        f'<article class="home-pillar">{icon(ic, "home-pillar-icon")}<h2 class="home-pillar-title">{e(h)}</h2><p>{e(x)}</p></article>'
         for ic, h, x in t['pillars'])
     return (
         '<section class="home-seo-intro home-passion" aria-labelledby="home-seo-title"><div class="in home-passion-in">'
@@ -597,7 +605,7 @@ def about(t):
     return (
         '<section class="sec home-about" id="about"><div class="in about-grid"><div>'
         f'{eye(t["about_eye"])}<h2 class="dh">{t["about_h"]}</h2><div class="about-body" style="margin-top:30px">{body}</div></div>'
-        f'<div><div class="about-photo about-photo-wide"><img src="/img/about.jpg?v={ASSET_VER}" width="1024" height="512" loading="lazy" alt="{a(t["about_alt"])}"></div>'
+        f'<div><div class="about-photo about-photo-wide"><img src="/img/about-680.webp" srcset="/img/about-680.webp 680w, /img/about.webp 1024w" sizes="(max-width:860px) 92vw, 42vw" width="1024" height="512" loading="lazy" decoding="async" alt="{a(t["about_alt"])}"></div>'
         f'{quote_html}</div></div></section>\n'
     )
 
@@ -620,14 +628,14 @@ def projects(t):
         if is_gold:
             media = (
                 f'<div class="project-showcase-media{landscape} project-media-rotator" data-project-rotator data-interval="4500">'
-                f'<img class="is-active" src="{img}" width="{w}" height="{h}" loading="lazy" alt="{a(alt)}">'
-                f'<img src="/img/prestige-gold-night.webp" width="1024" height="576" loading="lazy" alt="{a(alt)} — night view">'
+                f'<img class="is-active" src="/img/prestige-gold/tower-day-900.webp" srcset="/img/prestige-gold/tower-day-900.webp 900w, /img/prestige-gold/tower-day-1440.webp 1440w" sizes="(max-width:860px) 92vw, 48vw" width="900" height="506" loading="lazy" decoding="async" alt="{a(alt)}">'
+                f'<img src="/img/prestige-gold/tower-night-900.webp" width="900" height="506" loading="lazy" decoding="async" alt="{a(alt)} — night view">'
                 '</div>'
             )
         else:
             media = (
                 f'<div class="project-showcase-media{landscape}">'
-                f'<img src="{img}" width="{w}" height="{h}" loading="lazy" alt="{a(alt)}"></div>'
+                f'<img src="/img/prestige-one/tower-day-720.webp" srcset="/img/prestige-one/tower-day-720.webp 720w, /img/prestige-one/tower-day-1011.webp 1011w" sizes="(max-width:860px) 92vw, 42vw" width="720" height="1107" loading="lazy" decoding="async" alt="{a(alt)}"></div>'
             )
         band = (
             f'<div class="home-project-band{alt_band}">'
@@ -850,11 +858,11 @@ def contact(t):
         '<section class="sec contact" id="contact"><div class="in contact-grid"><div>'
         f'{eye(t["contact_eye"])}<h2 class="dh light">{t["contact_h"]}</h2><p class="lead light" style="margin-top:18px">{e(t["contact_p"])}</p>'
         f'<ul class="contact-list"><li><b>{e(t["addr"])}</b><span>{ADDRESS}</span></li>'
-        f'<li><b>{e(t["phone"])}</b><a href="tel:{PHONE_TEL}">{PHONE}</a></li>'
-        f'<li><b>WhatsApp</b><a href="{link}" target="_blank" rel="noopener">{PHONE}</a></li>'
+        f'<li><b>{e(t["phone"])}</b><a href="tel:{PHONE_TEL}" aria-label="Call {PHONE}">{PHONE}</a></li>'
+        f'<li><b>WhatsApp</b><a href="{link}" target="_blank" rel="noopener" aria-label="WhatsApp {PHONE}">Chat on WhatsApp</a></li>'
         f'<li><b>{e(t["email"])}</b><a href="mailto:{EMAIL}">{EMAIL}</a></li></ul>'
         f'<div class="cta-row"><a class="btn-wa" href="{link}" target="_blank" rel="noopener">{icon("chat")}<span>{e(t["wa_btn"])}</span></a>'
-        f'<a class="btn-o" href="tel:{PHONE_TEL}">{icon("phone")}<span>{e(t["call"])}</span></a></div></div>'
+        f'<a class="btn-o" href="tel:{PHONE_TEL}" aria-label="Call {PHONE}">{icon("phone")}<span>{e(t["call"])}</span></a></div></div>'
         f'<div><iframe class="map" src="{MAPS_EMBED}" title="{a(ADDRESS)}" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe></div></div></section>\n</main>\n'
     )
 
@@ -878,11 +886,11 @@ def footer(l, t):
                     for k, n in (('en', 'English'), ('hi', 'हिन्दी'), ('mr', 'मराठी')))
     return (
         '<footer class="home-footer"><div class="foot-grid">'
-        f'<div><a class="foot-logo-link" href="{p}/" aria-label="Prestige Projects"><img src="/img/logo-on-dark.png" width="210" height="70" alt="Prestige Projects" class="foot-logo"></a>'
+        f'<div><a class="foot-logo-link" href="{p}/" aria-label="Prestige Projects"><img src="/img/logo-on-dark.webp" width="210" height="70" alt="Prestige Projects" class="foot-logo" decoding="async" loading="lazy"></a>'
         f'<p>{e(t["foot_tag"])}</p><div class="foot-langs">{langs}</div></div>'
-        f'<div><h4>{e(t["foot_explore"])}</h4><ul>{links}</ul></div>'
-        f'<div><h4>{e(t["foot_contact"])}</h4><p><a href="{MAPS_URL}" target="_blank" rel="noopener">{ADDRESS}</a></p>'
-        f'<p><a href="tel:{PHONE_TEL}">{PHONE}</a><br><a href="mailto:{EMAIL}">{EMAIL}</a></p></div></div>'
+        f'<div><h3 class="foot-heading">{e(t["foot_explore"])}</h3><ul>{links}</ul></div>'
+        f'<div><h3 class="foot-heading">{e(t["foot_contact"])}</h3><p><a href="{MAPS_URL}" target="_blank" rel="noopener">{ADDRESS}</a></p>'
+        f'<p><a href="tel:{PHONE_TEL}" aria-label="Call {PHONE}">{PHONE}</a><br><a href="mailto:{EMAIL}">{EMAIL}</a></p></div></div>'
         f'<div class="foot-legal"><p class="foot-rera"><strong>MahaRERA Reg. No:</strong> {RERA}</p>'
         f'<p><a href="/privacy/">{e(t["privacy"])}</a></p><p>{e(t["disclaimer"])}</p><p>{e(t["rights"])}</p></div></footer>\n'
         f'<a class="wa" href="{a(wa(t["wa_text"]))}" target="_blank" rel="noopener" aria-label="{a(t["wa_btn"])}">{icon("chat")}<span>{e(t["float_wa"])}</span></a>\n'

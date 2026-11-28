@@ -25,15 +25,23 @@ SAME_AS = []            # profile URLs, e.g. your Facebook Page and Instagram
 
 
 def gtm_head():
-    """Google tag snippet — place immediately after <head> on every page."""
+    """Deferred Google tag — loads after idle so it does not compete with LCP."""
     if not GTM_ID:
         return ''
     return (
-        f'<script async src="https://www.googletagmanager.com/gtm.js?id={GTM_ID}"></script>\n'
         '<script>\n'
-        '  window.dataLayer = window.dataLayer || [];\n'
-        '  function gtag(){dataLayer.push(arguments);}\n'
-        "  gtag('js', new Date());\n"
+        'window.dataLayer=window.dataLayer||[];\n'
+        'function gtag(){dataLayer.push(arguments);}\n'
+        "gtag('js',new Date());\n"
+        '(function(){\n'
+        f"var id='{GTM_ID}';\n"
+        'function load(){if(window.__peGtm)return;window.__peGtm=1;'
+        "var s=document.createElement('script');s.async=true;"
+        "s.src='https://www.googletagmanager.com/gtm.js?id='+id;"
+        'document.head.appendChild(s);}\n'
+        "if('requestIdleCallback' in window)requestIdleCallback(load,{timeout:3500});\n"
+        'else window.addEventListener("load",function(){setTimeout(load,1200);});\n'
+        '})();\n'
         '</script>\n'
     )
 

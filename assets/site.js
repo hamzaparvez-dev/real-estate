@@ -66,25 +66,35 @@
     homeScrollY = y;
   }
 
+  var scrollMax = 0;
+  var measureScrollMax = function () {
+    scrollMax = Math.max(document.documentElement.scrollHeight - window.innerHeight, 0);
+  };
+  var scrollRaf = 0;
   function onScroll() {
-    var y = window.pageYOffset || document.documentElement.scrollTop;
-    if (nav) {
-      if (isHomeVideo) {
-        updateHomeHeroNav(y);
-      } else if (!isHomePremium) {
-        nav.classList.remove('home-nav-hidden', 'home-nav-solid');
-        document.body.classList.remove('home-nav-hidden');
-        nav.classList.toggle('up', y > 40);
-      } else {
-        nav.classList.toggle('up', y > 40);
+    if (scrollRaf) return;
+    scrollRaf = window.requestAnimationFrame(function () {
+      scrollRaf = 0;
+      var y = window.pageYOffset || document.documentElement.scrollTop || 0;
+      if (nav) {
+        if (isHomeVideo) {
+          updateHomeHeroNav(y);
+        } else if (!isHomePremium) {
+          nav.classList.remove('home-nav-hidden', 'home-nav-solid');
+          document.body.classList.remove('home-nav-hidden');
+          nav.classList.toggle('up', y > 40);
+        } else {
+          nav.classList.toggle('up', y > 40);
+        }
       }
-    }
-    if (prog) {
-      var h = document.documentElement.scrollHeight - window.innerHeight;
-      prog.style.width = (h > 0 ? Math.min(100, (y / h) * 100) : 0) + '%';
-    }
+      if (prog) {
+        if (!scrollMax) measureScrollMax();
+        prog.style.width = (scrollMax > 0 ? Math.min(100, (y / scrollMax) * 100) : 0) + '%';
+      }
+    });
   }
   window.addEventListener('scroll', onScroll, { passive: true });
+  window.addEventListener('resize', function () { scrollMax = 0; }, { passive: true });
   onScroll();
 
   /* Home hero background video (Vercel Blob) — autoplay + seamless loop */
@@ -94,8 +104,6 @@
     var HERO_URL = '/video/Prestige_Sales_Hero_Video_1080p.mp4';
 
     if (heroVideo) {
-      if (!heroVideo.getAttribute('src')) heroVideo.setAttribute('src', HERO_URL);
-      heroVideo.removeAttribute('poster');
       heroVideo.removeAttribute('controls');
       heroVideo.controls = false;
       heroVideo.muted = true;
@@ -106,25 +114,23 @@
       heroVideo.playsInline = true;
       heroVideo.setAttribute('playsinline', '');
       heroVideo.setAttribute('webkit-playsinline', '');
-      heroVideo.setAttribute('autoplay', '');
-      heroVideo.setAttribute('preload', 'auto');
+      heroVideo.setAttribute('preload', 'none');
       heroVideo.setAttribute('controlsList', 'nodownload nofullscreen noremoteplayback');
       heroVideo.setAttribute('disablepictureinpicture', '');
       heroVideo.setAttribute('disableremoteplayback', '');
       heroVideo.setAttribute('x-webkit-airplay', 'deny');
       if (heroVideo.disableRemotePlayback !== undefined) heroVideo.disableRemotePlayback = true;
-      /* Never show native media UI / center play on iPhone */
-      try { heroVideo.setAttribute('controlslist', 'nodownload nofullscreen noremoteplayback'); } catch (ignore) {}
 
       var markPlaying = function () {
         heroVideo.classList.add('is-playing');
         if (heroSection) {
           heroSection.classList.add('hero-video-ready');
-          heroSection.classList.remove('hero-video-blocked');
+          heroSection.classList.remove('hero-video-blocked', 'hero-video-error');
         }
       };
 
       var tryPlay = function () {
+        if (!heroVideo.getAttribute('src')) return;
         heroVideo.muted = true;
         heroVideo.controls = false;
         if (!heroVideo.paused && !heroVideo.ended) return;
@@ -132,7 +138,6 @@
         if (attempt && typeof attempt.then === 'function') {
           attempt.then(markPlaying).catch(function () {
             if (heroSection) heroSection.classList.add('hero-video-blocked');
-            window.setTimeout(tryPlay, 400);
           });
         }
       };
@@ -145,42 +150,38 @@
         }
       };
       heroVideo.addEventListener('loadedmetadata', syncHeroVideoAspect, { once: true });
-      if (heroVideo.readyState >= 1) syncHeroVideoAspect();
-
       heroVideo.addEventListener('playing', markPlaying);
-      heroVideo.addEventListener('pause', function () {
-        if (document.hidden) return;
-        window.setTimeout(tryPlay, 120);
-      });
-      heroVideo.addEventListener('ended', function () {
-        try {
-          heroVideo.currentTime = 0.001;
-          tryPlay();
-        } catch (ignore) {}
-      });
       heroVideo.addEventListener('canplay', tryPlay);
-      heroVideo.addEventListener('canplaythrough', tryPlay);
-      heroVideo.addEventListener('loadeddata', tryPlay);
       heroVideo.addEventListener('error', function () {
+        /* Keep the poster image as LCP; do not thrash retries that spam the console */
         if (heroSection) heroSection.classList.add('hero-video-error');
+        heroVideo.removeAttribute('src');
+        try { heroVideo.load(); } catch (ignore) {}
       });
 
-      tryPlay();
-      if (heroVideo.readyState < 2) heroVideo.load();
-      window.setTimeout(tryPlay, 250);
-      window.setTimeout(tryPlay, 1000);
-
-      document.addEventListener('visibilitychange', function () {
-        if (!document.hidden) tryPlay();
-      });
-      window.addEventListener('pageshow', tryPlay);
-      window.addEventListener('focus', tryPlay);
-
-      var unlock = function () {
+      var armVideo = function () {
+        if (heroVideo.getAttribute('src')) return;
+        var saveData = navigator.connection && navigator.connection.saveData;
+        var slow = navigator.connection && /2g/.test(navigator.connection.effectiveType || '');
+        if (saveData || slow) return;
+        var src = heroVideo.getAttribute('data-src') || HERO_URL;
+        heroVideo.setAttribute('src', src);
+        heroVideo.setAttribute('autoplay', '');
+        try { heroVideo.load(); } catch (ignore) {}
         tryPlay();
       };
-      ['touchstart', 'touchend', 'pointerdown', 'click', 'scroll'].forEach(function (evt) {
-        document.addEventListener(evt, unlock, { once: true, passive: true });
+
+      /* Defer video until after first paint / idle so poster wins LCP */
+      if ('requestIdleCallback' in window) {
+        requestIdleCallback(armVideo, { timeout: 4000 });
+      } else {
+        window.addEventListener('load', function () { window.setTimeout(armVideo, 1500); });
+      }
+      ['touchstart', 'pointerdown', 'click', 'scroll'].forEach(function (evt) {
+        document.addEventListener(evt, armVideo, { once: true, passive: true });
+      });
+      document.addEventListener('visibilitychange', function () {
+        if (!document.hidden) tryPlay();
       });
     }
   }
@@ -550,10 +551,25 @@
     var rememberMidDismiss = function () {
       try { sessionStorage.setItem(MID_KEY, '1'); } catch (ignore) {}
     };
+    var setModalInert = function (hidden) {
+      modal.setAttribute('aria-hidden', hidden ? 'true' : 'false');
+      if ('inert' in modal) modal.inert = !!hidden;
+      modal.querySelectorAll('button,input,select,textarea,a[href]').forEach(function (el) {
+        if (hidden) {
+          if (!el.hasAttribute('data-pe-tab')) el.setAttribute('data-pe-tab', el.getAttribute('tabindex') || '');
+          el.setAttribute('tabindex', '-1');
+        } else {
+          var prev = el.getAttribute('data-pe-tab');
+          if (prev === '' || prev === null) el.removeAttribute('tabindex');
+          else el.setAttribute('tabindex', prev);
+          el.removeAttribute('data-pe-tab');
+        }
+      });
+    };
     var close = function () {
       if (midAutoShown) rememberMidDismiss();
       modal.classList.remove('open');
-      modal.setAttribute('aria-hidden', 'true');
+      setModalInert(true);
       document.body.style.overflow = '';
       if (lastFocus && typeof lastFocus.focus === 'function') lastFocus.focus();
     };
@@ -565,12 +581,13 @@
       modal.querySelector('#enqTitle').textContent = copy.title;
       form.querySelector('.enq-submit').textContent = copy.submit;
       modal.classList.add('open');
-      modal.setAttribute('aria-hidden', 'false');
+      setModalInert(false);
       document.body.style.overflow = 'hidden';
       var error = form.querySelector('.enq-error');
       error.textContent = '';
       window.setTimeout(function () { var name = form.querySelector('[name="name"]'); if (name) name.focus(); }, 30);
     };
+    setModalInert(true);
     modal.querySelector('.enq-close').addEventListener('click', close);
     modal.addEventListener('click', function (e) { if (e.target === modal) close(); });
     /* Homepage: show the centred enquiry popup a little earlier while scrolling (before Who we are). */
