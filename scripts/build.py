@@ -26,6 +26,9 @@ import config as C  # noqa: E402
 import cities_en, cities_hi, cities_mr, posts_en, posts_hi, posts_mr  # noqa: E402,E401
 from ui import HOME, UI  # noqa: E402
 import build_home_pages as home_pages  # noqa: E402
+import seo_meta  # noqa: E402
+import seo_schema  # noqa: E402
+import re  # noqa: E402
 
 LANGS = C.LANGS
 CIT = {'en': cities_en.CITIES, 'hi': cities_hi.CITIES, 'mr': cities_mr.CITIES}
@@ -33,6 +36,16 @@ PST = {'en': posts_en.POSTS, 'hi': posts_hi.POSTS, 'mr': posts_mr.POSTS}
 MENU, NEAR, ORDER, FEATURED = cities_en.MENU, cities_en.NEAR, posts_en.ORDER, posts_en.FEATURED
 CITY_SLUGS = [s for _, slugs in MENU for s in slugs]
 DATE_FMT = {'en': 'October 29, 2026', 'hi': '29 अक्टूबर 2026', 'mr': '29 ऑक्टोबर 2026'}
+NEW_DATE = '2026-11-26'  # publish date of the November 2026 local-keyword guides
+NEW_DATE_FMT = {'en': 'November 26, 2026', 'hi': '26 नवंबर 2026', 'mr': '26 नोव्हेंबर 2026'}
+LEGACY_ORDER = posts_en.LEGACY_ORDER
+NEW_ORDER = [x for x in ORDER if x not in LEGACY_ORDER]
+LINK_RE = re.compile(r'\[([^\]]+)\]\((/[^)\s]*)\)')
+
+
+def rich(text):
+    """Escape text, then turn [label](/internal/path/) into a link (used only by the new guides)."""
+    return LINK_RE.sub(lambda m: f'<a href="{m.group(2)}">{m.group(1)}</a>', esc(text))
 
 # URLs of the old Spanish / Bay Area site: redirected so no inbound link dies.
 OLD_BLOG = ['intercambio-1031-california', 'condominio-o-casa', 'comprar-casa-con-itin-california', 'casa-para-rentar-inversion-bay-area',
@@ -198,6 +211,7 @@ def agent_ld(l):
         'areaServed': [{'@type': 'City', 'name': f"{cities_en.CITIES[s]['name']}, Maharashtra"} for s in CITY_SLUGS]
                       + [{'@type': 'AdministrativeArea', 'name': 'Mumbai Metropolitan Region'}],
         'knowsLanguage': ['en', 'hi', 'mr'],
+        **seo_schema.agent_extra(),
         **({'sameAs': C.SAME_AS} if C.SAME_AS else {}),
     }
 
@@ -224,7 +238,9 @@ def head(l, title, desc, alts, img, img_alt, ld, preload=None, og_type='website'
             f'<meta property="og:locale" content="{C.LOCALE[l]}">{og_alt}<meta property="og:url" content="{canon}">'
             f'<meta property="og:title" content="{attr(title)}"><meta property="og:description" content="{attr(desc)}">'
             f'<meta property="og:image" content="{C.SITE}{img}"><meta property="og:image:width" content="1200"><meta property="og:image:height" content="630">'
-            f'<meta property="og:image:alt" content="{attr(img_alt)}"><meta name="twitter:card" content="summary_large_image">\n'
+            f'<meta property="og:image:alt" content="{attr(img_alt)}"><meta name="twitter:card" content="summary_large_image">'
+            f'<meta name="twitter:title" content="{attr(title)}"><meta name="twitter:description" content="{attr(desc)}">'
+            f'<meta name="twitter:image" content="{C.SITE}{img}"><meta name="twitter:image:alt" content="{attr(img_alt)}">\n'
             '<link rel="icon" href="/favicon.ico" sizes="any"><link rel="icon" type="image/png" sizes="192x192" href="/icon-192.png">'
             '<link rel="apple-touch-icon" href="/apple-touch-icon.png">\n'
             + (f'<link rel="preload" as="image" href="{preload}" fetchpriority="high">\n' if preload else '')
@@ -531,7 +547,11 @@ def build_prestige_gold():
     contact = contact.replace('id="pg-enquire"', 'id="contact"', 1)
     body = (hero + overview + amen_details + amen_gallery + specs + rooftop + pricing
             + location + contact)
-    ld = [agent_ld('en'), breadcrumb_ld('en', [(UI['en']['home'], url('en', '/')), ('Prestige Gold', path)])]
+    title, desc = seo_meta.get('en', 'project:prestige-gold', title, desc)
+    ld = [agent_ld('en'), breadcrumb_ld('en', [(UI['en']['home'], url('en', '/')), ('Prestige Gold', path)]),
+          {'@type': 'WebPage', '@id': C.SITE + path + '#webpage', 'url': C.SITE + path, 'name': title, 'description': desc, 'inLanguage': 'en-IN',
+           'about': {'@id': seo_schema.GOLD_ID}, 'isPartOf': {'@id': C.SITE + '/#website'}, 'publisher': {'@id': C.SITE + '/#agent'}}]
+    ld += seo_schema.project_graph()
     html = head('en', title, desc, seo_alts, '/img/prestige-tower-day.jpg', 'Prestige Gold project in Kalyan West', ld, extra=video_preconnect())
     write(path.lstrip('/') + 'index.html', html + '<body class="home-video-page has-video-hero">\n' + nav('en', nav_alts) + body + footer(
         'en', nav_alts, phone_display=GOLD_PHONE_DISPLAY, phone_tel=GOLD_PHONE_TEL, wa_href=wa_link,
@@ -592,7 +612,11 @@ def build_prestige_one():
         '</div></section></main>'
     )
     body = hero + overview + amen_gallery + pricing + contact
-    ld = [{'@type': 'WebPage', 'name': 'Prestige One', 'url': C.SITE + path, 'description': desc, 'inLanguage': 'en-IN'}]
+    title, desc = seo_meta.get('en', 'project:prestige-one', title, desc)
+    ld = [agent_ld('en'), breadcrumb_ld('en', [(UI['en']['home'], url('en', '/')), ('Prestige One', path)]),
+          {'@type': 'WebPage', '@id': C.SITE + path + '#webpage', 'name': title, 'url': C.SITE + path, 'description': desc, 'inLanguage': 'en-IN',
+           'about': {'@id': seo_schema.ONE_ID}, 'isPartOf': {'@id': C.SITE + '/#website'}, 'publisher': {'@id': C.SITE + '/#agent'}}]
+    ld += seo_schema.project_graph()
     html = head('en', title, desc, seo_alts, '/img/Prestige%20One%20Tower%20in%20Daylight.png', 'Prestige One Kalyan', ld, extra=video_preconnect())
     write(path.lstrip('/') + 'index.html', html + '<body class="home-video-page has-video-hero">\n' + nav('en', nav_alts) + body + footer(
         'en', nav_alts, contact_href='#contact'))
@@ -664,7 +688,7 @@ def build_hub(l):
             + f'<section class="sec"><div class="in"><h1 class="dh">{U["hub_h1"]}</h1><p class="lead" style="margin-top:18px">{esc(U["hub_lead"])}</p>{out}</div></section>\n'
             + contact_block(l, U['hub_contact_h'], HOME[l]['contact_p']) + '</main>\n')
     ld = [agent_ld(l), breadcrumb_ld(l, [(U['home'], url(l, '/')), (U['areas'], url(l, '/areas/'))])]
-    page(l, '/areas/', alts, head(l, U['hub_title'], U['hub_desc'], alts, '/img/og-default.jpg', C.BRAND, ld, extra=video_preconnect()), body)
+    page(l, '/areas/', alts, head(l, *seo_meta.get(l, 'areas', U['hub_title'], U['hub_desc']), alts, '/img/og-default.jpg', C.BRAND, ld, extra=video_preconnect()), body)
     PAGES.append(alts)
 
 
@@ -692,7 +716,7 @@ def build_city(l, s):
             + contact_block(l, U['contact_h'].format(name=esc(n)), HOME[l]['contact_p'], wa_text=wa_t) + '</main>\n')
     trail = [(U['home'], url(l, '/')), (U['areas'], url(l, '/areas/')), (n, url(l, f'/areas/{s}/'))]
     ld = [agent_ld(l), breadcrumb_ld(l, trail), faq_ld(c['faq'])]
-    page(l, f'/areas/{s}/', alts, head(l, U['city_title'].format(name=n), c['desc'], alts, f'/img/areas/{s}.jpg', c['alt'], ld, extra=video_preconnect()), body)
+    page(l, f'/areas/{s}/', alts, head(l, *seo_meta.get(l, 'city:' + s, U['city_title'].format(name=n), c['desc']), alts, f'/img/areas/{s}.jpg', c['alt'], ld, extra=video_preconnect()), body)
     PAGES.append(alts)
 
 
@@ -707,33 +731,46 @@ def build_blog_index(l):
             + contact_block(l, U['cta_h'], U['cta_p']) + '</main>\n')
     ld = [agent_ld(l), breadcrumb_ld(l, [(U['home'], url(l, '/')), (U['blog'], url(l, '/blog/'))])]
     feed = video_preconnect() + f'<link rel="alternate" type="application/rss+xml" title="{attr(C.BRAND)}" href="{url(l, "/blog/feed.xml")}">\n'
-    page(l, '/blog/', alts, head(l, U['blog_title'], U['blog_desc'], alts, '/img/og-default.jpg', C.BRAND, ld, extra=feed), body)
+    page(l, '/blog/', alts, head(l, *seo_meta.get(l, 'blog', U['blog_title'], U['blog_desc']), alts, '/img/og-default.jpg', C.BRAND, ld, extra=feed), body)
     PAGES.append(alts)
 
 
 def build_post(l, s):
     U, p = UI[l], post(l, s)
     alts = {k: url(k, f'/blog/{s}/') for k in LANGS}
+    is_new = s in NEW_ORDER
+    fmt = rich if is_new else esc
     secs = ''
     for hd, paras, bullets in p['sections']:
-        secs += f'<h2>{esc(hd)}</h2>' + ''.join(f'<p>{esc(x)}</p>' for x in paras)
+        secs += f'<h2>{esc(hd)}</h2>' + ''.join(f'<p>{fmt(x)}</p>' for x in paras)
         if bullets:
-            secs += '<ul>' + ''.join(f'<li>{esc(b)}</li>' for b in bullets) + '</ul>'
-    idx = ORDER.index(s)
-    rel = [ORDER[(idx + k) % len(ORDER)] for k in (1, 2, 3)]
+            secs += '<ul>' + ''.join(f'<li>{fmt(b)}</li>' for b in bullets) + '</ul>'
+    group = NEW_ORDER if is_new else LEGACY_ORDER
+    idx = group.index(s)
+    rel = [group[(idx + k) % len(group)] for k in (1, 2, 3)]
     wa_t = U['post_wa'].format(title=p['title'])
+    date_txt = NEW_DATE_FMT[l] if is_new else DATE_FMT[l]
     body = (video_hero(p['title'])
             + f'\n<article class="sec"><div class="post"><h1>{esc(p["title"])}</h1>'
-            f'<p class="post-meta">{esc(U["by"])} · {esc(U["updated"].format(date=DATE_FMT[l]))} · {esc(U["min_read"].format(n=p["read"]))}</p>'
+            f'<p class="post-meta">{esc(U["by"])} · {esc(U["updated"].format(date=date_txt))} · {esc(U["min_read"].format(n=p["read"]))}</p>'
             f'<div class="answer"><b>{esc(U["quick_answer"])}</b><p>{esc(p["answer"])}</p></div>{secs}'
             f'<h2>{esc(U["post_faq"])}</h2>{faq_html(p["faq"])}'
             f'<div class="cta-box"><h2>{esc(U["cta_h"])}</h2><p>{esc(U["cta_p"])}</p><a class="btn-wa" href="{waurl(wa_t)}" target="_blank" rel="noopener">{I["chat"]}<span>{esc(U["wa_btn"])}</span></a></div>'
             f'</div></article>\n<section class="sec" style="background:#fff"><div class="in"><h2 class="dh" style="font-size:clamp(28px,3.4vw,42px)">{esc(U["related"])}</h2>'
             f'<div class="cards">{"".join(post_card(l, r) for r in rel)}</div></div></section></main>\n')
-    ld = [agent_ld(l), breadcrumb_ld(l, [(U['home'], url(l, '/')), (U['blog'], url(l, '/blog/')), (p['title'], url(l, f'/blog/{s}/'))]), faq_ld(p['faq']),
-          {'@type': 'Article', 'headline': p['title'], 'description': p['desc'], 'inLanguage': C.HTML_LANG[l], 'datePublished': C.BUILD_DATE, 'dateModified': C.BUILD_DATE,
-           'image': f'{C.SITE}/img/blog/{s}.jpg?v={BLOG_PHOTO_VERSION}', 'mainEntityOfPage': C.SITE + alts[l], 'author': {'@id': C.SITE + '/#agent'}, 'publisher': {'@id': C.SITE + '/#agent'}}]
-    page(l, f'/blog/{s}/', alts, head(l, (p['title'] + ' | ' + C.BRAND) if len(p['title']) + len(C.BRAND) + 3 <= 70 else p['title'], p['desc'], alts, f'/img/blog/{s}.jpg', p['title'], ld, og_type='article', extra=video_preconnect()), body)
+    default_title = (p['title'] + ' | ' + C.BRAND) if len(p['title']) + len(C.BRAND) + 3 <= 70 else p['title']
+    title, desc = seo_meta.get(l, 'post:' + s, default_title, p['desc'])
+    d_pub = NEW_DATE if is_new else C.BUILD_DATE
+    article = {'@type': 'Article', 'headline': p['title'], 'description': desc, 'inLanguage': C.HTML_LANG[l], 'datePublished': d_pub, 'dateModified': d_pub,
+               'image': f'{C.SITE}/img/blog/{s}.jpg?v={BLOG_PHOTO_VERSION}', 'mainEntityOfPage': C.SITE + alts[l], 'author': {'@id': C.SITE + '/#agent'}, 'publisher': {'@id': C.SITE + '/#agent'}}
+    ld = [agent_ld(l), breadcrumb_ld(l, [(U['home'], url(l, '/')), (U['blog'], url(l, '/blog/')), (p['title'], url(l, f'/blog/{s}/'))]), faq_ld(p['faq'])]
+    if is_new:
+        article['about'] = [{'@id': seo_schema.GOLD_ID}, {'@id': seo_schema.ONE_ID}]
+        article['contentLocation'] = {'@type': 'Place', 'name': 'Kalyan West, Kalyan, Maharashtra'}
+        article['keywords'] = ', '.join(p.get('keywords', []))
+        ld += [seo_schema.gold_project(), seo_schema.one_project()]
+    ld.append(article)
+    page(l, f'/blog/{s}/', alts, head(l, title, desc, alts, f'/img/blog/{s}.jpg', p['title'], ld, og_type='article', extra=video_preconnect()), body)
     PAGES.append(alts)
 
 
@@ -765,6 +802,9 @@ def build_login_page():
         write('login/index.html', f.read())
 
 
+LASTMOD = {}  # en path -> lastmod for pages changed after BUILD_DATE
+
+
 def build_sitemap():
     rows, seen = '', set()
     for alts in PAGES:
@@ -774,9 +814,10 @@ def build_sitemap():
         for l in alts:
             links = ''.join(f'<xhtml:link rel="alternate" hreflang="{k}" href="{C.SITE}{alts[k]}"/>' for k in alts)
             links += f'<xhtml:link rel="alternate" hreflang="x-default" href="{C.SITE}{alts["en"]}"/>'
-            rows += f'<url><loc>{C.SITE}{alts[l]}</loc><lastmod>{C.BUILD_DATE}</lastmod>{links}</url>\n'
+            lm = LASTMOD.get(alts['en'], C.BUILD_DATE)
+            rows += f'<url><loc>{C.SITE}{alts[l]}</loc><lastmod>{lm}</lastmod>{links}</url>\n'
     write('sitemap.xml', '<?xml version="1.0" encoding="UTF-8"?>\n<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:xhtml="http://www.w3.org/1999/xhtml">\n' + rows + '</urlset>\n')
-    write('robots.txt', f'User-agent: *\nAllow: /\n\nSitemap: {C.SITE}/sitemap.xml\n')
+    write('robots.txt', f'User-agent: *\nAllow: /\nDisallow: /login/\nDisallow: /admin/\nDisallow: /api/\n\nSitemap: {C.SITE}/sitemap.xml\n')
 
 
 def build_llms():
@@ -847,6 +888,13 @@ def main():
     build_prestige_one()
     build_login_page()
     build_404()
+    PAGES.insert(0, {k: url(k, '/') for k in LANGS})  # homepages (built by build_home_pages)
+    PAGES.append({'en': '/privacy/'})
+    for pth in ['/', '/projects/prestige-gold/', '/projects/prestige-one/', '/blog/', '/areas/kalyan/'] + [f'/blog/{x}/' for x in NEW_ORDER]:
+        LASTMOD[pth] = NEW_DATE
+    for x in seo_meta.META['en']:
+        if x.startswith('post:'):
+            LASTMOD[f'/blog/{x[5:]}/'] = NEW_DATE
     build_sitemap()
     build_llms()
     build_vercel()
